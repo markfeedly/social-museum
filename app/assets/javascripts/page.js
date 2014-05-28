@@ -1,9 +1,10 @@
 jQuery(document).ready(function ($) {
     $('#tabs').tab();
-    $(document).on("click", "#comment-button", hide_and_show);
+    $(document).on("click", "#help-button",    help_dialog);
+    $(document).on("click", "#comment-button", show_comment_box);
 });
 
-function hide_and_show(event) {
+function show_comment_box(event) {
     event.preventDefault();
     $(event.target).hide();
     $("#comment-form").show();
