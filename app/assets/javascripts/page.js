@@ -9,7 +9,7 @@ function hide_and_show(event) {
     $("#comment-form").show();
 }
 
-function help_dialog() {
+function help_dialog(event) {
     event.preventDefault();
     $("#dialog").dialog({
         position: {
