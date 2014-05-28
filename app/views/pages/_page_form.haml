@@ -40,7 +40,8 @@
 
   %br/
   .parent-div.ccc
-    .float-right= link_to("Show content editing help", '', class: "btn btn-primary", onclick: "help_dialog();")
+    #help-button.float-right
+      = link_to("Show content editing help", '#', class: "btn btn-primary" )
 
     .float-left
       = f.label :content
