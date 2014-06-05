@@ -1,11 +1,13 @@
 Then(/^I can see a hyperlink to a "(.*?)" page$/) do |arg1|
-  within(:xpath, "id('content_tab')/p/a") do
-    page.should have_content(arg1)
+  within( '.content-content') do
+    find('a', text: arg1)
   end
 end
 
 Then(/^I can see a rendition of an image$/) do
-    page.should have_xpath("id('content_tab')/div/img")
+  within( '.content-content') do
+    find('img')
+  end
 end
 
 Then(/^I can see a You Tube video$/) do

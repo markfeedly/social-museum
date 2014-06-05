@@ -5,10 +5,11 @@ describe Page do
   def page() @page end
   def page_state() @page_state end
   def user2() @user2 end
+  puts Rails.env
 
   before(:each) do
     @user = FactoryGirl.create(:user)
-    @page = FactoryGirl.create(:page, creator: @user, content: 'check me')
+    @page = FactoryGirl.create(:page, user: @user, content: 'check me')
     @page_state = @page.history.first
     @user2 = FactoryGirl.create(:user)
     subject {@page}
@@ -23,7 +24,7 @@ describe Page do
 
   it "should be able to change title" do
     original_content = page_state.content
-    page.update_attributes(creator: user, title: 'check me', content: original_content)
+    page.change(user, title: 'check me', content: original_content)
     expect(page.title).to eq('check me')
     page.content.should == original_content
   end
@@ -38,14 +39,14 @@ describe Page do
 
   it "should have one past page after one change" do
     original_title = page_state.title
-    page.change(user, title: original_title, content: ' xxx ')
+    page.change(user, title: original_title, content: 'first change')
     page.history.count.should == 2
   end
 
   it "should have two past pages after two changes" do
     original_title = page_state.title
-    page.change(user, title: original_title, content: ' xxx ')
-    page.change(user, title: original_title, content: ' zzzz ')
+    page.change(user, title: original_title, content: 'first change')
+    page.change(user, title: original_title, content: 'second change')
     Page.first.history.count.should == 3
   end
 
@@ -70,22 +71,17 @@ describe Page do
 
   it 'page title and content should reflect with sucessive changes' do
 
-    page.update_attributes(creator: user, title: 'first title change', content: 'first content change')
-    page.title.should == 'first title change'
-    page.content.should == 'first content change'
+    expect{page.update(user: user, title: 'changed title')}.to change{page.title}.to('changed title')
 
-    page.update_attributes(creator: user, title: 'second title change', content: 'second content change')
-    page.title.should == 'second title change'
-    page.content.should == 'second content change'
   end
 
   it "a page's history should only contain the page's past" do
     original_content = page.content
     original_title = page_state.title
-    page.update_attributes(creator: user, title: original_title, content: 'first content change')
-    page.update_attributes(creator: user, title: original_title, content: 'second content change')
+    page.update_attributes(user: user, title: original_title, content: 'first content change')
+    page.update_attributes(user: user, title: original_title, content: 'second content change')
 
-    @page2 = FactoryGirl.create(:page, creator: @user, content: "check me")
+    @page2 = FactoryGirl.create(:page, user: @user, content: "check me")
     @page_state2 = @page2.history.first
 
     history = Page.first.history

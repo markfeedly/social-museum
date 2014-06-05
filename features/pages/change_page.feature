@@ -14,18 +14,21 @@ Feature: Wiki page
     And I change the title to "Famous Photographer"
     Then I can see a page entitled "Famous Photographer" with content "Test me"
 
-  Scenario: Edits to a page should be recorded in page history
+  Scenario: Edits to a page content should be recorded in page history
 
     When I create a page entitled "Test" with content "Test me"
     And I change the content to "Mario Testino"
-    And I change the title to "Famous Photographer"
+    And I change the content to "Famous Photographer"
 
     Then I can see one item of page history containing "Test me" as third most recent
     Then I can see one item of page history containing "Mario Testino" as second most recent
     Then I can see one item of page history containing "Famous Photographer" as most recent
 
+  Scenario: Edits to a page title should be recorded in page history
+    When I create a page entitled "Test" with content "Test me"
+    And I change the title to "Mario Testino's Page"
 
-
+    Then I can see one item of page history containing "Mario Testino's Page" as most recent
 
 
 

@@ -11,7 +11,7 @@ Feature: Wiki page
     When I create a page entitled "Test" with content "Link to new [http://hedtek.com] page"
     Then I can see a hyperlink to a "http://hedtek.com" page
 
-  Scenario: Creation of a url with texy
+  Scenario: Creation of a url with text
     When I create a page entitled "Test" with content "Link to new [http://hedtek.com hedtek home] page"
     Then I can see a hyperlink to a "hedtek home" page
 

@@ -1,5 +1,5 @@
 Last five changes
 %br/
 %br/
-%ul{'no-bullets'.to_sym => true}
+%ul{'no-bullets'.to_sym => true, data: {role: 'page-history'}}
   = render partial: 'page_states/page_state', collection: page.history.reverse[0..4]
