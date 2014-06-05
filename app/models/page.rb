@@ -48,12 +48,13 @@ class Page < ActiveRecord::Base
   #---------------------------------------------------------
 
   def title=(title)
-    self[:title] = title
+
     if history.last.try(:new_record?)
       history.last.title = title
     else
       history.new(title: title)
     end
+    self[:title] = title
   end
 
   #---------------------------------------------------------
@@ -73,6 +74,12 @@ class Page < ActiveRecord::Base
   #---------------------------------------------------------
 
   # only for test purposes
+
+  # Page#change now only used in tests, refactor to not exist
+  def change(editing_user, args)
+    PageState.create(title: args[:title], content: args[:content], user: editing_user, page: self)
+  end
+
   def editor
     self.history.length == 1 ? nil : history.last.user
   end
