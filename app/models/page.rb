@@ -47,6 +47,17 @@ class Page < ActiveRecord::Base
 
   #---------------------------------------------------------
 
+  def title=(title)
+    self[:title] = title
+    if history.last.try(:new_record?)
+      history.last.title = title
+    else
+      history.new(title: title)
+    end
+  end
+
+  #---------------------------------------------------------
+
   def has_category?(c)
     history.last.try(:has_category?, c)
   end
@@ -61,11 +72,7 @@ class Page < ActiveRecord::Base
 
   #---------------------------------------------------------
 
-  # Page#change now only used in tests, refactor to not exist
-  def change(editing_user, args)
-    PageState.create(title: args[:title], content: args[:content], user: editing_user, page: self)
-  end
-
+  # only for test purposes
   def editor
     self.history.length == 1 ? nil : history.last.user
   end
@@ -100,13 +107,6 @@ class Page < ActiveRecord::Base
 
   def to_param
     slug
-  end
-
-  #------------------------------------------------------------------
-
-  def ensure_page_state_id_ok
-    # kludge!
-    self.page_state_id = PageState.last.id + 1 if self.page_state_id == nil
   end
 
 end

@@ -8,7 +8,7 @@ Given(/^I am signed in$/) do
   click_button('sign_up_button')
 
   current_path.should == '/'
-  page.should have_content('Logout')
+  page.should have_content('Sign out')
 end
 
 When(/^I create a page entitled "(.*?)" with content "(.*?)"$/) do |title, content|
