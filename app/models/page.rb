@@ -18,6 +18,7 @@ class Page < ActiveRecord::Base
   history_attr :tags
   history_attr :item_number
   history_attr :location
+  history_attr :title
 
   attr_readonly :slug
 
@@ -45,17 +46,6 @@ class Page < ActiveRecord::Base
     Page.where(moscow: p)
   end
 
-  #---------------------------------------------------------
-
-  def title=(title)
-
-    if history.last.try(:new_record?)
-      history.last.title = title
-    else
-      history.new(title: title)
-    end
-    self[:title] = title
-  end
 
   #---------------------------------------------------------
 
