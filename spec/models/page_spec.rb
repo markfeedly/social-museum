@@ -1,18 +1,13 @@
 require 'spec_helper'
 
 describe Page do
-  def user() @user end
-  def page() @page end
-  def page_state() @page_state end
-  def user2() @user2 end
 
-  before(:each) do
-    @user = FactoryGirl.create(:user)
-    @page = FactoryGirl.create(:page, user: @user, content: 'check me')
-    @page_state = @page.history.last
-    @user2 = FactoryGirl.create(:user)
-    subject {@page}
-  end
+  let(:user){ FactoryGirl.create(:user) }
+  let(:page){ FactoryGirl.create(:page, user: @user, content: 'check me') }
+  let(:page_state){ page.history.last }
+  let(:user2){ FactoryGirl.create(:user) }
+
+  # ----------------------------------------------------
 
   it { page_state.should validate_presence_of(:title) }
   it { page_state.should validate_presence_of(:content) }
