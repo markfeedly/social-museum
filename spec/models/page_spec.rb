@@ -29,8 +29,9 @@ describe Page do
   end
 
   it "assignment should work correctly for title" do
+    page.reload
     page.update(title: 'new title')
-    expect(page.history.count).to eq(2)                           # <<<< fails
+    expect(page.history.count).to eq(2)
     expect(page.title).to eq('new title')
     expect(page[:title]).to eq('new title')
     expect(page.history.last.title).to eq('new title')
@@ -44,8 +45,9 @@ describe Page do
   end
 
   it "assignment should work correctly using history control with title in update" do
+    page.reload
     page.update(user: user, title: 'new title')
-    expect(page.history.count).to eq 2                          # <<<< fails
+    expect(page.history.count).to eq 2
     expect(page.history.last.user).to eq(user)
     expect(page.history.last.title).to eq('new title')
   end
@@ -66,6 +68,10 @@ describe Page do
     page.update(tags: 'tag1, tag2')
     expect(page.tags).to eq('tag1, tag2')
 
+    page.reload
+    page.update(title: 'new title')
+    expect(page.title).to eq('new title')
+
     page.update(user: user2)
     expect(page.user).to eq(user2)
   end
@@ -82,11 +88,10 @@ describe Page do
   end
 
   it 'page should reflect successive changes' do
+    page.reload
     expect{page.update(user: user, title: 'changed title')}.to change{page.title}.to('changed title')
-    p page.lock_version
-                              # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-
-    expect{page.update(user: user, content: 'changed content', lock_version: 0)}.to change{page.content}.to('changed content')
+    expect{page.reload}.to change{page.lock_version}
+    expect{page.update(user: user, content: 'changed content')}.to change{page.content}.to('changed content')
   end
 
   it "each page's history should only contain that page's past" do
