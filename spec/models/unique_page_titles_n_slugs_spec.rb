@@ -10,6 +10,4 @@ describe 'Pages with unique titles' do
     Page.create(title: page.title, user: user, content: 'any' ).id.should == nil
   end
 
-
-
 end
