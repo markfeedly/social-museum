@@ -19,6 +19,9 @@ describe 'Previous Page' do
   it { page_state.should validate_presence_of(:user_id) }
   it { page_state.should belong_to(:user) }
 
+  it { page_state.should validate_presence_of(:title) }
+  it { page_state.should validate_presence_of(:content) }
+
   it "should return the correct title" do
     page_state.title.should == page.original_title
   end

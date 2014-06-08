@@ -9,9 +9,6 @@ describe Page do
 
   # ----------------------------------------------------
 
-  it { page_state.should validate_presence_of(:title) }
-  it { page_state.should validate_presence_of(:content) }
-
   it "page creation results in one page state in page history" do
     page.history.should == [page_state]
   end
