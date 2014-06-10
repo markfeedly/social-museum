@@ -20,6 +20,16 @@ When(/^I create a page entitled "(.*?)" with content "(.*?)"$/) do |title, conte
   click_button('Create Page')
 end
 
+Then(/^I see the navigation menu$/) do
+  within('.nav .nav') do
+      page.should have_content('New Page')
+      page.should have_content('Pages')
+      page.should have_content('New Resource')
+      page.should have_content('Resource')
+      page.should have_content('Profile')
+  end
+end
+
 Then(/^I can see a page entitled "(.*?)" with content "(.*?)"$/) do |title, content|
   current_slug = current_path.sub /.*\//, ''
   current_path.should == pages_path + '/' + current_slug
