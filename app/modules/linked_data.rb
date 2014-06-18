@@ -1,15 +1,8 @@
 module LinkedData
   def ld_page_type
-    [ # ['Collection item', :isa, 'Type'],
-      # ['Person', :isa, 'Type'],
-      # ['Other', :isa, 'Type'],
-      ['Theme', :isa, 'Type'],
-      ['Context', :isa, 'Type'],
-      ['Issue', :isa, 'Type'],
-      ['Competition', :isa, 'Type'],
-      ['Need', :isa, 'Type'],
-      ['Capability', :isa, 'Type'],
-      ['Action', :isa, 'Type']
+    [  ['Collection item', :isa, 'Type'],
+       ['Person', :isa, 'Type'],
+       ['Other', :isa, 'Type']
     ]
   end
 
@@ -18,7 +11,7 @@ module LinkedData
   end
 
   def ld_categories
-    [ ['Ferranti Mark I', :isa, 'Library Technology Consideration'],
+    [ ['Ferranti Mark I', :isa, 'Computer'],
       ['MU5', :isa, 'Computer'],
       ['Atlas', :isa, 'Computer'],
       ['MU6G', :isa, 'Computer'],
@@ -29,9 +22,7 @@ module LinkedData
       ['Memory', :is_part_of, 'Hardware'],
       ['Disc Drive', :is_part_of, 'Hardware'],
       ['CPU', :is_part_of, 'Hardware'],
-      ['Zorg', :isa, 'Atlas'],
-      ['Zorb', :isa, 'Atlas'],
-      ['Zort', :isa, 'MU6G'] ]
+      ['Zorg', :isa, 'Atlas'] ]
   end
 
   def ld_all_included_pages(object, predicate)
