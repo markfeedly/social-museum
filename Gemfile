@@ -29,6 +29,7 @@ gem 'omniauth-twitter'
 gem 'puma'
 gem 'font-awesome-rails'
 gem 'newrelic_rpm'
+gem 'rakismet'
 
 
 group :development, :test do

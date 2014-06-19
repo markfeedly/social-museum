@@ -5,3 +5,4 @@ class Comment < ActiveRecord::Base
   # validates :commenter, presence: true
   #TODO add error feedback if either of the two above are true
 end
+
