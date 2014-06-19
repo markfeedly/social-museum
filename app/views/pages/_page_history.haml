@@ -1,5 +1,10 @@
-Last five changes
+- @page_states = Kaminari.paginate_array(page.history.reverse).page().per(2)
 %br/
-%br/
-%ul{'no-bullets'.to_sym => true, data: {role: 'page-history'}}
-  = render partial: 'page_states/page_state', collection: page.history.reverse[0..4]
+
+= paginate @page_states
+.page-summary-width-plus
+  %hr
+  - @page_states.each do |pg_st|
+    = render partial: 'page_states/page_state', locals: {page_state: pg_st}
+    %hr
+  = paginate @page_states
