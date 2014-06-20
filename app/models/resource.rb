@@ -9,6 +9,9 @@ class Resource < ActiveRecord::Base
 
   belongs_to :user
 
+  tracks_association :pages
+  tracks_association :user
+
   validates :title,   presence: {allow_blank: false }
   validate :source_ok?
 
