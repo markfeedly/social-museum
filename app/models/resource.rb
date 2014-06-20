@@ -1,4 +1,6 @@
 class Resource < ActiveRecord::Base
+  has_secretary
+
   include Authority::Abilities
   self.authorizer_name = 'ResourceAuthorizer'
 
@@ -13,6 +15,8 @@ class Resource < ActiveRecord::Base
   def source
     url || file
   end
+
+  private
 
   def source_ok?
     self.url = nil if url == ''
