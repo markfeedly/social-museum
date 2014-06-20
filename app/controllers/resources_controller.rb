@@ -4,17 +4,6 @@ class ResourcesController < ApplicationController
 
   expose(:resource) { resource_or_nil }
 
-  def resource_or_nil
-    id = params[:id]
-    result = nil
-    if id == id.gsub(/[^0-9]/, '').gsub(/^0/,'')
-      result = begin
-        Resource.find(id) rescue nil
-      end
-    end
-    result
-  end
-
   def new
     self.resource = Resource.new
   end
@@ -80,6 +69,17 @@ class ResourcesController < ApplicationController
   end
 
   private
+
+  def resource_or_nil
+    id = params[:id]
+    result = nil
+    if id == id.gsub(/[^0-9]/, '').gsub(/^0/,'')
+      result = begin
+        Resource.find(id) rescue nil
+      end
+    end
+    result
+  end
 
   def get_titles_from_params
     titles_to_add = params['resource_pages'].collect{ |title, checked| checked=='0' ? nil : title }.delete_if { |v| !v }
