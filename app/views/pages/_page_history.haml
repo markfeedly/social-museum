@@ -1,4 +1,4 @@
-- @page_states = Kaminari.paginate_array(page.history.reverse).page().per(2)
+- @page_states = Kaminari.paginate_array(page.history.reverse).page(params[:page]).per(2)
 %br/
 
 = paginate @page_states
