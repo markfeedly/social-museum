@@ -65,11 +65,11 @@ def sign_in
 end
 
 ### GIVEN ###
-Given /^I am not logged in$/ do
+Given /^I am not signed in$/ do
   visit '/users/sign_out'
 end
 
-Given /^I am logged in$/ do
+Given /^I am signed in$/ do
   create_user
   sign_in
 end
@@ -94,7 +94,7 @@ And(/^I sign up$/) do
   sign_up
 end
 
-And(/^confirm my email identity$/) do
+And(/^I confirm my email identity$/) do
   confirm_via_emailed_link
 end
 
@@ -194,7 +194,7 @@ Then /^I see a successful sign in message$/ do
 end
 
 Then /^I should see a successful sign up message$/ do
-  page.should have_content "Logout"
+  page.should have_content "Sign out"
 end
 
 Then /^I should see an invalid email message$/ do
@@ -217,7 +217,7 @@ Then /^I should see a signed out message$/ do
   page.should have_content "Signed out successfully."
 end
 
-Then /^I see an invalid login message$/ do
+Then /^I see an invalid sign in message$/ do
   page.should have_content "Invalid email or password."
 end
 
