@@ -3,14 +3,14 @@ Feature: Sign in
   A user
   Should be able to sign in
 
-  Scenario: User is not signed up
+  Scenario: Sign up successfully
     Given I do not exist as a user
-    When I sign in with valid credentials
-    Then I see an invalid login message
-    And I should be signed out
+    And I sign up
+    And confirm my email identity
+    Then I should have signed up successfully
+
 
   Scenario: User signs in successfully
-    Pending #TODO fix this text
     Given I exist as a user
     And I am not logged in
     When I sign in with valid credentials
@@ -33,3 +33,8 @@ Feature: Sign in
     Then I see an invalid login message
     And I should be signed out
 
+  Scenario: User is not signed up
+    Given I do not exist as a user
+    When I try to sign in with invalid credentials
+    Then I see an invalid login message
+    And I should be signed out
