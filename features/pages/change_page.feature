@@ -1,7 +1,7 @@
 Feature: Wiki page
 
   Background:
-    Given I am signed in
+    Given I have signed in with valid credentials
 
   Scenario: Edit page body
 
