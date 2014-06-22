@@ -1,7 +1,7 @@
 Feature: Wiki page
 
   Background:
-    Given I am signed in
+    Given I have signed in
 
   Scenario: See the header
     When I create a page entitled "Test" with content "My content"
