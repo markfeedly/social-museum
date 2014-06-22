@@ -69,8 +69,9 @@ Given /^I am not signed in$/ do
   visit '/users/sign_out'
 end
 
-Given /^I am signed in$/ do
+Given /^I have signed in with valid credentials$/ do
   create_user
+  visit '/users/sign_out'    #TODO Email not found in the next line if I omit this, why?
   sign_in
 end
 
@@ -83,9 +84,9 @@ Given /^I do not exist as a user$/ do
   delete_user
 end
 
-Given /^I exist as an unconfirmed user$/ do
-  create_unconfirmed_user
-end
+# Given /^I exist as an unconfirmed user$/ do
+#   create_unconfirmed_user
+# end
 
 ### AND ###
 
