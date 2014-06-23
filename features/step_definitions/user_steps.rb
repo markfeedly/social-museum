@@ -4,11 +4,6 @@ Before do
   @user = nil
 end
 
-After do
-  @user_sign_in_data = nil
-  @user = nil
-end
-
 def create_user_sign_in_data
   @user_sign_in_data ||= {:name => "Testy McUserton", :email => "example@example.com",
                 :password => "changeme", :password_confirmation => "changeme"}
@@ -18,12 +13,6 @@ end
 #   @user ||= User.where(email: @user_sign_in_data[:email]).first
 # end
 
-def create_unconfirmed_user
-  create_user_sign_in_data
-  delete_user
-  sign_up
-  visit '/users/sign_out'
-end
 
 def create_user
   create_user_sign_in_data
@@ -50,10 +39,6 @@ end
 def confirm_via_emailed_link
   unread_emails_for(@user_sign_in_data[:email]).size.should == 1
   open_last_email
-  follow_first_link
-end
-
-def follow_first_link
   click_email_link_matching /confirm/
 end
 
