@@ -4,18 +4,13 @@ Before do
   @user = nil
 end
 
-def create_user_sign_in_data
-  @user_sign_in_data ||= {:name => "Testy McUserton", :email => "example@example.com",
-                :password => "changeme", :password_confirmation => "changeme"}
+def create_user_sign_in_data(user_name="Testy McUserton")
+  @user_sign_in_data ||= {:name => user_name, :email => "#{user_name.downcase.gsub(/ /,'.')}@example.com",
+                          :password => "changeme", :password_confirmation => "changeme"}
 end
 
-# def find_user
-#   @user ||= User.where(email: @user_sign_in_data[:email]).first
-# end
-
-
-def create_user
-  create_user_sign_in_data
+def create_user(user_name="Testy McUserton")
+  create_user_sign_in_data(user_name)
   sign_up
   confirm_via_emailed_link
 end
@@ -37,6 +32,8 @@ def sign_up
 end
 
 def confirm_via_emailed_link
+  p User.all
+  p @user_sign_in_data[:email]
   unread_emails_for(@user_sign_in_data[:email]).size.should == 1
   open_last_email
   click_email_link_matching /confirm/
