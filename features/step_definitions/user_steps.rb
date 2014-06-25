@@ -12,6 +12,10 @@ def merge_into_user_data(merge_data, user_name="Testy McUserton")
   @user_data[user_name] = @user_data[user_name].merge(merge_data)
 end
 
+def user_email(user_name="Testy McUserton") #TODO cld refactor to use this and similar methods in this file
+  @user_data[user_name][:email]
+end
+
 def create_user(user_name="Testy McUserton")
   create_user_data(user_name)
   sign_up(user_name)
