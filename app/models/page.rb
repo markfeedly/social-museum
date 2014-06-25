@@ -11,6 +11,8 @@ class Page < ActiveRecord::Base
   has_many :resource_usages
   has_many :resources, through: :resource_usages
 
+  has_and_belongs_to_many :subscribers, :class_name => "User", :join_table => "page_subscribers"
+
   extend HistoryControl
   history_attr :content
   history_attr :user
@@ -23,12 +25,21 @@ class Page < ActiveRecord::Base
   attr_readonly :slug
 
   before_validation :set_slug, on: :create
+  after_create :subscribe_creator
 
   validates :title, presence: true, uniqueness: true
   validates :content, presence: true
   validates :slug, uniqueness: true
 
   #---------------------------------------------------------
+
+  def subscribe_creator
+    self.subscribers << user
+  end
+
+  def subscribe_user(u)
+    self.subscribers << u
+  end
 
   def self.find_with_category(cat)
     Page.order(:title).select{ |p| p.has_category?( cat ) ? p : nil}

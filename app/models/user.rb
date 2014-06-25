@@ -29,4 +29,8 @@ class User < ActiveRecord::Base
     end
   end
 
+  def name_or_email
+    name == nil or name == '' ? email : name
+  end
+
 end
