@@ -10,7 +10,7 @@ class Comment < ActiveRecord::Base
   private
 
   def subscribe_creator
-    page.subscribe_user(user)
+    page.subscribe(user)
   end
 
 end
