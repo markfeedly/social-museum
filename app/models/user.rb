@@ -29,8 +29,8 @@ class User < ActiveRecord::Base
     end
   end
 
-  def name_or_email
-    name == nil or name == '' ? email : name
+  def name_or_anonymous_user
+    name == nil or name == '' ? 'An anonymous user' : name
   end
 
 end

@@ -13,15 +13,15 @@ describe 'Subscription' do
 
   it "should subscribe comment creator" do
     page.comments.create(user: user1,
-                          commenter: user1.name_or_email,
+                          commenter: user1.name_or_anonymous_user,
                           content: 'meh'  )
     page.subscribers.count.should == 2
-    p page.subscribers.last.should == user1
+    page.subscribers.last.should == user1
   end
 
   it "should not subcribe if already subscribed" do
     page.comments.create(user: user,
-                         commenter: user.name_or_email,
+                         commenter: user.name_or_anonymous_user,
                          content: 'meh'  )
     page.subscribers.count.should == 1
     page.subscribers.last.should == user
@@ -29,7 +29,7 @@ describe 'Subscription' do
 
   it "should unsubscribe" do
     page.comments.create(user: user1,
-                         commenter: user.name_or_email,
+                         commenter: user.name_or_anonymous_user,
                          content: 'meh'  )
     page.unsubscribe(user1)
     page.subscribers.count.should == 1

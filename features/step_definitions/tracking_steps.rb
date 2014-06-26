@@ -11,12 +11,14 @@ When(/^"(.*?)" creates a comment "(.*?)" on page entitled "(.*?)"$/) do |user_na
   click_on 'Add a comment'
   fill_in 'comment[content]', with: comment
   click_on 'Add comment'
-  page.should have_content(comment)
+  within( '#comments') do
+    page.should have_content(comment)
+  end
 end
 
 Then(/^I am emailed about a comment "(.*?)" on page entitled "(.*?)"$/) do |comment, page_title|
   unread_emails_for(user_email).size.should == 1
   open_last_email
   # ...
-  click_email_link_matching /See page and comment/
+  #click_email_link_matching /See page and comment/
 end
