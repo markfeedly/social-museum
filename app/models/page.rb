@@ -37,9 +37,16 @@ class Page < ActiveRecord::Base
     self.subscribers << user
   end
 
-  def subscribe_user(u)
-    self.subscribers << u
+  def subscribe(usr)
+    self.subscribers << usr unless subscribers.exists?(usr)
   end
+
+  def unsubscribe(usr)
+    subscribers.exists?(usr)
+    self.subscribers -= [usr]
+  end
+
+  #---------------------------------------------------------
 
   def self.find_with_category(cat)
     Page.order(:title).select{ |p| p.has_category?( cat ) ? p : nil}
@@ -56,7 +63,6 @@ class Page < ActiveRecord::Base
   def self.find_by_prioritisation(p)
     Page.where(moscow: p)
   end
-
 
   #---------------------------------------------------------
 
