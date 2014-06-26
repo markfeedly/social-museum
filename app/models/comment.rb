@@ -5,7 +5,16 @@ class Comment < ActiveRecord::Base
   # validates :commenter, presence: true
   #TODO add error feedback if either of the two above are true
 
-  after_create :subscribe_creator
+  after_create :notify_subscribers
+
+  private
+
+  def notify_subscribers
+    subscribe_creator
+    (page.subscribers -= [user]).each do |usr|
+      Notifier.comment_updated(self, usr).deliver
+    end
+  end
 
   private
 

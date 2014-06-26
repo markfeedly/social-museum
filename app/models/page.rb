@@ -38,7 +38,7 @@ class Page < ActiveRecord::Base
   end
 
   def subscribe(usr)
-    self.subscribers << usr unless subscribers.exists?(usr)
+    subscribers << usr unless subscribers.exists?(usr)
   end
 
   def unsubscribe(usr)
