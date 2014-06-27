@@ -20,5 +20,5 @@ Then(/^I am emailed about a comment "(.*?)" on page entitled "(.*?)"$/) do |comm
   unread_emails_for(user_email).size.should == 1
   open_last_email
   # ...
-  #click_email_link_matching /See page and comment/
+  click_email_link_matching /See page and comment/
 end
