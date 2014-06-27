@@ -3,5 +3,5 @@ Hello!
 <%= @comment.page.title %>
 
 <%= @comment.content %>
-You can view this ticket on line by going to:
-<%=  %>
+You can view this page by going to:
+<%=  link_to "#{@page.title}", @page %>

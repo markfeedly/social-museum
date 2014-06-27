@@ -6,15 +6,15 @@ Feature: Tracking
   Background:
     Given I exist as a user
     When I sign in with valid credentials
-    And I create a page entitled "Test" with content "My content"
+    And I create a page entitled "Test me" with content "My content"
     And I sign out
     Given "Jane Doe" exists as a user
     Given "Jane Doe" is signed in
     Given a clear email queue
 
   Scenario: Page creator is notified when a comment is created
-    When "Jane Doe" creates a comment "Meh" on page entitled "Test"
-    Then I am emailed about a comment "Meh" on page entitled "Test"
+    When "Jane Doe" creates a comment "Meh" on page entitled "Test me"
+    Then I am emailed about a comment "Meh" on page entitled "Test me"
 
   @wip
   Scenario: Commenter is automatically subscribed to a page
