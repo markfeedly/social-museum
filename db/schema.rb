@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140625224115) do
+ActiveRecord::Schema.define(version: 20140628152759) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,11 +42,6 @@ ActiveRecord::Schema.define(version: 20140625224115) do
   end
 
   add_index "page_states", ["page_id"], name: "index_page_states_on_page_id", using: :btree
-
-  create_table "page_subscribers", id: false, force: true do |t|
-    t.integer "page_id"
-    t.integer "user_id"
-  end
 
   create_table "pages", force: true do |t|
     t.datetime "created_at"
@@ -82,6 +77,14 @@ ActiveRecord::Schema.define(version: 20140625224115) do
     t.integer  "user_id"
     t.integer  "lock_version"
   end
+
+  create_table "subscriptions", force: true do |t|
+    t.integer "page_id"
+    t.integer "user_id"
+  end
+
+  add_index "subscriptions", ["page_id"], name: "index_subscriptions_on_page_id", using: :btree
+  add_index "subscriptions", ["user_id"], name: "index_subscriptions_on_user_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "",    null: false

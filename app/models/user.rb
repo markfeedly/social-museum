@@ -11,6 +11,9 @@ class User < ActiveRecord::Base
   has_many :comments
   has_many :resources
 
+  has_many :subscriptions
+  has_many :pages, through: :subscriptions
+
   # -----------------------------------------------------------
 
   def self.process_omniauth(auth)

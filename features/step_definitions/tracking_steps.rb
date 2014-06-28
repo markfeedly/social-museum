@@ -6,6 +6,10 @@ Given(/^"(.*?)" is signed in$/) do |user_name|
   sign_in(user_name)
 end
 
+And(/^"(.*?)" is signed out$/) do |arg1|
+  sign_out
+end
+
 When(/^"(.*?)" creates a comment "(.*?)" on page entitled "(.*?)"$/) do |user_name, comment, page_title|
   visit "/pages/#{Page.find_by_title(page_title).slug}"
   click_on 'Add a comment'
@@ -20,5 +24,21 @@ Then(/^I am emailed about a comment "(.*?)" on page entitled "(.*?)"$/) do |comm
   unread_emails_for(user_email).size.should == 1
   open_last_email
   # ...
-  click_email_link_matching /See page and comment/
+  click_email_link_matching "#{page_title}"
+end
+
+Then(/^"(.*?)" is emailed about a comment "(.*?)" on page entitled "(.*?)"$/) do |user_name, comment, page_title|
+  unread_emails_for(user_email(user_name)).size.should == 1
+  open_last_email
+  # ...
+  click_email_link_matching "#{page_title}"end
+
+When(/^"(.*?)" signs in and adds a comment "(.*?)" to the page entitled "(.*?)"$/) do |user_name, comment, page_title|
+  sign_out
+  create_user(user_name)
+  sign_in
+  visit "/pages/#{Page.find_by_title(page_title).slug}"
+  click_on 'Add a comment'
+  fill_in 'comment[content]', with: comment
+  click_on 'Add comment'
 end

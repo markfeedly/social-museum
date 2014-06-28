@@ -3,7 +3,7 @@
 FactoryGirl.define do
   factory :comment do
     commenter "MyString"
-    body "MyText"
+    content "MyText"
     page nil
     user nil
   end
