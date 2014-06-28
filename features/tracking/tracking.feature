@@ -8,21 +8,23 @@ Feature: Tracking
     When I sign in with valid credentials
     And I create a page entitled "Test me" with content "My content"
     And I sign out
-    Given "Jane Doe" exists as a user
-    Given "Jane Doe" is signed in
-    Given a clear email queue
 
   Scenario: Page creator is notified when a comment is created
-    When "Jane Doe" creates a comment "Meh" on page entitled "Test me"
+    Given "Jane Doe" signs in and adds a comment "Meh" to the page entitled "Test me"
     Then I am emailed about a comment "Meh" on page entitled "Test me"
 
-  @wip
-  Scenario: Commenter is automatically subscribed to a page
-    When "Jane Doe" creates a comment "Meh" on page entitled "Test"
-    When "Bob Hoskins" creates a comment "Mona Lisa" on page entitled "Test"
-    Then "Jane Doe" should receive an email
-    When "Jane Doe" opens the email
-    Then "Jane Doe" should see "New comment on Test" in the email subject
-    And "Jane Doe" should see "Mona Lisa" in the email body
-    When "Jane Doe" clicks the see page link in the email
-    Then "Jane Doe" should see a page entitled "Test" with content "My content" and a comment "Mona Lisa"
+  Scenario: Email has correct content
+    When "Jane Doe" creates a comment "Meh" on page entitled "Test me"
+    Then I should see the system name in the email subject
+    And  I should see "New comment on page Test me" in the email subject
+    And  I should see "Jane Doe" as the commenter in the email body
+    And  I should see "Test me" as the title in the email body
+    And  I should see "Meh" as the comment in the email body
+
+  Scenario: Commenter is automatically subscribed to a page and notified after comment creations
+    Given "Jane Doe" signs in and adds a comment "Meh" to the page entitled "Test me"
+    When "Bob Hoskins" signs in and adds a comment "Mona Lisa" to the page entitled "Test me"
+    Then "Jane Doe" is emailed about a comment "Meh" on page entitled "Test me"
+    Then I am emailed about a comment "Meh" on page entitled "Test me"
+    Then I am emailed about a comment "Mona Lisa" on page entitled "Test me"
+    Then "Jane Doe" emailed about a comment "Mona Lisa" on page entitled "Test me"

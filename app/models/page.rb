@@ -6,12 +6,13 @@ class Page < ActiveRecord::Base
 
   include LinkedData
 
-  has_many :history, class_name: "PageState", dependent: :delete_all, autosave: true
+  has_many :history, class_name: 'PageState', dependent: :delete_all, autosave: true
   has_many :comments, dependent: :delete_all
   has_many :resource_usages
   has_many :resources, through: :resource_usages
 
-  has_and_belongs_to_many :subscribers, :class_name => "User", :join_table => "page_subscribers"
+  has_many :subscriptions
+  has_many :users, through: :subscriptions
 
   extend HistoryControl
   history_attr :content
@@ -34,16 +35,16 @@ class Page < ActiveRecord::Base
   #---------------------------------------------------------
 
   def subscribe_creator
-    self.subscribers << user
+    subscribe(user)
   end
 
   def subscribe(usr)
-    subscribers << usr unless subscribers.exists?(usr)
+    self.users << usr unless self.users.exists?(usr)
   end
 
   def unsubscribe(usr)
-    subscribers.exists?(usr)
-    self.subscribers -= [usr]
+    users.exists?(usr)
+    self.users -= [usr]
   end
 
   #---------------------------------------------------------

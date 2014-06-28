@@ -44,7 +44,7 @@ def confirm_via_emailed_link(user_name="Testy McUserton")
 end
 
 def sign_in(user_name="Testy McUserton")
-  visit '/users/sign_out'
+  sign_out
   visit '/users/sign_in'
   page.should have_content 'Sign in'
   fill_in "Email", :with => @user_data[user_name][:email]
@@ -52,9 +52,12 @@ def sign_in(user_name="Testy McUserton")
   click_button "Sign in"
 end
 
-### GIVEN ###
-Given /^I am not signed in$/ do
+def sign_out
   visit '/users/sign_out'
+end
+
+Given /^I am not signed in$/ do
+  sign_out
 end
 
 Given /^I have signed in with valid credentials$/ do
@@ -83,13 +86,13 @@ When /^I look at the list of users$/ do
 end
 
 When /^I sign in with valid credentials$/ do
-  visit '/users/sign_out'
+  sign_out
   create_user_data
   sign_in
 end
 
 When /^I sign out$/ do
-  visit '/users/sign_out'
+  sign_out
 end
 
 And(/^I sign up$/) do
@@ -166,7 +169,7 @@ Then /^I see an unconfirmed account message$/ do
 end
 
 Then /^I should see an invalid email message$/ do
-  page.should have_content "Emailis invalid"
+  page.should have_content "is invalid"
 end
 
 Then /^I should see a mismatched password message$/ do
