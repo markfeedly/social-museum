@@ -7,24 +7,24 @@ describe 'Subscription' do
   let(:page){ FactoryGirl.create(:page, title: 'first title', user: user, content: 'any' ) }
 
   it "should subscribe page creator" do
-    page.users.count.should == 1
-    page.users.last.should == user
+    page.subscribers.count.should == 1
+    page.subscribers.last.should == user
   end
 
   it "should add a subscriber" do
     page.subscribe(user1)
-    page.users.count.should == 2
-    page.users.first.should == user
-    page.users.last.should == user1
+    page.subscribers.count.should == 2
+    page.subscribers.first.should == user
+    page.subscribers.last.should == user1
   end
 
   it "should add a subscriber once only" do
     page.subscribe(user)
     page.subscribe(user1)
     page.subscribe(user1)
-    page.users.count.should == 2
-    page.users.first.should == user
-    page.users.last.should == user1
+    page.subscribers.count.should == 2
+    page.subscribers.first.should == user
+    page.subscribers.last.should == user1
     user.pages.should == [page]
   end
 
@@ -32,7 +32,7 @@ describe 'Subscription' do
     user.pages.should == [page]
     user1.pages.should == []
     page.subscribe(user1)
-    page.users.should == [user, user1]
+    page.subscribers.should == [user, user1]
     user.pages.should == [page]
     user1.reload
     user1.pages.should == [page]
@@ -55,38 +55,38 @@ describe 'Subscription' do
     page.comments.create(user: user1,
                          commenter: user.name_or_anonymous_user,
                          content: 'meh'  )
-    page.users.count.should == 2
-    page.users.last.should == user1
+    page.subscribers.count.should == 2
+    page.subscribers.last.should == user1
   end
 
   it "should not re-subcribe a comment creator if already subscribed" do
     page.comments.create(user: user,
                          commenter: user.name_or_anonymous_user,
                          content: 'meh'  )
-    page.users.count.should == 1
-    page.users.last.should == user
+    page.subscribers.count.should == 1
+    page.subscribers.last.should == user
   end
 
   it "should not re-subcribe comment creators if already subscribed" do
     page.comments.create(user: user,
                          commenter: user.name_or_anonymous_user,
                          content: 'meh'  )
-    page.users.count.should == 1
-    page.users.last.should == user
+    page.subscribers.count.should == 1
+    page.subscribers.last.should == user
 
     page.comments.create(user: user1,
                          commenter: user.name_or_anonymous_user,
                          content: 'meh 2'  )
-    page.users.count.should == 2
-    page.users.first.should == user
-    page.users.last.should == user1
+    page.subscribers.count.should == 2
+    page.subscribers.first.should == user
+    page.subscribers.last.should == user1
 
     page.comments.create(user: user1,
                          commenter: user.name_or_anonymous_user,
                          content: 'meh 3'  )
-    page.users.count.should == 2
-    page.users.first.should == user
-    page.users.last.should == user1
+    page.subscribers.count.should == 2
+    page.subscribers.first.should == user
+    page.subscribers.last.should == user1
   end
 
   it "should unsubscribe" do
@@ -94,8 +94,8 @@ describe 'Subscription' do
                          commenter: user.name_or_anonymous_user,
                          content: 'meh'  )
     page.unsubscribe(user1)
-    page.users.count.should == 1
-    page.users.last.should == user
+    page.subscribers.count.should == 1
+    page.subscribers.last.should == user
   end
 
 end
