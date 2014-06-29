@@ -6,6 +6,6 @@ class Notifier < ActionMailer::Base
     @page = comment.page
     @user = user
     mail(:to => user.email,
-         :subject => "[UMCS] Comment on #{comment.page.title} at #{comment.created_at}")
+         :subject => "[UMCS] New comment on page #{comment.page.title} at #{comment.created_at}")
   end
 end
