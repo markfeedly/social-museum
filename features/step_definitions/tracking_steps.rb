@@ -20,6 +20,10 @@ When(/^"(.*?)" creates a comment "(.*?)" on page entitled "(.*?)"$/) do |user_na
   end
 end
 
+Then(/^I am on the subscriber list for "(.*?)"$/) do |page_title|
+  Page.find_by_title(page_title).users.include? user
+end
+
 Then(/^I am emailed about a comment "(.*?)" on page entitled "(.*?)"$/) do |comment, page_title|
   unread_emails_for(user_email).size.should == 1
   open_last_email

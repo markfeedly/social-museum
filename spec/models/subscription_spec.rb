@@ -34,34 +34,32 @@ describe 'Subscription' do
     page.subscribe(user1)
     page.users.should == [user, user1]
     user.pages.should == [page]
+    user1.reload
     user1.pages.should == [page]
   end
 
-  it "should deal wiht multiple subscribed pages for users" do
+  it "should allow a user to subscribe to multiple pages" do
     page1 = FactoryGirl.create(:page, title: 'second title', user: user, content: 'anyway' )
     user.pages.should == [page1, page]
 
     page2 = FactoryGirl.create(:page, title: 'fourth title', user: user, content: 'racy' )
-    user.pages.count.should == 3
-    p user.pages
+    user.reload
+
     user.pages.count.should == 3
     user.pages.include?(page).should == true
     user.pages.include?(page1).should == true
-    page2.users.should == [user]
     user.pages.include?(page2).should == true
   end
 
-
-
-  it "should subscribe comment creator" do
-    FactoryGirl.create(:comment, user: user1, page: page,
-                          commenter: user1.name_or_anonymous_user,
-                          content: 'meh'  )
+  it "should subscribe a comment creator" do
+    page.comments.create(user: user1,
+                         commenter: user.name_or_anonymous_user,
+                         content: 'meh'  )
     page.users.count.should == 2
     page.users.last.should == user1
   end
 
-  it "should not subcribe if already subscribed" do
+  it "should not re-subcribe a comment creator if already subscribed" do
     page.comments.create(user: user,
                          commenter: user.name_or_anonymous_user,
                          content: 'meh'  )
@@ -69,7 +67,7 @@ describe 'Subscription' do
     page.users.last.should == user
   end
 
-  it "should not subcribe if already subscribed repeat tests" do
+  it "should not re-subcribe comment creators if already subscribed" do
     page.comments.create(user: user,
                          commenter: user.name_or_anonymous_user,
                          content: 'meh'  )
@@ -90,8 +88,6 @@ describe 'Subscription' do
     page.users.first.should == user
     page.users.last.should == user1
   end
-
-
 
   it "should unsubscribe" do
     page.comments.create(user: user1,
