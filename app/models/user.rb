@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
   has_many :resources
 
   has_many :subscriptions
-  has_many :pages, through: :subscriptions
+  has_many :subscribed_pages, through: :subscriptions, source: :page
 
   # -----------------------------------------------------------
 
