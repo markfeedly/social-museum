@@ -10,6 +10,7 @@ Feature: Tracking
     And I sign out
 
   Scenario: Page creator is notified when a comment is created
+    Then I am on the subscriber list for "Test me"
     Given "Jane Doe" signs in and adds a comment "Meh" to the page entitled "Test me"
     Then I am emailed about a comment "Meh" on page entitled "Test me"
 
