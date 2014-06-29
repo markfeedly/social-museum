@@ -14,7 +14,7 @@ class Comment < ActiveRecord::Base
   end
 
   def notify_subscribers
-    (page.users - [user]).each do |usr|
+    (page.subscribers - [user]).each do |usr|
       Notifier.comment_updated(self, usr).deliver
     end
   end

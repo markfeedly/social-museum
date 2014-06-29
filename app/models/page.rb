@@ -12,7 +12,7 @@ class Page < ActiveRecord::Base
   has_many :resources, through: :resource_usages
 
   has_many :subscriptions
-  has_many :users, through: :subscriptions
+  has_many :subscribers, through: :subscriptions, source: :user
 
   extend HistoryControl
   history_attr :content
@@ -39,12 +39,12 @@ class Page < ActiveRecord::Base
   end
 
   def subscribe(usr)
-    self.users << usr unless self.users.exists?(usr)
+    self.subscribers << usr unless self.subscribers.exists?(usr)
   end
 
   def unsubscribe(usr)
-    users.exists?(usr)
-    self.users -= [usr]
+    subscribers.exists?(usr)
+    self.subscribers -= [usr]
   end
 
   #---------------------------------------------------------
