@@ -13,6 +13,5 @@ class CommentsController < ApplicationController
 
   def page_params
     params.require(:comment).permit(:commenter, :content, :user, :page)
-    params.require(:page).permit(:commenters)
   end
 end
