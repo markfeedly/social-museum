@@ -13,6 +13,8 @@ VirtualMuseum::Application.routes.draw do
 
   resources :pages do
     resources :comments
+    resources :subscribe, only: [:index]
+    resources :unsubscribe, only: [:index]
   end
 
 
