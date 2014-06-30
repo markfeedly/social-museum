@@ -55,3 +55,13 @@ When(/^"(.*?)" signs in and adds a comment "(.*?)" to the page entitled "(.*?)"$
   fill_in 'comment[content]', with: comment
   click_on 'Add comment'
 end
+
+Given(/^I unsubscribe from page entitled "(.*?)" via the emailed unsubscribe link$/) do |page_title|
+  click_email_link_matching 'Unsubscribe'
+end
+
+Given(/^I unsubscribe from page entitled "(.*?)" via the page button$/) do |page_title|
+  visit page_path Page.find_by_title(page_title)
+  body.should match page_title
+  click_on 'Unsubscribe'
+end

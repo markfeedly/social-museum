@@ -42,3 +42,11 @@ Feature: Tracking
     Then "Jane Doe" is emailed about a comment "Horses" on page entitled "Test me"
     Then "Bob Hoskins" is emailed about a comment "Horses" on page entitled "Test me"
     And no one else is emailed
+
+  Scenario: Page creator is notified when a comment is created
+    Given "Jane Doe" signs in and adds a comment "Meh" to the page entitled "Test me"
+    Then I am emailed about a comment "Meh" on page entitled "Test me"
+    Given I unsubscribe from page entitled "Test me" via the emailed unsubscribe link
+    Given "Jane Doe" signs in and adds a comment "Hem" to the page entitled "Test me"
+    And no one else is emailed
+
