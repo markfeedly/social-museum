@@ -19,8 +19,12 @@
     .content-edit-button.float-right
       - if current_user
         = link_to("Edit page", "/pages/#{params[:id]}/edit", class: "btn btn-primary")
-        = # %br
+        %br
+        %br
         = # link_to("Add resource", "/resources/new", class: "btn btn-primary")
+        - if (current_user)
+          = link_to( 'Subscribe', page_subscribe_index_path(page), class: 'btn btn-primary') if page.subscribed?(current_user) == false
+          = link_to( 'Unubscribe', page_unsubscribe_index_path(page), class: 'btn btn-primary') if page.subscribed?(current_user) == true
   .clear
 
   - if page.has_category? ('UMCS Collection')
