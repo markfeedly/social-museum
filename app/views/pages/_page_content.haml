@@ -18,13 +18,14 @@
       = page.categories_as_html.html_safe
     .content-edit-button.float-right
       - if current_user
-        = link_to("Edit page", "/pages/#{params[:id]}/edit", class: "btn btn-primary")
+        .float-right
+          = link_to("Edit page", "/pages/#{params[:id]}/edit", class: "btn btn-primary")
         %br
         %br
         = # link_to("Add resource", "/resources/new", class: "btn btn-primary")
         - if (current_user)
-          = link_to( 'Subscribe', page_subscribe_index_path(page), class: 'btn btn-primary') if page.subscribed?(current_user) == false
-          = link_to( 'Unubscribe', page_unsubscribe_index_path(page), class: 'btn btn-primary') if page.subscribed?(current_user) == true
+          = link_to( 'Subscribe',  "/pages/#{page.slug}/subscribe",   class: 'btn btn-primary') if page.subscribed?(current_user) == false
+          = link_to( 'Unubscribe', "/pages/#{page.slug}/unsubscribe", class: 'btn btn-primary') if page.subscribed?(current_user) == true
   .clear
 
   - if page.has_category? ('UMCS Collection')

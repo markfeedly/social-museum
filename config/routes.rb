@@ -13,9 +13,12 @@ VirtualMuseum::Application.routes.draw do
 
   resources :pages do
     resources :comments
-    resources :subscribe, only: [:index]
-    resources :unsubscribe, only: [:index]
   end
+
+  get 'pages/:id/subscribe'   => 'pages#subscribe'
+  get 'pages/:id/unsubscribe' => 'pages#unsubscribe'
+  get 'pages/:id/unsubscribe-via-email'=> 'pages#unsubscribe_via_email'
 
 
 end
+

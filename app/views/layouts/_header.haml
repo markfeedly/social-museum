@@ -16,8 +16,9 @@
               %li= link_to 'Profile', edit_user_registration_path
               %li
                 - if current_user.admin?
-                  .red.absolute.admin-position
-                    Admin
+                  .red.absolute.admin-position #{current_user.email}
+                - else
+                  .absolute.admin-position #{current_user.email}
               %li= link_to 'Sign out', destroy_user_session_path,  :method => :delete
             - else
               %li= link_to 'Sign up', new_user_registration_path
