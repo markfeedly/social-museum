@@ -1,7 +1,7 @@
 class PagesController < ApplicationController
   expose(:page) { Page.find_by_slug(params[:id]).decorate  }
 
-  before_action :authenticate_user!, :except => [:index, :show]
+  before_action :authenticate_user!, :except => [:index, :show, :unsubscribe_via_email]
                 # :destroy requires admin, see method body
 
   def new
@@ -49,6 +49,25 @@ class PagesController < ApplicationController
     authorize_action_for page
     page.destroy
     redirect_to :back
+  end
+
+  def subscribe
+    page.subscribe(current_user)
+    render :show
+  end
+
+  def unsubscribe
+    page.unsubscribe(current_user)
+    render :show
+  end
+
+  def unsubscribe_via_email # /pages/:id/unsubscribe-via-email
+    if current_user
+      render :confirm_unsubcribe
+    else
+      store_location
+      render 'devise/sessions/new'
+    end
   end
 
   def page_params
