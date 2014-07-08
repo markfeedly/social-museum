@@ -26,6 +26,7 @@ GEM
       thread_safe (~> 0.1)
       tzinfo (~> 0.3.37)
     addressable (2.3.5)
+    akismetor (1.0.0)
     arel (4.0.2)
     authority (2.10.0)
       activesupport (>= 3.0.0)
@@ -246,6 +247,7 @@ PLATFORMS
 
 DEPENDENCIES
   activesupport
+  akismetor
   authority
   better_errors
   binding_of_caller
