@@ -1,7 +1,7 @@
 Feature: Wiki page
 
   Background:
-    Given I am signed in
+    Given I have signed in with valid credentials
 
   Scenario: Creation of a page link
     When I create a page entitled "Test" with content "Link to new [Test me] page"
@@ -20,8 +20,8 @@ Feature: Wiki page
     Then I can see a rendition of an image
 
   Scenario: Creation of a video content
-    When I create a page entitled "Test" with content "Link to new [http://youtube.com/vids] page"
-    Then I can see a You Tube video
+    When I create a page entitled "Test" with content "Link to new [https://www.youtube.com/watch?v=GNTvWxl3Isw] page"
+    Then I can see the Youtube video "GNTvWxl3Isw"
 
   Scenario: Creation of a video content
     When I create a page entitled "Test" with content "Link to new [http://youtube.com/vids] page"
