@@ -14,15 +14,15 @@ When(/^I change the title to "(.*?)"$/) do |new_title|
 
 Then(/^I can see one item of page history containing "(.*?)" as most recent$/) do |arg1|
   within('#history-tab') do
-    #within('li[1]') do
+    within('li[data-history-idx="0"]') do
       page.should have_content(arg1)
-    #end
+    end
   end
 end
 
 Then(/^I can see one item of page history containing "(.*?)" as second most recent$/) do |arg1|
   within('#history-tab') do
-    within('li[2]') do
+    within('li[data-history-idx="1"]') do
       page.should have_content(arg1)
     end
   end
@@ -30,8 +30,8 @@ end
 
 Then(/^I can see one item of page history containing "(.*?)" as third most recent$/) do |arg1|
   within('#history-tab') do
-    within('li[3]') do
-      page.should have_content(arg1)
-    end
+      within('li[data-history-idx="2"]') do
+        page.should have_content(arg1)
+      end
   end
 end

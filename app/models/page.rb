@@ -64,6 +64,7 @@ class Page < ActiveRecord::Base
     Page.where(title: t).first
   end
 
+
   def self.find_by_prioritisation(p)
     Page.where(moscow: p)
   end

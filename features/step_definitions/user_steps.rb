@@ -38,6 +38,8 @@ def delete_user(user_name="Testy McUserton")
 end
 
 def sign_up(user_name="Testy McUserton")
+  delete_user(user_name)
+  create_user_data(user_name)
   visit '/users/sign_up'
   fill_in "Name", :with => @user_data[user_name][:name]
   fill_in "Email", :with => @user_data[user_name][:email]
