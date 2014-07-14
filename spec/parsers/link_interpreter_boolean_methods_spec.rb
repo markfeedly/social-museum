@@ -1,5 +1,4 @@
 require 'spec_helper'
-require './lib/parsing/link_interpreter'
 
 describe LinkInterpreter do
 
@@ -17,45 +16,39 @@ describe LinkInterpreter do
     li = LinkInterpreter.new('http://hedtek.com')
     li.url?.should be_true
     li.page_title?.should be_false
+
+    li = LinkInterpreter.new('https://hedtek.com')
+    li.url?.should be_true
+    li.page_title?.should be_false
+
     li = LinkInterpreter.new('http://www.hedtek.com')
     li.url?.should be_true
     li.page_title?.should be_false
+
     li = LinkInterpreter.new('http://hedtek.com/xx')
     li.url?.should be_true
     li.page_title?.should be_false
+
     li = LinkInterpreter.new('http://hedtek.com/xx/y-y')
     li.url?.should be_true
     li.page_title?.should be_false
+
     li = LinkInterpreter.new('http://hedtek.com/xx/y-y/img.png')
     li.url?.should be_true
     li.page_title?.should be_false
+
   end
 
   it "should recognise a bad URL 1" do
     li = LinkInterpreter.new('http:/hedtek.com')
-    li.url?.should == false
+    expect(li.url?).to be_false
+    expect(li.page_title?).to be_true
   end
 
   it "should recognise a bad URL 2" do
     li = LinkInterpreter.new('ftp://hedtek.com')
     expect(li.url?).to be_false
-  end
-
-  #TODO think about the phrasing above
-
-  it "should recognise a bad URL 3" do
-    li = LinkInterpreter.new('http://hedtek..com')
-    li.url?.should == false
-  end
-
-  it "should recognise a bad URL 4" do
-    li = LinkInterpreter.new('http:/hedtek.com')
-    li.url?.should == false
-  end
-
-  it "should recognise a bad URL 5" do
-    li = LinkInterpreter.new('My page')
-    li.url?.should == false
+    expect(li.page_title?).to be_true
   end
 
   it "should recognise url suffix" do
@@ -88,7 +81,7 @@ describe LinkInterpreter do
   it "should extract domain" do
     li = LinkInterpreter.new('http://hedtek.com/movie.mp4')
     li.domain.should == 'hedtek.com'
-    li = LinkInterpreter.new('http://hedtek.com/')
+    li = LinkInterpreter.new('https://hedtek.com/')
     li.domain.should == 'hedtek.com'
     li = LinkInterpreter.new('http://hedtek.com')
     li.domain.should == 'hedtek.com'
@@ -96,22 +89,22 @@ describe LinkInterpreter do
     li.domain.should == 'www.hedtek.com'
   end
 
-  it "should recognise a given domain" do
+  it "should recognise its domain" do
     li = LinkInterpreter.new('http://hedtek.com')
     li.is_domain?('hedtek.com').should == true
   end
-  it "should recognise not a given domain" do
+  it "should not recognise a different domain" do
     li = LinkInterpreter.new('http://hedtek.com')
     li.is_domain?('sefol.com').should == false
   end
 
   it "should recognise a youtube URL" do
-    li = LinkInterpreter.new('http://youtube.com')
+    li = LinkInterpreter.new('http://youtube.com/embed/0123ABC')
     li.is_youtube_url?.should == true
     li = LinkInterpreter.new('http://www.youtube.com')
     li.is_youtube_url?.should == true
   end
-  it "should recognise a non youtube URL" do
+  it "should recognise a non-youtube URL" do
     li = LinkInterpreter.new('http://hedtek.com')
     li.is_youtube_url?.should == false
   end
