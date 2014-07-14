@@ -32,7 +32,7 @@ end
 
 Then(/^I can see a page entitled "(.*?)" with content "(.*?)"$/) do |title, content|
   current_slug = current_path.sub /.*\//, ''
-  current_path.should == pages_path + '/' + current_slug
+  expect(current_path).to eq pages_path + '/' + current_slug
 
   page.should have_content(title)
   page.should have_content(content)

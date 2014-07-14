@@ -1,4 +1,4 @@
-%li
+%li{'data-history-idx' => page_state_counter }
   #history-width
     .time-and-user
       = render 'users/user_and_time', user: page_state.user.name, thing: page_state
@@ -10,6 +10,4 @@
         = render 'tags/tags', tags: page_state.tags_as_array
       .tags-and-categories
         = render 'categories/categories', categories: page_state.categories_as_array
-
-
-
+%hr

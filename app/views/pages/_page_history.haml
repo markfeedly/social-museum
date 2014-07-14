@@ -1,10 +1,8 @@
-- @page_states = Kaminari.paginate_array(page.history.reverse).page(params[:page]).per(2)
+- @page_states = Kaminari.paginate_array(page.history.reverse).page(params[:page]).per(5)
 %br/
 
 = paginate @page_states
 .page-summary-width-plus
   %hr
-  - @page_states.each do |pg_st|
-    = render partial: 'page_states/page_state', locals: {page_state: pg_st}
-    %hr
-  = paginate @page_states
+  = render partial: 'page_states/page_state', collection: @page_states
+= paginate @page_states
