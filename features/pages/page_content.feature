@@ -15,14 +15,14 @@ Feature: Wiki page
     When I create a page entitled "Test" with content "Link to new [http://hedtek.com hedtek home] page"
     Then I can see a hyperlink to a "hedtek home" page
 
-  Scenario: Creation of a an image
+  Scenario: Creation of an image
     When I create a page entitled "Test" with content "Link to new [http://hedtek.com/im.png] page"
     Then I can see a rendition of an image
 
   Scenario: Creation of a video content
-    When I create a page entitled "Test" with content "Link to new [http://youtube.com/vids page"
+    When I create a page entitled "Test" with content "Link to new [http://youtube.com/vids] page"
     Then I can see a You Tube video
 
   Scenario: Creation of a video content
-    When I create a page entitled "Test" with content "Link to new [http://youtube.com/vids page"
+    When I create a page entitled "Test" with content "Link to new [http://youtube.com/vids] page"
     Then I can see a Vimeo video
