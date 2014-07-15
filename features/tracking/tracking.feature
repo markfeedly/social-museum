@@ -48,5 +48,5 @@ Feature: Tracking
     Then I am emailed about a comment "Meh" on page entitled "Test me"
     Given I unsubscribe from page entitled "Test me" via the emailed unsubscribe link
     Given "Jane Doe" signs in and adds a comment "Hem" to the page entitled "Test me"
-    And no one else is emailed
+    And I am not emailed
 

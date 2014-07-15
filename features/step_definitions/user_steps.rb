@@ -43,7 +43,7 @@ def sign_up(user_name="Testy McUserton")
   create_user_data(user_name)
 
   visit new_user_registration_path
-  
+
   fill_in "Name", :with => @user_data[user_name][:name]
   fill_in "Email", :with => @user_data[user_name][:email]
   fill_in "user_password", :with => @user_data[user_name][:password]
@@ -59,7 +59,7 @@ end
 
 def sign_in(user_name="Testy McUserton")
   sign_out
-  visit '/users/sign_in'
+  visit new_user_session_path
   page.should have_content 'Sign in'
   fill_in "Email", :with => @user_data[user_name][:email]
   fill_in "Password", :with => @user_data[user_name][:password]
@@ -96,7 +96,7 @@ And(/^I confirm my email identity$/) do
 end
 
 When /^I look at the list of users$/ do
-  visit '/'
+  visit root_path
 end
 
 When /^I sign in with valid credentials$/ do
@@ -144,7 +144,7 @@ When /^I sign up with a mismatched password confirmation$/ do
 end
 
 When /^I return to the site$/ do
-  visit '/'
+  root_path
 end
 
 When /^I sign in with a wrong email$/ do

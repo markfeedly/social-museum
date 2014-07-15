@@ -11,7 +11,7 @@ And(/^"(.*?)" is signed out$/) do |arg1|
 end
 
 When(/^"(.*?)" creates a comment "(.*?)" on page entitled "(.*?)"$/) do |user_name, comment, page_title|
-  visit "/pages/#{Page.find_by_title(page_title).slug}"
+  visit page_path(Page.find_by_title(page_title).slug)
   click_on 'Add a comment'
   fill_in 'comment[content]', with: comment
   click_on 'Add comment'
@@ -29,6 +29,10 @@ Then(/^I am emailed about a comment "(.*?)" on page entitled "(.*?)"$/) do |comm
   expect( current_email.default_part_body.to_s).to include(comment)
   pg = Page.find_by_title(page_title)
   expect(current_email.default_part_body.to_s).to include(page_path pg)
+end
+
+Then(/^I am not emailed$/) do
+  unread_emails_for(user_email).size.should == 0
 end
 
 Then(/^"(.*?)" is emailed about a comment "(.*?)" on page entitled "(.*?)"$/) do |user_name, comment, page_title|
@@ -50,14 +54,16 @@ When(/^"(.*?)" signs in and adds a comment "(.*?)" to the page entitled "(.*?)"$
   sign_out
   create_user(user_name) unless user_exists?(user_name)
   sign_in(user_name)
-  visit "/pages/#{Page.find_by_title(page_title).slug}"
+  visit page_path(Page.find_by_title(page_title).slug)
   click_on 'Add a comment'
   fill_in 'comment[content]', with: comment
   click_on 'Add comment'
 end
 
 Given(/^I unsubscribe from page entitled "(.*?)" via the emailed unsubscribe link$/) do |page_title|
-  click_email_link_matching 'Unsubscribe'
+  sign_out
+  sign_in
+  click_email_link_matching /unsubscribe/
 end
 
 Given(/^I unsubscribe from page entitled "(.*?)" via the page button$/) do |page_title|
