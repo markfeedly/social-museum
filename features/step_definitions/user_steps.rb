@@ -26,7 +26,6 @@ def all_user_emails
 end
 
 def create_user(user_name="Testy McUserton")
-  create_user_data(user_name)
   sign_up(user_name)
   confirm_via_emailed_link(user_name)
 end
