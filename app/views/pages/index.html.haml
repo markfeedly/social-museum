@@ -1,11 +1,17 @@
-- @pages = Page.order('title ASC').page(params[:page]).per(10)
-
-
 .container
   .page-title Pages
-  = paginate @pages
-  .page-summary-width-plus
-    %hr
-  - @pages.each do |pg|
-    = render partial: 'pages/page_summary', locals: {page: pg}
-  = paginate @pages
+  - @pages = Page.order('title ASC').page(params[:page]).per(10)
+  - if @pages == []
+    - if current_user
+      No pages yet
+      %br/
+      You can add them via the new page menu item above
+    - else
+      No pages yet
+  - else
+    = paginate @pages
+    .page-summary-width-plus
+      %hr
+    - @pages.each do |pg|
+      = render partial: 'pages/page_summary', locals: {page: pg}
+    = paginate @pages
