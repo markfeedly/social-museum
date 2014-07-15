@@ -3,22 +3,19 @@ VirtualMuseum::Application.routes.draw do
   devise_for :users, :controllers => {:registrations => "registrations",
                                       :omniauth_callbacks => "omniauth_callbacks" }
   resources :users
-  resources :pages
+  resources :pages do
+    resources :comments
+    member do
+      get :subscribe
+      get :unsubscribe
+      get 'unsubscribe-via-email' => :unsubscribe_via_email, as: :unsubscribe_via_email
+    end
+  end
   resources :resources
 
   resources :tags,       only: [:show]
   resources :categories, only: [:show]
   resources :page_types, only: [:show]
   resources :moscow,     only: [:show]
-
-  resources :pages do
-    resources :comments
-  end
-
-  get 'pages/:id/subscribe'   => 'pages#subscribe'
-  get 'pages/:id/unsubscribe' => 'pages#unsubscribe'
-  get 'pages/:id/unsubscribe-via-email'=> 'pages#unsubscribe_via_email'
-
-
 end
 
