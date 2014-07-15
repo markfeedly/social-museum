@@ -37,6 +37,10 @@ Then(/^I can see a tagged page entitled "(.*?)" with content "(.*?)" and tags "(
   page.should have_content(tags)
 end
 
+When(/^I navigate to the 'Pages' page$/) do
+  click_link 'Pages'
+end
+
 
 
 
