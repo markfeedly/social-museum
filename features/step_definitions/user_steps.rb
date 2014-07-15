@@ -31,15 +31,19 @@ def create_user(user_name="Testy McUserton")
 end
 
 def delete_user(user_name="Testy McUserton")
-  u = User.where(email: @user_data[user_name][:email]).first
-  u.destroy unless u.nil?
-  @user_data[user_name] = nil if @user_data[user_name]
+  if @user_data[user_name]
+    u = User.where(email: @user_data[user_name][:email]).first
+    u.destroy unless u.nil?
+    @user_data[user_name] = nil
+  end
 end
 
 def sign_up(user_name="Testy McUserton")
   delete_user(user_name)
   create_user_data(user_name)
-  visit '/users/sign_up'
+
+  visit new_user_registration_path
+  
   fill_in "Name", :with => @user_data[user_name][:name]
   fill_in "Email", :with => @user_data[user_name][:email]
   fill_in "user_password", :with => @user_data[user_name][:password]
