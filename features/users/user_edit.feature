@@ -5,6 +5,6 @@ Feature: Edit User
 
   @wip
   Scenario: I sign in and edit my account
-    Given I am signed in
+    Given I have signed in with valid credentials
     When I edit my account details
     Then I should see an account edited message

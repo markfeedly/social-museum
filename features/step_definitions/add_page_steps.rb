@@ -1,23 +1,8 @@
-Given(/^I am signed in$/) do
-  @user = FactoryGirl. build(:user)
-
-  visit new_user_session_path
-
-  fill_in('user_email', :with => @user.email)
-  fill_in('user_password', :with => @user.password)
-  fill_in('user_password_confirmation', :with => @user.password)
-
-  click_button('sign_up_button')
-
-  page.should have_content('Sign out')
-end
-
 When(/^I create a page entitled "(.*?)" with content "(.*?)"$/) do |title, content|
   click_link('add_page_link')
 
   fill_in('Title', :with => title)
   fill_in('Content', :with => content)
-
   click_button('Create Page')
 end
 
