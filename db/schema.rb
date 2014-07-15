@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140708174820) do
+ActiveRecord::Schema.define(version: 20140715143937) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,7 +54,6 @@ ActiveRecord::Schema.define(version: 20140708174820) do
     t.string   "title"
     t.integer  "lock_version"
     t.string   "page_type"
-    t.string   "moscow",       default: "Not set yet"
   end
 
   add_index "pages", ["slug"], name: "index_pages_on_slug", using: :btree
