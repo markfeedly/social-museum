@@ -21,6 +21,10 @@ def user_email(user_name="Testy McUserton") #TODO cld refactor to use this and s
   @user_data[user_name][:email]
 end
 
+def default_user
+  @user_data['Testy McUserton']
+end
+
 def all_user_emails
   @user_data.collect{ |u| u[1][:email] }
 end
@@ -34,7 +38,6 @@ def delete_user(user_name="Testy McUserton")
   if @user_data[user_name]
     u = User.where(email: @user_data[user_name][:email]).first
     u.destroy unless u.nil?
-    @user_data[user_name] = nil
   end
 end
 
@@ -121,7 +124,7 @@ end
 
 When /^I sign up with an invalid email$/ do
   create_user_data
-  @user_data = @user_data.merge(:email => "notanemail")
+  default_user[:email] = "notanemail"
   sign_up
 end
 
@@ -133,7 +136,8 @@ end
 
 When /^I sign up without a password$/ do
   create_user_data
-  merge_into_user_data(:password => "")
+  default_user[:password] = ""
+  default_user[:password_confirmation] = ""
   sign_up
 end
 
@@ -182,7 +186,7 @@ Then /^I see an unconfirmed account message$/ do
   page.should have_content "You have to confirm your account before continuing."
 end
 
-Then /^I should see an invalid email message$/ do
+Then /^I should see an 'is invalid' message$/ do
   page.should have_content "is invalid"
 end
 
