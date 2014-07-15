@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Page do
 
   let(:user){ FactoryGirl.create(:user) }
-  let(:page){ FactoryGirl.create(:page, user: @user, content: 'check me') }
+  let(:page){ FactoryGirl.create(:page, user: user, content: 'check me') }
   let(:page_state){ page.history.last }
   let(:user2){ FactoryGirl.create(:user) }
 
@@ -68,12 +68,12 @@ describe Page do
     expect(page.user).to eq(user2)
   end
 
-  it "should have one past page after one change" do
+  it "should have two page states in the history after one change" do
     page.update(user: user, content: 'first change')
     expect(page.history.count).to eq 2
   end
 
-  it "should have two past pages after two changes" do
+  it "should have three page states in the history after two changes" do
     page.update(user: user, content: 'first change')
     page.update(user: user, content: 'second change')
     expect(page.history.count).to eq 3
@@ -88,7 +88,7 @@ describe Page do
 
   it "each page's history should only contain that page's past" do
     original_content = page.content
-    @page2 = FactoryGirl.create(:page, user: @user, content: "check me dude")
+    @page2 = FactoryGirl.create(:page, user: user, content: "check me dude")
 
     page.update(user: user, content: 'first content change')
     @page2.update(user: user, content: 'dude, first content change')
