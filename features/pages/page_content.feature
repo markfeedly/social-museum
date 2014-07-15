@@ -24,5 +24,5 @@ Feature: Wiki page
     Then I can see the Youtube video "GNTvWxl3Isw"
 
   Scenario: Creation of a video content
-    When I create a page entitled "Test" with content "Link to new [http://youtube.com/vids] page"
-    Then I can see a Vimeo video
+    When I create a page entitled "Test" with content "Link to new [http://vimeo.com/originals/ownyourtomorrow/93491987] page"
+    Then I can see Vimeo video "93491987"

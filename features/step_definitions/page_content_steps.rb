@@ -14,7 +14,7 @@ Then(/^I can see the Youtube video "(.*?)"$/) do |video_id|
   page.should have_css("iframe[src='//www.youtube.com/embed/#{video_id}']")
 end
 
-Then(/^I can see a Vimeo video$/) do
-  pending # express the regexp above with the code you wish you had
+Then(/^I can see Vimeo video "(.*?)"$/) do |video_id|
+  page.should have_css("iframe[src='//player.vimeo.com/video/#{video_id}']")
 end
 
