@@ -24,8 +24,8 @@
         %br
         = # link_to("Add resource", "/resources/new", class: "btn btn-primary")
         - if (current_user)
-          = link_to( 'Subscribe',  "/pages/#{page.slug}/subscribe",   class: 'btn btn-primary') if page.subscribed?(current_user) == false
-          = link_to( 'Unubscribe', "/pages/#{page.slug}/unsubscribe", class: 'btn btn-primary') if page.subscribed?(current_user) == true
+          = link_to( 'Subscribe',  subscribe_page_path(page),   class: 'btn btn-primary') if page.subscribed?(current_user) == false
+          = link_to( 'Unsubscribe', unsubscribe_page_path(page), class: 'btn btn-primary') if page.subscribed?(current_user) == true
   .clear
 
   - if page.has_category? ('UMCS Collection')
