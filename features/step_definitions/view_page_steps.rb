@@ -53,3 +53,8 @@ Then(/^I see the navigation menu$/) do
     page.should have_content('Profile')
   end
 end
+
+Then(/^I cannot see the remove page link$/) do
+  visit pages_path
+  page.should_not have_css("[delete-page]")
+end
