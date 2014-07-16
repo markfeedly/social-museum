@@ -82,7 +82,8 @@ class ResourcesController < ApplicationController
   end
 
   def get_titles_from_params
-    titles_to_add = params['resource_pages'].collect{ |title, checked| checked=='0' ? nil : title }.delete_if { |v| !v }
+    # TODO Fix slightly 'hacky' solution to missing resource_pages param
+    titles_to_add = (params['resource_pages'] || []).collect{ |title, checked| checked=='0' ? nil : title }.delete_if { |v| !v }
     selected_pages = []
     titles_to_add.each do |t|
       selected_pages << Page.find_by_title(t)
