@@ -63,14 +63,17 @@ end
 def sign_in(user_name="Testy McUserton")
   sign_out
   visit new_user_session_path
-  page.should have_content 'Sign in'
+
   fill_in "Email", :with => @user_data[user_name][:email]
   fill_in "Password", :with => @user_data[user_name][:password]
   click_button "Sign in"
 end
 
 def sign_out
-  visit '/users/sign_out'
+  visit root_path
+  if page.has_css?("[data-role='sign-out']")
+    find(:css, "[data-role='sign-out']").click
+  end
 end
 
 Given /^I am not signed in$/ do
@@ -179,8 +182,8 @@ Then /^I should be signed out$/ do
 end
 
 Then /^I see a successful sign in message$/ do
-  page.should have_content "Sign out"
-  end
+  page.should have_content I18n.t("devise.sessions.signed_in")
+end
 
 Then /^I see an unconfirmed account message$/ do
   page.should have_content "You have to confirm your account before continuing."
@@ -195,13 +198,17 @@ Then /^I should see a mismatched password message$/ do
 end
 
 Then /^I should be signed in$/ do
-  page.should have_content "Sign out"
+  page.should have_css "[data-role='sign-out']"
   page.should_not have_content "Sign up"
   page.should_not have_content "Sign in"
 end
 
 Then /^I should see a missing password message$/ do
-  page.should have_content "Passwordcan't be blank"
+  within("[data-role='new-user']") do
+    within("[data-role='password']") do
+      page.should have_content "can't be blank"
+    end
+  end
 end
 
 Then /^I should see a missing password confirmation message$/ do
@@ -214,7 +221,7 @@ Then /^I should see a signed out message$/ do
 end
 
 Then /^I should see a successful sign up message$/ do
-  page.should have_content "Sign out"
+  page.should have_content I18n.t('devise.registrations.signed_up')
 end
 
 Then /^I should see an account edited message$/ do
