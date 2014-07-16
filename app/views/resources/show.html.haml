@@ -20,7 +20,7 @@
               - resource.pages.all.each do |r|
                 = ', ' if started
                 - started = true
-                %a{href: page_url(r.slug)} #{r.title}
+                %a{href: page_path(r.slug)} #{r.title}
           - else
             This is not a resource for any pages yet, edit to associate with pages
           .color-bbb
