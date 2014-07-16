@@ -27,3 +27,10 @@ Feature: Wiki page editing
     And I change the title to "Mario Testino's Page"
 
     Then I can see one item of page history containing "Mario Testino's Page" as most recent
+
+  Scenario: Admins can remove pages
+    When I turn an existing user into an administrator
+    And I create a page entitled "Test" with content "Test me"
+    And I remove a page entitled "Test" with content "Test me"
+
+    Then I can't see a page entitled "Test" with content "Test me"

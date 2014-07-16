@@ -16,11 +16,6 @@ Then(/^I see the navigation menu$/) do
   end
 end
 
-Then(/^I can see a page entitled "(.*?)" with content "(.*?)"$/) do |title, content|
-  page.should have_content(title)
-  page.should have_content(content)
-end
-
 When(/^I create a tagged page entitled "(.*?)" with content "(.*?)" and tags (.*?)$/) do |title, content, tags|
   click_link('add_page_link')
 
@@ -29,12 +24,6 @@ When(/^I create a tagged page entitled "(.*?)" with content "(.*?)" and tags (.*
   fill_in('Tags',    :with => tags)
 
   click_button('Create Page')
-end
-
-Then(/^I can see a tagged page entitled "(.*?)" with content "(.*?)" and tags "(.*?)"$/) do |title, content, tags|
-  page.should have_content(title)
-  page.should have_content(content)
-  page.should have_content(tags)
 end
 
 When(/^I navigate to the 'Pages' page$/) do
