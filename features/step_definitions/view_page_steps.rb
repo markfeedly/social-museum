@@ -1,3 +1,7 @@
+When(/^I navigate to the 'Pages' page$/) do
+  click_link 'Pages'
+end
+
 Then(/^I can see a page entitled "(.*?)" with content "(.*?)"$/) do |title, content|
   visit pages_path
   page.should have_content(title)
@@ -37,5 +41,15 @@ Then(/^I can see one item of page history containing "(.*?)" as third most recen
     within('li[data-history-idx="2"]') do
       page.should have_content(arg1)
     end
+  end
+end
+
+Then(/^I see the navigation menu$/) do
+  within('.nav') do
+    page.should have_content('New Page')
+    page.should have_content('Pages')
+    page.should have_content('New Resource')
+    page.should have_content('Resource')
+    page.should have_content('Profile')
   end
 end

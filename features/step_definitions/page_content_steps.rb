@@ -17,4 +17,3 @@ end
 Then(/^I can see Vimeo video "(.*?)"$/) do |video_id|
   page.should have_css("iframe[src='//player.vimeo.com/video/#{video_id}']")
 end
-
