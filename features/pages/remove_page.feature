@@ -1,4 +1,4 @@
-Feature: Wiki page
+Feature: Wiki page removal
 
   Background:
     Given I have signed in with valid credentials
