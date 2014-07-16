@@ -33,11 +33,11 @@ class LinkInterpreter
   end
 
   def url_suffix?
-    url? && ((@first =~ /\/\/[^\/]+\/[^\/]+/) != nil)
+    url? && ( !!(@first =~ /:\/\/..*\/..*/   ))
   end
 
   def image_url?
-    url_suffix? && ((@first =~ /\.png$/) || (@first =~ /\.jpg$/) || (@first =~ /\.jpeg$/))
+    url_suffix? && ( !!(@first =~ /\.png$/) || !!(@first =~ /\.jpg$/) || !!(@first =~ /\.jpeg$/))
   end
 
   def domain
