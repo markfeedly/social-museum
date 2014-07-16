@@ -125,6 +125,18 @@ When /^I sign up with valid user data$/ do
   sign_up
 end
 
+When /^I turn an existing user into an administrator$/ do
+  user = User.find_by_email(user_email)
+  user.admin = true
+  user.save!
+end
+
+When /^I turn an existing admin into a standard user$/ do
+  user = User.find_by_email(user_email)
+  user.admin = false
+  user.save!
+end
+
 When /^I sign up with an invalid email$/ do
   create_user_data
   default_user[:email] = "notanemail"
