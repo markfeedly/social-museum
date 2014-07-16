@@ -2,54 +2,48 @@ require 'spec_helper'
 
 describe ContentHtmlGenerator do
 
-  before(:each) do
-    @user = FactoryGirl.create(:user)
-    @page = FactoryGirl.create(:page, title: 'My title')
-    @page_state = FactoryGirl.create(:page_state, title: @page.title, user: @user, page: @page)
+  let(:user) { FactoryGirl.create(:user) }
+  let(:page) { FactoryGirl.create(:page, user: user) }
+
+  it "should process plain text correctly" do
+    expect(ContentHtmlGenerator.generate_full(page)).to eq "<p>#{page.content}</p>\n"
   end
 
-  it "should process plain text" do
-    @page.change(@user, title: 'My title', content: 'abc')
-    ContentHtmlGenerator.generate_full(@page).should ==
-        "<p>abc</p>\n"
-  end
-
-  it "should process an existing page title" do
-    @page.change(@user, title: 'My title', content: 'pre-amble [My title] post-amble')
-    @page.title.should == 'My title'
-    ContentHtmlGenerator.generate_full(@page).should ==
-        "<p>pre-amble <a href='/pages/my-title' data-page>My title</a> post-amble</p>\n"
+  it "should process an existing page title correctly" do
+    page.update(user: user, content: "preamble [#{page.title}] postamble")
+    expect(ContentHtmlGenerator.generate_full(page)).to eq \
+        "<p>preamble <a href='/pages/#{page.slug}' data-page>#{page.title}</a> postamble</p>\n"
   end
 
   it "should process a non-existing page title" do
-    @page.change(@user, title: 'My title', content: 'pre-amble [My non-existent title] post-amble')
-    ContentHtmlGenerator.generate_full(@page).should ==
+    page.update(user: user, content: "pre-amble [My non-existent title] post-amble")
+    expect(ContentHtmlGenerator.generate_full(page)).to eq \
         "<p>pre-amble <a href='/pages/new?page_title=My non-existent title' data-new-page>My non-existent title</a> post-amble</p>\n"
   end
 
   it "should process an embedded image" do
-    @page.change(@user, title: 'My title', content: 'pre-amble [http://a.b/img.png] post-amble')
-    ContentHtmlGenerator.generate_full(@page).should ==
+    page.update(user: user, content: 'pre-amble [http://a.b/img.png] post-amble')
+    ContentHtmlGenerator.generate_full(page).should ==
         "<p>pre-amble <div><img src='http://a.b/img.png'/></div> post-amble</p>\n"
   end
 
   it "should process an embedded image and width" do
     pending "can't do this yet"
-    @page.change(@user, title: 'My title', content: 'pre-amble [http://a.b/img.png 100] post-amble')
-    ContentHtmlGenerator.generate_full(@page).should ==
+    page.update(user: user, content: 'pre-amble [http://a.b/img.png 100] post-amble')
+    ContentHtmlGenerator.generate_full(page).should ==
         "<p>pre-amble </p><div><img src='http://a.b/img.png' style='width: 100px;'/></div><p> post-amble</p>\n"
   end
 
-  it "should process an embedded image and width in tricy circumstances" do
-    pending "can't do this yet"
-    @page.change(@user, title: 'My title', content: '[http://a.b/first.png 100] some text [http://a.b/second.png 100] post-amble')
-    ContentHtmlGenerator.generate_full(@page).should ==
+  it "should process an embedded image and width in tricky circumstances" do
+    pending 'look into what should really be output in tricky circumstances'
+    page.update(user: user, content: '[http://a.b/first.png 100] some text [http://a.b/second.png 100] post-amble')
+    ContentHtmlGenerator.generate_full(page).should ==
         "<div><img src='http://a.b/first.png' style='width: 100px;'/></div><p>some text</p><div><img src='http://a.b/second.png' style='width: 100px;'/></div><p> post-amble</p>\n"
   end
 
   it "should process an only on line image and width" do
-    @page.change(@user, title: 'My title', content: '[http://a.b/img.png 100]')
-    ContentHtmlGenerator.generate_full(@page).should ==
+    page.update(user: user, content: '[http://a.b/img.png 100]')
+    ContentHtmlGenerator.generate_full(page).should ==
         "<div><img src='http://a.b/img.png' style='width: 100px;'/></div>\n"
   end
 
