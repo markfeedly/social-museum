@@ -15,17 +15,7 @@ describe LinkInterpreter do
         "<a href='/pages/#{@page.title.downcase.gsub(/ /, '-')}' data-page>#{@page.title}</a>" )
   end
 
-
-
-  it "should output a hyperlink to an existing page" do
-    @page = FactoryGirl.create(:page)
-    li=LinkInterpreter.new(@page.title)
-
-    check_outputs(li, :process_page_title,
-        "<a href='/pages/#{@page.title.downcase.gsub(/ /, '-')}' data-page>#{@page.title}</a>" )
-  end
-
-  it "should output a hyperlink to a missing page" do
+  it "should output a hyperlink to create a missing page" do
     @page = FactoryGirl.create(:page)
     new_page_title = "This is not the title of existing page #{@page.title}; rather for a page to be created by a user"
     li=LinkInterpreter.new(new_page_title)
@@ -41,15 +31,7 @@ describe LinkInterpreter do
         "<a href='http://hedtek.com' external-link>http://hedtek.com</a>"  )
   end
 
-  it "should output a hyperlink to a URL with ther URL as the link text" do
-    url = 'http://hedtek.com/some/page'
-    li = LinkInterpreter.new(url)
-
-    check_outputs(li, :process_url_without_text,
-        "<a href='#{url}' external-link>#{url}</a>" )
-  end
-
-  it "should output a hyperlink showing text" do
+  it "should output a hyperlink showing link text" do
     url_and_hyperlink_with_text= 'http://hedtek.com/some/page funny money'
     li = LinkInterpreter.new(url_and_hyperlink_with_text)
 
@@ -65,7 +47,7 @@ describe LinkInterpreter do
         "<div><img src='#{image_url}'/></div>" )
   end
 
-  it "should process an image with a display width in pixels" do
+  it "should process an image with a width in pixels" do
     image_url_and_width= 'http://hedtek.com/some/page.png  300'
     li=LinkInterpreter.new(image_url_and_width)
 
