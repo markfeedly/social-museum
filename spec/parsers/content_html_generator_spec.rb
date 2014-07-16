@@ -1,12 +1,11 @@
 require 'spec_helper'
-require './lib/parsing/link_interpreter'
 
 describe ContentHtmlGenerator do
 
   before(:each) do
     @user = FactoryGirl.create(:user)
-    @page = FactoryGirl.create(:page, original_title: 'My title')
-    @page_state = FactoryGirl.create(:page_state, title: @page.original_title, user: @user, page: @page)
+    @page = FactoryGirl.create(:page, title: 'My title')
+    @page_state = FactoryGirl.create(:page_state, title: @page.title, user: @user, page: @page)
   end
 
   it "should process plain text" do
