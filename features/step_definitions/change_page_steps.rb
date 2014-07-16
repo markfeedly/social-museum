@@ -11,3 +11,11 @@ When(/^I change the title to "(.*?)"$/) do |new_title|
   click_button 'Update Page'
   # PageState.count.should == 1  # TODO eliminate bad practice db in feature steps file
   end
+
+Then(/^I can see a page with title "(.*?)"$/) do |title|
+  page.should have_content(title)
+end
+
+Then(/^I can see a "Title has already been taken" error message$/) do
+  page.should have_content("Title has already been taken")
+end

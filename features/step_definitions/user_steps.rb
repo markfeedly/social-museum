@@ -94,90 +94,90 @@ Given /^I do not exist as a user$/ do
   delete_user
 end
 
-
 # -----------------------------------------------------------------
 
-And(/^I confirm my email identity$/) do
+Given(/^I confirm my email identity$/) do
   confirm_via_emailed_link
 end
 
-When /^I look at the list of users$/ do
+When(/^I look at the list of users$/) do
   visit root_path
 end
 
-When /^I sign in with valid credentials$/ do
+When(/^I sign in with valid credentials$/) do
   sign_out
   create_user_data
   sign_in
 end
 
-When /^I sign out$/ do
+When(/^I sign out$)/ do
   sign_out
 end
 
-And(/^I sign up$/) do
+When(/^I sign up$/) do
   create_user_data
   sign_up
 end
 
-When /^I sign up with valid user data$/ do
+When(/^I sign up with valid user data$/) do
   create_user_data
   sign_up
 end
 
-When /^I turn an existing user into an administrator$/ do
+When(/^I turn an existing user into an administrator$/) do
   user = User.find_by_email(user_email)
   user.admin = true
   user.save!
 end
 
-When /^I turn an existing admin into a standard user$/ do
+When(/^I turn an existing admin into a standard user$/) do
   user = User.find_by_email(user_email)
   user.admin = false
   user.save!
 end
 
-When /^I sign up with an invalid email$/ do
+When(/^I sign up with an invalid email$/) do
   create_user_data
   default_user[:email] = "notanemail"
   sign_up
 end
 
-When /^I sign up without a password confirmation$/ do
+When(/^I sign up without a password confirmation$/) do
   create_user_data
   merge_into_user_data(:password_confirmation => "")
   sign_up
 end
 
-When /^I sign up without a password$/ do
+When(/^I sign up without a password$/) do
   create_user_data
   default_user[:password] = ""
   default_user[:password_confirmation] = ""
   sign_up
 end
 
-When /^I sign up with a mismatched password confirmation$/ do
+When(/^I sign up with a mismatched password confirmation$/) do
   create_user_data
   merge_into_user_data(:password_confirmation => "changeme123")
   sign_up
 end
 
-When /^I return to the site$/ do
+When(/^I return to the site$/) do
   root_path
 end
 
-When /^I sign in with a wrong email$/ do
+When(/^I sign in with a wrong email$/) do
   merge_into_user_data(:email => "wrong@example.com")
   sign_in
 end
 
-When /^I sign in with a wrong password$/ do
+When(/^I sign in with a wrong password$/) do
   merge_into_user_data(:password => "wrongpass")
   sign_in
 end
 
-When /^I edit my account details$/ do
+When(/^I edit my account details$/) do
   click_link "Edit account"
+
   fill_in "Name", :with => "newname"
   fill_in "user_current_password", :with => @user_data[:password]
   click_button "Update"
@@ -187,35 +187,35 @@ Then(/^I should have signed up successfully$/) do
   page.should have_content "Your account was successfully confirmed"
 end
 
-Then /^I should be signed out$/ do
+Then(/^I should be signed out$/) do
   page.should have_content "Sign up"
   page.should have_content "Sign in"
   page.should_not have_content "Sign out"
 end
 
-Then /^I see a successful sign in message$/ do
+Then(/^I see a successful sign in message$/) do
   page.should have_content I18n.t("devise.sessions.signed_in")
 end
 
-Then /^I see an unconfirmed account message$/ do
+Then(/^I see an unconfirmed account message$/) do
   page.should have_content "You have to confirm your account before continuing."
 end
 
-Then /^I should see an 'is invalid' message$/ do
+Then(/^I should see an 'is invalid' message$/) do
   page.should have_content "is invalid"
 end
 
-Then /^I should see a mismatched password message$/ do
+Then (/^I should see a mismatched password message$/) do
   page.should have_content "doesn't match Password"
 end
 
-Then /^I should be signed in$/ do
+Then(/^I should be signed in$/) do
   page.should have_css "[data-role='sign-out']"
   page.should_not have_content "Sign up"
   page.should_not have_content "Sign in"
 end
 
-Then /^I should see a missing password message$/ do
+Then(/^I should see a missing password message$/)do
   within("[data-role='new-user']") do
     within("[data-role='password']") do
       page.should have_content "can't be blank"
@@ -223,35 +223,27 @@ Then /^I should see a missing password message$/ do
   end
 end
 
-Then /^I should see a missing password confirmation message$/ do
+Then(/^I should see a missing password confirmation message$/) do
   page.should have_content "doesn't match Password"
 end
 
-
-Then /^I should see a signed out message$/ do
+Then(/^I should see a signed out message$/) do
   page.should have_content "Signed out successfully."
 end
 
-Then /^I should see a successful sign up message$/ do
+Then(/^I should see a successful sign up message$/) do
   page.should have_content I18n.t('devise.registrations.signed_up')
 end
 
-Then /^I should see an account edited message$/ do
+Then(/^I should see an account edited message$/) do
   page.should have_content "You updated your account successfully."
 end
 
-Then /^I see an invalid sign in message$/ do
+Then(/^I see an invalid sign in message$/) do
   page.should have_content "Invalid email or password."
 end
 
-Then /^I should see my name$/ do
+Then(/^I should see my name$/) do
   create_user
   page.should have_content @user[:name]
 end
-
-When /^I try to sign in with invalid credentials$/ do
-  create_user_data
-  sign_in
-end
-
-
