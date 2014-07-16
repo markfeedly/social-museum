@@ -39,13 +39,13 @@ describe LinkInterpreter do
 
   end
 
-  it "should recognise a bad URL 1" do
+  it "should recognise a bad URL" do
     li = LinkInterpreter.new('http:/hedtek.com')
     expect(li.url?).to be_false
     expect(li.page_title?).to be_true
   end
 
-  it "should recognise a bad URL 2" do
+  it "should recognise a bad protocol" do
     li = LinkInterpreter.new('ftp://hedtek.com')
     expect(li.url?).to be_false
     expect(li.page_title?).to be_true
@@ -60,16 +60,15 @@ describe LinkInterpreter do
   it "should recognise no url suffix" do
     li = LinkInterpreter.new('http://hedtek.com/')
     li.url_suffix?.should == false
-    li = LinkInterpreter.new('http://hedtek.com/')
-    li.url_suffix?.should == false
   end
 
-  it "should recognise an image url" do
-    li = LinkInterpreter.new('http:/hedtek.com/x/u/img.png')
+  it "should recognise an image url or not" do
+    li = LinkInterpreter.new('http://hedtek.com/x/u/img.zip')
     li.image_url?.should == false
-    li = LinkInterpreter.new('http:/hedtek.com/image.jpg')
-    li.image_url?.should == false
+    li = LinkInterpreter.new('http://hedtek.com/image.jpg')
+    li.image_url?.should == true
   end
+
   it "should recognise a bad image URL 1" do
     li = LinkInterpreter.new('http:/hedtek.png')
     li.url?.should == false
