@@ -110,7 +110,7 @@ When(/^I sign in with valid credentials$/) do
   sign_in
 end
 
-When(/^I sign out$)/ do
+When(/^I sign out$/) do
   sign_out
 end
 
