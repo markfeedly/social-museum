@@ -216,8 +216,8 @@ Then(/^I should be signed in$/) do
 end
 
 Then(/^I should see a missing password message$/)do
-  within("[data-role='new-user']") do
-    within("[data-role='password']") do
+  within_role("new-user") do
+    within_role("password") do
       page.should have_content "can't be blank"
     end
   end
