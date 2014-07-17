@@ -1,4 +1,4 @@
-When(/^I create a new resource with title "(.*?)" and link to "(.*?)"$/) do |resource_title, resource_url|
+When(/^I create a new resource with title "(.*?)", and a link to "(.*?)"$/) do |resource_title, resource_url|
   visit new_resource_path
 
   within_role("resource-form") do
