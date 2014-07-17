@@ -8,5 +8,8 @@ class ResourceAuthorizer < Authority::Authorizer
     end
   end
 
+  def updateable_by?(user)
+    user.admin? || user == resource.user || resource.new_record?
+  end
 end
 
