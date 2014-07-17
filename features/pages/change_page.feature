@@ -9,12 +9,6 @@ Feature: Wiki page editing
 
     Then I can see a page entitled "Test" with content "Mario Testino"
 
-  Scenario: Edit page title
-    When I create a page entitled "Test" with content "Test me"
-    And I change the page title to "Famous Photographer"
-
-    Then I can see a page entitled "Famous Photographer" with content "Test me"
-
   Scenario: Edits to a page content should be recorded in page history
     When I create a page entitled "Test" with content "Test me"
     And I change the page content to "Mario Testino"
