@@ -1,21 +1,27 @@
-When(/^I change the content to "(.*?)"$/) do |new_content|
-  click_link('Edit')
-  fill_in('Content', with: new_content)
-  click_button 'Update Page'
-  # PageState.count.should == 1 # TODO eliminate bad practice db in feature steps file
-end
-
 When(/^I change the title to "(.*?)"$/) do |new_title|
   click_link('Edit')
-  fill_in('Title', with: new_title)
-  click_button 'Update Page'
-  # PageState.count.should == 1  # TODO eliminate bad practice db in feature steps file
-  end
 
-Then(/^I can see a page with title "(.*?)"$/) do |title|
-  page.should have_content(title)
+  within_role "page-form" do
+    fill_in('Title', with: new_title)
+    click_button 'Update Page'
+  end
 end
 
-Then(/^I can see a "Title has already been taken" error message$/) do
-  page.should have_content("Title has already been taken")
+When(/^I change the content to "(.*?)"$/) do |new_content|
+  click_link('Edit')
+
+  within_role "page-form" do
+    fill_in('Content', with: new_content)
+    click_button 'Update Page'
+  end
+end
+
+Then(/^I can see a "(.*?)" error message for "([^"]*)"$/) do |message, attribute|
+  within_role "page-form" do
+    within_role attribute.downcase do
+      within_role "error" do
+        page.should have_content(message)
+      end
+    end
+  end
 end

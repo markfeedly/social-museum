@@ -1,6 +1,9 @@
 When(/^I create a page entitled "(.*?)" with content "(.*?)"$/) do |title, content|
   click_link('add_page_link')
 
+  within_role 'page-form' do
+    "[data-role='page'"
+  end
   fill_in('Title', :with => title)
   fill_in('Content', :with => content)
   click_button('Create Page')

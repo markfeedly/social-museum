@@ -58,3 +58,7 @@ Then(/^I cannot see the remove page link$/) do
   visit pages_path
   page.should_not have_css("[delete-page]")
 end
+
+Then(/^I can see a page with title "(.*?)"$/) do |title|
+  page.should have_content(title)
+end
