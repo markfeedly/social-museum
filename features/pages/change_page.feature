@@ -41,4 +41,4 @@ Feature: Wiki page editing
     And I create a page entitled "Test" with content "Test me"
     And I change the title to "Pre-existing title"
 
-    Then I can see a "has already been taken" error message for "Title"
+    Then I can see a "has already been taken" error for the page title
