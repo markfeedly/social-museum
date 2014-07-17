@@ -17,9 +17,9 @@ Feature: Resource addition
 
   Scenario: Add a resource associated with a page
     When I create a page entitled "Test" with content "My content"
-    And I create a new resource with title "Test", and a link to "http://media.npr.org/images/picture-show-flickr-promo.jpg", associated with page "Test"
+    And I create a new resource entitled "Test", and a link to "http://media.npr.org/images/picture-show-flickr-promo.jpg", associated with page "Test"
 
-    Then I can see a resource with title "Test", and a link to "http://media.npr.org/images/picture-show-flickr-promo.jpg", associated with page "Test"
+    Then I can see a resource entitled "Test", and a link to "http://media.npr.org/images/picture-show-flickr-promo.jpg", associated with page "Test"
     
   Scenario: Add a resource with a description
     When I create a new resource with title "Test", and a description of "My content"

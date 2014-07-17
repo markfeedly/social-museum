@@ -8,7 +8,7 @@ When(/^I create a new resource with title "(.*?)", and a link to "(.*?)"$/) do |
   end
 end
 
-When(/^I create a new resource with title "(.*?)", and a link to "(.*?)", associated with page "(.*?)"$/) do |resource_title, resource_url, page_title|
+When(/^I create a new resource entitled "(.*?)", and a link to "(.*?)", associated with page "(.*?)"$/) do |resource_title, resource_url, page_title|
   visit new_resource_path
 
   within_role("resource-form") do

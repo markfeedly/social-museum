@@ -7,3 +7,5 @@ Feature: Resource page removal
     Given I turn an existing user into an administrator
     And I create a new resource with title "Test", and a link to "http://media.npr.org/images/picture-show-flickr-promo.jpg"
     And I remove a resource with title "Test", and a link to "http://media.npr.org/images/picture-show-flickr-promo.jpg"
+
+    Then I cannot see an image resource with title "Test, and a link to "http://media.npr.org/images/picture-show-flickr-promo.jpg"
