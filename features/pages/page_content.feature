@@ -26,7 +26,7 @@ Feature: Wiki page contents
   Scenario: Creation of YouTube content
     When I create a page entitled "Test" with content "Link to new [https://www.youtube.com/watch?v=GNTvWxl3Isw] page"
 
-    Then I can see the Youtube video "GNTvWxl3Isw"
+    Then I can see Youtube video "GNTvWxl3Isw"
 
   Scenario: Creation of Vimeo content
     When I create a page entitled "Test" with content "Link to new [http://vimeo.com/originals/ownyourtomorrow/93491987] page"

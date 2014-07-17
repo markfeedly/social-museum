@@ -10,7 +10,7 @@ Then(/^I can see a rendition of an image$/) do
   end
 end
 
-Then(/^I can see the Youtube video "(.*?)"$/) do |video_id|
+Then(/^I can see Youtube video "(.*?)"$/) do |video_id|
   within( '.content-content') do
     page.should have_css("iframe[src='//www.youtube.com/embed/#{video_id}']")
   end
