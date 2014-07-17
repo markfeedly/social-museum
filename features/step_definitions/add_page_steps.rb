@@ -2,18 +2,19 @@ When(/^I create a page entitled "(.*?)" with content "(.*?)"$/) do |title, conte
   click_link('add_page_link')
 
   within_role 'page-form' do
-    "[data-role='page'"
+    fill_in('Title', :with => title)
+    fill_in('Content', :with => content)
+    click_button('Create Page')
   end
-  fill_in('Title', :with => title)
-  fill_in('Content', :with => content)
-  click_button('Create Page')
 end
 
-When(/^I create a tagged page entitled "(.*?)" with content "(.*?)" and tags (.*?)$/) do |title, content, tags|
+When(/^I create a tagged page entitled "(.*?)" with content "(.*?)" and tags "(.*?)"$/) do |title, content, tags|
   click_link('add_page_link')
 
-  fill_in('Title',   :with => title)
-  fill_in('Content', :with => content)
-  fill_in('Tags',    :with => tags)
-  click_button('Create Page')
+  within_role 'page-form' do
+    fill_in('Title',   :with => title)
+    fill_in('Content', :with => content)
+    fill_in('Tags',    :with => tags)
+    click_button('Create Page')
+  end
 end
