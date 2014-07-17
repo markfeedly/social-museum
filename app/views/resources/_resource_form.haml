@@ -1,10 +1,7 @@
-= form_for(resource) do |f|
-  %ul.red
-    - resource.errors.full_messages.each do |msg|
-      %li
-        = msg
-
-  - if act == :create
+= simple_form_for(resource, :html => {:data => {:role => 'resource-form'}}) do |f|
+  = f.input :lock_version, as: :hidden
+  = f.input :title, wrapper_html: {data: {role: 'title'}}, error_html: {data: {role: 'error'}}
+  - if resource.new_record?
     %div
       .notice-para
         A resource is typically an image (but may be any document or file).
@@ -12,34 +9,17 @@
         Each resource will typically be added to one or more pages.
       .notice-para
         Resources that have been added to a page are displayed in the page's resources' tab.
-
   - else
-    - # must be an edit cause it's not a create action
     %img.width-600px{src: resource.source}
-    - if !current_user.admin? && current_user != resource.user
+    - if current_user.can_update?(resource)
       %br
       .instruction.change-note
         = "This resource asset above may ony be changed by this resource's creator&nbsp;(#{resource.user.name}) or by an administrator.".html_safe
-
-  .width-500px
-    = f.label :title
-    = f.text_field :title
-
-
-    = f.label :description
-    = f.text_area :description
-
-  - if act == :create || current_user.admin? || current_user == resource.user
-    .width-500px
-      Resource on the web to link to (this must be a URL beginning with http)
-      %br
-      = f.text_field :url
-    %br
-
-  .width-550px
-    = f.label 'Optionally add the resource to one or more pages (you can also do this later if you want to)'
+  = f.input :description
+  - if current_user.can_update?(resource)
+    = f.input :url, label: 'Resource on the web to link to (this must be a URL beginning with http)'
+  = f.label 'Optionally add the resource to one or more pages (you can also do this later if you want to)'
   .scrolling-div
-    =  render partial: 'resources/resource_check_boxes',
-                               locals: {pages_for_partial: resource.pages, f: f}
+    = render partial: 'resources/resource_check_boxes', locals: {pages_for_partial: resource.pages, f: f}
   %br
-  = f.submit class: 'btn btn-primary'
+  = f.button :submit, class: 'btn btn-primary'
