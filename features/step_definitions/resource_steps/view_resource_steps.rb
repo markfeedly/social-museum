@@ -28,8 +28,6 @@ Then(/^I cannot see an image resource with title "(.*?)", and a link to "(.*?)"$
   visit resources_path
 
   within("[data-resource-slug='#{Resource.find_by_title(title).slug}']") do
-    visit resources_path
-
     page.should have_content(resource_title)
     page.should_not have_css("img[src='#{resource_url}']")
   end

@@ -1,4 +1,4 @@
-Feature: Wiki resource editing
+Feature: Resource editing
 
   Background:
     Given I have signed in with valid credentials
