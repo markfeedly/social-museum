@@ -15,13 +15,3 @@ When(/^I change the content to "(.*?)"$/) do |new_content|
     click_button 'Update Page'
   end
 end
-
-Then(/^I can see a "(.*?)" error message for "([^"]*)"$/) do |message, attribute|
-  within_role "page-form" do
-    within_role attribute.downcase do
-      within_role "error" do
-        page.should have_content(message)
-      end
-    end
-  end
-end
