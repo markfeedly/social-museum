@@ -72,3 +72,13 @@ Then(/^I can see a comment "(.*?)" as the most recent comment on the page entitl
     end
   end
 end
+
+Then(/^I can see a comment "(.*?)" as the second most recent comment on the page entitled "(.*?)"$/) do |comment_content, page_title|
+  visit page_path(Page.find_by_title(page_title))
+
+  within('li[data-comment-idx="1"]') do
+    within(".comment-content") do
+      page.should have_content(comment_content)
+    end
+  end
+end
