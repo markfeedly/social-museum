@@ -102,6 +102,11 @@ class LinkInterpreter
     "<div><iframe width=\"420\" height=\"315\" src=\"//www.youtube.com/embed/#{youtube_id}\" frameborder=\"0\" allowfullscreen></iframe></div>"
   end
 
+  def process_vimeo_url
+    vimeo_id = @first.split('/')[-1]
+    "<iframe src=\"//player.vimeo.com/video/#{vimeo_id}\" width=\"420\" height=\"236\" frameborder=\"0\" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>"
+  end
+
   def output_type
     return :in_div__hyperlink if image_url? || is_youtube_url? || is_vimeo_url?
     :in_line_hyperlink
@@ -112,7 +117,7 @@ class LinkInterpreter
     return process_page_title if page_title?
     return process_image_url if image_url?
     return process_youtube_url if is_youtube_url?
-    #return 'vimeo' if is_vimeo_url?
+    return process_vimeo_url if is_vimeo_url?
     process_url
   end
 
