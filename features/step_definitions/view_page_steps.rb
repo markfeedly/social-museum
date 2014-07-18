@@ -62,3 +62,11 @@ end
 Then(/^I can see a page with title "(.*?)"$/) do |title|
   page.should have_content(title)
 end
+
+Then(/^I can see a comment "(.*?)" as the most recent comment on the page entitled "(.*?)"$/) do |comment_content, page_title|
+  visit page_path(Page.find_by_title(page_title))
+
+  within(".comment-content") do
+    page.should have_content(comment_content)
+  end
+end
