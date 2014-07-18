@@ -1,0 +1,4 @@
+= simple_form_for(([page, page.comments.build]), :html => {:data => {:role => 'comments-form'}}) do |f|
+ = f.text_area :content
+ %br
+ = f.submit class: 'btn btn-primary', value: 'Add comment'
