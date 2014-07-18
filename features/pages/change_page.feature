@@ -38,6 +38,7 @@ Feature: Wiki page editing
     Then I can see a "has already been taken" error for the page title
 
   Scenario: I can comment on pages
-    When I make the comment "Test me" on the page entitled "Test"
+    When I create a page entitled "Test" with content "Test me"
+    And I make the comment "Test me" on the page entitled "Test"
 
     Then I can see a comment "Test me" as the most recent comment on the page entitled "Test"
