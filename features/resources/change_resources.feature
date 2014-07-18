@@ -4,7 +4,7 @@ Feature: Resource editing
     Given I have signed in with valid credentials
 
   Scenario: Edit resource description
-    When I create a new resource with title "Test", a link to "http://media.npr.org/images/picture-show-flickr-promo.jpg", and a description of "Test"
+    When I create a new resource with title "Test", and a description of "Test"
     And I change the resource description to "Mario Testino"
 
     Then I can see a resource entitled "Test" with description "Mario Testino"

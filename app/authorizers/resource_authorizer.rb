@@ -12,4 +12,3 @@ class ResourceAuthorizer < Authority::Authorizer
     user.admin? || user == resource.user || resource.new_record?
   end
 end
-
