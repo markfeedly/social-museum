@@ -51,14 +51,6 @@ class PageDecorator < Draper::Decorator
     end
   end
 
-  def comments_as_html
-    if model.comments
-      h.render(partial: 'comments/comments', locals: {comments: model.comments})
-    else
-      'No comments so far'
-    end
-  end
-
 # history tab
 
 

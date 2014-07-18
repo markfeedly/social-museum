@@ -36,3 +36,8 @@ Feature: Wiki page editing
     And I change the page title to "Pre-existing title"
 
     Then I can see a "has already been taken" error for the page title
+
+  Scenario: I can comment on pages
+    When I make the comment "Test me" on the page entitled "Test"
+
+    Then I can see a comment "Test me" as the most recent comment on the page entitled "Test"

@@ -15,5 +15,7 @@
     to comment
   .clear
 
-  - #TODO move to haml
-  = page.comments_as_html
+  -if page.comments.empty?
+
+  - else
+    %ul.no-bullets= render partial: 'comments/comment', collection: page.comments
