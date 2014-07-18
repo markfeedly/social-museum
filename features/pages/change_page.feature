@@ -49,3 +49,4 @@ Feature: Wiki page editing
     And I make the comment "Test me please" on the page entitled "Test"
 
     Then I can see a comment "Test me please" as the most recent comment on the page entitled "Test"
+    And I can see a comment "Test me" as the second most recent comment on the page entitled "Test"
