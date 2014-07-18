@@ -66,7 +66,9 @@ end
 Then(/^I can see a comment "(.*?)" as the most recent comment on the page entitled "(.*?)"$/) do |comment_content, page_title|
   visit page_path(Page.find_by_title(page_title))
 
-  within(".comment-content") do
-    page.should have_content(comment_content)
+  within('li[data-comment-idx="0"]') do
+    within(".comment-content") do
+      page.should have_content(comment_content)
+    end
   end
 end
