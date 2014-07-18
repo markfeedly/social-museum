@@ -1,11 +1,12 @@
 %ul{'no-bullets'.to_sym => true}
-  - page.resources.each do |r|
-    %li
-      %p.bold
+  - if page.resources == []
+    There are no resources associated with this page.
+  - else
+    - page.resources.each do |r|
+      %li
+        %p.bold
+          %a{href: resource_path(r)}
+            = r.title
         %a{href: resource_path(r)}
-          = r.title
-      %a{href: resource_path(r)}
-        %img.resource-image{src: r.source, title: "#{r.description}"}
-      %hr
-
-
+          %img.resource-image{src: r.source, title: "#{r.description}"}
+        %hr
