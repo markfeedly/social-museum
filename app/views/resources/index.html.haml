@@ -11,20 +11,25 @@
   - else
     = paginate @resources
     - @resources.each do |r|
-      .summary-title
-        %a{href: resource_path(r.id)}
-          = r.title
+      -#
+        TODO Either change this to slug and use slug as identifying attribute for resources
+        or modify tests to use title to identify resource. Titles may be ambiguous
+        if they do not need to be unique. Ideally implement slugs for resources.
+      .search-result{data: {'resource-title' => r.title}}
+        .summary-title
+          %a{href: resource_path(r.id)}
+            = r.title
 
-      - get_from = r.file
-      - get_from = r.url if r.url
-      %a.resources-summary-width-and-margin{href: resource_path(r.id)}
-        %img.width-150px{src: get_from}
-      %br
+        - get_from = r.file
+        - get_from = r.url if r.url
+        %a.resources-summary-width-and-margin{href: resource_path(r.id)}
+          %img.width-150px{src: get_from}
+        %br
 
-      - if current_user && current_user.can_delete?(r)
-        .float-right
-          = link_to 'Remove resource', r,
-               :confirm => 'Are you sure you want to remove this resource? This cannot be undone.',
-               :method => :delete
-      %hr
+        - if current_user && current_user.can_delete?(r)
+          .float-right
+            = link_to 'Remove resource', r,
+                 :confirm => 'Are you sure you want to remove this resource? This cannot be undone.',
+                 :method => :delete
+        %hr
     = paginate @resources

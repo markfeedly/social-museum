@@ -63,7 +63,6 @@ class ResourcesController < ApplicationController
     redirect_to :back
   end
 
-
   def page_params
     params.require(:resource).permit(:file, :description, :title, :resource_usages, :pages)
   end
@@ -83,7 +82,7 @@ class ResourcesController < ApplicationController
 
   def get_titles_from_params
     # TODO Fix slightly 'hacky' solution to missing resource_pages param
-    titles_to_add = (params['resource_pages'] || []).collect{ |title, checked| checked=='0' ? nil : title }.delete_if { |v| !v }
+    titles_to_add = (params['resource_pages'] || []).reject{|_, checked| checked=='0' }.map(&:first)
     selected_pages = []
     titles_to_add.each do |t|
       selected_pages << Page.find_by_title(t)
