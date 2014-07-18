@@ -27,4 +27,4 @@
             = "Resource created by #{resource.user.name}"
         .content-edit-button.float-right
           - if current_user
-            = link_to("Edit resource", "/resources/#{params[:id]}/edit", class: "btn btn-primary")
+            = link_to("Edit resource", edit_resource_path(params), class: "btn btn-primary")
