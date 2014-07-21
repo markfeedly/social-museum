@@ -11,10 +11,7 @@
   - else
     = paginate @resources
     - @resources.each do |r|
-      -#
-        TODO Either change this to slug and use slug as identifying attribute for resources
-        or modify tests to use title to identify resource. Titles may be ambiguous
-        if they do not need to be unique. Ideally implement slugs for resources.
+      / TODO Change if titles are not mandated to be unique
       .search-result{data: {'resource-title' => r.title}}
         .summary-title
           %a{href: resource_path(r.id)}

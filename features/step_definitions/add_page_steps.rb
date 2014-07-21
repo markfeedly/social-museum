@@ -1,5 +1,5 @@
 Before do
-  @pages = []
+  @pages = Hash.new{|h,k| h[k] = []}
 end
 
 def page_count
@@ -16,19 +16,13 @@ def create_page(title: nil, content: "test content", tags: "")
     fill_in('Tags', :with => tags)
     click_button('Create Page')
   end
-  @pages << title
+  # TODO Change empty array to resource_title (or unique identifier)
+  @pages[title] = []
 end
 
-
-
 When(/^I create (a|\d+) pages?$/) do |pages|
-  if pages == "a"
-    create_page()
-  else
-    (1..pages.to_i).each do
-      create_page
-    end
-  end
+  pages = 1 if pages == "a"
+  pages.to_i.times.each{ create_page }
 end
 
 When(/^I create a page entitled "([^"]*)"$/) do |title|
