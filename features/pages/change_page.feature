@@ -41,12 +41,12 @@ Feature: Wiki page editing
     When I create a page entitled "Test" with content "Test me"
     And I make the comment "Test me" on the page entitled "Test"
 
-    Then I can see a comment "Test me" as the most recent comment on the page entitled "Test"
+    Then I can see a comment "Test me" as most recent comment on the page entitled "Test"
 
   Scenario: I can comment on pages, and they will appear with most recent first
     When I create a page entitled "Test" with content "Test me"
     And I make the comment "Test me" on the page entitled "Test"
     And I make the comment "Test me please" on the page entitled "Test"
 
-    Then I can see a comment "Test me please" as the most recent comment on the page entitled "Test"
-    And I can see a comment "Test me" as the second most recent comment on the page entitled "Test"
+    Then I can see a comment "Test me please" as most recent comment on the page entitled "Test"
+    And I can see a comment "Test me" as second most recent comment on the page entitled "Test"

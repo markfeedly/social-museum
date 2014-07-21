@@ -1,5 +1,5 @@
 When(/^I create a page entitled "(.*?)" with content "(.*?)"$/) do |title, content|
-  click_link('add_page_link')
+  visit new_page_path
 
   within_role 'page-form' do
     fill_in('Title', :with => title)
@@ -9,7 +9,7 @@ When(/^I create a page entitled "(.*?)" with content "(.*?)"$/) do |title, conte
 end
 
 When(/^I create a tagged page entitled "(.*?)" with content "(.*?)" and tags "(.*?)"$/) do |title, content, tags|
-  click_link('add_page_link')
+  visit new_page_path
 
   within_role 'page-form' do
     fill_in('Title',   :with => title)
