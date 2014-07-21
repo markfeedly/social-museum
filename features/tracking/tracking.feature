@@ -6,7 +6,7 @@ Feature: Tracking
   Background:
     Given I exist as a user
     When I sign in with valid credentials
-    And I create a page entitled "Test me" with content "My content"
+    And I create a page entitled "Test me"
     And I sign out
 
   Scenario: Page creator is notified when a comment is created

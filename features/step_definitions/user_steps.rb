@@ -130,6 +130,14 @@ When(/^I turn an existing user into an administrator$/) do
   user.save!
 end
 
+When(/^I have signed in with valid admin credentials$/) do
+  steps %{
+  When I sign up with valid user data
+  And I sign in with valid credentials
+  And I turn an existing user into an administrator
+  }
+end
+
 When(/^I turn an existing admin into a standard user$/) do
   user = User.find_by_email(user_email)
   user.admin = false

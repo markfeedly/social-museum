@@ -15,6 +15,7 @@ Feature: Resource editing
 
     Then I can see an image resource with title "Test2", and a link to "http://media.npr.org/images/picture-show-flickr-promo.jpg"
 
+  # TODO Establish whether this is or is not desirable - app/models/resource.rb and app/views/resources/index.html.haml
   Scenario: Edit resource title to a pre-existing title
     When I create a new resource with title "Test1", and a link to "http://media.npr.org/images/picture-show-flickr-promo.jpg"
     And I create a new resource with title "Test2", and a link to "http://media.npr.org/images/picture-show-flickr-promo.jpg"

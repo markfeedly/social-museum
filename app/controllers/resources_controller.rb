@@ -91,8 +91,8 @@ class ResourcesController < ApplicationController
   end
 
   def need_to_update_resource?(update_params)
-    resource.title          != update_params[:title]      ||
-        resource.description != update_params[:description] ||
-        resource.pages       != update_params[:pages]
+       resource.title       != update_params[:title]       ||
+       resource.description != update_params[:description] ||
+       resource.pages       != update_params[:pages]
   end
 end
