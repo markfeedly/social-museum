@@ -14,8 +14,8 @@ class Resource < ActiveRecord::Base
 
   # Delete appropriate line depending on whether titles must be unique
   # for resources
-  validates :title, presence: {allow_blank: false }
-  #validates :title, uniqueness: true, presence: {allow_blank: false }
+  #validates :title, presence: {allow_blank: false }
+  validates :title, uniqueness: true, presence: {allow_blank: false }
   validate :source_ok?
 
   def source

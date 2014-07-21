@@ -1,64 +1,34 @@
-=begin
-Then(/^I can see an image resource with title "(.*?)", and a link to "(.*?)"$/) do |resource_title, resource_url|
+def visit_resource(resource_title: nil, page_title: nil)
   visit resources_path
-
-  within("[data-resource-slug='#{Resource.find_by_title(title).slug}']") do
-    page.should have_content(resource_title)
-    page.should have_css("img[src='#{resource_url}']")
-  end
-end
-
-Then(/^I can see a resource entitled "(.*?)", and a link to "(.*?)", associated with page "(.*?)"$/) do |resource_title, resource_url, page_title |
-  visit resources_path
-
-  within("[data-resource-slug='#{Resource.find_by_title(title).slug}']") do
-    page.should have_link(page_title, :href => page_path(Page.find_by_title(page_title)))
-  end
-end
-
-Then(/^I can see a resource entitled "(.*?)" with description "(.*?)"$/) do |resource_title, resource_description |
-  visit resources_path
-
-  within("[data-resource-slug='#{Resource.find_by_title(title).slug}']") do
-    page.should have_content(resource_title)
-    page.should have_content(resource_description)
-  end
-end
-
-Then(/^I cannot see an image resource with title "(.*?)", and a link to "(.*?)"$/) do |resource_title, resource_url|
-  visit resources_path
-
-  within("[data-resource-slug='#{Resource.find_by_title(title).slug}']") do
-    page.should have_content(resource_title)
-    page.should_not have_css("img[src='#{resource_url}']")
-  end
-end
-=end
-
-Then(/^I can see an image resource with title "(.*?)", and a link to "(.*?)"$/) do |resource_title, resource_url|
-  visit resources_path
-
-  within("[data-resource-title='#{resource_title}']") do
-    page.should have_content(resource_title)
-    page.should have_css("img[src='#{resource_url}']")
-  end
-end
-
-Then(/^I can see a resource entitled "(.*?)", and a link to "(.*?)", associated with page "(.*?)"$/) do |resource_title, resource_url, page_title |
-  visit resources_path
-
+  resource_title  ||= @resources.find{|_, v| v.include? page_title}.try(:first)
   within("[data-resource-title='#{resource_title}']") do
     click_link(resource_title)
   end
-
-  page.should have_link(page_title, :href => page_path(Page.find_by_title(page_title)))
 end
 
-Then(/^I can see a resource entitled "(.*?)" with description "(.*?)"$/) do |resource_title, resource_description |
-  visit resources_path
+Then(/^I can see a resource entitled "(.*?)"$/) do |page_title|
+  page.should have_content(page_title)
+end
 
-  within("[data-resource-title='#{resource_title}']") do
-    click_link(resource_title)
+Then(/^I cannot see a resource entitled "(.*?)"$/) do |page_title|
+  page.should_not have_content(page_title)
+end
+
+Then(/^I can see a resource with a link to "(.*?)"$/) do |resource_url|
+  visit resources_path
+  page.should have_css("img[src='#{resource_url}']")
+end
+
+Then(/^I can see a resource associated with a page entitled "(.*?)"$/) do |page_title|
+  visit_resource(page_title: page_title)
+  click_link(page_title)
+end
+
+Then(/^I can see a resource with description "(.*?)"$/) do |resource_description|
+  visit resources_path
+  # TODO Use a less generic way to find the description
+  within(".search-result") do
+    first('a').click
   end
 
   page.should have_content(resource_description)
