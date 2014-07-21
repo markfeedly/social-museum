@@ -15,12 +15,14 @@ Feature: Wiki page addition
 
   Examples:
     |Number|
+    |0     |
     |1     |
     |2     |
     |3     |
     |9     |
     |10    |
     |11    |
+    |19    |
     |20    |
     |21    |
 

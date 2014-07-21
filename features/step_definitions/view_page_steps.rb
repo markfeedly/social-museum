@@ -19,6 +19,11 @@ Then(/^I can see a page entitled "([^"]*)"$/) do |title|
   page.should have_content(title)
 end
 
+Then(/^I can't see a page entitled "([^"]*)"$/) do |title|
+  visit pages_path
+  page.should_not have_content(title)
+end
+
 Then(/^I can see a page with content "([^"]*)"$/) do |content|
   visit pages_path
   page.should have_content(content)
@@ -29,18 +34,9 @@ Then(/^I can see a page with tags "([^"]*)"$/) do |tags|
   page.should have_content(tags)
 end
 
-Then(/^I can't see a page entitled "([^"]*)"$/) do |title|
-  visit pages_path
-  page.should_not have_content(title)
-end
-
 Then(/^I cannot see the remove page link$/) do
   visit pages_path
   page.should_not have_css("[delete-page]")
-end
-
-Then(/^I can see a page with title "(.*?)"$/) do |title|
-  page.should have_content(title)
 end
 
 CAPTURE_ITEM_RECENCY = Transform /^(|second|third) ?most recent$/ do |position|
