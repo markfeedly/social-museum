@@ -1,33 +1,37 @@
-When(/^I navigate to the 'Pages' page$/) do
-  click_link 'Pages'
+Then(/^I can see (a|\d+) pages?$/) do |pages|
+  visit pages_path
+  count = 0
+  pages = 1 if pages == "a"
+
+  loop do
+    count += page.all("div.search-result").count.to_i
+    if page.has_css?("a[rel='next']")
+      page.first('a[rel="next"]').click
+    else
+      break
+    end
+  end
+  count.should == pages.to_i
 end
 
-Then(/^I can see a page entitled "(.*?)" with content "(.*?)"$/) do |title, content|
+Then(/^I can see a page entitled "([^"]*)"$/) do |title|
   visit pages_path
   page.should have_content(title)
+end
+
+Then(/^I can see a page with content "([^"]*)"$/) do |content|
+  visit pages_path
   page.should have_content(content)
 end
 
-Then(/^I can't see a page entitled "(.*?)" with content "(.*?)"$/) do |title, content|
+Then(/^I can see a page with tags "([^"]*)"$/) do |tags|
   visit pages_path
-  page.should_not have_content(title)
-  page.should_not have_content(content)
-end
-
-Then(/^I can see a tagged page entitled "(.*?)" with content "(.*?)" and tags "(.*?)"$/) do |title, content, tags|
-  page.should have_content(title)
-  page.should have_content(content)
   page.should have_content(tags)
 end
 
-Then(/^I see the navigation menu$/) do
-  within('.nav') do
-    page.should have_content('New Page')
-    page.should have_content('Pages')
-    page.should have_content('New Resource')
-    page.should have_content('Resource')
-    page.should have_content('Profile')
-  end
+Then(/^I can't see a page entitled "([^"]*)"$/) do |title|
+  visit pages_path
+  page.should_not have_content(title)
 end
 
 Then(/^I cannot see the remove page link$/) do

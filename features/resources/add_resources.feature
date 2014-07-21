@@ -16,7 +16,7 @@ Feature: Resource addition
     And I can see an image resource with title "Test2", and a link to "http://i16.photobucket.com/albums/b24/mustangii/cat-tax-cat-with-gun-looking-out-window-760030.jpg"
 
   Scenario: Add a resource associated with a page
-    When I create a page entitled "Test" with content "My content"
+    When I create a page entitled "Test"
     And I create a new resource entitled "Test", and a link to "http://media.npr.org/images/picture-show-flickr-promo.jpg", associated with page "Test"
 
     Then I can see a resource entitled "Test", and a link to "http://media.npr.org/images/picture-show-flickr-promo.jpg", associated with page "Test"
