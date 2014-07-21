@@ -20,30 +20,6 @@ Then(/^I can see a tagged page entitled "(.*?)" with content "(.*?)" and tags "(
   page.should have_content(tags)
 end
 
-Then(/^I can see one item of page history containing "(.*?)" as most recent$/) do |arg1|
-  within('#history-tab') do
-    within('li[data-history-idx="0"]') do
-      page.should have_content(arg1)
-    end
-  end
-end
-
-Then(/^I can see one item of page history containing "(.*?)" as second most recent$/) do |arg1|
-  within('#history-tab') do
-    within('li[data-history-idx="1"]') do
-      page.should have_content(arg1)
-    end
-  end
-end
-
-Then(/^I can see one item of page history containing "(.*?)" as third most recent$/) do |arg1|
-  within('#history-tab') do
-    within('li[data-history-idx="2"]') do
-      page.should have_content(arg1)
-    end
-  end
-end
-
 Then(/^I see the navigation menu$/) do
   within('.nav') do
     page.should have_content('New Page')
@@ -63,20 +39,25 @@ Then(/^I can see a page with title "(.*?)"$/) do |title|
   page.should have_content(title)
 end
 
-Then(/^I can see a comment "(.*?)" as the most recent comment on the page entitled "(.*?)"$/) do |comment_content, page_title|
-  visit page_path(Page.find_by_title(page_title))
+CAPTURE_ITEM_RECENCY = Transform /^(|second|third) ?most recent$/ do |position|
+  index = 0 if position == ""
+  index = 1 if position == "second"
+  index = 2 if position == "third"
+  index
+end
 
-  within('li[data-comment-idx="0"]') do
-    within(".comment-content") do
-      page.should have_content(comment_content)
+Then(/^I can see one item of page history containing "(.*?)" as (#{CAPTURE_ITEM_RECENCY})$/) do |arg1, index|
+  within('#history-tab') do
+    within("li[data-history-idx='#{index}']") do
+      page.should have_content(arg1)
     end
   end
 end
 
-Then(/^I can see a comment "(.*?)" as the second most recent comment on the page entitled "(.*?)"$/) do |comment_content, page_title|
+Then(/^I can see a comment "(.*?)" as (#{CAPTURE_ITEM_RECENCY}) comment on the page entitled "(.*?)"$/) do |comment_content, index, page_title|
   visit page_path(Page.find_by_title(page_title))
 
-  within('li[data-comment-idx="1"]') do
+  within("li[data-comment-idx='#{index}']") do
     within(".comment-content") do
       page.should have_content(comment_content)
     end
