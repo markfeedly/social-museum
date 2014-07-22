@@ -72,7 +72,6 @@ class PagesController < ApplicationController
                                  :item_number,
                                  :location,
                                  :lock_version,
-                                 :moscow,
                                  :slug,
                                  :tags,
                                  :title,
