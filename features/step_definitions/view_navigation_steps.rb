@@ -15,6 +15,6 @@ Then(/^I see the user navigation menu$/) do
     # TODO Establish appropriate way to refer to profile/edit from route
     #page.should have_css("a[href='#{edit_user_path(User.find_by_email(user_email))}']")
     page.should have_css("a[href='/users/edit']")
-    page.should have_css("form[action='#{destroy_user_session_path}']")
+    page.should have_css("a[href='#{destroy_user_session_path}']")
   end
 end
