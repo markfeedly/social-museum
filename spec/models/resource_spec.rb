@@ -6,7 +6,6 @@ describe Resource do
   # ----------------------------------------------------
 
   it "creation works and has starting version" do
-    expect( resource.user_id ).to eq 1
     expect( resource.versions.count ).to eq 1
   end
 

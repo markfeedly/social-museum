@@ -1,3 +1,5 @@
 %span.tags
-  = (render  partial: 'tags/tag', collection: tags, spacer_template: 'tags/tag_spacer').html_safe if  tags != []
-  = 'No tags' if tags == []
+  - if tags == []
+    = 'No tags'
+  - else
+    = (render partial: 'tags/tag', collection: tags, spacer_template: 'tags/tag_spacer').html_safe

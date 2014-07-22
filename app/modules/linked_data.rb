@@ -43,7 +43,6 @@ module LinkedData
     categories.split(',').collect { |c| ld_trail(c.strip, predicate) }
   end
 
-  #TODO not used as yet YAGNI :) ?
   def ld_assert(start_subject, predicate, end_object)
     trail = ld_trail(start_subject, predicate)
     return false unless (s_index = trail.index start_subject)

@@ -42,13 +42,6 @@ RSpec.configure do |config|
   #     --seed 1234
   #mvh config.order = "random"
 
-  config.before(:suite) do
-    DatabaseCleaner.strategy = :truncation
-  end
-  config.before(:each) do
-    DatabaseCleaner.clean
-  end
-
 end
 
 OmniAuth.config.test_mode = true
