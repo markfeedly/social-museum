@@ -13,25 +13,25 @@ describe ContentHtmlGenerator do
     page.update(user: user, content: "preamble [#{page.title}] postamble")
 
     expect(ContentHtmlGenerator.generate_full(page)).to eq \
-        "<p>preamble <a href='/pages/#{page.slug}' data-page>#{page.title}</a> postamble</p>\n"
+        "<p>preamble </p><a href='/pages/#{page.slug}' data-page>#{page.title}</a><p> postamble</p>\n"
   end
 
   it "should process a non-existing page title" do
     page.update(user: user, content: "pre-amble [My non-existent title] post-amble")
 
     expect(ContentHtmlGenerator.generate_full(page)).to eq \
-        "<p>pre-amble <a href='/pages/new?page_title=My non-existent title' data-new-page>My non-existent title</a> post-amble</p>\n"
+        "<p>pre-amble </p><a href='/pages/new?page_title=My non-existent title' data-new-page>My non-existent title</a><p> post-amble</p>\n"
   end
 
   it "should process an embedded image" do
     page.update(user: user, content: 'pre-amble [http://a.b/img.png] post-amble')
 
     ContentHtmlGenerator.generate_full(page).should ==
-        "<p>pre-amble <div><img src='http://a.b/img.png'/></div> post-amble</p>\n"
+        "<p>pre-amble </p><div><img src='http://a.b/img.png'/></div><p> post-amble</p>\n"
   end
 
   it "should process an embedded image and width" do
-    pending 'look into what should really be output in tricky circumstances'
+    #pending 'look into what should really be output in tricky circumstances'
     page.update(user: user, content: 'pre-amble [http://a.b/img.png 100] post-amble')
 
     ContentHtmlGenerator.generate_full(page).should ==
