@@ -24,11 +24,14 @@
         %br
         / TODO Phrase button more appropriately, or create a means to select existing resource.
         = link_to("Add resource", new_resource_path, class: "btn btn-primary")
-        - if (current_user)
-          = link_to( 'Subscribe',  subscribe_page_path(page),   class: 'btn btn-primary') if page.subscribed?(current_user) == false
-          = link_to( 'Unsubscribe', unsubscribe_page_path(page), class: 'btn btn-primary') if page.subscribed?(current_user) == true
+        - if current_user
+          - if page.subscribed?(current_user)
+            = link_to( 'Unsubscribe', unsubscribe_page_path(page), class: 'btn btn-primary')
+          - else
+            = link_to( 'Subscribe', subscribe_page_path(page), class: 'btn btn-primary')
   .clear
 
+  / TODO Could be important when 'categories' changes
   - if page.has_category?('UMCS Collection')
     .content-footer.parent-div
 
