@@ -12,23 +12,19 @@
   <link rel="icon" type="image/png" href="<%= image_path ENV['FAVICON'] %>">
 </head>
 <body>
-<%# application layout styled for Twitter Bootstrap 2.3 %>
-<header>
-  <%= render 'layouts/header' %>
-</header>
-<main role="main">
-  <div class="container">
-    <div class="content">
+    <%# application layout styled for Twitter Bootstrap 2.3 %>
+    <header>
+        <%= render 'layouts/header' %>
+    </header>
+    <div class="container">
       <div class="row">
         <div class="span12">
           <%= render 'layouts/messages' %>
           <%= yield %>
         </div>
       </div>
-      <footer>
-      </footer>
     </div>
-  </div>
-</main>
+    <footer>
+    </footer>
 </body>
 </html>
