@@ -79,7 +79,7 @@ describe Page do
     expect(page.history.count).to eq 3
   end
 
-  it 'page should reflect successive changes' do
+  it "page should reflect successive changes" do
     page.reload
     expect{page.update(user: user, title: 'changed title')}.to change{page.title}.to('changed title')
     expect{page.reload}.to change{page.lock_version}
