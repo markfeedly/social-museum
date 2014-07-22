@@ -25,30 +25,28 @@ describe 'Subscription' do
     page.subscribers.count.should == 2
     page.subscribers.first.should == user
     page.subscribers.last.should == user1
-    user.pages.should == [page]
+    user.subscribed_pages.should == [page]
   end
 
   it "should keep track of subscribed pages for several users" do
-    user.pages.should == [page]
-    user1.pages.should == []
+    user.subscribed_pages.should == [page]
+    user1.subscribed_pages.should == []
     page.subscribe(user1)
-    page.subscribers.should == [user, user1]
-    user.pages.should == [page]
+    page.subscribers.should include(user, user1)
+    user.subscribed_pages.should == [page]
     user1.reload
-    user1.pages.should == [page]
+    user1.subscribed_pages.should == [page]
   end
 
   it "should allow a user to subscribe to multiple pages" do
     page1 = FactoryGirl.create(:page, title: 'second title', user: user, content: 'anyway' )
-    user.pages.should == [page1, page]
+    user.subscribed_pages.should == [page, page1]
 
     page2 = FactoryGirl.create(:page, title: 'fourth title', user: user, content: 'racy' )
     user.reload
 
-    user.pages.count.should == 3
-    user.pages.include?(page).should == true
-    user.pages.include?(page1).should == true
-    user.pages.include?(page2).should == true
+    user.subscribed_pages.count.should == 3
+    user.subscribed_pages.should include(page, page1, page2)
   end
 
   it "should subscribe a comment creator" do
