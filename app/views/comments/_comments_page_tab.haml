@@ -15,7 +15,9 @@
     to comment
   .clear
 
-  -if page.comments.empty?
-
+  %br
+  -if page.comments.present?
+    %ul.no-bullets
+      = render partial: 'comments/comment', collection: page.comments
   - else
-    %ul.no-bullets= render partial: 'comments/comment', collection: page.comments
+    No comments yet
