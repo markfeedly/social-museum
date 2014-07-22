@@ -10,7 +10,7 @@
 - else
   = paginate @pages
   .page-summary-width-plus
-    - @pages.each do |pg|
-      %hr
-      = render partial: 'pages/page_summary', locals: {page: pg}
+    %hr
+  - @pages.each do |pg|
+    = render partial: 'pages/page_summary', locals: {page: pg}
   = paginate @pages
