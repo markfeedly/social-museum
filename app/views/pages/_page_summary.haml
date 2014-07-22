@@ -1,20 +1,15 @@
 .search-result{data: {'page-slug' => page.slug}}
-  .page-summary-width.page-summary-image-indent
-    = link_to page.title, page_path(page), class: 'summary-title'
-  .clear
+  = link_to page.title, page_path(page), class: 'summary-title'
   %br
   .parent-div.page-summary-width
     .float-left.width-150px.page-summary-image-indent
       = link_to image_tag(ContentHtmlGenerator.page_image(page) || 'http://localhost/Pictures/no_image.png'), page_url(page)
       %br
     .float-right.width-400px
-      .try_in_rhs
-        = ContentHtmlGenerator.generate_part(page).html_safe
-      .clear
-    .clear
+      = ContentHtmlGenerator.generate_part(page).html_safe
 
   - if current_user && current_user.can_delete?(page)
-    .float-right.delete-page
+    .clear.float-right.delete-page
       = link_to 'Remove page', page,
                :data =>  {:confirm => 'Are you sure you want to remove this page? This cannot be undone.'}  ,
                :method => :delete
@@ -24,6 +19,5 @@
       = render 'tags/tags', tags: page.history.last.tags_as_array
     .tags-and-categories
       = render partial: 'categories/categories', locals: {categories: page.history.last.categories_as_array}
-  .clear
-    .page-summary-width-plus
-      %hr
+  .clear.page-summary-width-plus
+    %hr
