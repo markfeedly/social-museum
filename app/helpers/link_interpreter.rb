@@ -95,6 +95,7 @@ class LinkInterpreter
   end
 
   def process_youtube_url
+
     process_video_url('youtube.com/embed/', '=')
   end
 
@@ -104,7 +105,7 @@ class LinkInterpreter
 
   def process_video_url(prefix, split)
     @rest &&= @rest.split(' ', 2)[0]
-    @rest ||= 400
+    @rest ||= '400'
     video_id = @first.split(split)[-1]
     "<iframe src='//#{prefix}#{video_id}' width='#{@rest}' height='#{(@rest.to_i * 0.5625).ceil}' frameborder='0' allowfullscreen sandbox='allow-scripts allow-same-origin'></iframe>"
   end

@@ -58,7 +58,7 @@ describe LinkInterpreter do
   it "should process an unsized youtube video" do
     video_url = 'http://www.youtube.com/watch?v=pNe6fsaCVtI'
     li = LinkInterpreter.new(video_url)
-    video_slug = video_url.split('=')[-1].split(' ')[0]
+    video_slug = video_url.split('=')[-1]
 
     check_outputs(li, :process_youtube_url,
                   "<iframe src='//youtube.com/embed/#{video_slug}' width='400' height='225' frameborder='0' allowfullscreen sandbox='allow-scripts allow-same-origin'></iframe>")
@@ -67,7 +67,7 @@ describe LinkInterpreter do
   it "should process an unsized vimeo video" do
     video_url = 'http://vimeo.com/channels/staffpicks/42109988'
     li = LinkInterpreter.new(video_url)
-    video_slug = video_url.split('/')[-1].split(' ')[0]
+    video_slug = video_url.split('/')[-1]
 
     check_outputs(li, :process_vimeo_url,
                   "<iframe src='//player.vimeo.com/video/#{video_slug}' width='400' height='225' frameborder='0' allowfullscreen sandbox='allow-scripts allow-same-origin'></iframe>")
