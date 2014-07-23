@@ -54,7 +54,6 @@ class LinkInterpreter
   end
 
   #TODO refine checking of these URLs to see that they look good for vids
-
   def is_youtube_url?
     is_domain? 'youtube.com'
   end
@@ -97,6 +96,7 @@ class LinkInterpreter
   end
 
   #TODO test and refine
+  #TODO implement setting of width
   def process_youtube_url
     youtube_id = @first.gsub(/.*=/, '')
     "<div><iframe width=\"420\" height=\"315\" src=\"//www.youtube.com/embed/#{youtube_id}\" frameborder=\"0\" allowfullscreen></iframe></div>"
@@ -114,16 +114,11 @@ class LinkInterpreter
 
 #TODO untested  write embed code for youtube and vimeo
   def process
-    return process_page_title if page_title?
-    return process_image_url if image_url?
+    return process_page_title  if page_title?
+    return process_image_url   if image_url?
     return process_youtube_url if is_youtube_url?
-    return process_vimeo_url if is_vimeo_url?
+    return process_vimeo_url   if is_vimeo_url?
     process_url
   end
 
-
 end
-
-
-
-
