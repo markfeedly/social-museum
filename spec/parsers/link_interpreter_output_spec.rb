@@ -44,33 +44,51 @@ describe LinkInterpreter do
     li = LinkInterpreter.new(image_url)
 
     check_outputs(li, :process_image_url_without_width,
-        "<div><img src='#{image_url}'/></div>" )
+        "<img src='#{image_url}'/>" )
   end
 
   it "should process an image with a width in pixels" do
-    image_url_and_width = 'http://hedtek.com/some/page.png  300'
+    image_url_and_width = 'http://hedtek.com/some/page.png 300'
     li = LinkInterpreter.new(image_url_and_width)
 
     check_outputs(li, :process_image_url_with_width,
-        "<div><img src='http://hedtek.com/some/page.png' style='width: 300px;'/></div>" )
+        "<img src='http://hedtek.com/some/page.png' style='width: 300px;'/>" )
   end
 
   it "should process an unsized youtube video" do
     video_url = 'http://www.youtube.com/watch?v=pNe6fsaCVtI'
     li = LinkInterpreter.new(video_url)
-    new_video_url = video_url.gsub('http:','').gsub('watch?v=','embed/')
+    video_slug = video_url.split('=')[-1].split(' ')[0]
 
     check_outputs(li, :process_youtube_url,
-                  "<div><iframe width='420' height='315' src='#{new_video_url}' frameborder='0' allowfullscreen></iframe></div>")
+                  "<iframe src='//youtube.com/embed/#{video_slug}' width='400' height='225' frameborder='0' allowfullscreen sandbox='allow-scripts allow-same-origin'></iframe>")
   end
 
   it "should process an unsized vimeo video" do
     video_url = 'http://vimeo.com/channels/staffpicks/42109988'
     li = LinkInterpreter.new(video_url)
-    video_slug = video_url.split('/')[-1]
+    video_slug = video_url.split('/')[-1].split(' ')[0]
 
     check_outputs(li, :process_vimeo_url,
-                  "<iframe src='//player.vimeo.com/video/#{video_slug}' width='420' height='236' frameborder='0' webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>")
+                  "<iframe src='//player.vimeo.com/video/#{video_slug}' width='400' height='225' frameborder='0' allowfullscreen sandbox='allow-scripts allow-same-origin'></iframe>")
+  end
+
+  it "should process a youtube video with width in pixels" do
+    video_url = 'http://www.youtube.com/watch?v=pNe6fsaCVtI 400'
+    li = LinkInterpreter.new(video_url)
+    video_slug = video_url.split('=')[-1].split(' ')[0]
+
+    check_outputs(li, :process_youtube_url,
+                  "<iframe src='//youtube.com/embed/#{video_slug}' width='400' height='225' frameborder='0' allowfullscreen sandbox='allow-scripts allow-same-origin'></iframe>")
+  end
+
+  it "should process a vimeo video with width in pixels" do
+    video_url = 'http://vimeo.com/channels/staffpicks/42109988 400'
+    li = LinkInterpreter.new(video_url)
+    video_slug = video_url.split('/')[-1].split(' ')[0]
+
+    check_outputs(li, :process_vimeo_url,
+                  "<iframe src='//player.vimeo.com/video/#{video_slug}' width='400' height='225' frameborder='0' allowfullscreen sandbox='allow-scripts allow-same-origin'></iframe>")
   end
 
 end
