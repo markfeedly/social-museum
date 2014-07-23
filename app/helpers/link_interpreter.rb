@@ -99,12 +99,12 @@ class LinkInterpreter
   #TODO implement setting of width
   def process_youtube_url
     youtube_id = @first.gsub(/.*=/, '')
-    "<div><iframe width=\"420\" height=\"315\" src=\"//www.youtube.com/embed/#{youtube_id}\" frameborder=\"0\" allowfullscreen></iframe></div>"
+    "<div><iframe width='420' height='315' src='//www.youtube.com/embed/#{youtube_id}' frameborder='0' allowfullscreen></iframe></div>"
   end
 
   def process_vimeo_url
     vimeo_id = @first.split('/')[-1]
-    "<iframe src=\"//player.vimeo.com/video/#{vimeo_id}\" width=\"420\" height=\"236\" frameborder=\"0\" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>"
+    "<iframe src='//player.vimeo.com/video/#{vimeo_id}' width='420' height='236' frameborder='0' webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>"
   end
 
   def output_type

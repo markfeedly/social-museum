@@ -32,7 +32,7 @@ describe LinkInterpreter do
   end
 
   it "should output a hyperlink showing link text" do
-    url_and_hyperlink_with_text= 'http://hedtek.com/some/page funny money'
+    url_and_hyperlink_with_text = 'http://hedtek.com/some/page funny money'
     li = LinkInterpreter.new(url_and_hyperlink_with_text)
 
     check_outputs(li, :process_url_with_text,
@@ -40,7 +40,7 @@ describe LinkInterpreter do
   end
 
   it "should process an unsized image" do
-    image_url= 'http://hedtek.com/some/page.png'
+    image_url = 'http://hedtek.com/some/page.png'
     li = LinkInterpreter.new(image_url)
 
     check_outputs(li, :process_image_url_without_width,
@@ -48,11 +48,29 @@ describe LinkInterpreter do
   end
 
   it "should process an image with a width in pixels" do
-    image_url_and_width= 'http://hedtek.com/some/page.png  300'
-    li=LinkInterpreter.new(image_url_and_width)
+    image_url_and_width = 'http://hedtek.com/some/page.png  300'
+    li = LinkInterpreter.new(image_url_and_width)
 
     check_outputs(li, :process_image_url_with_width,
         "<div><img src='http://hedtek.com/some/page.png' style='width: 300px;'/></div>" )
+  end
+
+  it "should process an unsized youtube video" do
+    video_url = 'http://www.youtube.com/watch?v=pNe6fsaCVtI'
+    li = LinkInterpreter.new(video_url)
+    new_video_url = video_url.gsub('http:','').gsub('watch?v=','embed/')
+
+    check_outputs(li, :process_youtube_url,
+                  "<div><iframe width='420' height='315' src='#{new_video_url}' frameborder='0' allowfullscreen></iframe></div>")
+  end
+
+  it "should process an unsized vimeo video" do
+    video_url = 'http://vimeo.com/channels/staffpicks/42109988'
+    li = LinkInterpreter.new(video_url)
+    video_slug = video_url.split('/')[-1]
+
+    check_outputs(li, :process_vimeo_url,
+                  "<iframe src='//player.vimeo.com/video/#{video_slug}' width='420' height='236' frameborder='0' webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>")
   end
 
 end
