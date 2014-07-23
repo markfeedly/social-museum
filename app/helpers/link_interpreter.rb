@@ -53,7 +53,6 @@ class LinkInterpreter
     !!(domain.match(domain_to_match))
   end
 
-  #TODO refine checking of these URLs to see that they look good for vids
   def is_youtube_url?
     is_domain? 'youtube.com'
   end
@@ -95,16 +94,19 @@ class LinkInterpreter
     @rest ? process_image_url_with_width : process_image_url_without_width
   end
 
-  #TODO test and refine
-  #TODO implement setting of width
   def process_youtube_url
-    youtube_id = @first.gsub(/.*=/, '')
-    "<div><iframe width='420' height='315' src='//www.youtube.com/embed/#{youtube_id}' frameborder='0' allowfullscreen></iframe></div>"
+    process_video_url('youtube.com/embed/', '=')
   end
 
   def process_vimeo_url
-    vimeo_id = @first.split('/')[-1]
-    "<iframe src='//player.vimeo.com/video/#{vimeo_id}' width='420' height='236' frameborder='0' webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>"
+    process_video_url('player.vimeo.com/video/', '/')
+  end
+
+  def process_video_url(prefix, split)
+    @rest &&= @rest.split(' ', 2)[0]
+    @rest ||= 400
+    video_id = @first.split(split)[-1]
+    "<iframe src='//#{prefix}#{video_id}' width='#{@rest}' height='#{(@rest.to_i * 0.5625).ceil}' frameborder='0' allowfullscreen sandbox='allow-scripts'></iframe>"
   end
 
   def output_type
@@ -112,7 +114,6 @@ class LinkInterpreter
     :in_line_hyperlink
   end
 
-#TODO untested  write embed code for youtube and vimeo
   def process
     return process_page_title  if page_title?
     return process_image_url   if image_url?

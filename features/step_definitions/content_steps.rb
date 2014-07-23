@@ -12,7 +12,7 @@ end
 
 Then(/^I can see Youtube video "(.*?)"$/) do |video_id|
   within( '.content-content') do
-    page.should have_css("iframe[src='//www.youtube.com/embed/#{video_id}']")
+    page.should have_css("iframe[src='//youtube.com/embed/#{video_id}']")
   end
 end
 
