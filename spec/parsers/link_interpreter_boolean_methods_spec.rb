@@ -13,29 +13,29 @@ describe LinkInterpreter do
   end
 
   it "should recognise a URL as a URL and not a page title" do
-    li = LinkInterpreter.new('http://hedtek.com')
-    li.url?.should be_true
-    li.page_title?.should be_false
+    urls = ['http://hedtek.com',
+            'https://hedtek.com',
+            'http://www.hedtek.com',
+            'https://www.hedtek.com',
+            'http://hedtek.com/xx',
+            'https://hedtek.com/xx',
+            'http://www.hedtek.com/xx',
+            'https://www.hedtek.com/xx',
+            'http://hedtek.com/xx/y-y',
+            'https://hedtek.com/xx/y-y',
+            'http://www.hedtek.com/xx/y-y',
+            'https://www.hedtek.com/xx/y-y',
+            'http://hedtek.com/xx/y-y/img.png',
+            'https://hedtek.com/xx/y-y/img.png',
+            'http://www.hedtek.com/xx/y-y/img.png',
+            'https://www.hedtek.com/xx/y-y/img.png']
 
-    li = LinkInterpreter.new('https://hedtek.com')
-    li.url?.should be_true
-    li.page_title?.should be_false
-
-    li = LinkInterpreter.new('http://www.hedtek.com')
-    li.url?.should be_true
-    li.page_title?.should be_false
-
-    li = LinkInterpreter.new('http://hedtek.com/xx')
-    li.url?.should be_true
-    li.page_title?.should be_false
-
-    li = LinkInterpreter.new('http://hedtek.com/xx/y-y')
-    li.url?.should be_true
-    li.page_title?.should be_false
-
-    li = LinkInterpreter.new('http://hedtek.com/xx/y-y/img.png')
-    li.url?.should be_true
-    li.page_title?.should be_false
+    urls.each do |url|
+      puts url
+      li = LinkInterpreter.new(url)
+      li.url?.should be_true
+      li.page_title?.should be_false
+    end
 
   end
 
