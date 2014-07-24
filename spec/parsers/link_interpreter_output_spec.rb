@@ -101,22 +101,41 @@ describe LinkInterpreter do
     end
   end
 
-  it "should process an unsized vimeo video" do
-    video_url = 'http://vimeo.com/channels/staffpicks/42109988'
-    li = LinkInterpreter.new(video_url)
-    video_slug = video_url.split('/')[-1]
+  describe "Vimeo link processing" do
+    let(:video_slug) {"42109988"}
+    let(:non_video_link) {"http://www.vimeo.com"}
+    let(:video_link) {"http://www.vimeo.com/channels/staffpicks/#{video_slug}"}
+    let(:video_link_with_query) {"http://www.vimeo.com/channels/staffpicks/#{video_slug}?playlist=awesome_playlist"}
+    let(:width) {600}
+    let(:height) { (width * (9.fdiv(16))).ceil }
+    let(:video_link_with_width){"#{video_link} #{width}"}
 
-    check_outputs(li, :process_vimeo_url,
-                  "<iframe src='//player.vimeo.com/video/#{video_slug}' width='400' height='225' frameborder='0' allowfullscreen sandbox='allow-scripts allow-same-origin'></iframe>")
+    it "should process a video link" do
+      li = LinkInterpreter.new(video_link)
+
+      check_outputs(li, :process_vimeo_url,
+                    "<iframe src='//player.vimeo.com/video/#{video_slug}' width='400' height='225' frameborder='0' allowfullscreen sandbox='allow-scripts allow-same-origin'></iframe>")
+    end
+
+    it "should process a video with a width" do
+      li = LinkInterpreter.new(video_link_with_width)
+
+      check_outputs(li, :process_vimeo_url,
+                    "<iframe src='//player.vimeo.com/video/#{video_slug}' width='#{width}' height='#{height}' frameborder='0' allowfullscreen sandbox='allow-scripts allow-same-origin'></iframe>")
+    end
+
+    it "should process a video with a query" do
+      li = LinkInterpreter.new(video_link_with_query)
+
+      check_outputs(li, :process_vimeo_url,
+                    "<iframe src='//player.vimeo.com/video/#{video_slug}' width='400' height='225' frameborder='0' allowfullscreen sandbox='allow-scripts allow-same-origin'></iframe>")
+    end
+
+    it "should process a vimeo link which is not a video" do
+      li = LinkInterpreter.new(non_video_link)
+
+      check_outputs(li, :process_vimeo_url,
+                    "<a href='#{non_video_link}' external-link>#{non_video_link}</a>")
+    end
   end
-
-  it "should process a vimeo video with width in pixels" do
-    video_url = 'http://vimeo.com/channels/staffpicks/42109988 400'
-    li = LinkInterpreter.new(video_url)
-    video_slug = video_url.split('/')[-1].split(' ')[0]
-
-    check_outputs(li, :process_vimeo_url,
-                  "<iframe src='//player.vimeo.com/video/#{video_slug}' width='400' height='225' frameborder='0' allowfullscreen sandbox='allow-scripts allow-same-origin'></iframe>")
-  end
-
 end
