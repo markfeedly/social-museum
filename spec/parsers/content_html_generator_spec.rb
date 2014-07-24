@@ -39,18 +39,18 @@ describe ContentHtmlGenerator do
   end
 
   it "should process an embedded image and width in tricky circumstances" do
-    pending 'look into what should really be output re paras and divs'
+    #pending 'look into what should really be output re paras and divs'
     page.update(user: user, content: '[http://a.b/first.png 100] some text [http://a.b/second.png 100] post-amble')
 
     ContentHtmlGenerator.generate_full(page).should ==
-        "<img src='http://a.b/first.png' style='width: 100px;'/><p>some text<img src='http://a.b/second.png' style='width: 100px;'/> post-amble</p>\n"
+        "<p><img src='http://a.b/first.png' style='width: 100px;'/> some text <img src='http://a.b/second.png' style='width: 100px;'/> post-amble</p>\n"
   end
 
   it "should process an only on line image and width" do
     page.update(user: user, content: '[http://a.b/img.png 100]')
 
     ContentHtmlGenerator.generate_full(page).should ==
-        "<img src='http://a.b/img.png' style='width: 100px;'/>\n"
+        "<p><img src='http://a.b/img.png' style='width: 100px;'/></p>\n"
   end
 
 end
