@@ -2,7 +2,11 @@ require 'spec_helper'
 
 describe 'Previous Page' do
 
-  let(:page){ FactoryGirl.create(:page, title: 'Title', content: 'Content', tags: 't1, t2', categories: 'c1, c2') }
+  let(:page){ FactoryGirl.create(:page,
+                                 title: 'Title',
+                                 content: 'Content',
+                                 tags: 't1, t2',
+                                 categories: 'c1, c2') }
   let(:page_state) { page.history.last }
 
   it { page_state.should belong_to(:page) }

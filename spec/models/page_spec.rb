@@ -3,7 +3,9 @@ require 'spec_helper'
 describe Page do
 
   let(:user){ FactoryGirl.create(:user) }
-  let(:page){ FactoryGirl.create(:page, user: user, content: 'check me') }
+  let(:page){ FactoryGirl.create(:page,
+                                 user: user,
+                                 content: 'check me') }
   let(:page_state){ page.history.last }
   let(:user2){ FactoryGirl.create(:user) }
 
@@ -54,13 +56,6 @@ describe Page do
       page.update(user: user, content: 'new content')
       expect(page.history.count).to eq 2
       expect(page.history.last.user).to eq(user)
-    end
-
-    it "assignment should work correctly using history control with title in update" do
-      page.update(user: user, title: 'new title')
-      expect(page.history.count).to eq 2
-      expect(page.history.last.user).to eq(user)
-      expect(page.history.last.title).to eq('new title')
     end
   end
 

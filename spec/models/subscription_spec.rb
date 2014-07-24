@@ -4,7 +4,10 @@ describe 'Subscription' do
 
   let(:user) {FactoryGirl.create(:user) }
   let(:user1) {FactoryGirl.create(:user) }
-  let(:page){ FactoryGirl.create(:page, title: 'first title', user: user, content: 'any' ) }
+  let(:page){ FactoryGirl.create(:page,
+                                 title: 'first title',
+                                 user: user,
+                                 content: 'any' ) }
 
   it "should subscribe page creator" do
     page.subscribers.count.should == 1
@@ -39,10 +42,16 @@ describe 'Subscription' do
   end
 
   it "should allow a user to subscribe to multiple pages" do
-    page1 = FactoryGirl.create(:page, title: 'second title', user: user, content: 'anyway' )
+    page1 = FactoryGirl.create(:page,
+                               title: 'second title',
+                               user: user,
+                               content: 'anyway' )
     user.subscribed_pages.should == [page, page1]
 
-    page2 = FactoryGirl.create(:page, title: 'fourth title', user: user, content: 'racy' )
+    page2 = FactoryGirl.create(:page,
+                               title: 'fourth title',
+                               user: user,
+                               content: 'racy' )
     user.reload
 
     user.subscribed_pages.count.should == 3

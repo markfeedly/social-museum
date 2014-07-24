@@ -18,10 +18,9 @@ describe Resource do
     expect( resource.versions[0].object_changes['title']).to eq ['Title 1', 'New Title']
   end
 
-
-
 end
 
+#TODO establish why this is here?
 #<ActiveRecord::Associations::CollectionProxy [
 
 # #<Secretary::Version id: 2, version_number: 2, versioned_type: "Resource",
