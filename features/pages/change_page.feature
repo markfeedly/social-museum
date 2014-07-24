@@ -4,14 +4,14 @@ Feature: Wiki page editing
     Given I have signed in with valid credentials
 
   Scenario: Edit page title
-    When I create a page with content "Test me"
+    When I create a page
     And I change the page title to "Famous Photographer"
 
     Then I can see a page entitled "Famous Photographer"
 
   Scenario: Edit page title to a pre-existing title
     When I create a page entitled "Pre-existing title"
-    And I create a page entitled "Test"
+    And I create a page
     And I change the page title to "Pre-existing title"
 
     Then I can see a "has already been taken" error for the page title
