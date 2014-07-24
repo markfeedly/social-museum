@@ -28,9 +28,9 @@ class Page < ActiveRecord::Base
   before_validation :set_slug, on: :create
   after_create :subscribe_creator
 
-  validates :title, presence: true, uniqueness: true
+  validates :title,   presence: true, uniqueness: true
+  validates :slug,    presence: true, uniqueness: true
   validates :content, presence: true
-  validates :slug, uniqueness: true
 
   #---------------------------------------------------------
 
@@ -84,12 +84,15 @@ class Page < ActiveRecord::Base
   def previous_content
     history.length == 1 ? nil : history[-2].content
   end
+
   def previous_title
     history.length == 1 ? nil : history[-2].title
   end
+
   def previous_categories
     history.length == 1 ? nil : history[-2].categories
   end
+
   def previous_tags
     history.length == 1 ? nil : history[-2].tags
   end

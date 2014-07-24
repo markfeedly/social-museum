@@ -9,15 +9,26 @@ describe Page do
 
   # ----------------------------------------------------
 
-  it "page creation results in one page state in page history" do
-    page.history.should == [page_state]
+  describe "Validations" do
+    it { page.should validate_presence_of(:title) }
+    it { page.should validate_uniqueness_of(:title) }
+
+    it { page.should validate_presence_of(:content) }
+
+    it { page.should validate_uniqueness_of(:slug) }
   end
 
-  it "assignment should work correctly using history control" do
-    page.update(content: 'new content')
-    expect(page.history.count).to eq 2
-    expect(page.content).to eq('new content')
-    expect(page.history.last.content).to eq('new content')
+  describe "History" do
+    it "page creation results in one page state in page history" do
+      page.history.should == [page_state]
+    end
+
+    it "assignment should work correctly using history control" do
+      page.update(content: 'new content')
+      expect(page.history.count).to eq 2
+      expect(page.content).to eq('new content')
+      expect(page.history.last.content).to eq('new content')
+    end
   end
 
   it "assignment should work correctly for title" do
