@@ -17,6 +17,7 @@ class Resource < ActiveRecord::Base
   validates :title, uniqueness: true, presence: true
   validate :validate_source
 
+  #TODO verify how file will work && implement?
   def source
     url || file
   end

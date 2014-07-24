@@ -4,4 +4,4 @@ module PageHelper
     xxx should never get here
   ContentHtmlGenerator.generate_full(pg).html_safe
   end
-  end
+end
