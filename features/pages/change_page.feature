@@ -17,7 +17,7 @@ Feature: Wiki page editing
     Then I can see a "has already been taken" error for the page title
 
   Scenario: Edit page body
-    When I create a page with content "Test me"
+    When I create a page
     And I change the page content to "Mario Testino"
 
     Then I can see a page with content "Mario Testino"
