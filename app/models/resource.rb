@@ -1,3 +1,5 @@
+require 'uri'
+
 class Resource < ActiveRecord::Base
   has_secretary
 
@@ -12,11 +14,8 @@ class Resource < ActiveRecord::Base
   tracks_association :pages
   tracks_association :user
 
-  # Delete appropriate line depending on whether titles must be unique
-  # for resources
-  #validates :title, presence: {allow_blank: false }
-  validates :title, uniqueness: true, presence: {allow_blank: false }
-  validate :source_ok?
+  validates :title, uniqueness: true, presence: true
+  validate :validate_source
 
   def source
     url || file
@@ -24,12 +23,9 @@ class Resource < ActiveRecord::Base
 
   private
 
-  def source_ok?
-    self.url = nil if url == ''
-    self.file = nil if file == ''
-
-    ret = (url && !file) || (!url && file)
-    errors.add :url, 'one of file or URL should be set as the resource source' unless ret
-    ret
+  def validate_source
+    if url !~ URI::regexp(['http','https']) && file.blank?
+      errors.add :url, 'one of file or URL should be set as the resource source'
+    end
   end
 end
