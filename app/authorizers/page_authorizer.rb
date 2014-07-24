@@ -9,4 +9,3 @@ class PageAuthorizer < Authority::Authorizer
   end
 
 end
-

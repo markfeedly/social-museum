@@ -1,4 +1,3 @@
 class CategoriesController < ApplicationController
 
 end
-
