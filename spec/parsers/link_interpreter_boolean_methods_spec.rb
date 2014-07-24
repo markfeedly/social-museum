@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe LinkInterpreter do
+describe LinkInterpreter, "boolean methods" do
 
-  describe "Page titles" do
+  context "Page titles" do
     it "should recognise a page title" do
       li = LinkInterpreter.new('Some title')
       expect(li.page_title?).to be_true
@@ -14,7 +14,7 @@ describe LinkInterpreter do
     end
   end
 
-  describe "URLs" do
+  context "URLs" do
     it "should recognise a URL as a URL and not a page title" do
       urls = ['http://hedtek.com',
               'https://hedtek.com',
@@ -89,8 +89,8 @@ describe LinkInterpreter do
       expect(li.is_domain?('sefol.com')).to be_false
     end
 
-    describe "Content URLs" do
-      describe "Image URLs" do
+    context "Content URLs" do
+      context "Image URLs" do
         it "should recognise an image url or not" do
           li = LinkInterpreter.new('http://hedtek.com/x/u/img.zip')
           expect(li.image_url?).to be_false
@@ -108,8 +108,8 @@ describe LinkInterpreter do
         end
       end
 
-      describe "Video URLs" do
-        describe "YouTube" do
+      context "Video URLs" do
+        context "YouTube" do
           it "should recognise a youtube URL" do
             urls = ['http://youtube.com/embed/0123ABC',
                     'http://youtube.com',
@@ -133,7 +133,7 @@ describe LinkInterpreter do
           end
         end
 
-        describe "Vimeo" do
+        context "Vimeo" do
           it "should recognise a vimeo URL" do
             urls = ['http://vimeo.com/channels/staffpicks/42109988',
                     'http://vimeo.com',

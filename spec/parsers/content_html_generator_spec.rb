@@ -10,49 +10,53 @@ describe ContentHtmlGenerator do
         "<p>#{page.content}</p>"
   end
 
-  it "should process an existing page title correctly" do
-    page.update(user: user, content: "preamble [#{page.title}] postamble")
+  context "Page titles" do
+    it "should process an existing page title correctly" do
+      page.update(user: user, content: "preamble [#{page.title}] postamble")
 
-    expect(ContentHtmlGenerator.generate_full(page)).to include
-        "<a href='/pages/#{page.slug}' data-page>#{page.title}</a>"
+      expect(ContentHtmlGenerator.generate_full(page)).to include
+          "<a href='/pages/#{page.slug}' data-page>#{page.title}</a>"
+    end
+
+    it "should process a non-existing page title" do
+      page.update(user: user, content: "pre-amble [My non-existent title] post-amble")
+
+      expect(ContentHtmlGenerator.generate_full(page)).to include
+          "<a href='/pages/new?page_title=My non-existent title' data-new-page>My non-existent title</a>"
+    end
   end
 
-  it "should process a non-existing page title" do
-    page.update(user: user, content: "pre-amble [My non-existent title] post-amble")
+  context "Images" do
+    it "should process an embedded image" do
+      page.update(user: user, content: "pre-amble [http://a.b/img.png] post-amble")
 
-    expect(ContentHtmlGenerator.generate_full(page)).to include
-        "<a href='/pages/new?page_title=My non-existent title' data-new-page>My non-existent title</a>"
-  end
+      expect(ContentHtmlGenerator.generate_full(page)).to include
+          "<img src='http://a.b/img.png'/>"
+    end
 
-  it "should process an embedded image" do
-    page.update(user: user, content: "pre-amble [http://a.b/img.png] post-amble")
+    it "should process an embedded image and width" do
+      page.update(user: user, content: "pre-amble [http://a.b/img.png 100] post-amble")
 
-    expect(ContentHtmlGenerator.generate_full(page)).to include
-        "<img src='http://a.b/img.png'/>"
-  end
+      expect(ContentHtmlGenerator.generate_full(page)).to include
+          "<img src='http://a.b/img.png' style='width: 100px;'/>"
+    end
 
-  it "should process an embedded image and width" do
-    page.update(user: user, content: "pre-amble [http://a.b/img.png 100] post-amble")
+    it "should process an embedded image and width in tricky circumstances" do
+      page.update(user: user, content: "[http://a.b/first.png 100] some text [http://a.b/second.png 100] post-amble")
 
-    expect(ContentHtmlGenerator.generate_full(page)).to include
-        "<img src='http://a.b/img.png' style='width: 100px;'/>"
-  end
+      expect(ContentHtmlGenerator.generate_full(page)).to include
+          "<img src='http://a.b/first.png' style='width: 100px;'/>"
 
-  it "should process an embedded image and width in tricky circumstances" do
-    page.update(user: user, content: "[http://a.b/first.png 100] some text [http://a.b/second.png 100] post-amble")
+      expect(ContentHtmlGenerator.generate_full(page)).to include
+          "<img src='http://a.b/second.png' style='width: 100px;'/>"
+    end
 
-    expect(ContentHtmlGenerator.generate_full(page)).to include
-        "<img src='http://a.b/first.png' style='width: 100px;'/>"
+    it "should process an only on line image and width" do
+      page.update(user: user, content: "[http://a.b/img.png 100]")
 
-    expect(ContentHtmlGenerator.generate_full(page)).to include
-        "<img src='http://a.b/second.png' style='width: 100px;'/>"
-  end
-
-  it "should process an only on line image and width" do
-    page.update(user: user, content: "[http://a.b/img.png 100]")
-
-    expect(ContentHtmlGenerator.generate_full(page)).to include
-        "<img src='http://a.b/img.png' style='width: 100px;'/>"
+      expect(ContentHtmlGenerator.generate_full(page)).to include
+          "<img src='http://a.b/img.png' style='width: 100px;'/>"
+    end
   end
 
 end
