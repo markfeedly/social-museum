@@ -95,19 +95,32 @@ class LinkInterpreter
   end
 
   def process_youtube_url
+    uri = URI.parse(@first)
+    params = Hash[uri.query.split('&').map{|p| p.split('=')}] if uri.query
 
-    process_video_url('youtube.com/embed/', '=')
+    if params
+      process_video_url("youtube.com/embed/#{params['v']}")
+    else
+      process_url
+    end
   end
 
   def process_vimeo_url
-    process_video_url('player.vimeo.com/video/', '/')
+    uri = URI.parse(@first)
+    id = uri.path.split('/').last
+
+    if id
+      process_video_url("player.vimeo.com/video/#{id}")
+    else
+      process_url
+    end
   end
 
-  def process_video_url(prefix, split)
+  def process_video_url(video_url)
     @rest &&= @rest.split(' ', 2)[0]
     @rest ||= '400'
-    video_id = @first.split(split)[-1]
-    "<iframe src='//#{prefix}#{video_id}' width='#{@rest}' height='#{(@rest.to_i * 0.5625).ceil}' frameborder='0' allowfullscreen sandbox='allow-scripts allow-same-origin'></iframe>"
+    aspect_ratio = 0.5625
+    "<iframe src='//#{video_url}' width='#{@rest}' height='#{(@rest.to_i * aspect_ratio).ceil}' frameborder='0' allowfullscreen sandbox='allow-scripts allow-same-origin'></iframe>"
   end
 
   def output_type

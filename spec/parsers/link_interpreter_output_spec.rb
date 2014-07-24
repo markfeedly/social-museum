@@ -55,13 +55,50 @@ describe LinkInterpreter do
         "<img src='http://hedtek.com/some/page.png' style='width: 300px;'/>" )
   end
 
-  it "should process an unsized youtube video" do
-    video_url = 'http://www.youtube.com/watch?v=pNe6fsaCVtI'
-    li = LinkInterpreter.new(video_url)
-    video_slug = video_url.split('=')[-1]
+  describe "Youtube link processing" do
+    let(:video_slug) {"pNe6fsaCVtI"}
+    let(:non_video_link) {"http://www.youtube.com"}
+    let(:video_link) {"http://www.youtube.com/watch?v=#{video_slug}"}
+    let(:video_link_with_playlist) {"http://www.youtube.com/watch?v=#{video_slug}&playlist=awesome_playlist"}
+    let(:video_link_reverse_order) {"http://www.youtube.com/watch?playlist=awesome_playlist&v=#{video_slug}"}
+    let(:width) {600}
+    let(:height) { (width * (9.fdiv(16))).ceil }
+    let(:video_link_with_width){"#{video_link} #{width}"}
 
-    check_outputs(li, :process_youtube_url,
-                  "<iframe src='//youtube.com/embed/#{video_slug}' width='400' height='225' frameborder='0' allowfullscreen sandbox='allow-scripts allow-same-origin'></iframe>")
+    it "should process a video link" do
+      li = LinkInterpreter.new(video_link)
+
+      check_outputs(li, :process_youtube_url,
+                    "<iframe src='//youtube.com/embed/#{video_slug}' width='400' height='225' frameborder='0' allowfullscreen sandbox='allow-scripts allow-same-origin'></iframe>")
+    end
+
+    it "should process a video with a width" do
+      li = LinkInterpreter.new(video_link_with_width)
+
+      check_outputs(li, :process_youtube_url,
+                    "<iframe src='//youtube.com/embed/#{video_slug}' width='#{width}' height='#{height}' frameborder='0' allowfullscreen sandbox='allow-scripts allow-same-origin'></iframe>")
+    end
+
+    it "should process a video with a playlist" do
+      li = LinkInterpreter.new(video_link_with_playlist)
+
+      check_outputs(li, :process_youtube_url,
+                    "<iframe src='//youtube.com/embed/#{video_slug}' width='400' height='225' frameborder='0' allowfullscreen sandbox='allow-scripts allow-same-origin'></iframe>")
+    end
+
+    it "should process a video with a reversed order query string" do
+      li = LinkInterpreter.new(video_link_reverse_order)
+
+      check_outputs(li, :process_youtube_url,
+                    "<iframe src='//youtube.com/embed/#{video_slug}' width='400' height='225' frameborder='0' allowfullscreen sandbox='allow-scripts allow-same-origin'></iframe>")
+    end
+
+    it "should process a youtube link which is not a video" do
+      li = LinkInterpreter.new(non_video_link)
+
+      check_outputs(li, :process_youtube_url,
+                    "<a href='#{non_video_link}' external-link>#{non_video_link}</a>")
+    end
   end
 
   it "should process an unsized vimeo video" do
@@ -71,15 +108,6 @@ describe LinkInterpreter do
 
     check_outputs(li, :process_vimeo_url,
                   "<iframe src='//player.vimeo.com/video/#{video_slug}' width='400' height='225' frameborder='0' allowfullscreen sandbox='allow-scripts allow-same-origin'></iframe>")
-  end
-
-  it "should process a youtube video with width in pixels" do
-    video_url = 'http://www.youtube.com/watch?v=pNe6fsaCVtI 400'
-    li = LinkInterpreter.new(video_url)
-    video_slug = video_url.split('=')[-1].split(' ')[0]
-
-    check_outputs(li, :process_youtube_url,
-                  "<iframe src='//youtube.com/embed/#{video_slug}' width='400' height='225' frameborder='0' allowfullscreen sandbox='allow-scripts allow-same-origin'></iframe>")
   end
 
   it "should process a vimeo video with width in pixels" do
