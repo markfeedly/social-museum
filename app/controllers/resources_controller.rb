@@ -69,6 +69,7 @@ class ResourcesController < ApplicationController
 
   private
 
+  #TODO What is going on with this third line?
   def resource_or_nil
     id = params[:id]
     result = nil

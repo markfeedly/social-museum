@@ -9,6 +9,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end
 
+#TODO Either scrap this or implement?
 =begin
   def update
     authorize! :update, @user, :message => 'Not authorized as an administrator.'

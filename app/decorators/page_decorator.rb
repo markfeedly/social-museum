@@ -53,12 +53,10 @@ class PageDecorator < Draper::Decorator
 
 # history tab
 
-
 # last change tab
 
   def last_change_as_html
-    previous_content = page.previous_content
-    if previous_content
+    if page.previous_content
       (h.render 'users/user_and_time', user: page.history.last.user.name, thing: page.history.last) +
           Diffy::Diff.new(page.previous_content, page.content).to_s(:html).html_safe
     else
@@ -67,10 +65,10 @@ class PageDecorator < Draper::Decorator
   end
 
   def page_changes_as_html
-    html = ((any_diff_as_html :title) +
-    (any_diff_as_html :content) +
-    (any_diff_as_html :tags) +
-    (any_diff_as_html :categories)).html_safe
+    html = ((any_diff_as_html :title)   +
+            (any_diff_as_html :content) +
+            (any_diff_as_html :tags)    +
+            (any_diff_as_html :categories)).html_safe
     html == '' ? '<p>No change on last save</p>'.html_safe : html
   end
 
@@ -78,23 +76,23 @@ class PageDecorator < Draper::Decorator
     Diffy::Diff.new(previous, current).to_s(:html)
   end
 
+  #Todo maybe a cleaner way of doing this?
   def any_diff_as_html (symb)
     if symb == :title && page.previous_title != title
-      ret = '<h3>Title</h3>' +
-            compare_versions(page.previous_title, title)
-    elsif symb == :content  && page.previous_content != content
-      ret = '<h3>Content</h3>' +
-            compare_versions(page.previous_content, content)
+      '<h3>Title</h3>' +
+      compare_versions(page.previous_title, title)
+    elsif symb == :content && page.previous_content != content
+      '<h3>Content</h3>' +
+      compare_versions(page.previous_content, content)
     elsif symb == :tags && page.previous_tags != tags
-      ret = '<h3>Tags</h3>' +
-            compare_versions(page.previous_tags, tags)
+      '<h3>Tags</h3>' +
+      compare_versions(page.previous_tags, tags)
     elsif symb == :categories && page.previous_categories != categories
-      ret = '<h3>Categories</h3>' +
-            compare_versions(page.previous_categories, categories)
+      '<h3>Categories</h3>' +
+      compare_versions(page.previous_categories, categories)
     else
-      ret = ''
+      ''
     end
-    ret
   end
 
 end
