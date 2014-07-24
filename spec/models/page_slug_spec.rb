@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'Page slug' do
 
   let(:user) {FactoryGirl.create(:user) }
-  let(:page){ FactoryGirl.create(:page,
+  let(:page) {FactoryGirl.create(:page,
                                  title: 'first title',
                                  user: user,
                                  content: 'any' ) }
@@ -20,4 +20,3 @@ describe 'Page slug' do
            slug).to eq 'first-title-1'
   end
 end
-
