@@ -3,6 +3,7 @@ require 'pp'
 
 class LinkInterpreter
 
+  #TODO Large restructure of this file
   def url
     @first
   end

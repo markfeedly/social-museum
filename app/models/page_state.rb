@@ -15,7 +15,7 @@ class PageState < ActiveRecord::Base
 
   def tags=(new_tags)
     begin
-      self['tags'] =  clean(new_tags)
+      self['tags'] = clean(new_tags)
     rescue
       self['tags'] = ''
     end

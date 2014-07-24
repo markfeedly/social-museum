@@ -97,7 +97,7 @@ class Page < ActiveRecord::Base
     history.length == 1 ? nil : history[-2].tags
   end
 
-  #------------------------------------------------------------------
+  #---------------------------------------------------------
 
   def set_slug
     if slug.blank?
