@@ -76,7 +76,7 @@ class PageDecorator < Draper::Decorator
     Diffy::Diff.new(previous, current).to_s(:html)
   end
 
-  #Todo maybe a cleaner way of doing this?
+  #Todo maybe a cleaner way of doing this? - Maybe with a page.previous which takes a symbol
   def any_diff_as_html (symb)
     if symb == :title && page.previous_title != title
       '<h3>Title</h3>' +
