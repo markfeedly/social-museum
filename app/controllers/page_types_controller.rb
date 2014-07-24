@@ -1,4 +1,3 @@
 class PageTypesController < ApplicationController
 
 end
-

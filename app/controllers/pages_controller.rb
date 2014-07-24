@@ -75,8 +75,7 @@ class PagesController < ApplicationController
                                  :slug,
                                  :tags,
                                  :title,
-                                 :page_type
-                                 )
+                                 :page_type )
   end
 
   private
