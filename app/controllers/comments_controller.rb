@@ -18,7 +18,7 @@ class CommentsController < ApplicationController
 
   def index
     @approved_comments = Comment(:approved => true)
-    @rejected_comments = Comment(:approved => false) if admin?
+    @rejected_comments = Comment(:approved => false) if :user.admin?
   end
 
   def destroy

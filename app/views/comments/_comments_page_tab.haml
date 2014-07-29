@@ -19,7 +19,7 @@
   %br
   -if @approved_comments.present?
     %ul.no-bullets
-      = render partial: 'comments/comment', collection: page.approved_comments
+      = render partial: 'comments/comment', collection: @approved_comments
   - else
     No comments yet
 
