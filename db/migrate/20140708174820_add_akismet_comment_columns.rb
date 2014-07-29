@@ -1,4 +1,4 @@
-class ExtraCommentColsForAkismetor < ActiveRecord::Migration
+class AddAkismetCommentColumns < ActiveRecord::Migration
   def change
     add_column :comments, :user_ip, :string
     add_column :comments, :user_agent, :string

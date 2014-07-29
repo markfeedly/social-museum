@@ -31,7 +31,6 @@ gem 'font-awesome-rails'
 gem 'newrelic_rpm'
 gem 'rakismet'
 gem 'secretary-rails'
-gem 'akismetor'
 
 
 group :development, :test do
