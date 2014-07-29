@@ -39,17 +39,3 @@ Feature: Wiki page editing
     Then I can see one item of page history containing "Test me" as third most recent
     And I can see one item of page history containing "Mario Testino" as second most recent
     And I can see one item of page history containing "Famous Photographer" as most recent
-
-  Scenario: I can comment on pages
-    When I create a page entitled "Test"
-    And I make the comment "Test me" on the page entitled "Test"
-
-    Then I can see a comment "Test me" as most recent comment on the page entitled "Test"
-
-  Scenario: I can comment on pages, and they will appear with in recent-first order
-    When I create a page entitled "Test"
-    And I make the comment "Test me" on the page entitled "Test"
-    And I make the comment "Test me please" on the page entitled "Test"
-
-    Then I can see a comment "Test me please" as most recent comment on the page entitled "Test"
-    And I can see a comment "Test me" as second most recent comment on the page entitled "Test"
