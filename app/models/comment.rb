@@ -1,13 +1,23 @@
 class Comment < ActiveRecord::Base
+  include Rakismet::Model
+
   belongs_to :page
   belongs_to :user
-  validates :content, presence: true
-  # validates :commenter, presence: true
-  #TODO add error feedback if either of the two above are true
 
+  rakismet_attrs :author       => proc { user.name  },
+                 :author_email => proc { user.email }
+
+  before_create :check_for_spam
   after_create :subscribe_creator, :notify_subscribers
 
+  validates_presence_of :content
+
   private
+
+  def check_for_spam
+    self.approved = !self.spam?
+    true
+  end
 
   def subscribe_creator
     page.subscribe(user)

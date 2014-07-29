@@ -2,9 +2,11 @@ class CommentsController < ApplicationController
 
   def create
     @page = Page.find_by_slug(params['page_id'])
-    @comment = @page.comments.create(user: current_user,
-                                     commenter: params[:comment][:commenter],
-                                     content: params[:comment][:content]  )
+    @comment = @page.comments.create(user:       current_user,
+                                     content:    params[:comment][:content],
+                                     user_ip:    request.remote_ip,
+                                     user_agent: request.env["HTTP_USER_AGENT"],
+                                     referrer:   request.env["HTTP_REFERRER"])
     redirect_to :back
   end
 
@@ -12,6 +14,6 @@ class CommentsController < ApplicationController
   end
 
   def page_params
-    params.require(:comment).permit(:commenter, :content, :user, :page)
+    params.require(:comment).permit(:user, :content, :page)
   end
 end
