@@ -1,12 +1,10 @@
 VirtualMuseum::Application.routes.draw do
   root :to => "home#index"
-  devise_for :users, :controllers => {:registrations      => "registrations",
+  devise_for :users, :controllers => {:registrations => "registrations",
                                       :omniauth_callbacks => "omniauth_callbacks" }
   resources :users
   resources :pages do
-    resources :comments, :collection => {:destroy_multiple => :delete},
-                         :member     => {:approve => :put,
-                                         :reject => :put }
+    resources :comments
     member do
       get :subscribe
       get :unsubscribe

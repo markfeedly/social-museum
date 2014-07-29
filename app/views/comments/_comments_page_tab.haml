@@ -17,28 +17,8 @@
   .clear
 
   %br
-  -if @approved_comments.present?
+  -if page.comments.present?
     %ul.no-bullets
-      = render partial: 'comments/comment', collection: page.approved_comments
+      = render partial: 'comments/comment', collection: page.comments
   - else
     No comments yet
-
-  -if @rejected_comments.present?
-    %ul.no-bullets
-      %h4 Rejected comments
-      %table
-      -for comment in @rejected_comments
-        %tr
-          %td
-            = check_box_tag "comment_idx[]", comment.id, true
-            = truncate(comment.content, 30)
-            = link_to "not spam",
-              approve_comment_path(comment),
-              :confirm => "Are you sure?",
-              :method => put
-      %p
-        = submit_tag "Destroy checked"
-
-  - else
-    %br
-    No rejected comments
