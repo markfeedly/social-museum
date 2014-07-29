@@ -31,6 +31,7 @@ gem 'font-awesome-rails'
 gem 'newrelic_rpm'
 gem 'rakismet'
 gem 'secretary-rails'
+gem 'lograge_params', github: "hedtek/lograge-params"
 
 
 group :development, :test do
@@ -46,6 +47,7 @@ group :development, :test do
   gem 'shoulda-matchers'
   gem 'database_cleaner'
   gem 'pry-rails'
+  gem 'pry-byebug'
 end
 
 group :test do
