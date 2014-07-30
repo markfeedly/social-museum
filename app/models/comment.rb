@@ -1,5 +1,7 @@
 class Comment < ActiveRecord::Base
   include Rakismet::Model
+  include Authority::Abilities
+  self.authorizer_name = 'CommentAuthorizer'
 
   belongs_to :page
   belongs_to :user
@@ -8,9 +10,20 @@ class Comment < ActiveRecord::Base
                  :author_email => proc { user.email }
 
   before_create :check_for_spam
-  after_create :subscribe_creator, :notify_subscribers
+  after_create  :subscribe_creator,
+                :notify_subscribers
 
   validates_presence_of :content
+
+  def spam!
+    self.approved = false
+    super
+  end
+  
+  def ham!
+    self.approved = true
+    super
+  end
 
   private
 

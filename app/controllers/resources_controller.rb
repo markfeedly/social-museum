@@ -18,7 +18,7 @@ class ResourcesController < ApplicationController
                                   user: current_user
                                  )
     if resource.save
-      redirect_to resource_url(resource), status: 301
+      redirect_to resource_url(resource)
     else
       render :new
     end
@@ -41,8 +41,8 @@ class ResourcesController < ApplicationController
   def update
     selected_pages = get_titles_from_params
     update_params = { description: params['resource']['description'],
-                      title: params['resource']['title'],
-                      pages: selected_pages }
+                      title:       params['resource']['title'],
+                      pages:       selected_pages }
 
     if resource.update_attributes(update_params)
       redirect_to resource_url(resource), status: 301
@@ -58,6 +58,7 @@ class ResourcesController < ApplicationController
   end
 
   def destroy
+    authorize_action_for resource # user must be an admin
     authorize_action_for resource # user must be an admin
     resource.destroy
     redirect_to :back

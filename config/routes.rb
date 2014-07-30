@@ -4,7 +4,10 @@ VirtualMuseum::Application.routes.draw do
                                       :omniauth_callbacks => "omniauth_callbacks" }
   resources :users
   resources :pages do
-    resources :comments
+    resources :comments do
+      post :approve
+      post :disapprove
+    end
     member do
       get :subscribe
       get :unsubscribe

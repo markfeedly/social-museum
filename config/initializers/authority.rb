@@ -21,13 +21,15 @@ config.user_method = :current_user
   # Defaults are as follows:
   #
 config.controller_action_map = {
-   :index   => 'read',
-   :show    => 'read',
-   :new     => 'create',
-   :create  => 'create',
-   :edit    => 'update',
-   :update  => 'update',
-   :destroy => 'delete'
+    index:   'read',
+    show:    'read',
+    new:     'create',
+    create:  'create',
+    edit:    'update',
+    update:  'update',
+    destroy: 'delete',
+    disapprove: 'disapprove',
+    approve:    'approve'
  }
 
   # ABILITIES
@@ -39,10 +41,12 @@ config.controller_action_map = {
   # Defaults are as follows:
   #
 config.abilities =  {
-   :create => 'creatable',
-   :read   => 'readable',
-   :update => 'updatable',
-   :delete => 'deletable'
+    create:     'creatable',
+    read:       'readable',
+    update:     'updatable',
+    delete:     'deletable',
+    disapprove: 'disapprove',
+    approve:    'approve'
  }
 
   # LOGGER

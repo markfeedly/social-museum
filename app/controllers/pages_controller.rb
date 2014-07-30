@@ -81,7 +81,7 @@ class PagesController < ApplicationController
   private
 
   def need_to_update?
-    page.title          != page_params[:title]      ||
+        page.title      != page_params[:title]      ||
         page.categories != page_params[:categories] ||
         page.tags       != page_params[:tags]       ||
         page.content    != page_params[:content]    ||
