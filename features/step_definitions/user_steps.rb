@@ -5,7 +5,7 @@ end
 
 def create_user_data(user_name="Testy McUserton")
   @user_data[user_name] ||= {:name => user_name, :email => "#{user_name.downcase.gsub(/ /,'.')}@example.com",
-                          :password => "changeme", :password_confirmation => "changeme"}
+                            :password => "changeme", :password_confirmation => "changeme"}
 end
 
 def user_exists?(user_name="Testy McUserton")
@@ -46,7 +46,6 @@ def sign_up(user_name="Testy McUserton")
   create_user_data(user_name)
 
   visit new_user_registration_path
-
   fill_in "Name", :with => @user_data[user_name][:name]
   fill_in "Email", :with => @user_data[user_name][:email]
   fill_in "user_password", :with => @user_data[user_name][:password]
@@ -83,6 +82,12 @@ end
 Given /^I have signed in with valid credentials$/ do
   create_user
   sign_in
+end
+
+Given /^I have signed in as a spammer/ do
+  sign_out
+  create_user("viagra-test-123")
+  sign_in("viagra-test-123")
 end
 
 Given /^I exist as a user$/ do
