@@ -7,25 +7,26 @@ Feature: Wiki page comment administration
 
   Background:
     Given I have signed in with valid admin credentials
-    And a user has posted a comment
+    And I create a page entitled "Test"
 
   Scenario: Admins can see approved comments, and disapprove them
-    Given the comment was approved
+    Given I make the comment "Test me" on the page entitled "Test"
+    And I can't see a message "This comment is awaiting approval" on the page entitled "Test"
 
-    When I disapprove the comment
+    When I disapprove a comment on the page entitled "Test"
 
-    Then I can see the comment is now pending
+    Then I can see a message "Test me" on the page entitled "Test"
 
   Scenario: Admins can permanently remove pending comments
-    Given the comment was not approved
+    Given a spammer makes the comment "Spam!" on the page entitled "Test"
 
-    When I remove the comment
+    When I remove a comment on the page entitled "Test"
 
-    Then I can no longer see the comment
+    Then I can't see a comment "Spam!" on the page entitled "Test"
 
   Scenario: Admins can see unapproved comments, and approve them
-    Given the comment was not approved
+    Given a spammer makes the comment "Spam!" on the page entitled "Test"
 
-    When I approve the comment
+    When I approve a comment on the page entitled "Test"
 
-    Then I can see the comment is approved
+    Then I can't see a comment "Spam!" on the page entitled "Test"
