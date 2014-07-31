@@ -26,5 +26,5 @@
           .color-bbb
             = "Resource created by #{resource.user.name}"
         .content-edit-button.float-right
-          - if current_user
+          - if current_user.can_update?(resource)
             = link_to("Edit resource", edit_resource_path(params), class: "btn btn-primary")

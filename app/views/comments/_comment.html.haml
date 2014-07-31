@@ -1,7 +1,7 @@
 - if comment.persisted? && current_user.can_read?(comment)
   %li{'data-comment-idx' => comment_counter }
     .float-right
-      - if current_user.try(:can_delete?, comment)
+      - if current_user.can_delete?(comment)
         = link_to fa_icon('trash-o'), page_comment_path(comment.page, comment),
                   :class   => 'remove-comment',
                   :data => { :confirm => 'Are you sure you want to remove this comment? This cannot be undone.' },

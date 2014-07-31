@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
 
   include Authority::UserAbilities
+  include Authority::Abilities
 
   # :lockable, :timeoutable
   devise :database_authenticatable, :registerable, :confirmable,
@@ -34,6 +35,10 @@ class User < ActiveRecord::Base
 
   def name_or_anonymous_user
     name == nil or name == '' ? 'An anonymous user' : name
+  end
+
+  def guest?
+    !persisted?
   end
 
 end

@@ -46,7 +46,9 @@ config.abilities =  {
     update:     'updatable',
     delete:     'deletable',
     disapprove: 'disapprove',
-    approve:    'approve'
+    approve:    'approve',
+    subscribe:  'subscribable',
+    unsubscribe: 'unsubscribable'
  }
 
   # LOGGER
