@@ -60,10 +60,6 @@ class Page < ActiveRecord::Base
     Page.order(:title).select{ |p| p.has_tag?( tag ) }
   end
 
-  def self.find_by_title(t)
-    Page.where(title: t).first
-  end
-
   #---------------------------------------------------------
 
   def has_category?(c)
@@ -81,12 +77,15 @@ class Page < ActiveRecord::Base
   #---------------------------------------------------------
 
   # used when invoking diffy
+  # or should be - it seems this is never called
+  # TODO establish what is happening with this.
   def previous_content
     history.length == 1 ? nil : history[-2].content
   end
 
   def previous_title
     history.length == 1 ? nil : history[-2].title
+    #history.length == 1 ? nil : history[-2].send("tidtle")
   end
 
   def previous_categories

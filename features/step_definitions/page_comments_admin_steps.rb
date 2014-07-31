@@ -3,7 +3,9 @@ When(/^I (approve|disapprove|remove) a comment on the page entitled "([^"]*)"$/)
 
   within("#comments") do
     within(".comment-content") do
-      click_link("#{action}-comment")
+      if page.has_css?("a[class='#{action}-comment']")
+        page.first("a[class='#{action}-comment']").click
+      end
     end
   end
 end
