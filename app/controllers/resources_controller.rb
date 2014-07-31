@@ -42,6 +42,8 @@ class ResourcesController < ApplicationController
     selected_pages = get_titles_from_params
     update_params = { description: params['resource']['description'],
                       title:       params['resource']['title'],
+                      url:         params['resource']['url'],
+                      file:        params['resource']['file'],
                       pages:       selected_pages }
 
     if resource.update_attributes(update_params)

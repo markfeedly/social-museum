@@ -25,11 +25,15 @@ def create_resource(title: nil, description: "", url: "http://broken.com/img.jpg
   @resources[title] = for_pages
 end
 
-When(/^I create a new resource entitled "(.*?)"$/) do |resource_title|
+When(/^I create a new resource entitled "([^"]+)"$/) do |resource_title|
   create_resource(title: resource_title)
 end
 
-When(/^I create a new resource with a link to "(.*?)"$/) do |resource_url|
+When(/^I create a new resource entitled "([^"]+)" with a link to "([^"]+)"$/) do |resource_title, resource_url|
+  create_resource(title: resource_title, url: resource_url)
+end
+
+When(/^I create a new resource with a link to "([^"]+)"$/) do |resource_url|
   create_resource(url: resource_url)
 end
 
