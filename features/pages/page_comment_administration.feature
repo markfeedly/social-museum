@@ -15,7 +15,8 @@ Feature: Wiki page comment administration
 
     When I disapprove a comment on the page entitled "Test"
 
-    Then I can see a message "Test me" on the page entitled "Test"
+    And I can see a comment "Test me" on the page entitled "Test"
+    And I can see a message "This comment is awaiting approval" on the page entitled "Test"
 
   Scenario: Admins can permanently remove pending comments
     Given a spammer makes the comment "Spam!" on the page entitled "Test"
@@ -29,4 +30,5 @@ Feature: Wiki page comment administration
 
     When I approve a comment on the page entitled "Test"
 
-    Then I can't see a comment "Spam!" on the page entitled "Test"
+    Then  I can see a comment "Spam!" on the page entitled "Test"
+    And I can't see a message "This comment is awaiting approval" on the page entitled "Test"

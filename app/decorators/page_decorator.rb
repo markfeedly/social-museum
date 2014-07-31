@@ -11,7 +11,9 @@ class PageDecorator < Draper::Decorator
     if model.categories.empty?
       "No categories"
     else
-      h.render partial: 'categories/category', collection: categories_as_arr, spacer_template: 'categories/trail_spacer'
+      h.render partial: 'categories/category',
+               collection: categories_as_arr,
+               spacer_template: 'categories/trail_spacer'
     end
   end
 
@@ -27,7 +29,9 @@ class PageDecorator < Draper::Decorator
     if model.tags.empty?
       "No tags"
     else
-      h.render partial: 'tags/tag', collection: tags_as_arr, spacer_template: 'tags/tag_spacer'
+      h.render partial: 'tags/tag',
+               collection: tags_as_arr,
+               spacer_template: 'tags/tag_spacer'
     end
   end
 
@@ -54,11 +58,15 @@ class PageDecorator < Draper::Decorator
 # history tab
 
 # last change tab
+#TODO wanted to refactor - discovered none of this gets hit - why?
 
   def last_change_as_html
     if page.previous_content
-      (h.render 'users/user_and_time', user: page.history.last.user.name, thing: page.history.last) +
-          Diffy::Diff.new(page.previous_content, page.content).to_s(:html).html_safe
+      (h.render        'users/user_and_time',
+                       user: page.history.last.user.name,
+                       thing: page.history.last) +
+       Diffy::Diff.new(page.previous_content,
+                       page.content).to_s(:html).html_safe
     else
       'No previous edit'
     end

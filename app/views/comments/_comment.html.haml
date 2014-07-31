@@ -10,19 +10,19 @@
       - if current_user && current_user.can_delete?(comment)
         .clear.float-right
           = link_to 'Remove comment', page_comment_path(comment.page, comment),
-                    :class   => '.remove-comment',
-                    :confirm => 'Are you sure you want to remove this page? This cannot be undone.',
+                    :class   => 'remove-comment',
+                    :data => { :confirm => 'Are you sure you want to remove this page? This cannot be undone.' },
                     :method  => :delete
       - if current_user && current_user.can_disapprove?(comment)
         .clear.float-right
           = link_to 'Disapprove comment', page_comment_disapprove_path(comment.page, comment),
-                    :class   => '.disapprove-comment',
-                    :confirm => 'Are you sure you want to remove this page? This cannot be undone.',
+                    :class   => 'disapprove-comment',
+                    :data => { :confirm => 'Are you sure you want to remove this page? This cannot be undone.' },
                     :method  => :post
       - if current_user && current_user.can_approve?(comment)
         .clear.float-right
           = link_to 'Approve comment', page_comment_approve_path(comment.page, comment),
-                    :class   => '.approve-comment',
-                    :confirm => 'Are you sure you want to remove this page? This cannot be undone.',
+                    :class   => 'approve-comment',
+                    :data => { :confirm => 'Are you sure you want to remove this page? This cannot be undone.'} ,
                     :method  => :post
   %hr
