@@ -19,4 +19,24 @@ describe 'Page slug' do
                               content: 'any' ).
            slug).to eq 'first-title-1'
   end
+
+  it "should append a number based on slug clashes" do
+    expect(FactoryGirl.create(:page,
+                              title: 'title',
+                              user: user,
+                              content: 'any' ).
+               slug).to eq 'title'
+
+    expect(FactoryGirl.create(:page,
+                              title: 'Title',
+                              user: user,
+                              content: 'any' ).
+               slug).to eq 'title-1'
+
+    expect(FactoryGirl.create(:page,
+                              title: 'titlE',
+                              user: user,
+                              content: 'any' ).
+               slug).to eq 'title-2'
+    end
 end
