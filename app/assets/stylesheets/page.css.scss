@@ -28,7 +28,7 @@
 .omniauth-provider-button {padding: 0 0 0 0; }
                   // make parent div have height of child floats
 .parent-div:after { content: " "; display: block; clear: both; }
-.red           { color: #ff5e1f; }
+.red           { color: #ff5e1f !important; }
 .relative      { position: relative; }
 .std-width     { width: 640px; }
 .time-and-user { color: lightseagreen; font-size: 0.96em; margin: 0 0 6px 0; }
