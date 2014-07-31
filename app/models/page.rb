@@ -100,7 +100,12 @@ class Page < ActiveRecord::Base
 
   def set_slug
     if slug.blank?
-      self.slug = title.parameterize
+      title_as_slug = title.parameterize
+      index = 0
+      until Page.where(slug: title_as_slug) == []
+        title_as_slug = "#{title.parameterize}" + "-#{index += 1}"
+      end
+      self.slug = title_as_slug
     end
   end
 

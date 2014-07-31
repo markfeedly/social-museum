@@ -5,15 +5,14 @@ class PagesController < ApplicationController
                 # :destroy requires admin, see method body
 
   def new
-    p = Page.new(title: params[:page_title])
-    self.page = p.decorate
+    self.page = Page.new(title: params[:page_title]).decorate
     render :new
   end
 
   def create
     page = Page.new(page_params.merge(user: current_user))
     if page.save
-      redirect_to page_url(page), status: 301
+      redirect_to page_url(page)
     else
       self.page = page.decorate
       render :new
@@ -34,7 +33,7 @@ class PagesController < ApplicationController
       end
     end
     if success
-      redirect_to page_url(page), status: 301
+      redirect_to page_url(page)
     else
       render :edit
     end
