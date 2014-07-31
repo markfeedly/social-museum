@@ -1,23 +1,28 @@
-.header.navbar.navbar-fixed-top.navbar-inverse
+
+.navbar.navbar-fixed-top.navbar-inverse
   .navbar-inner
-    #logo.nav.float-left
-      = link_to  'Social Museum', root_path, id: 'logo'
+    .container
+      .row
+        .span12
+          = link_to  'Social Museum', root_path, class: 'brand'
+          %ul.nav
+            %li= link_to     'Pages',         pages_path
+            %li= link_to     'Resources',     resources_path
 
-    #header-nav.nav.float-right
-      %ul.nav
-        %li= link_to     'Pages',         pages_path
-        %li= link_to     'Resources',     resources_path
+            - if current_user
+              %li= link_to 'New Page', new_page_path, :id => 'add_page_link'
+              %li= link_to 'New Resource', new_resource_path, :id => 'add_resource_link'
+          .pull-right
+            %ul.nav
+              -if current_user
+                %li.dropdown
+                  = link_to '#', class: "dropdown-toggle #{current_user.admin? ? 'red' : ''}", data: {toggle: 'dropdown'} do
+                    = current_user.email
+                    = fa_icon 'caret-down'
+                  %ul.dropdown-menu
+                    %li= link_to 'Profile', edit_user_registration_path
+                    %li= link_to 'Sign out', destroy_user_session_path,  :method => :delete, :data => {:role => 'sign-out'}
 
-        - if current_user
-          %li= link_to 'New Page', new_page_path, :id => 'add_page_link'
-          %li= link_to 'New Resource', new_resource_path, :id => 'add_resource_link'
-          %li= link_to 'Profile', edit_user_registration_path
-          %li
-            - if current_user.admin?
-              .red.absolute.admin-position #{current_user.email}
-            - else
-              .absolute.admin-position #{current_user.email}
-          %li= link_to 'Sign out', destroy_user_session_path,  :method => :delete, :data => {:role => 'sign-out'}
-        - else
-          %li= link_to 'Sign up', new_user_registration_path
-          %li= link_to 'Sign in',  new_user_session_path
+              -else
+                %li= link_to 'Sign up', new_user_registration_path
+                %li= link_to 'Sign in',  new_user_session_path
