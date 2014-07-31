@@ -17,7 +17,7 @@
             Resource belongs to
             %div
               - started = false
-              - resource.pages.all.each do |r|
+              - resource.pages.each do |r|
                 = ', ' if started
                 - started = true
                 %a{href: page_path(r.slug)} #{r.title}
