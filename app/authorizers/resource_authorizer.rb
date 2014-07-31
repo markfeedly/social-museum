@@ -1,14 +1,18 @@
 class ResourceAuthorizer < Authority::Authorizer
 
-  def self.default(adjective, user)
-    if adjective == :deletable
-      user.admin?
-    else
-      true
-    end
+  def self.default(adjective, user, opts={})
+    user.admin?
   end
 
-  def updateable_by?(user)
-    user.admin? || user == resource.user || resource.new_record?
+  def self.creatable_by?(user, opts={})
+    !user.guest?
+  end
+
+  def readable_by?(user, opts={})
+    true
+  end
+
+  def updatable_by?(user)
+    !user.guest? && (user == resource.user || resource.new_record? || super)
   end
 end
