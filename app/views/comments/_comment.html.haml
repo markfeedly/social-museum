@@ -13,7 +13,7 @@
           This comment is awaiting approval
     .comment-content
       = comment.content.html_safe
-    .comment.actions
+    .comment-actions
       - if current_user.try(:can_disapprove?, comment)
         = link_to fa_icon('fa-square thumbs-o-down'), page_comment_disapprove_path(comment.page, comment),
                   :class   => 'disapprove-comment',
