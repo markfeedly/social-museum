@@ -61,7 +61,6 @@ class ResourcesController < ApplicationController
 
   def destroy
     authorize_action_for resource # user must be an admin
-    authorize_action_for resource # user must be an admin
     resource.destroy
     redirect_to :back
   end
