@@ -46,3 +46,7 @@ Then(/^I cannot remove a resource with title "(.*?)"$/) do |resource_title|
     page.should_not have_link('Remove resource')
   end
 end
+
+When(/I go to a resource entitled "([^"]+)"/) do |resource_title|
+  visit_resource(resource_title: resource_title)
+end

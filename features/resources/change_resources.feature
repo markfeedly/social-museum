@@ -15,10 +15,23 @@ Feature: Resource editing
 
     Then I can see a resource with a link to "http://media.npr.org/images/picture-show-flickr-promo.jpg"
 
-  # TODO Establish whether this is or is not desirable - app/models/resource.rb and app/views/resources/index.html.haml
   Scenario: Edit resource title to a pre-existing title
     When I create a new resource entitled "Test1"
     And I create a new resource entitled "Test2"
     And I change the resource title to "Test1"
 
     Then I can see a "has already been taken" error for the resource title
+
+  Scenario: Admins can edit resources
+    When I create a new resource entitled "Test" with a link to "http://media.npr.org/images/picture-show-flickr-promo.jpg"
+    And I have signed in with valid admin credentials
+    And I go to a resource entitled "Test"
+    And I change the resource url to "http://i16.photobucket.com/albums/b24/mustangii/cat-tax-cat-with-gun-looking-out-window-760030.jpg"
+
+    Then I can see a resource with a link to "http://i16.photobucket.com/albums/b24/mustangii/cat-tax-cat-with-gun-looking-out-window-760030.jpg"
+
+  Scenario: Users can edit their own resources
+    When I create a new resource entitled "Test" with a link to "http://media.npr.org/images/picture-show-flickr-promo.jpg"
+    And I change the resource url to "http://i16.photobucket.com/albums/b24/mustangii/cat-tax-cat-with-gun-looking-out-window-760030.jpg"
+
+    Then I can see a resource with a link to "http://i16.photobucket.com/albums/b24/mustangii/cat-tax-cat-with-gun-looking-out-window-760030.jpg"
