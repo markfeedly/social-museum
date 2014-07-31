@@ -9,6 +9,7 @@
         Each resource will typically be added to one or more pages.
       .notice-para
         Resources that have been added to a page are displayed in the page's resources' tab.
+    %br
   - else
     %img.width-600px{src: resource.source}
     - if current_user.can_update?(resource)
