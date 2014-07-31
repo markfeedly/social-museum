@@ -1,5 +1,5 @@
 Then(/^I see the basic navigation menu$/) do
-  within('ul.nav') do
+  within('.navbar') do
     page.should have_css("a[href='#{pages_path}']")
     page.should have_css("a[href='#{resources_path}']")
     page.should have_css("a[href='#{new_user_registration_path}']")
@@ -8,7 +8,7 @@ Then(/^I see the basic navigation menu$/) do
 end
 
 Then(/^I see the user navigation menu$/) do
-  within('ul.nav') do
+  within('.navbar') do
     page.should have_css("a[href='#{pages_path}']")
     page.should have_css("a[href='#{resources_path}']")
     page.should have_css("a[href='#{new_page_path}']")
