@@ -29,7 +29,7 @@ gem 'omniauth-twitter'
 gem 'puma'
 gem 'font-awesome-rails'
 gem 'newrelic_rpm'
-gem 'rakismet'
+gem 'rakismet', github: "hedtek/rakismet"
 gem 'secretary-rails'
 gem 'lograge_params', github: "hedtek/lograge-params"
 

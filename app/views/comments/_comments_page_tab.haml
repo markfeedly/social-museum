@@ -19,6 +19,8 @@
   %br
   -if page.comments.present?
     %ul.no-bullets
-      = render partial: 'comments/comment', collection: page.comments
+      = render partial: 'comments/comment',
+                        collection: page.comments.order(:approved,
+                                                        :created_at).reverse_order
   - else
     No comments yet

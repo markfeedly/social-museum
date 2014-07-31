@@ -7,6 +7,12 @@ GIT
       rails (>= 3.1)
       useragent
 
+GIT
+  remote: git://github.com/hedtek/rakismet.git
+  revision: 9cb1a30ea6cbdd087a829998042c72778154a69c
+  specs:
+    rakismet (1.5.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -198,7 +204,6 @@ GEM
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
     rake (10.3.2)
-    rakismet (1.5.0)
     redcarpet (3.1.1)
     request_store (1.0.5)
     rspec-core (2.14.7)
@@ -302,7 +307,7 @@ DEPENDENCIES
   rails (= 4.0.5)
   rails_layout
   rake
-  rakismet
+  rakismet!
   redcarpet
   rspec-rails
   sass-rails (~> 4.0.3)
