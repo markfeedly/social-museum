@@ -46,7 +46,7 @@ describe 'Subscription' do
                                title: 'second title',
                                user: user,
                                content: 'anyway' )
-    user.subscribed_pages.should == [page, page1]
+    user.subscribed_pages.should include(page, page1)
 
     page2 = FactoryGirl.create(:page,
                                title: 'fourth title',

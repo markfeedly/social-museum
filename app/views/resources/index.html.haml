@@ -13,6 +13,11 @@
     - @resources.each do |r|
       / TODO Change if titles are not mandated to be unique
       .search-result{data: {'resource-title' => r.title}}
+        .float-right
+          - if current_user && current_user.can_delete?(r)
+            = link_to fa_icon('trash-o'), r,
+                 :data   => { :confirm => 'Are you sure you want to remove this resource? This cannot be undone.' },
+                 :method => :delete
         .summary-title
           %a{href: resource_path(r.id)}
             = r.title
@@ -22,11 +27,5 @@
         %a.resources-summary-width-and-margin{href: resource_path(r.id)}
           %img.width-150px{src: get_from}
         %br
-
-        - if current_user && current_user.can_delete?(r)
-          .float-right
-            = link_to 'Remove resource', r,
-                 :data   => { :confirm => 'Are you sure you want to remove this resource? This cannot be undone.' },
-                 :method => :delete
         %hr
     = paginate @resources
