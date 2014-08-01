@@ -21,7 +21,7 @@ Feature: Wiki page comment administration
   Scenario: Admins can permanently remove pending comments
     Given a spammer makes the comment "Spam!" on the page entitled "Test"
 
-    When I remove a comment on the page entitled "Test"
+    When I delete a comment on the page entitled "Test"
 
     Then I can't see a comment "Spam!" on the page entitled "Test"
 
