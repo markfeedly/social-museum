@@ -27,7 +27,8 @@ When /^I try to sign in with invalid credentials$/ do
   sign_in
 end
 
-When(/^"(.*?)" signs in and adds a comment "(.*?)" to the page entitled "(.*?)"$/) do |user_name, comment, page_title|
+When(/^"(.*?)" adds a comment "(.*?)" to the page entitled "(.*?)"$/) do |user_name, comment, page_title|
+  previous_user = current_user
   sign_out
   create_user(user_name) unless user_exists?(user_name)
   sign_in(user_name)
@@ -36,17 +37,9 @@ When(/^"(.*?)" signs in and adds a comment "(.*?)" to the page entitled "(.*?)"$
   click_on 'Add a comment'
   fill_in 'comment[content]', with: comment
   click_on 'Add comment'
-end
 
-When(/^"(.*?)" creates a comment "(.*?)" on page entitled "(.*?)"$/) do |user_name, comment, page_title|
-  visit page_path(Page.find_by_title(page_title).slug)
-
-  click_on 'Add a comment'
-  fill_in 'comment[content]', with: comment
-  click_on 'Add comment'
-
-  within( '#comments') do
-    page.should have_content(comment)
+  if previous_user
+    sign_in(previous_user)
   end
 end
 
