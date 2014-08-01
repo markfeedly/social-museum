@@ -1,6 +1,7 @@
 require 'set'
 
 class Page < ActiveRecord::Base
+  include Rakismet::Model
   include Authority::Abilities
   self.authorizer_name = 'PageAuthorizer'
 
@@ -14,8 +15,12 @@ class Page < ActiveRecord::Base
   has_many :subscriptions
   has_many :subscribers, through: :subscriptions, source: :user
 
+  rakismet_attrs :author       => proc { user.name  },
+                 :author_email => proc { user.email }
+
   extend HistoryControl
   history_attr :content
+  history_attr :user_id
   history_attr :user
   history_attr :categories
   history_attr :tags
@@ -26,11 +31,12 @@ class Page < ActiveRecord::Base
   attr_readonly :slug
 
   before_validation :set_slug, on: :create
-  after_create :subscribe_creator
+  after_create      :subscribe_creator
 
   validates :title,   presence: true, uniqueness: true
   validates :slug,    presence: true, uniqueness: true
   validates :content, presence: true
+  validate  :not_spam?
 
   #---------------------------------------------------------
 
@@ -76,6 +82,17 @@ class Page < ActiveRecord::Base
 
   #---------------------------------------------------------
 
+  def not_spam?
+    if user.present?
+      errors.add :content, I18n.t('errors.page.content.is_spam') if spam?
+    else
+      errors.add :content, I18n.t('errors.page.content.rakismet_skipped')
+    end
+  rescue
+    errors.add :content, I18n.t('errors.page.content.rakismet_failed')
+  end
+
+  #---------------------------------------------------------
   # used when invoking diffy
   # or should be - it seems this is never called
   # TODO establish what is happening with this.

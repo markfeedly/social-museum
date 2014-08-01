@@ -21,3 +21,10 @@
 
 en:
   hello: "Hello world"
+
+  errors:
+    page:
+      content:
+        is_spam: 'This page has been marked as potential spam, please edit and try again, or cancel.'
+        rakismet_failed: 'We could not verify this page content at this time. Please try again later'
+        rakismet_skipped: 'We could not verify this page content at this time. Please try again later'
