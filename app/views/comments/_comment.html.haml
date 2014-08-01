@@ -3,8 +3,8 @@
     .float-right
       - if current_user.can_delete?(comment)
         = link_to fa_icon('trash-o'), page_comment_path(comment.page, comment),
-                  :class   => 'remove-comment',
-                  :data => { :confirm => 'Are you sure you want to remove this comment? This cannot be undone.' },
+                  :data => { :confirm => 'Are you sure you want to remove this comment? This cannot be undone.',
+                             :role    => 'remove-comment' },
                   :method  => :delete
     .time-and-user
       = render 'users/user_and_time', user: comment.user.name, thing: comment
@@ -16,10 +16,10 @@
     .comment-actions
       - if current_user.try(:can_disapprove?, comment)
         = link_to fa_icon('fa-square thumbs-o-down'), page_comment_disapprove_path(comment.page, comment),
-                  :class   => 'disapprove-comment',
-                  :method  => :post
+                  :data    => { :role =>'disapprove-comment' },
+                  :method  =>   :post
       - if current_user.try(:can_approve?, comment)
         = link_to fa_icon('fa-square thumbs-o-up'), page_comment_approve_path(comment.page, comment),
-                  :class   => 'approve-comment',
-                  :method  => :post
+                  :data    => { :role => 'approve-comment' },
+                  :method  =>   :post
   %hr.clear

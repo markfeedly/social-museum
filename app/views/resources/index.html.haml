@@ -16,7 +16,8 @@
         .float-right
           - if current_user && current_user.can_delete?(r)
             = link_to fa_icon('trash-o'), r,
-                 :data   => { :confirm => 'Are you sure you want to remove this resource? This cannot be undone.' },
+                 :data   => { :confirm => 'Are you sure you want to remove this resource? This cannot be undone.',
+                              :role    => 'delete-resource' },
                  :method => :delete
         .summary-title
           %a{href: resource_path(r.id)}
