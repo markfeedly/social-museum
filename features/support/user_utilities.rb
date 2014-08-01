@@ -28,7 +28,7 @@ def merge_into_user_data(merge_data, user_name=default_user_name)
   user_data[user_name].merge!(merge_data)
 end
 
-def user_email(user_name=current_user) #TODO cld refactor to use this and similar methods in this file
+def user_email(user_name=current_user)
   user_data[user_name].try(:[], :email)
 end
 
