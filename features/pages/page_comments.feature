@@ -31,4 +31,4 @@ Feature: Commenting on wiki pages
     And another user makes the comment "Ham!" on the page entitled "Test"
 
     Then I can see a comment "Ham!" on the page entitled "Test"
-    And I cannot see a comment "Spam!" on the page entitled "Test"
+    And I can't see a comment "Spam!" on the page entitled "Test"

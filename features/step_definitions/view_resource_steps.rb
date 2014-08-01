@@ -40,10 +40,11 @@ Then(/^I cannot see an image resource with title "(.*?)", and a link to "(.*?)"$
   page.should_not have_css("[data-resource-title='#{resource_title}']")
 end
 
-Then(/^I cannot remove a resource with title "(.*?)"$/) do |resource_title|
+Then(/^I can(?:no|')t delete a resource with title "(.*?)"$/) do |resource_title|
   visit resources_path
+
   within("[data-resource-title='#{resource_title}']") do
-    page.should_not have_link('Remove resource')
+    page.should_not have_css("a[data-role='delete-resource']")
   end
 end
 

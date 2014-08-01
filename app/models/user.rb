@@ -34,7 +34,7 @@ class User < ActiveRecord::Base
   end
 
   def name_or_anonymous_user
-    name == nil or name == '' ? 'An anonymous user' : name
+    name == nil || name == '' ? 'An anonymous user' : name
   end
 
   def guest?

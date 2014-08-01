@@ -6,7 +6,7 @@ Then(/^I can see (a|\d+) pages?$/) do |pages|
   loop do
     count += page.all("div.search-result").count.to_i
     if page.has_css?("a[rel='next']")
-      page.first('a[rel="next"]').click
+      page.first("a[rel='next']").click
     else
       break
     end
@@ -19,7 +19,7 @@ Then(/^I can see a page entitled "([^"]*)"$/) do |title|
   page.should have_content(title)
 end
 
-Then(/^I can't see a page entitled "([^"]*)"$/) do |title|
+Then(/^I can(?:no|')t see a page entitled "([^"]*)"$/) do |title|
   visit pages_path
   page.should_not have_content(title)
 end
@@ -34,13 +34,13 @@ Then(/^I can see a page with tags "([^"]*)"$/) do |tags|
   page.should have_content(tags)
 end
 
-Then(/^I cannot see the remove page link$/) do
+Then(/^I can(?:no|')t see the delete page button$/) do
   visit pages_path
-  page.should_not have_css("[delete-page]")
+  page.should_not have_css("a[data-role='delete-page']")
 end
 
 Then(/^I can see one item of page history containing "(.*?)" as (#{CAPTURE_ITEM_RECENCY})$/) do |arg1, index|
-  within('#history-tab') do
+  within("#history-tab") do
     within("li[data-history-idx='#{index}']") do
       page.should have_content(arg1)
     end
