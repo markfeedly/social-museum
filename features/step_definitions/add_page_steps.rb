@@ -36,3 +36,18 @@ end
 When(/^I create a page with tags "([^"]*)"$/) do |tags|
   create_page(title: title, tags: tags)
 end
+
+When(/^someone else creates a page$/) do
+  user_name = current_user
+  sign_out
+  create_user("somebody")
+  sign_in("somebody")
+
+  create_page
+
+  sign_out
+
+  if user_name
+    sign_in(user_name)
+  end
+end

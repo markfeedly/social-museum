@@ -46,3 +46,9 @@ Then(/^I can see one item of page history containing "(.*?)" as (#{CAPTURE_ITEM_
     end
   end
 end
+
+When(/^I visit (?:the |a )(?:first )?page$/) do
+  visit pages_path
+
+  page.first("a[class='summary-title']").click
+end

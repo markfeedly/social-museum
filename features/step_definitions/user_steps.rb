@@ -79,6 +79,11 @@ When(/^I sign up with an invalid email$/) do
   sign_up
 end
 
+When(/^I am signed in as a spammer$/) do
+  create_user("viagra-test-123")
+  sign_in("viagra-test-123")
+end
+
 When(/^I sign up without a password confirmation$/) do
   create_user_data
   merge_into_user_data(:password_confirmation => "")
