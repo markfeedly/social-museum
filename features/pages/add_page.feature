@@ -40,3 +40,13 @@ Feature: Wiki page addition
     When I create a page with tags "a, bb"
 
     Then I can see a page with tags "a, bb"
+
+  Scenario: Add a page with links as tags and get an error
+    When I create a page with tags "a, http://www.google.com"
+
+    Then I can see an "Links are not allowed as tags" error for the page tags
+
+  Scenario: Add a page with links as categories and get an error
+    When I create a page with categories "a, http://www.google.com"
+
+    Then I can see an "Links are not allowed as categories" error for the page categories

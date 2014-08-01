@@ -6,7 +6,7 @@ def page_count
   @pages.length
 end
 
-def create_page(title: nil, content: "test content", tags: "")
+def create_page(title: nil, content: "test content", tags: "", categories: "")
   visit new_page_path
 
   title ||= "Test me #{page_count}"
@@ -14,6 +14,7 @@ def create_page(title: nil, content: "test content", tags: "")
     fill_in('Title', :with => title)
     fill_in('Content', :with => content)
     fill_in('Tags', :with => tags)
+    fill_in('Categories', :with => categories)
     click_button('Create Page')
   end
   # TODO Change empty array to resource_title (or unique identifier)
@@ -35,6 +36,10 @@ end
 
 When(/^I create a page with tags "([^"]*)"$/) do |tags|
   create_page(title: title, tags: tags)
+end
+
+When(/^I create a page with categories "([^"]*)"$/) do |categories|
+  create_page(title: title, categories: categories)
 end
 
 When(/^someone else creates a page$/) do

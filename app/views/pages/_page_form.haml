@@ -1,10 +1,10 @@
 = simple_form_for(page, :html => {:data => {:role => 'page-form'}}) do |f|
   = f.input :lock_version, as: :hidden
   = f.input :title, wrapper_html: {data: {role: 'title'}}, error_html: {data: {role: 'error'}}
-  = f.input :categories
+  = f.input :categories, wrapper_html: {data: {role: 'categories'}}, error_html: {data: {role: 'error'}}
   = f.hint link_to("Show content editing help", '#', class: "btn btn-primary" ), id: 'help-button'
   = f.input :content, as: :text, wrapper_html: {data: {role: 'content'}}, error_html: {data: {role: 'error'}}
-  = f.input :tags
+  = f.input :tags, wrapper_html: {data: {role: 'tags'}}, error_html: {data: {role: 'error'}}
   - if page.has_category? 'UMCS Collection'
     = f.input :item_number
     = f.input :location
