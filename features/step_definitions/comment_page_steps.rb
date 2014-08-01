@@ -14,7 +14,7 @@ When(/^(?:I|another user) makes? the comment "(.*?)" on the page entitled "(.*?)
 end
 
 When(/^a spammer makes? the comment "(.*?)" on the page entitled "(.*?)"$/) do |page_comment, page_title|
-  user_name = User.find_by_email(user_email).name if user_email
+  user_name = current_user
   sign_out
   create_user("viagra-test-123")
   sign_in("viagra-test-123")
