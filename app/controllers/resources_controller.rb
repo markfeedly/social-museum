@@ -23,6 +23,10 @@ class ResourcesController < ApplicationController
     end
   end
 
+  def index
+    @resources = Resource.all.page(params[:id]).page(params[:resources]).per(10)
+  end
+
   def show
     unless resource
       flash[:warning] = ["Resource #{params[:id]} does not exist"]
