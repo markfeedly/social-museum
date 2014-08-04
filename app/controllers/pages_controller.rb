@@ -1,5 +1,7 @@
 class PagesController < ApplicationController
   expose(:page) { Page.find_by_slug(params[:id]).decorate  }
+  expose(:page_states) { Kaminari.paginate_array(page.history.reverse).page(params[:page_states]).per(5) }
+  expose(:page_summaries) { Page.order('title ASC').page(params[:page_summaries]).per(10) }
 
   before_filter :authenticate_user!, :except => [:index, :show]
                 # :destroy requires admin, see method body
@@ -20,11 +22,9 @@ class PagesController < ApplicationController
   end
 
   def index
-    @page_summaries = Page.order('title ASC').page(params[:page_summaries]).per(10)
   end
 
   def show
-    @page_states = Kaminari.paginate_array(page.history.reverse).page(params[:page_states]).per(5)
   end
 
   def edit
@@ -53,17 +53,17 @@ class PagesController < ApplicationController
   def destroy
     authorize_action_for page
     page.destroy
-    redirect_to :back
+    redirect_to pages_path
   end
 
   def subscribe
     page.subscribe(current_user)
-    render :show
+    redirect_to page_path(page)
   end
 
   def unsubscribe
     page.unsubscribe(current_user)
-    render :show
+    redirect_to page_path(page)
   end
 
   def unsubscribe_via_email # /pages/:id/unsubscribe-via-email

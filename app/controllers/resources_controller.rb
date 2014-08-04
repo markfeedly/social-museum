@@ -2,7 +2,8 @@ class ResourcesController < ApplicationController
 
   before_action :authenticate_user!, :except => [:index, :show]
 
-  expose(:resource) { resource_or_nil }
+  expose(:resources) { Resource.all.page(params[:id]).page(params[:resources]).per(10) }
+  expose(:resource)  { resource_or_nil }
 
   def new
     self.resource = Resource.new
@@ -24,7 +25,6 @@ class ResourcesController < ApplicationController
   end
 
   def index
-    @resources = Resource.all.page(params[:id]).page(params[:resources]).per(10)
   end
 
   def show
