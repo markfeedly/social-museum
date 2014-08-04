@@ -34,7 +34,9 @@ class PagesController < ApplicationController
     success = true
     Page.transaction do
       if need_to_update?
-        success = page.update_attributes(page_params.merge(user: current_user))
+        success = page.update_attributes(page_params.merge(user:       current_user,
+                                                           tags:       clean(:tags),
+                                                           categories: clean(:categories)))
       end
     end
     if success
@@ -91,6 +93,13 @@ class PagesController < ApplicationController
         page.tags       != page_params[:tags]       ||
         page.content    != page_params[:content]    ||
         page.page_type  != page_params[:page_type]
+  end
+
+  def clean(input)
+    page_params[input].split(',')
+                      .map{|elem| elem.strip.gsub(/%|\.|\?|;/,'')}
+                      .select{|elem| !elem.empty?}
+                      .join(", ")
   end
 
 end
