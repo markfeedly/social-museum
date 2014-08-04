@@ -5,7 +5,7 @@ VirtualMuseum::Application.routes.draw do
   resources :users
   resources :pages do
     get 'P:page_summaries', :action => :index, :on => :collection
-    get ':id/:page_states', :action => :show, :on => :collection
+    get ':id/P:page_states', :action => :show, :on => :collection
     resources :comments do
       post :approve
       post :disapprove

@@ -1,5 +1,5 @@
 .page-title Pages
-- if @page_summaries == []
+- if page_summaries == []
   - if current_user
     No pages yet
     %br/
@@ -7,9 +7,9 @@
   - else
     No pages yet
 - else
-  = paginate @page_summaries, param_name: "page_summaries"
+  = paginate page_summaries, param_name: "page_summaries"
   .page-summary-width-plus
     %hr
-  - @page_summaries.each do |pg|
+  - page_summaries.each do |pg|
     = render partial: 'pages/page_summary', locals: {page: pg}
-  = paginate @page_summaries, param_name: "page_summaries"
+  = paginate page_summaries, param_name: "page_summaries"
