@@ -36,8 +36,13 @@ Feature: Wiki page addition
 
     Then I can see a page with content "My content"
 
-  Scenario: Add a tagged page and then see it
+  Scenario: I can add a page with tags which are just letters
     When I create a page with tags "a, bb"
+
+    Then I can see a page with tags "a, bb"
+
+  Scenario: Special characters %, ., ? and ; won't submit as tags
+    When I create a page with tags "a, bb, ccc, %, ., ?, ;"
 
     Then I can see a page with tags "a, bb"
 
