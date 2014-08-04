@@ -46,32 +46,52 @@ Feature: Wiki page addition
 
     Then I can see a page with tags "a, bb"
 
-  Scenario: I can't add hyperlinks to tags
-    When I create a page with tags "a, http://www.google.com"
-
-    Then I can see an "Links are not allowed as tags" error for the page tags
-
-  Scenario: I can't add .jpgs to tags
-    When I create a page with tags "a, image.jpg"
-
-    Then I can see an "Links are not allowed as tags" error for the page tags
-
-  Scenario: I can't add .jpegs to tags
-    When I create a page with tags "a, image.jpeg"
-
-    Then I can see an "Links are not allowed as tags" error for the page tags
-
-  Scenario: I can't add .pngs to tags
-    When I create a page with tags "a, google.png"
-
-    Then I can see an "Links are not allowed as tags" error for the page tags
-
-  Scenario: I can't add .gifs to tags
-    When I create a page with tags "a, google.gif"
-
-    Then I can see an "Links are not allowed as tags" error for the page tags
-
-  Scenario: Add a page with links as categories and get an error
+  Scenario: I can't add hyperlinks to categories
     When I create a page with categories "a, http://www.google.com"
+
+    Then I can see an "Links are not allowed as categories" error for the page categories
+
+  Scenario: I can't add .jpgs to categories
+    When I create a page with categories "a, image.jpg"
+
+    Then I can see an "Links are not allowed as categories" error for the page categories
+
+  Scenario: I can't add .jpegs to categories
+    When I create a page with categories "a, image.jpeg"
+
+    Then I can see an "Links are not allowed as categories" error for the page categories
+
+  Scenario: I can't add .pngs to categories
+    When I create a page with categories "a, google.png"
+
+    Then I can see an "Links are not allowed as categories" error for the page categories
+
+  Scenario: I can't add .gifs to categories
+    When I create a page with categories "a, google.gif"
+
+    Then I can see an "Links are not allowed as categories" error for the page categories
+
+  Scenario: I can't add hyperlinks to categories
+    When I create a page with categories "a, http://www.google.com"
+
+    Then I can see an "Links are not allowed as categories" error for the page categories
+
+  Scenario: I can't add .jpgs to categories
+    When I create a page with categories "a, image.jpg"
+
+    Then I can see an "Links are not allowed as categories" error for the page categories
+
+  Scenario: I can't add .jpegs to categories
+    When I create a page with categories "a, image.jpeg"
+
+    Then I can see an "Links are not allowed as categories" error for the page categories
+
+  Scenario: I can't add .pngs to categories
+    When I create a page with categories "a, google.png"
+
+    Then I can see an "Links are not allowed as categories" error for the page categories
+
+  Scenario: I can't add .gifs to categories
+    When I create a page with categories "a, google.gif"
 
     Then I can see an "Links are not allowed as categories" error for the page categories
