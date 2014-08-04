@@ -4,6 +4,8 @@ VirtualMuseum::Application.routes.draw do
                                       :omniauth_callbacks => "omniauth_callbacks" }
   resources :users
   resources :pages do
+    get 'P:page_summaries', :action => :index, :on => :collection
+    get ':id/:page_states', :action => :show, :on => :collection
     resources :comments do
       post :approve
       post :disapprove
@@ -14,7 +16,9 @@ VirtualMuseum::Application.routes.draw do
       get 'unsubscribe-via-email' => :unsubscribe_via_email, as: :unsubscribe_via_email
     end
   end
-  resources :resources
+  resources :resources do
+    get 'P:resources', :action => :index, :on => :collection
+  end
 
   resources :tags,       only: [:show]
   resources :categories, only: [:show]
