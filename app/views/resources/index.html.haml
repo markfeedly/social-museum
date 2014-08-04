@@ -1,6 +1,5 @@
 .container
   .page-title Resources
-  - @resources = Resource.all.page(params[:id]).page(params[:page]).per(10)
   - if @resources == []
     - if current_user
       No resources yet
@@ -9,7 +8,7 @@
     - else
       No resources yet
   - else
-    = paginate @resources
+    = paginate @resources, param_name: "resources"
     - @resources.each do |r|
       / TODO Change if titles are not mandated to be unique
       .search-result{data: {'resource-title' => r.title}}
@@ -29,4 +28,4 @@
           %img.width-150px{src: get_from}
         %br
         %hr
-    = paginate @resources
+    = paginate @resources, param_name: "resources"
