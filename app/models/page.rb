@@ -96,7 +96,6 @@ class Page < ActiveRecord::Base
   end
 
   def tag_link?
-   # binding.pry
     errors.add :tags, 'Links are not allowed as tags' unless
                (tags =~ %r{\A.*(https?://)|(\.jpe?g|\.gif|\.png).*\z}i) == nil
   end
