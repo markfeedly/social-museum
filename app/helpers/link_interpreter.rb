@@ -55,7 +55,7 @@ class LinkInterpreter
 
   #TODO test this
   def is_domain? domain_to_match
-    return false if (@first =~ /https?\:\/\//) != 0
+    (@first =~ /https?\:\/\//) == 0 &&
     !!(domain.match(domain_to_match))
   end
 
