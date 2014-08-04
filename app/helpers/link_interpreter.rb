@@ -131,16 +131,29 @@ class LinkInterpreter
   end
 
   def output_type
-    return :in_div__hyperlink if image_url? || is_youtube_url? || is_vimeo_url?
-    :in_line_hyperlink
+    if image_url? || is_youtube_url? || is_vimeo_url?
+      :in_div__hyperlink
+    else
+      :in_line_hyperlink
+    end
   end
 
   def process
-    return process_page_title  if page_title?
-    return process_image_url   if image_url?
-    return process_youtube_url if is_youtube_url?
-    return process_vimeo_url   if is_vimeo_url?
-    process_url
+    if page_title?
+      process_page_title
+
+    elsif image_url?
+      process_image_url
+
+    elsif is_youtube_url?
+      process_youtube_url
+
+    elsif is_vimeo_url?
+      process_vimeo_url
+
+    else
+      process_url
+    end
   end
 
 end
