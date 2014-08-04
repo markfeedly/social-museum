@@ -19,7 +19,12 @@ class PagesController < ApplicationController
     end
   end
 
+  def index
+    @pages = Page.order('title ASC').page(params[:page]).per(10)
+  end
+
   def show
+    @page_states = Kaminari.paginate_array(page.history.reverse).page(params[:page]).per(5)
   end
 
   def edit
