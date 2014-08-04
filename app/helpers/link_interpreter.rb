@@ -22,7 +22,11 @@ class LinkInterpreter
   end
 
   def page_title?
-    ! url?
+    !(url? || empty?)
+  end
+
+  def empty?
+    @text.blank?
   end
 
   def valid_scheme?
@@ -35,6 +39,7 @@ class LinkInterpreter
 
   def url_suffix?
     url? && ( !!(@first =~ /:\/\/..*\/..*/   ))
+
   end
 
   def image_url?
@@ -96,7 +101,7 @@ class LinkInterpreter
   end
 
   def process_youtube_url
-    uri = URI.parse(@first)
+    uri    = URI.parse(@first)
     params = Hash[uri.query.split('&').map{|p| p.split('=')}] if uri.query
 
     if params
