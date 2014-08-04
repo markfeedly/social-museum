@@ -96,11 +96,14 @@ class Page < ActiveRecord::Base
   end
 
   def tag_link?
-    errors.add :tags, 'Links are not allowed as tags' unless (tags =~ %r{\A.*https?://.+(?:\.jpe?g|.gif|.png)?\z}i) == nil
+   # binding.pry
+    errors.add :tags, 'Links are not allowed as tags' unless
+               (tags =~ %r{\A.*(https?://)|(\.jpe?g|\.gif|\.png).*\z}i) == nil
   end
 
   def cat_link?
-    errors.add :categories, 'Links are not allowed as categories' unless (categories =~ %r{\A.*https?://.+(?:\.jpe?g|.gif|.png)?\z}i) == nil
+    errors.add :categories, 'Links are not allowed as categories' unless
+               (categories =~ %r{\A.*(https?://)|(\.jpe?g|\.gif|\.png).*\z}i) == nil
   end
 
   #---------------------------------------------------------
