@@ -10,13 +10,12 @@ class ResourcesController < ApplicationController
 
   def create
     selected_pages = get_titles_from_params
-    self.resource = Resource.new( file: params['resource']['file'],
-                                  url: params['resource']['url'],
+    self.resource = Resource.new( file:        params['resource']['file'],
+                                  url:         params['resource']['url'],
                                   description: params['resource']['description'],
-                                  title: params['resource']['title'],
-                                  pages: selected_pages,
-                                  user: current_user
-                                 )
+                                  title:       params['resource']['title'],
+                                  pages:       selected_pages,
+                                  user:        current_user )
     if resource.save
       redirect_to resource_url(resource)
     else
@@ -47,7 +46,7 @@ class ResourcesController < ApplicationController
                       pages:       selected_pages }
 
     if resource.update_attributes(update_params)
-      redirect_to resource_url(resource), status: 301
+      redirect_to resource_url(resource)
     else
       render :edit
     end
@@ -66,7 +65,11 @@ class ResourcesController < ApplicationController
   end
 
   def page_params
-    params.require(:resource).permit(:file, :description, :title, :resource_usages, :pages)
+    params.require(:resource).permit( :file,
+                                      :description,
+                                      :title,
+                                      :resource_usages,
+                                      :pages )
   end
 
   private
