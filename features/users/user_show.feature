@@ -3,8 +3,7 @@ Feature: Show Users
   I want to see registered users listed on the homepage
   so I can know if the site has users
 
-  @wip
   Scenario: Viewing users
-    Given I exist as a user
+    Given I am signed up
     When I look at the list of users
     Then I should see my name

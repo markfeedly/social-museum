@@ -64,8 +64,7 @@ def sign_up(user_name=default_user_name)
   click_button "Sign up"
 end
 
-def confirm_via_emailed_link(user_name=current_user)
-  unread_emails_for(user_data[user_name][:email]).size.should == 1
+def confirm_via_emailed_link
   open_last_email
   click_email_link_matching /confirm/
 end

@@ -5,8 +5,8 @@ Feature: Wiki page removal
     And I create a page entitled "Test"
 
   Scenario: Admins can remove pages
-    When I become an admin
-    And I delete a page entitled "Test"
+    Given I am signed in as an admin
+    When I delete a page entitled "Test"
 
     Then I can't see a page entitled "Test"
 

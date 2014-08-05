@@ -7,7 +7,7 @@ Scenario: When I am not signed in I see the correct navigation menu
   Then I see the basic navigation menu
 
 Scenario: Admins see the correct navigation menu
-  Given I have signed in with valid admin credentials
+  Given I am signed in as an admin
 
   Then I see the user navigation menu
 

@@ -2,17 +2,6 @@ Given /^I am not signed in$/ do
   sign_out
 end
 
-Given /^I have signed in with valid credentials$/ do
-  create_user
-  sign_in
-end
-
-Given /^I have signed in as a spammer/ do
-  sign_out
-  create_user("viagra-test-123")
-  sign_in("viagra-test-123")
-end
-
 Given /^I exist as a user$/ do
   create_user
 end
@@ -29,12 +18,12 @@ Given(/^I confirm my email identity$/) do
 end
 
 When(/^I look at the list of users$/) do
-  visit root_path
+  visit users_path
 end
 
-When(/^I sign in with valid credentials$/) do
-  sign_out
-  create_user_data
+When(/^I (?:am |have )?sign(?:ed)? in(?: with valid credentials)?$/) do
+  sign_up
+  confirm_via_emailed_link
   sign_in
 end
 
@@ -42,34 +31,16 @@ When(/^I sign out$/) do
   sign_out
 end
 
-When(/^I sign up$/) do
-  create_user_data
+When(/^I (?:am )?sign(?:ed)? up(?: with valid user data)?$/) do
   sign_up
 end
 
-When(/^I sign up with valid user data$/) do
-  create_user_data
-  sign_up
-end
-
-When(/^I become an admin$/) do
-  user = User.find_by_email(user_email)
-  user.admin = true
-  user.save!
-end
-
-When(/^I have signed in with valid admin credentials$/) do
+When(/^I (?:am |have )?sign(?:ed)? in as an admin(?:istrator)?$/) do
   sign_out
   create_user("admin")
   sign_in("admin")
   user = User.find_by_email(user_email("admin"))
   user.admin = true
-  user.save!
-end
-
-When(/^I turn an existing admin into a standard user$/) do
-  user = User.find_by_email(user_email("admin"))
-  user.admin = false
   user.save!
 end
 
@@ -79,7 +50,8 @@ When(/^I sign up with an invalid email$/) do
   sign_up
 end
 
-When(/^I am signed in as a spammer$/) do
+When(/^I (?:am |have )?sign(?:ed)? in as a spammer$/) do
+  sign_out
   create_user("viagra-test-123")
   sign_in("viagra-test-123")
 end
@@ -186,6 +158,5 @@ Then(/^I see an invalid sign in message$/) do
 end
 
 Then(/^I should see my name$/) do
-  create_user
-  page.should have_content @user[:name]
+  page.should have_content user_data[:current_user] || default_user_name
 end

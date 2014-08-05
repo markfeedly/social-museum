@@ -17,7 +17,9 @@ class Page < ActiveRecord::Base
   has_many :subscribers, through: :subscriptions, source: :user
 
   rakismet_attrs :author       => proc { user.name  },
-                 :author_email => proc { user.email }
+                 :author_email => proc { user.email },
+                 :user_role    => proc { user.admin? ? 'administrator' : 'user' },
+                 :comment_type => proc { 'page' }
 
   extend HistoryControl
   history_attr :content
