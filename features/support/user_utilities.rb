@@ -42,7 +42,7 @@ end
 
 def create_user(user_name=current_user)
   sign_up(user_name)
-  confirm_via_emailed_link(user_name)
+  confirm_via_emailed_link
 end
 
 def delete_user(user_name=current_user)

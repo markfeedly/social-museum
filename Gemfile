@@ -32,6 +32,7 @@ gem 'newrelic_rpm'
 gem 'rakismet', github: "hedtek/rakismet"
 gem 'secretary-rails'
 gem 'lograge_params', github: "hedtek/lograge-params"
+gem 'carrierwave'
 
 
 group :development, :test do
