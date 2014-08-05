@@ -1,4 +1,4 @@
- require File.expand_path('../boot', __FILE__)
+require File.expand_path('../boot', __FILE__)
 
 # Pick the frameworks you want:
 require "active_record/railtie"
@@ -17,10 +17,10 @@ module VirtualMuseum
     # don't generate RSpec tests for views and helpers
     config.generators do |g|
 
-      g.test_framework :rspec, fixture: true
+      g.test_framework      :rspec,        fixture: true
       g.fixture_replacement :factory_girl, dir: 'spec/factories'
 
-      g.view_specs false
+      g.view_specs   false
       g.helper_specs false
     end
 
@@ -40,7 +40,8 @@ module VirtualMuseum
 
     config.lograge.static_data = { site: ENV['SITE'] }
 
-    config.rakismet.key = ENV['WORDPRESS_KEY']
-    config.rakismet.url = ENV['SITE']
+    config.rakismet.test = true
+    config.rakismet.key  = ENV['WORDPRESS_KEY']
+    config.rakismet.url  = ENV['SITE']
   end
 end

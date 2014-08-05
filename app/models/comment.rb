@@ -7,7 +7,8 @@ class Comment < ActiveRecord::Base
   belongs_to :user
 
   rakismet_attrs :author       => proc { user.name  },
-                 :author_email => proc { user.email }
+                 :author_email => proc { user.email },
+                 :user_role    => proc { user.admin? ? 'administrator' : 'user' }
 
   before_create :check_for_spam
   after_create  :subscribe_creator,

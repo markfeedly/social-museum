@@ -6,7 +6,7 @@ Feature: Wiki page comment administration
   Pending comments can be deleted.
 
   Background:
-    Given I have signed in with valid admin credentials
+    Given I am signed in as an admin
     And I create a page entitled "Test"
 
   Scenario: Admins can see approved comments, and disapprove them

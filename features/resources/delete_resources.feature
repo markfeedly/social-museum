@@ -4,7 +4,7 @@ Feature: Resource page removal
     Given I have signed in with valid credentials
 
   Scenario: Admins can remove resources
-    When I become an admin
+    When I am signed in as an admin
     And I create a new resource entitled "Test"
     And I delete a resource with title "Test"
 

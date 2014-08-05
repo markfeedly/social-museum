@@ -33,6 +33,6 @@ Feature: Sign in
 
   Scenario: User is not signed up
     Given I do not exist as a user
-    When I try to sign in with invalid credentials
+    When I try to sign in
     Then I see an invalid sign in message
     And I should be signed out

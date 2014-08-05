@@ -24,7 +24,7 @@ Feature: Resource editing
 
   Scenario: Admins can edit resources
     When I create a new resource entitled "Test" with a link to "http://media.npr.org/images/picture-show-flickr-promo.jpg"
-    And I have signed in with valid admin credentials
+    And I am signed in as an admin
     And I go to a resource entitled "Test"
     And I change the resource url to "http://i16.photobucket.com/albums/b24/mustangii/cat-tax-cat-with-gun-looking-out-window-760030.jpg"
 
