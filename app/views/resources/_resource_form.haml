@@ -1,4 +1,4 @@
-= simple_form_for(resource, :html => {:data => {:role => 'resource-form'}}) do |f|
+= simple_form_for(resource, :html => {:data => {:role => 'resource-form'}, :multipart => true}) do |f|
   = f.input :lock_version, as: :hidden
   = f.input :title, wrapper_html: {data: {role: 'title'}}, error_html: {data: {role: 'error'}}
   - if resource.new_record?
@@ -19,6 +19,7 @@
   = f.input :description
   - if current_user.can_update?(resource)
     = f.input :url, label: 'Resource on the web to link to (this must be a URL beginning with http)'
+    = f.input :image, label: 'Upload an image'
   = f.label 'Optionally add the resource to one or more pages (you can also do this later if you want to)'
   .scrolling-div
     = render partial: 'resources/resource_check_boxes', locals: {pages_for_partial: resource.pages, f: f}

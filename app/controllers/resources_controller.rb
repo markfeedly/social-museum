@@ -3,19 +3,18 @@ class ResourcesController < ApplicationController
   before_action :authenticate_user!, :except => [:index, :show]
 
   expose(:resources) { Resource.all.page(params[:id]).page(params[:resources]).per(10) }
-  expose(:resource)  { resource_or_nil }
+  expose(:resource)  { Resource.where(id: params[:id]).first }
 
   def new
     self.resource = Resource.new
   end
 
   def create
-    selected_pages = get_titles_from_params
-    self.resource = Resource.new( file:        params['resource']['file'],
+    self.resource = Resource.new( image:       params['resource']['image'],
                                   url:         params['resource']['url'],
                                   description: params['resource']['description'],
                                   title:       params['resource']['title'],
-                                  pages:       selected_pages,
+                                  pages:       get_selected_pages,
                                   user:        current_user )
     if resource.save
       redirect_to resource_url(resource)
@@ -42,12 +41,11 @@ class ResourcesController < ApplicationController
   end
 
   def update
-    selected_pages = get_titles_from_params
-    update_params = { description: params['resource']['description'],
-                      title:       params['resource']['title'],
-                      url:         params['resource']['url'],
-                      file:        params['resource']['file'],
-                      pages:       selected_pages }
+    update_params  = { description: params['resource']['description'],
+                       title:       params['resource']['title'],
+                       url:         params['resource']['url'],
+                       image:       params['resource']['image'],
+                       pages:       get_selected_pages }
 
     if resource.update_attributes(update_params)
       redirect_to resource_url(resource)
@@ -69,7 +67,7 @@ class ResourcesController < ApplicationController
   end
 
   def page_params
-    params.require(:resource).permit( :file,
+    params.require(:resource).permit( :image,
                                       :description,
                                       :title,
                                       :resource_usages,
@@ -78,26 +76,9 @@ class ResourcesController < ApplicationController
 
   private
 
-  #TODO What is going on with this third line?
-  def resource_or_nil
-    id = params[:id]
-    result = nil
-    if id == id.gsub(/[^0-9]/, '').gsub(/^0/,'')
-      result = begin
-        Resource.find(id) rescue nil
-      end
-    end
-    result
-  end
-
-  def get_titles_from_params
-    # TODO Fix slightly 'hacky' solution to missing resource_pages param
-    titles_to_add = (params['resource_pages'] || []).reject{|_, checked| checked=='0' }.map(&:first)
-    selected_pages = []
-    titles_to_add.each do |t|
-      selected_pages << Page.find_by_title(t)
-    end
-    selected_pages
+  def get_selected_pages
+    params['resource_pages'].reject{ |_, checked| checked == '0' }
+                            .map   { |title| Page.find_by_title(title.first) }
   end
 
   def need_to_update_resource?(update_params)
