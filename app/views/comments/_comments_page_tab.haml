@@ -7,7 +7,7 @@
 
   - if current_user.can_create?(Comment, for_page: page)
     #comment-button.float-right
-      = link_to("Add a comment", '#', class: "btn btn-primary")
+      = link_to("Add a comment", '#', class: "btn btn-primary button-wider-width")
     #comment-form.hiddenx
       = page.new_comment_form_as_html(current_user)
     .clear
@@ -18,7 +18,7 @@
       sign in
     to comment
 
-  %br
+  %hr.clear
   -if page.comments.present?
     %ul.no-bullets
       = render partial: 'comments/comment',
