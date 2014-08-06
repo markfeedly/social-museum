@@ -3,6 +3,7 @@ require 'carrierwave/orm/activerecord'
 
 class Resource < ActiveRecord::Base
   has_secretary
+  skip_callback :save, :after, :remove_previously_stored_image
 
   include Authority::Abilities
   self.authorizer_name = 'ResourceAuthorizer'
@@ -18,22 +19,18 @@ class Resource < ActiveRecord::Base
   tracks_association :user
 
   validates :title, uniqueness: true, presence: true
-  validate :validate_source
+  validates :source, presence: true
+  validate :validate_url, if: :url?
 
   def source
-    return url unless url.empty?
-    return image_url.to_s if image_url
+    url
   end
 
   private
 
-  def validate_source
-    if url !~ URI::regexp(['http','https']) && image.blank?
-      errors.add :url, 'one of file or URL should be set as the resource source'
-    end
-
-    if !url.empty? && image
-      errors.add :url, 'Only one resource may be set'
+  def validate_url
+    if url !~ URI::regexp(['http','https'])
+      errors.add :url, 'URL should be a valid link'
     end
   end
 end

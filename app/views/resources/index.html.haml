@@ -10,7 +10,6 @@
   - else
     = paginate resources, param_name: "resources"
     - resources.each do |r|
-      -# TODO Change if titles are not mandated to be unique
       .search-result{data: {'resource-title' => r.title}}
         .float-right
           - if current_user && current_user.can_delete?(r)
