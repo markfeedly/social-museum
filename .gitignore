@@ -83,3 +83,6 @@ zeus.json
 
 try*
 public/assets
+
+# Ignore content uploads folder
+/public/uploads

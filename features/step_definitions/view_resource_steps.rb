@@ -26,7 +26,7 @@ end
 
 Then(/^I can see a resource with description "(.*?)"$/) do |resource_description|
   visit resources_path
-  # TODO Use a less generic way to find the description
+
   within(".search-result") do
     first('a').click
   end

@@ -1,4 +1,5 @@
 class ResourcesController < ApplicationController
+  respond_to :html
 
   before_action :authenticate_user!, :except => [:index, :show]
 
@@ -10,20 +11,13 @@ class ResourcesController < ApplicationController
   end
 
   def create
-    self.resource = Resource.new( image:       params['resource']['image'],
-                                  url:         params['resource']['url'],
-                                  description: params['resource']['description'],
-                                  title:       params['resource']['title'],
-                                  pages:       get_selected_pages,
-                                  user:        current_user )
-    if resource.save
-      redirect_to resource_url(resource)
-    else
-      render :new
-    end
+    self.resource = current_user.resources.new(resource_params)
+    resource.save
+    respond_with(resource)
   end
 
   def index
+    respond_with(resources)
   end
 
   def show
@@ -41,18 +35,8 @@ class ResourcesController < ApplicationController
   end
 
   def update
-    update_params  = { description: params['resource']['description'],
-                       title:       params['resource']['title'],
-                       url:         params['resource']['url'],
-                       image:       params['resource']['image'],
-                       pages:       get_selected_pages }
-
-    if resource.update_attributes(update_params)
-      redirect_to resource_url(resource)
-    else
-      render :edit
-    end
-
+    resource.update_attributes(resource_params)
+    respond_with(resource)
   rescue ActiveRecord::StaleObjectError
     flash.now[:warning] = 'Another user has made a conflicting change, you can resolve the differences and save the resource again'
     resource.reload
@@ -63,27 +47,26 @@ class ResourcesController < ApplicationController
   def destroy
     authorize_action_for resource # user must be an admin
     resource.destroy
-    redirect_to :back
-  end
-
-  def page_params
-    params.require(:resource).permit( :image,
-                                      :description,
-                                      :title,
-                                      :resource_usages,
-                                      :pages )
+    respond_with(resource)
   end
 
   private
 
-  def get_selected_pages
-    params['resource_pages'].reject{ |_, checked| checked == '0' }
-                            .map   { |title| Page.find_by_title(title.first) }
+  def resource_params
+    params.require(:resource).permit( :image,
+                                      :lock_version,
+                                      :url,
+                                      :description,
+                                      :title,
+                                      :resource_usages).merge(pages: get_selected_pages)
   end
 
-  def need_to_update_resource?(update_params)
-       resource.title       != update_params[:title]       ||
-       resource.description != update_params[:description] ||
-       resource.pages       != update_params[:pages]
+  def get_selected_pages
+    resource_pages_params.reject{ |_, checked| checked == '0' }
+                                    .map   { |title| Page.find_by_title(title.first) }
+  end
+
+  def resource_pages_params
+    params['resource_pages'] || []
   end
 end
