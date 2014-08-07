@@ -11,7 +11,7 @@ class ContentHtmlGenerator
   def self.generate_part(page)
     new_markdown = page.content.gsub(/\[([^\]]*)\]/) do
       li = LinkInterpreter.new($1)
-      li.process unless li.image_url?
+      li.process unless li.image_url? || li.is_youtube_url? || li.is_vimeo_url?
     end
 
     markdown_renderer = Redcarpet::Markdown.new(Redcarpet::Render::HTML.new(render_options = {}),

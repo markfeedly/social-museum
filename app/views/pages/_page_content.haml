@@ -11,11 +11,11 @@
     .content-t-and-c.float-left
       .bold
         Tags
-      = page.tags_as_html.html_safe
+      = render  'tags/tags', tags: page.tags_as_arr
       %br
       .bold
         Categories
-      = page.categories_as_html.html_safe
+      = category_list(page.categories_as_arr)
     .content-edit-button.float-right.button-width
       - if current_user.can_update?(page)
         .float-right
@@ -51,5 +51,5 @@
   .clear
 
 .std-width
-  #comments
+  #comments.comments-spacer
     = render partial: 'comments/comments_page_tab'

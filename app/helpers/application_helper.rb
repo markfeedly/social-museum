@@ -12,4 +12,9 @@ module ApplicationHelper
     html.html_safe
   end
 
+  def category_list(categories)
+    categories.map do |cat|
+      Page.ld_trail(cat, :isa).map{|c| link_to c, category_path(c)}.join(' > ')
+    end.join(', ').html_safe
+  end
 end
