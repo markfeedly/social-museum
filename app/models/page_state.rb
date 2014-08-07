@@ -6,19 +6,19 @@ class PageState < ActiveRecord::Base
   belongs_to :user
 
   def categories=(new_categories)
-    begin
-      self['categories'] = clean(new_categories)
-    rescue
-      self['categories'] = ''
-    end
+    self['categories'] = clean(new_categories || '')
   end
 
   def tags=(new_tags)
-    begin
-      self['tags'] = clean(new_tags)
-    rescue
-      self['tags'] = ''
-    end
+    self['tags'] = clean(new_tags || '').downcase
+  end
+
+  def tags
+    super || ''
+  end
+
+  def categories
+    super || ''
   end
 
   def categories_as_array
@@ -30,21 +30,25 @@ class PageState < ActiveRecord::Base
   end
 
   def has_category?(cat)
-    categories ? categories.include?(cat) : false
+    categories.include?(clean(cat))
   end
 
   def has_tag?(tag)
-    tags ? tags.include?(tag) : false
+    tags.include?(clean(tag).downcase)
   end
 
   private
 
-  def clean(str)
-    str.split(',').map(&:strip).uniq.delete_if{|t| t == ''}.sort{|a,b|a.downcase<=>b.downcase}.join(', ')
+  def as_array(str)
+    str.split(',')
   end
 
-  def as_array(str)
-    str.blank? ? [] : str.split(',').collect{|t| t.strip}.delete_if{|t| t == ''}
+  def clean(input)
+    input.split(',')
+         .map(&:strip)
+         .map{|elem| elem.gsub('\s+', ' ').gsub(/[^A-Za-z0-9_\- ]/, '').tr('_', '-')}
+         .select(&:present?)
+         .uniq.sort_by(&:downcase).join(',')
   end
 
 end

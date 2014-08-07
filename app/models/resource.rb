@@ -1,14 +1,10 @@
 require 'uri'
-require 'carrierwave/orm/activerecord'
 
 class Resource < ActiveRecord::Base
   has_secretary
-  skip_callback :save, :after, :remove_previously_stored_image
 
   include Authority::Abilities
   self.authorizer_name = 'ResourceAuthorizer'
-
-  mount_uploader :image, ImageUploader
 
   has_many :resource_usages
   has_many :pages, through: :resource_usages

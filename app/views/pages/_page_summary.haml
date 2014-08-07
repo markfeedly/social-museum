@@ -18,6 +18,6 @@
       .tags-and-categories
         = render 'tags/tags', tags: page.history.last.tags_as_array
       .tags-and-categories
-        = render partial: 'categories/categories', locals: {categories: page.history.last.categories_as_array}
+        = render 'categories/categories', categories: page.history.last.categories_as_array
     .page-summary-width-plus
       %hr

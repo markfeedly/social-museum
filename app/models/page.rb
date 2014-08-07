@@ -40,8 +40,6 @@ class Page < ActiveRecord::Base
   validates :slug,    presence: true, uniqueness: true
   validates :content, presence: true
   validate  :not_spam?
-  validate  :cat_link?
-  validate  :tag_link?
 
   #---------------------------------------------------------
 
@@ -95,16 +93,6 @@ class Page < ActiveRecord::Base
     end
     rescue
       errors.add :content, I18n.t('errors.page.content.rakismet_failed')
-  end
-
-  def tag_link?
-    errors.add :tags, 'Links are not allowed as tags' unless
-               (tags =~ %r{\A.*(https?://)|(\.jpe?g|\.gif|\.png).*\z}i) == nil
-  end
-
-  def cat_link?
-    errors.add :categories, 'Links are not allowed as categories' unless
-               (categories =~ %r{\A.*(https?://)|(\.jpe?g|\.gif|\.png).*\z}i) == nil
   end
 
   #---------------------------------------------------------
