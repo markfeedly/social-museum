@@ -1,16 +1,16 @@
-module LinkedData
+module Categories
   def self.included(base)
     base.extend(self)
   end
 
-  def ld_page_type
+  def get_page_types
     [  ['Collection item', :isa, 'Type'],
        ['Person', :isa, 'Type'],
        ['Other', :isa, 'Type']
     ]
   end
 
-  def ld_categories
+  def get_categories
     [ ['Ferranti Mark I', :isa, 'Computer'],
       ['MU5', :isa, 'Computer'],
       ['Atlas', :isa, 'Computer'],
@@ -25,30 +25,30 @@ module LinkedData
       ['Zorg', :isa, 'Atlas'] ]
   end
 
-  def ld_trail(subject, predicate)
-    parent = ld_relation(subject,predicate)
+  def category_trail(subject, predicate)
+    parent = category_relation(subject,predicate)
     if parent
-      ld_trail(parent[2], predicate).unshift(subject)
+      category_trail(parent[2], predicate).unshift(subject)
     else
       [subject]
     end
   end
 
-  def ld_relation(subject, predicate)
-    ld_categories.find{|t| t[0..1] == [subject, predicate]}
+  def category_relation(subject, predicate)
+    get_categories.find{|t| t[0..1] == [subject, predicate]}
   end
 
-  def ld_inverse_relations(object, predicate)
-    ld_categories.find_all{ |t| t[1] == predicate && t[2] == object }
+  def category_inverse_relations(object, predicate)
+    get_categories.find_all{ |t| t[1] == predicate && t[2] == object }
   end
 
-  def ld_inverse_set(object, predicate)
-    ([object] + ld_inverse_relations(object, predicate).map{|cat| ld_inverse_set(cat[0], predicate)}).flatten.sort
+  def category_inverse_set(object, predicate)
+    ([object] + category_inverse_relations(object, predicate).map{|cat| category_inverse_set(cat[0], predicate)}).flatten.sort
   end
 
-  def ld_page_in_inverse_set(object, predicate)
+  def categorised_page_in_inverse_set(object, predicate)
     categories.split(',').any? do |cat|
-      ld_inverse_set(object, predicate).include?(cat)
+      category_inverse_set(object, predicate).include?(cat)
     end
   end
 end

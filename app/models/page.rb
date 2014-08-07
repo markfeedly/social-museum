@@ -6,7 +6,7 @@ class Page < ActiveRecord::Base
   include Authority::Abilities
   self.authorizer_name = 'PageAuthorizer'
 
-  include LinkedData
+  include Categories
 
   has_many :history, class_name: 'PageState', dependent: :delete_all, autosave: true
   has_many :comments, dependent: :delete_all
