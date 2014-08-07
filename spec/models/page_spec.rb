@@ -62,7 +62,7 @@ describe Page do
   describe "History controlled fields, set and get:" do
     specify "categories" do
       page.update(categories: 'Cat1, Cat2')
-      expect(page.categories).to eq('Cat1, Cat2')
+      expect(page.categories).to eq('Cat1,Cat2')
     end
 
     specify "content" do
@@ -82,7 +82,7 @@ describe Page do
 
     specify "tags" do
       page.update(tags: 'tag1, tag2')
-      expect(page.tags).to eq('tag1, tag2')
+      expect(page.tags).to eq('tag1,tag2')
     end
 
     specify "title" do

@@ -27,7 +27,7 @@ describe 'Page' do
   it 'should should set and get categories' do
     page.categories.should == 'Zorg'
     page.categories = 'Zorg, Atlas'
-    page.categories.should == 'Atlas, Zorg'
+    page.categories.should == 'Atlas,Zorg'
   end
 
   it 'should get the right trail' do
@@ -61,7 +61,7 @@ describe 'Page' do
     page.ld_page_in_inverse_set('MU6G', :isa).should == false
     page.categories = 'c1, MU6G'
     page.save
-    page.categories.should == 'c1, MU6G'
+    page.categories.should == 'c1,MU6G'
     page.ld_page_in_inverse_set('MU6G', :isa).should == true
     page.ld_page_in_inverse_set('Atlas', :isa).should == false
     page.categories = 'c1'

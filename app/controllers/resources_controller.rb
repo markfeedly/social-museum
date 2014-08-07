@@ -53,17 +53,17 @@ class ResourcesController < ApplicationController
   private
 
   def resource_params
-    params.require(:resource).permit( :image,
-                                      :lock_version,
+    params.require(:resource).permit( :lock_version,
                                       :url,
                                       :description,
                                       :title,
-                                      :resource_usages).merge(pages: get_selected_pages)
+                                      :resource_usages)
+                             .merge(pages: get_selected_pages)
   end
 
   def get_selected_pages
     resource_pages_params.reject{ |_, checked| checked == '0' }
-                                    .map   { |title| Page.find_by_title(title.first) }
+                         .map   { |title| Page.find_by_title(title.first) }
   end
 
   def resource_pages_params

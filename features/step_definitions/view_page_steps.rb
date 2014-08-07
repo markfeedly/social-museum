@@ -29,9 +29,11 @@ Then(/^I can see a page with content "([^"]*)"$/) do |content|
   page.should have_content(content)
 end
 
-Then(/^I can see a page with tags "([^"]*)"$/) do |tags|
+Then(/^I can see a page with (tags|categories) "([^"]*)"$/) do |type, content|
   visit pages_path
-  page.should have_content(tags)
+  within("span[class=#{type}]") do
+    page.should have_content(content)
+  end
 end
 
 Then(/^I can(?:no|')t see the delete page button$/) do

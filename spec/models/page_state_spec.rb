@@ -21,10 +21,10 @@ describe 'Previous Page' do
   end
 
   it "should return the tags" do
-    expect(page_state.tags).to eq 't1, t2'
+    expect(page_state.tags).to eq 't1,t2'
   end
 
   it "should return the categories" do
-    expect(page_state.categories).to eq 'c1, c2'
+    expect(page_state.categories).to eq 'c1,c2'
   end
 end
