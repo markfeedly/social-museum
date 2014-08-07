@@ -25,7 +25,7 @@
     %br/
     .width-500px
       = (page.compare_versions conflict.page_type, page.page_type).html_safe
-      = f.select :page_type, page.ld_page_type.collect{|t| [t[0], t[0]] }
+      = f.select :page_type, page.get_page_types.collect{|t| [t[0], t[0]] }
     %br/
   -else
     = f.hidden_field :page_type
