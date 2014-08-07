@@ -16,7 +16,7 @@ class Resource < ActiveRecord::Base
 
   validates :title, uniqueness: true, presence: true
   validates :source, presence: true
-  validate :validate_url, if: :url?
+  validate :validate_url
 
   def source
     url
