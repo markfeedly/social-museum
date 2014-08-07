@@ -39,11 +39,10 @@ class LinkInterpreter
 
   def url_suffix?
     url? && ( !!(@first =~ /:\/\/..*\/..*/   ))
-
   end
 
   def image_url?
-    url_suffix? && ( !!(@first =~ /\.png$/) || !!(@first =~ /\.jpg$/) || !!(@first =~ /\.jpeg$/))
+    url_suffix? && ( !!(@first.downcase =~ /\.png$/) || !!(@first.downcase =~ /\.jpg$/) || !!(@first.downcase =~ /\.jpeg$/))
   end
 
   def domain
@@ -125,7 +124,7 @@ class LinkInterpreter
   def process_video_url(video_url)
     @rest &&= @rest.split(' ', 2)[0]
     @rest ||= '400'
-    @rest = 720 if @rest.to_i > 720
+    @rest = 600 if @rest.to_i >600
     aspect_ratio = 0.5625
     "<iframe src='//#{video_url}' width='#{@rest}' height='#{(@rest.to_i * aspect_ratio).ceil}' frameborder='0' allowfullscreen sandbox='allow-scripts allow-same-origin'></iframe>"
   end

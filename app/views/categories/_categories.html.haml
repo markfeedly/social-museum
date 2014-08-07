@@ -4,6 +4,4 @@
   - else
     = 'Categories'
     %br
-    = render  partial: 'categories/category',
-              collection: categories,
-              spacer_template: 'categories/trail_spacer'
+    = category_list(categories)

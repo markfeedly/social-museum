@@ -1,4 +1,8 @@
 module LinkedData
+  def self.included(base)
+    base.extend(self)
+  end
+
   def ld_page_type
     [  ['Collection item', :isa, 'Type'],
        ['Person', :isa, 'Type'],
@@ -30,13 +34,12 @@ module LinkedData
   end
 
   def ld_trail(subject, predicate)
-    arr = [subject]
-    triple = :start_the_loop
-    while triple
-      triple = ld_categories.find{|t| t[0]==arr.last &&  t[1] == predicate}
-      arr << triple[2] if triple
+    parent = ld_categories.find{|t| t[0]==subject &&  t[1] == predicate}
+    if parent
+      ld_trail(parent[2], predicate).unshift(subject)
+    else
+      [subject]
     end
-    arr.reverse
   end
 
   def ld_trails(categories, predicate)

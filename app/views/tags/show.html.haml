@@ -5,7 +5,7 @@
 = paginate @pages
 
 - @pages.each do |p|
-  = render :partial => 'pages/page_summary', :locals => {:page => p}
+  = render :partial => 'pages/page_summary', :locals => {:page => p.decorate}
   %br/
 
 = paginate @pages
