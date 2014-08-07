@@ -11,12 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140805140856) do
+ActiveRecord::Schema.define(version: 20140807144338) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "comments", force: true do |t|
+    t.string   "commenter"
     t.text     "content"
     t.integer  "page_id"
     t.integer  "user_id"
@@ -78,7 +79,6 @@ ActiveRecord::Schema.define(version: 20140805140856) do
     t.string   "url"
     t.integer  "user_id"
     t.integer  "lock_version"
-    t.string   "image"
   end
 
   create_table "subscriptions", force: true do |t|
@@ -88,6 +88,13 @@ ActiveRecord::Schema.define(version: 20140805140856) do
 
   add_index "subscriptions", ["page_id"], name: "index_subscriptions_on_page_id", using: :btree
   add_index "subscriptions", ["user_id"], name: "index_subscriptions_on_user_id", using: :btree
+
+  create_table "uploads", force: true do |t|
+    t.string   "type"
+    t.string   "file"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "",    null: false

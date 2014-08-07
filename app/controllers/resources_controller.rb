@@ -55,6 +55,7 @@ class ResourcesController < ApplicationController
   def resource_params
     params.require(:resource).permit( :lock_version,
                                       :url,
+                                      :file,
                                       :description,
                                       :title,
                                       :resource_usages)
