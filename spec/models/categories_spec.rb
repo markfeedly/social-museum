@@ -31,22 +31,7 @@ describe 'Page' do
   end
 
   it 'should get the right trail' do
-    page.ld_trail(page.categories, :isa).should == [ 'Computer', 'Atlas', 'Zorg']
-  end
-
-  it 'should get the right trails' do
-    page.ld_trails('Zorg', :isa).should ==       [ [ 'Computer', 'Atlas', 'Zorg'] ]
-    page.ld_trails('MU6G, Zorg', :isa).should == [ [ 'Computer', 'MU6G'],[ 'Computer', 'Atlas', 'Zorg']  ]
-  end
-
-  it 'should assert transitive predicates' do
-    page.ld_assert( 'Zorg', :isa, 'Computer' ).should == true
-
-    page.ld_assert( 'Computer', :isa, 'Zorg' ).should == false
-    page.ld_assert( 'Zorg', :isa, 'Zorg' ).should == false
-
-    page.ld_assert( 'xx', :isa, 'Computer' ).should == false
-    page.ld_assert( 'Zorg', :isa, 'xx' ).should == false
+    page.ld_trail(page.categories, :isa).should == [ 'Zorg', 'Atlas', 'Computer']
   end
 
   it 'should find the inverse set' do

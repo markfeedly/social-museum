@@ -10,10 +10,6 @@ module LinkedData
     ]
   end
 
-  def ld_page_types
-    ld_page_type.collect{|triple| triple[0] }.join(', ')
-  end
-
   def ld_categories
     [ ['Ferranti Mark I', :isa, 'Computer'],
       ['MU5', :isa, 'Computer'],
@@ -29,12 +25,8 @@ module LinkedData
       ['Zorg', :isa, 'Atlas'] ]
   end
 
-  def ld_all_included_pages(object, predicate)
-    ld_categories.find_all{|t| t[1] == predicate && t[1] == object }
-  end
-
   def ld_trail(subject, predicate)
-    parent = ld_categories.find{|t| t[0]==subject &&  t[1] == predicate}
+    parent = ld_relation(subject,predicate)
     if parent
       ld_trail(parent[2], predicate).unshift(subject)
     else
@@ -42,28 +34,21 @@ module LinkedData
     end
   end
 
-  def ld_trails(categories, predicate)
-    categories.split(',').collect { |c| ld_trail(c.strip, predicate) }
+  def ld_relation(subject, predicate)
+    ld_categories.find{|t| t[0..1] == [subject, predicate]}
   end
 
-  def ld_assert(start_subject, predicate, end_object)
-    trail = ld_trail(start_subject, predicate)
-    return false unless (s_index = trail.index start_subject)
-    return false unless (o_index = trail.index end_object)
-    o_index < s_index
+  def ld_inverse_relations(object, predicate)
+    ld_categories.find_all{ |t| t[1] == predicate && t[2] == object }
   end
 
-  def ld_inverse_set(highest_object, predicate)
-    cats = ld_categories.find_all{|t| t[1] == predicate && t[2] == highest_object }
-    res = cats.collect{|t| t[0] }
-    #TODO sort put uniq - remove it and see what happens
-    [highest_object].concat(res.concat(res.each.collect{|c| ld_inverse_set(c, predicate) }.flatten.reject{|c| c == nil })).uniq
+  def ld_inverse_set(object, predicate)
+    ([object] + ld_inverse_relations(object, predicate).map{|cat| ld_inverse_set(cat[0], predicate)}).flatten.sort
   end
 
-  def ld_page_in_inverse_set(highest_object, predicate)
-    cats = categories.split(',').collect { |c| c.strip }
-    cats_set = ld_inverse_set(highest_object, predicate)
-    cats.each { |c| return true if cats_set.include?(c) }
-    false
+  def ld_page_in_inverse_set(object, predicate)
+    categories.split(',').any? do |cat|
+      ld_inverse_set(object, predicate).include?(cat)
+    end
   end
 end
