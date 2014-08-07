@@ -22,6 +22,17 @@ class Resource < ActiveRecord::Base
     url
   end
 
+  def file
+    @upload
+  end
+
+  def file=(new_file)
+    if new_file.present?
+      @upload =  Upload.create_upload(new_file)
+      self.url = @upload.file.url
+    end
+  end
+
   private
 
   def validate_url
