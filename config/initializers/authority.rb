@@ -48,7 +48,8 @@ config.abilities =  {
     disapprove: 'disapprove',
     approve:    'approve',
     subscribe:  'subscribable',
-    unsubscribe: 'unsubscribable'
+    unsubscribe: 'unsubscribable',
+    change_link: 'link_changeable'
  }
 
   # LOGGER

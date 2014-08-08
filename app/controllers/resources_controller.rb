@@ -53,13 +53,21 @@ class ResourcesController < ApplicationController
   private
 
   def resource_params
-    params.require(:resource).permit( :lock_version,
-                                      :url,
-                                      :file,
-                                      :description,
-                                      :title,
-                                      :resource_usages)
-                             .merge(pages: get_selected_pages)
+    if current_user.can_change_link?(resource)
+      params.require(:resource).permit( :lock_version,
+                                        :url,
+                                        :file,
+                                        :description,
+                                        :title,
+                                        :resource_usages)
+                               .merge(pages: get_selected_pages)
+    else
+      params.require(:resource).permit( :lock_version,
+                                        :description,
+                                        :title,
+                                        :resource_usages)
+                               .merge(pages: get_selected_pages)
+    end
   end
 
   def get_selected_pages

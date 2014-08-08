@@ -1,7 +1,6 @@
 = simple_form_for(resource, :html => {:data => {:role => 'resource-form'}, :multipart => true}) do |f|
   = f.input :lock_version, as: :hidden
-  = f.input :title, wrapper_html: {data: {role: 'title'}}, error_html: {data: {role: 'error'}}
-  - if resource.new_record?
+  - if resource.new_record? && !resource.valid_url?
     %div
       .notice-para
         A resource is typically an image (but may be any document or file).
@@ -11,15 +10,38 @@
         Resources that have been added to a page are displayed in the page's resources' tab.
     %br
   - else
-    %img.width-600px{src: resource.source}
-    - if current_user.can_update?(resource)
-      %br
-      .instruction.change-note
-        = "This resource asset above may ony be changed by this resource's creator&nbsp;(#{resource.user.name}) or by an administrator.".html_safe
+    %fieldset
+      %legend Preview
+      -if resource.valid_image_url?
+        %img.width-600px{src: resource.source}
+      -elsif resource.valid_url?
+        = link_to resource.url, resource.url
+      - else
+        %span.red
+          The resource could not be previewed because the link provided was not valid
+  %fieldset
+    %legend Resource
+  = f.input :title, wrapper_html: {data: {role: 'title'}}, error_html: {data: {role: 'error'}}
   = f.input :description
-  - if current_user.can_update?(resource)
-    = f.input :url, label: 'Resource on the web to link to (this must be a URL beginning with http)'
-    = f.input :file, as: :file, label: 'Upload a file (image, document or archive)'
+  - if current_user.can_change_link?(resource)
+    = f.input :url, label: 'Resource on the web to link to (this must be a URL beginning with http)', wrapper_html: {data: {role: "link-field"}}
+    %div.hide{data: {role: 'upload-field'}}
+      %p
+        Uploading a file will set the URL link to the uploaded file, replacing the current link.
+      = f.input :file, as: :file, label: 'Upload a file (image, document or archive)'
+      %button{data: {role: "clear-file"}, class: 'btn'} Clear file
+    %br
+    %button.btn.btn-info{data: {role: "toggle-field"}} Upload a file instead
+    %br
+    %br
+  - else
+    .control-group
+      = f.label :url, class: 'control-label string'
+      .controls
+        %input.string#resource_url{type: 'text', value: resource.url, disabled: true}
+        %br
+        .instruction.change-note
+          = "This resource asset may only be changed by this resource's creator (#{resource.user.name}) or by an administrator."
   = f.label 'Optionally add the resource to one or more pages (you can also do this later if you want to)'
   .scrolling-div
     = render partial: 'resources/resource_check_boxes', locals: {pages_for_partial: resource.pages, f: f}
