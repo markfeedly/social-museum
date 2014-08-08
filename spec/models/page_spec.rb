@@ -16,12 +16,12 @@ describe Page do
   # ----------------------------------------------------
 
   describe "Validations" do
-    it { page.should validate_presence_of(:title)   }
-    it { page.should validate_uniqueness_of(:title) }
+    it { expect(page).to validate_presence_of(:title)   }
+    it { expect(page).to validate_uniqueness_of(:title) }
 
-    it { page.should validate_presence_of(:content) }
+    it { expect(page).to validate_presence_of(:content) }
 
-    it { page.should validate_uniqueness_of(:slug)  }
+    it { expect(page).to validate_uniqueness_of(:slug)  }
   end
 
   describe "Assignment" do
@@ -98,7 +98,7 @@ describe Page do
 
   describe "Page history" do
     it "page creation results in one page state in page history" do
-      page.history.should == [page_state]
+      expect(page.history).to eq [page_state]
     end
 
     it "assignment should work correctly using history control" do
@@ -135,16 +135,16 @@ describe Page do
       @page2.update(user: user, content: 'dude, second content change')
 
       history = page.history
-      history.count.should == 3
-      history[0].content.should == original_content
-      history[1].content.should == 'first content change'
-      history[2].content.should == 'second content change'
+      expect(history.count).to eq 3
+      expect(history[0].content).to eq original_content
+      expect(history[1].content).to eq 'first content change'
+      expect(history[2].content).to eq 'second content change'
 
       history = @page2.history
-      history.count.should == 3
-      history[0].content.should == 'check me dude'
-      history[1].content.should == 'dude, first content change'
-      history[2].content.should == 'dude, second content change'
+      expect(history.count).to eq 3
+      expect(history[0].content).to eq 'check me dude'
+      expect(history[1].content).to eq 'dude, first content change'
+      expect(history[2].content).to eq 'dude, second content change'
     end
   end
 
