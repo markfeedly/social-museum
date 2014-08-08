@@ -4,6 +4,7 @@ class Resource < ActiveRecord::Base
   has_secretary
 
   include Authority::Abilities
+  include UploadHelper
   self.authorizer_name = 'ResourceAuthorizer'
 
   has_many :resource_usages
@@ -16,11 +17,9 @@ class Resource < ActiveRecord::Base
 
   validates :title, uniqueness: true, presence: true
   validates :source, presence: true
-  validate :validate_url
+  validate  :validate_url
 
-  def source
-    url
-  end
+  alias_attribute :source, :url
 
   def file
     @upload
@@ -33,10 +32,18 @@ class Resource < ActiveRecord::Base
     end
   end
 
+  def valid_url?
+    url =~ URI::regexp(['http','https']) || upload_exists?(url)
+  end
+
+  def valid_image_url?
+    valid_url? && url =~ /\.(jpe?g|gif|png)\z/
+  end
+
   private
 
   def validate_url
-    if url !~ URI::regexp(['http','https'])
+    if !valid_url?
       errors.add :url, 'URL should be a valid link'
     end
   end

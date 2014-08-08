@@ -10,10 +10,8 @@ class FileUploader < CarrierWave::Uploader::Base
   storage :file
   # storage :fog
 
-  # Override the directory where uploaded files will be stored.
-  # This is a sensible default for uploaders that are meant to be mounted:
   def store_dir
-    "#{ENV["PUBLIC_UPLOAD_DIR"]}/#{model.class.to_s.underscore}/#{model.id}"
+    "#{ENV["PUBLIC_UPLOAD_DIR"]}/#{model.class.model_name.element.to_param}s/#{model.id}"
   end
 
   # Provide a default URL as a default if there hasn't been a file uploaded:

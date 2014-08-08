@@ -12,7 +12,11 @@ class ResourceAuthorizer < Authority::Authorizer
     true
   end
 
-  def updatable_by?(user)
+  def updatable_by?(user, opts={})
+    !user.guest?
+  end
+
+  def link_changeable_by?(user, opts={})
     !user.guest? && (user == resource.user || resource.new_record? || super)
   end
 end
