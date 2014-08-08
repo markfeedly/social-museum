@@ -16,7 +16,7 @@
                        :data    => { :role => 'approve-comment' },
                        :method  =>   :post
     .time-and-user
-      = render 'users/user_and_time', user: comment.user.name, thing: comment
+      = render 'users/user_and_time', user: comment.user.try(:name) || 'Guest', thing: comment
       - unless comment.approved?
         %p.red
           This comment is awaiting approval
