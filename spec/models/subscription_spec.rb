@@ -26,8 +26,8 @@ describe 'Subscription' do
     page.subscribe(user1)
     page.subscribe(user1)
     page.subscribers.count.should == 2
-    page.subscribers.first.should == user
-    page.subscribers.last.should  == user1
+    expect(page.subscribers).to include(user)
+    expect(page.subscribers).to include(user1)
     user.subscribed_pages.should  == [page]
   end
 
@@ -62,33 +62,33 @@ describe 'Subscription' do
     page.comments.create(user:       user1,
                          content:   'meh'  )
     page.subscribers.count.should == 2
-    page.subscribers.last.should  == user1
+    expect(page.subscribers).to include(user1)
   end
 
   it "should not re-subcribe a comment creator if already subscribed" do
     page.comments.create(user:       user,
                          content:   'meh'  )
     page.subscribers.count.should == 1
-    page.subscribers.last.should  == user
+    expect(page.subscribers).to include(user)
   end
 
   it "should not re-subcribe comment creators if already subscribed" do
     page.comments.create(user:       user,
                          content:   'meh'  )
     page.subscribers.count.should == 1
-    page.subscribers.last.should  == user
+    expect(page.subscribers).to include(user)
 
     page.comments.create(user:       user1,
                          content:   'meh 2'  )
     page.subscribers.count.should == 2
-    page.subscribers.first.should == user
-    page.subscribers.last.should  == user1
+    expect(page.subscribers).to include(user)
+    expect(page.subscribers).to include(user1)
 
     page.comments.create(user:       user1,
                          content:   'meh 3'  )
     page.subscribers.count.should == 2
-    page.subscribers.first.should == user
-    page.subscribers.last.should  == user1
+    expect(page.subscribers).to include(user)
+    expect(page.subscribers).to include(user1)
   end
 
   it "should unsubscribe" do
@@ -96,7 +96,7 @@ describe 'Subscription' do
                          content:   'meh'  )
     page.unsubscribe(user1)
     page.subscribers.count.should == 1
-    page.subscribers.last.should  == user
+    expect(page.subscribers).to include(user)
   end
 
 end
