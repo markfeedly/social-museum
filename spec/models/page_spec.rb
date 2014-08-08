@@ -121,7 +121,7 @@ describe Page do
 
     it "page should reflect successive changes" do
       expect{page.update(user: user, title: 'changed title')}.to change{page.title}.to('changed title')
-      expect{page.reload}.to change{page.lock_version}
+      expect{page.update(user: user, title: 'another title')}.to change{page.lock_version}
       expect{page.update(user: user, content: 'changed content')}.to change{page.content}.to('changed content')
     end
 
