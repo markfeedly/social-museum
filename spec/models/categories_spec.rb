@@ -21,37 +21,37 @@ describe 'Page' do
   }
 
   it 'should be available' do
-    page.get_page_types.should == [["Collection item", :isa, "Type"], ["Person", :isa, "Type"], ["Other", :isa, "Type"]]
+    expect(page.get_page_types).to eq [["Collection item", :isa, "Type"], ["Person", :isa, "Type"], ["Other", :isa, "Type"]]
   end
 
   it 'should should set and get categories' do
-    page.categories.should == 'Zorg'
+    expect(page.categories).to eq 'Zorg'
     page.categories = 'Zorg, Atlas'
-    page.categories.should == 'Atlas,Zorg'
+    expect(page.categories).to eq 'Atlas,Zorg'
   end
 
   it 'should get the right trail' do
-    page.category_trail(page.categories, :isa).should == [ 'Zorg', 'Atlas', 'Computer']
+    expect(page.category_trail(page.categories, :isa)).to eq [ 'Zorg', 'Atlas', 'Computer']
   end
 
   it 'should find the inverse set' do
-    page.category_inverse_set('Zorg', :isa).should include('Zorg')
-    page.category_inverse_set('Atlas', :isa).should include('Atlas', 'Zorg')
-    page.category_inverse_set('Computer', :isa).should include("Computer", "MU5", "Atlas", "MU6G", "The baby", "Manchester Mark 1", "Zorg", "Ferranti Mark I")
+    expect(page.category_inverse_set('Zorg', :isa)).to include('Zorg')
+    expect(page.category_inverse_set('Atlas', :isa)).to include('Atlas', 'Zorg')
+    expect(page.category_inverse_set('Computer', :isa)).to include("Computer", "MU5", "Atlas", "MU6G", "The baby", "Manchester Mark 1", "Zorg", "Ferranti Mark I")
   end
 
   it 'should find pages in the inverse set' do
-    page.categorised_page_in_inverse_set('Zorg', :isa).should == true
-    page.categorised_page_in_inverse_set('Computer', :isa).should == true
-    page.categorised_page_in_inverse_set('MU6G', :isa).should == false
+    expect(page.categorised_page_in_inverse_set('Zorg', :isa)).to eq true
+    expect(page.categorised_page_in_inverse_set('Computer', :isa)).to eq true
+    expect(page.categorised_page_in_inverse_set('MU6G', :isa)).to eq false
     page.categories = 'c1, MU6G'
     page.save
-    page.categories.should == 'c1,MU6G'
-    page.categorised_page_in_inverse_set('MU6G', :isa).should == true
-    page.categorised_page_in_inverse_set('Atlas', :isa).should == false
+    expect(page.categories).to eq 'c1,MU6G'
+    expect(page.categorised_page_in_inverse_set('MU6G', :isa)).to eq true
+    expect(page.categorised_page_in_inverse_set('Atlas', :isa)).to eq false
     page.categories = 'c1'
     page.save
-    page.categorised_page_in_inverse_set('Atlas', :isa).should == false
+    expect(page.categorised_page_in_inverse_set('Atlas', :isa)).to eq false
   end
 
 end

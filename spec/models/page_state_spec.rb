@@ -9,8 +9,8 @@ describe 'Previous Page' do
                                  categories: 'c1, c2') }
   let(:page_state) { page.history.last }
 
-  it { page_state.should belong_to(:page) }
-  it { page_state.should belong_to(:user) }
+  it { expect(page_state).to belong_to(:page) }
+  it { expect(page_state).to belong_to(:user) }
 
   it "should return the correct title" do
     expect(page_state.title).to eq 'Title'

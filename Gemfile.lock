@@ -333,6 +333,7 @@ DEPENDENCIES
   secretary-rails
   shoulda-matchers
   simple_form
+  sprockets
   sprockets-image_compressor
   sprockets-webp
   turbolinks
