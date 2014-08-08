@@ -17,11 +17,11 @@ describe Resource do
     end
 
     it "should pass validation if the resource is a file" do
-      pending "Add test once implementation details become clearer."
+      skip "Add test once implementation details become clearer."
     end
 
     it "should pass validation if at least one valid resource is present" do
-      pending "Add test once implementation details become clearer."
+      skip "Add test once implementation details become clearer."
     end
   end
 
