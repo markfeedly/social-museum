@@ -75,7 +75,7 @@ describe LinkInterpreter, "boolean methods" do
                       'https://www.hedtek.com/'          => 'www.hedtek.com'}
 
       linkToDomain.each do |link, domain|
-        LinkInterpreter.new(link).domain.should == domain
+        expect(LinkInterpreter.new(link).domain).to eq domain
       end
 
     end
