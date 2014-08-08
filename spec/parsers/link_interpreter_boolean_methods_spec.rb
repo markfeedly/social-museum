@@ -5,12 +5,12 @@ describe LinkInterpreter, "boolean methods" do
   context "Page titles" do
     it "should recognise a page title" do
       li = LinkInterpreter.new('Some title')
-      expect(li.page_title?).to be_true
+      expect(li.page_title?).to be true
     end
 
     it "should not recognise a page title as a url" do
       li = LinkInterpreter.new('Some title')
-      expect(li.url?).to be_false
+      expect(li.url?).to be false
     end
   end
 
@@ -35,33 +35,33 @@ describe LinkInterpreter, "boolean methods" do
 
       urls.each do |url|
         li = LinkInterpreter.new(url)
-        expect(li.url?).to be_true
-        expect(li.page_title?).to be_false
+        expect(li.url?).to be true
+        expect(li.page_title?).to be false
       end
 
     end
 
     it "should recognise a bad URL" do
       li = LinkInterpreter.new('http:/hedtek.com')
-      expect(li.url?).to be_false
-      expect(li.page_title?).to be_true
+      expect(li.url?).to be false
+      expect(li.page_title?).to be true
     end
 
     it "should recognise a bad protocol" do
       li = LinkInterpreter.new('ftp://hedtek.com')
-      expect(li.url?).to be_false
-      expect(li.page_title?).to be_true
+      expect(li.url?).to be false
+      expect(li.page_title?).to be true
     end
 
     it "should recognise url suffix" do
       li = LinkInterpreter.new('http://hedtek.com/x')
-      expect(li.url?).to be_true
-      expect(li.url_suffix?).to be_true
+      expect(li.url?).to be true
+      expect(li.url_suffix?).to be true
     end
 
     it "should recognise no url suffix" do
       li = LinkInterpreter.new('http://hedtek.com/')
-      expect(li.url_suffix?).to be_false
+      expect(li.url_suffix?).to be false
     end
 
     it "should extract domain" do
@@ -82,29 +82,29 @@ describe LinkInterpreter, "boolean methods" do
 
     it "should recognise its domain" do
       li = LinkInterpreter.new('http://hedtek.com')
-      expect(li.is_domain?('hedtek.com')).to be_true
+      expect(li.is_domain?('hedtek.com')).to be true
     end
     it "should not recognise a different domain" do
       li = LinkInterpreter.new('http://hedtek.com')
-      expect(li.is_domain?('sefol.com')).to be_false
+      expect(li.is_domain?('sefol.com')).to be false
     end
 
     context "Content URLs" do
       context "Image URLs" do
         it "should recognise an image url or not" do
           li = LinkInterpreter.new('http://hedtek.com/x/u/img.zip')
-          expect(li.image_url?).to be_false
+          expect(li.image_url?).to be false
           li = LinkInterpreter.new('http://hedtek.com/image.jpg')
-          expect(li.image_url?).to be_true
+          expect(li.image_url?).to be true
         end
 
         it "should recognise a bad image URL 1" do
           li = LinkInterpreter.new('http:/hedtek.png')
-          expect(li.url?).to be_false
+          expect(li.url?).to be false
         end
         it "should recognise a bad image URL 2" do
           li = LinkInterpreter.new('http:/hedtek.com/movie.mp4')
-          expect(li.url?).to be_false
+          expect(li.url?).to be false
         end
       end
 
@@ -122,14 +122,14 @@ describe LinkInterpreter, "boolean methods" do
 
             urls.each do |url|
               li = LinkInterpreter.new(url)
-              expect(li.is_youtube_url?).to be_true
+              expect(li.is_youtube_url?).to be true
             end
 
           end
 
           it "should recognise a non-youtube URL" do
             li = LinkInterpreter.new('http://hedtek.com')
-            expect(li.is_youtube_url?).to be_false
+            expect(li.is_youtube_url?).to be false
           end
         end
 
@@ -146,14 +146,14 @@ describe LinkInterpreter, "boolean methods" do
 
             urls.each do |url|
               li = LinkInterpreter.new(url)
-              expect(li.is_vimeo_url?).to be_true
+              expect(li.is_vimeo_url?).to be true
             end
 
           end
 
           it "should recognise a non-vimeo URL" do
             li = LinkInterpreter.new('http://hedtek.com')
-            expect(li.is_vimeo_url?).to be_false
+            expect(li.is_vimeo_url?).to be false
           end
         end
       end
