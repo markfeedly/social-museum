@@ -1,5 +1,5 @@
 class RemoveCommenterFromComments < ActiveRecord::Migration
-  def change
+  def up
     remove_column :comments, :commenter
   end
 end
