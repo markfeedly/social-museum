@@ -1,5 +1,5 @@
 class RemoveImageFromResources < ActiveRecord::Migration
-  def change
+  def up
     remove_column :resources, :image
   end
 end
