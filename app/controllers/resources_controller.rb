@@ -53,7 +53,7 @@ class ResourcesController < ApplicationController
   private
 
   def resource_params
-    if current_user.can_change_link?(resource)
+    if resource.nil? || current_user.can_change_link?(resource)
       params.require(:resource).permit( :lock_version,
                                         :url,
                                         :file,
