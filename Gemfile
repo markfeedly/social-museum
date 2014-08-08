@@ -1,22 +1,22 @@
 source 'https://rubygems.org'
 ruby '2.0.0'
 
-gem 'activesupport'
 gem 'rails', '4.1.4'
 gem 'rake'
+gem 'pg'
+
 gem 'sass-rails', '~> 4.0.3'
-gem 'sprockets'
 gem 'sprockets-image_compressor'
 gem 'sprockets-webp'
 gem 'uglifier'
 gem 'coffee-rails'
 gem 'jquery-rails'
 gem 'turbolinks'
-gem 'jbuilder'
+gem 'font-awesome-rails'
 gem 'bootstrap-sass', '2.3.2.2'
+
 gem 'devise'
 gem 'figaro'
-gem 'pg'
 gem 'simple_form'
 gem 'parslet'
 gem 'decent_exposure'
@@ -27,16 +27,17 @@ gem 'redcarpet'
 gem 'authority'
 gem 'kaminari'
 gem 'omniauth-twitter'
-gem 'puma'
-gem 'font-awesome-rails'
-gem 'newrelic_rpm'
 gem 'rakismet', github: "hedtek/rakismet"
 gem 'secretary-rails'
-gem 'lograge_params', github: "hedtek/lograge-params"
 gem 'carrierwave'
 
+gem 'puma'
+gem 'newrelic_rpm'
+gem 'lograge_params', github: "hedtek/lograge-params"
 
 group :development, :test do
+  gem 'spring'
+  gem 'spring-commands-rspec'
   gem 'better_errors'
   gem 'binding_of_caller', :platforms => [:mri_19, :mri_20, :rbx]
   gem 'quiet_assets'
@@ -47,7 +48,7 @@ group :development, :test do
   gem 'email_spec'
   gem 'launchy'
   gem 'minitest'
-  gem 'shoulda-matchers'
+  gem 'shoulda-matchers', require: false
   gem 'database_cleaner'
   gem 'pry-rails'
   gem 'pry-byebug'
