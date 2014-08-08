@@ -43,7 +43,7 @@ group :development, :test do
   gem 'quiet_assets'
   gem 'rails_layout'
   gem 'factory_girl_rails'
-  gem 'rspec-rails', '~> 2.14'
+  gem 'rspec-rails'
   gem 'capybara'
   gem 'email_spec'
   gem 'launchy'
