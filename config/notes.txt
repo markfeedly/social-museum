@@ -1,0 +1,7 @@
+git status
+git add .
+git commit -m "Updating versions"
+got push
+git fetch
+git rebase origin/update-mail
+git push
