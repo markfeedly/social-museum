@@ -3,6 +3,6 @@
 - flash.each do |type, msgs|
   - msgs = [msgs] if msgs.class == String
   - msgs.each do |m|
-    %div{class: "alert alert-#{type == :notice ? 'success' : 'error'}"}
+    %div{class: "alert alert-#{type == 'notice' ? 'success' : 'error'}"}
       = content_tag :div, m
 - flash = nil
