@@ -2,6 +2,6 @@
 
 class ArchiveUploader < FileUploader
   def extension_white_list
-    %w(zip rar 7z tar.gzip)
+    UploadTypes.extensions_for('Archive')
   end
 end
