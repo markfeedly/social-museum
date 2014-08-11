@@ -1,0 +1,7 @@
+type,extension,mime_type
+Archive,rar,application/x-rar-compressed
+Archive,zip,application/zip
+Archive,gtar,application/x-gtar
+Archive,tar,application/x-tar
+Archive,tar.gz,application/gzip
+Archive,7z,application/x-7z-compressed
