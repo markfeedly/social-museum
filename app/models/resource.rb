@@ -29,7 +29,6 @@ class Resource < ActiveRecord::Base
   def file=(new_file)
     if new_file.present?
       begin
-        binding.pry
         @upload =  Upload.create_upload(new_file)
         self.url = @upload.file.url
       rescue
@@ -44,6 +43,10 @@ class Resource < ActiveRecord::Base
 
   def valid_image_url?
     valid_url? && url =~ /\.(jpe?g|gif|png)\z/
+  end
+
+  def image_url
+    Upload.image_url_for(url)
   end
 
   private

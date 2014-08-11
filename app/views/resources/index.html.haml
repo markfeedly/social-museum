@@ -18,13 +18,9 @@
                               :role    => 'delete-resource' },
                  :method =>   :delete
         .summary-title
-          %a{href: resource_path(r.id)}
-            = r.title
+          = link_to r.title, resource_path(r)
 
-        - get_from = r.file
-        - get_from = r.url if r.url
-        %a.resources-summary-width-and-margin{href: resource_path(r.id)}
-          %img.width-150px{src: get_from}
+        = link_to image_tag(r.image_url, class: 'width-150px'), resource_path(r), class: 'resources-summary-width-and-margin'
         %br
         %hr
     = paginate resources, param_name: "resources"
