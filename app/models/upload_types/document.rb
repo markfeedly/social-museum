@@ -2,6 +2,6 @@ class UploadTypes::Document < Upload
   mount_uploader :file, DocumentUploader
 
   def self.handles?(mime_type)
-    mime_type =~ /^text\//
+    UploadTypes.mimes_for('Document').include?(mime_type)
   end
 end

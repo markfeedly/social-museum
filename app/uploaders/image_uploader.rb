@@ -2,6 +2,6 @@
 
 class ImageUploader < FileUploader
   def extension_white_list
-    %w{png jpg jpeg gif}
+    UploadTypes.extensions_for('Image')
   end
 end

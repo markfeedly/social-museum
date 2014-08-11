@@ -1,0 +1,16 @@
+type,extension,mime_type
+Document,odt,application/vnd.oasis.opendocument.text
+Document,ott,application/vnd.oasis.opendocument.text-template
+Document,oth,application/vnd.oasis.opendocument.text-web
+Document,odm,application/vnd.oasis.opendocument.text-master
+Document,odg,application/vnd.oasis.opendocument.graphics
+Document,otg,application/vnd.oasis.opendocument.graphics-template
+Document,odp,application/vnd.oasis.opendocument.presentation
+Document,otp,application/vnd.oasis.opendocument.presentation-template
+Document,ods,application/vnd.oasis.opendocument.spreadsheet
+Document,ots,application/vnd.oasis.opendocument.spreadsheet-template
+Document,odc,application/vnd.oasis.opendocument.chart
+Document,odf,application/vnd.oasis.opendocument.formula
+Document,odb,application/vnd.oasis.opendocument.database
+Document,odi,application/vnd.oasis.opendocument.image
+Document,oxt,application/vnd.openofficeorg.extension

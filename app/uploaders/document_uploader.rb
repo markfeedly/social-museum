@@ -2,6 +2,6 @@
 
 class DocumentUploader < FileUploader
   def extension_white_list
-    %w{doc docx ppt pptx xls xlsx pdf}
+    UploadTypes.extensions_for('Document')
   end
 end

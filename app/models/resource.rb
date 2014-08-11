@@ -29,6 +29,7 @@ class Resource < ActiveRecord::Base
   def file=(new_file)
     if new_file.present?
       begin
+        binding.pry
         @upload =  Upload.create_upload(new_file)
         self.url = @upload.file.url
       rescue
