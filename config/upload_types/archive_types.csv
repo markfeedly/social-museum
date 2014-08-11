@@ -4,4 +4,6 @@ Archive,zip,application/zip
 Archive,gtar,application/x-gtar
 Archive,tar,application/x-tar
 Archive,tar.gz,application/gzip
+Archive,gz,application/gzip
+Archive,tgz,application/gzip
 Archive,7z,application/x-7z-compressed

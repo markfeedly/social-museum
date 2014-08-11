@@ -1,10 +1,4 @@
-  = paginate @page_states
-  .page-summary-width-plus
-    %hr
-  - @page_states.each do |pg_st|
-    = render partial: 'page_states/page_state', locals: {page_state: pg_st}
-  = paginate @page_states
-  
+icons from: https://www.iconfinder.com/iconsets/48-bubbles
 
 .yml after daves fix of mysterious cucumber problem
 this was not changed during the fix process

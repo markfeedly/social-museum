@@ -36,6 +36,13 @@ gem 'newrelic_rpm'
 gem 'lograge_params', github: "hedtek/lograge-params"
 
 group :development, :test do
+  gem 'guard'
+  gem 'guard-rspec'
+  gem 'guard-bundler'
+  gem 'guard-puma'
+  gem 'guard-rake'
+  gem 'guard-cucumber'
+
   gem 'spring'
   gem 'spring-commands-rspec'
   gem 'better_errors'
