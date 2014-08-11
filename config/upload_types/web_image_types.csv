@@ -1,0 +1,6 @@
+type,extension,mime_type
+Image,gif,image/gif
+Image,jpeg,image/jpeg
+Image,jpg,image/jpeg
+Image,jpe,image/jpeg
+Image,png,image/png
