@@ -1,4 +1,4 @@
-When(/^(?:I|another user) makes? the comment "(.*?)" on the page entitled "(.*?)"$/) do |page_comment, page_title|
+When(/^(?:I|another user) makes? (?:the|a) comment "(.*?)" on the page (?:entitled )?"(.*?)"$/) do |page_comment, page_title|
   visit page_path(Page.find_by_title(page_title))
 
   within("#comments") do
