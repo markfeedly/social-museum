@@ -7,16 +7,16 @@ def visit_resource(resource_title: nil, page_title: nil)
 end
 
 Then(/^I can see a resource entitled "(.*?)"$/) do |page_title|
-  page.should have_content(page_title)
+  expect(page).to have_content(page_title)
 end
 
 Then(/^I cannot see a resource entitled "(.*?)"$/) do |page_title|
-  page.should_not have_content(page_title)
+  expect(page).to_not have_content(page_title)
 end
 
 Then(/^I can see a resource with a link to "(.*?)"$/) do |resource_url|
   visit resources_path
-  page.should have_css("img[src='#{resource_url}']")
+  expect(page).to have_css("img[src='#{resource_url}']")
 end
 
 Then(/^I can see a resource associated with a page entitled "(.*?)"$/) do |page_title|
@@ -31,20 +31,20 @@ Then(/^I can see a resource with description "(.*?)"$/) do |resource_description
     first('a').click
   end
 
-  page.should have_content(resource_description)
+  expect(page).to have_content(resource_description)
 end
 
 Then(/^I cannot see an image resource with title "(.*?)", and a link to "(.*?)"$/) do |resource_title, resource_url|
   visit resources_path
 
-  page.should_not have_css("[data-resource-title='#{resource_title}']")
+  expect(page).to_not have_css("[data-resource-title='#{resource_title}']")
 end
 
 Then(/^I can(?:no|')t delete a resource with title "(.*?)"$/) do |resource_title|
   visit resources_path
 
   within("[data-resource-title='#{resource_title}']") do
-    page.should_not have_css("a[data-role='delete-resource']")
+    expect(page).to_not have_css("a[data-role='delete-resource']")
   end
 end
 
