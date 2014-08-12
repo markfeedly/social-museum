@@ -65,11 +65,11 @@ Then(/^I am not emailed$/) do
 end
 
 Then(/^I am not emailed about the comment on "([^"]+)"$/) do |page_title|
-  expect(unread_emails_for(user_email).select{|email| email.subject =~ Regex.new(page_title)}.size).to eq 0
+  expect(unread_emails_for(user_email).select{|email| email.subject =~ Regexp.new(page_title)}.size).to eq 0
 end
 
 Then(/^I am (?:only )?emailed about the comment on "([^"]+)" (#{CAPTURE_EMAIL_COUNT})$/) do |page_title, count|
-  expect(unread_emails_for(user_email).select{|email| email.subject =~ Regex.new(page_title)}.size).to eq count
+  expect(unread_emails_for(user_email).select{|email| email.subject =~ Regexp.new(page_title)}.size).to eq count
 end
 
 Then(/^"([^"]+)" is emailed about (?:a|the) comment "([^"]+)" by myself on (?:the |a )?page (?:entitled )?"([^"]+)"$/) do |user_name, comment, page_title|
