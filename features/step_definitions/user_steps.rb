@@ -98,65 +98,65 @@ When(/^I edit my account details$/) do
 end
 
 Then(/^I should have signed up successfully$/) do
-  page.should have_content "Your account was successfully confirmed"
+  expect(page).to have_content "Your account was successfully confirmed"
 end
 
 Then(/^I should be signed out$/) do
-  page.should have_content "Sign up"
-  page.should have_content "Sign in"
-  page.should_not have_content "Sign out"
+  expect(page).to have_content "Sign up"
+  expect(page).to have_content "Sign in"
+  expect(page).to_not have_content "Sign out"
 end
 
 Then(/^I see a successful sign in message$/) do
-  page.should have_content I18n.t("devise.sessions.signed_in")
+  expect(page).to have_content I18n.t("devise.sessions.signed_in")
 end
 
 Then(/^I see an unconfirmed account message$/) do
-  page.should have_content "You have to confirm your account before continuing."
+  expect(page).to have_content "You have to confirm your account before continuing."
 end
 
 Then(/^I should see an 'is invalid' message$/) do
-  page.should have_content "is invalid"
+  expect(page).to have_content "is invalid"
 end
 
 Then (/^I should see a mismatched password message$/) do
-  page.should have_content "doesn't match Password"
+  expect(page).to have_content "doesn't match Password"
 end
 
 Then(/^I should be signed in$/) do
-  page.should have_css "[data-role='sign-out']"
-  page.should_not have_content "Sign up"
-  page.should_not have_content "Sign in"
+  expect(page).to have_css "[data-role='sign-out']"
+  expect(page).to_not have_content "Sign up"
+  expect(page).to_not have_content "Sign in"
 end
 
 Then(/^I should see a missing password message$/)do
   within_role("new-user") do
     within_role("password") do
-      page.should have_content "can't be blank"
+      expect(page).to have_content "can't be blank"
     end
   end
 end
 
 Then(/^I should see a missing password confirmation message$/) do
-  page.should have_content "doesn't match Password"
+  expect(page).to have_content "doesn't match Password"
 end
 
 Then(/^I should see a signed out message$/) do
-  page.should have_content "Signed out successfully."
+  expect(page).to have_content "Signed out successfully."
 end
 
 Then(/^I should see a successful sign up message$/) do
-  page.should have_content I18n.t('devise.registrations.signed_up')
+  expect(page).to have_content I18n.t('devise.registrations.signed_up')
 end
 
 Then(/^I should see an account edited message$/) do
-  page.should have_content "You updated your account successfully."
+  expect(page).to have_content "You updated your account successfully."
 end
 
 Then(/^I see an invalid sign in message$/) do
-  page.should have_content "Invalid email or password."
+  expect(page).to have_content "Invalid email or password."
 end
 
 Then(/^I should see my name$/) do
-  page.should have_content user_data[:current_user] || default_user_name
+  expect(page).to have_content user_data[:current_user] || default_user_name
 end
