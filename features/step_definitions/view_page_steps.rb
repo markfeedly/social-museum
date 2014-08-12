@@ -11,40 +11,40 @@ Then(/^I can see (a|\d+) pages?$/) do |pages|
       break
     end
   end
-  count.should == pages.to_i
+  expect(count).to eq pages.to_i
 end
 
 Then(/^I can see a page entitled "([^"]*)"$/) do |title|
   visit pages_path
-  page.should have_content(title)
+  expect(page).to have_content(title)
 end
 
 Then(/^I can(?:no|')t see a page entitled "([^"]*)"$/) do |title|
   visit pages_path
-  page.should_not have_content(title)
+  expect(page).to_not have_content(title)
 end
 
 Then(/^I can see a page with content "([^"]*)"$/) do |content|
   visit pages_path
-  page.should have_content(content)
+  expect(page).to have_content(content)
 end
 
 Then(/^I can see a page with (tags|categories) "([^"]*)"$/) do |type, content|
   visit pages_path
   within("span[class=#{type}]") do
-    page.should have_content(content)
+    expect(page).to have_content(content)
   end
 end
 
 Then(/^I can(?:no|')t see the delete page button$/) do
   visit pages_path
-  page.should_not have_css("a[data-role='delete-page']")
+  expect(page).to_not have_css("a[data-role='delete-page']")
 end
 
 Then(/^I can see one item of page history containing "(.*?)" as (#{CAPTURE_ITEM_RECENCY})$/) do |arg1, index|
   within("#history-tab") do
     within("li[data-history-idx='#{index}']") do
-      page.should have_content(arg1)
+      expect(page).to have_content(arg1)
     end
   end
 end
