@@ -23,6 +23,7 @@ class Comment < ActiveRecord::Base
   
   def ham!
     self.approved = true
+    notify_subscribers unless self.notified
     super
   end
 
@@ -38,8 +39,11 @@ class Comment < ActiveRecord::Base
   end
 
   def notify_subscribers
-    (page.subscribers - [user]).select{|usr| usr.can_read?(self)}.each do |usr|
-      Notifier.comment_updated(self, usr).deliver
+    if self.approved
+      (page.subscribers - [user]).select{|usr| usr.can_read?(self)}.each do |usr|
+        Notifier.comment_updated(self, usr).deliver
+      end
+      self.notified = true
     end
   end
 

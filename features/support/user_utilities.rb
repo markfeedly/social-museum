@@ -98,7 +98,7 @@ module UserUtilities
     user = User.find_by_email(user_email)
     user.admin = true
     user.save!
-    blk
+    blk.call
     user.admin = false
     user.save!
   end

@@ -13,7 +13,5 @@ CAPTURE_EMAIL_COUNT = Transform /^(once|one time|no times|\d+ times)$/ do |count
     1
   when /\d+ times/
     count.split(' ')[0].to_i
-  else
-    -1
   end
 end
