@@ -5,7 +5,7 @@
   = f.hint link_to("Show content editing help", '#', class: "btn btn-primary" ), id: 'help-button'
   = f.input :content, as: :text, wrapper_html: {data: {role: 'content'}}, error_html: {data: {role: 'error'}}
   = f.input :tags, wrapper_html: {data: {role: 'tags'}}, error_html: {data: {role: 'error'}}
-  - if page.has_category? 'UMCS Collection'
+  - if page.has_category? "#{ENV['MUSEUM_NAME']} Collection"
     = f.input :item_number
     = f.input :location
 

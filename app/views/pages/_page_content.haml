@@ -35,7 +35,7 @@
   .clear
 
   -# TODO Could be important when 'categories' changes
-  - if page.has_category?('UMCS Collection')
+  - if page.has_category?("#{ENV['MUSEUM_NAME']} Collection")
     .content-footer.parent-div
 
       .float-left
