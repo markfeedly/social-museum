@@ -14,7 +14,7 @@ end
 
 Given(/^I unsubscribe from page entitled "(.*?)" via the page button$/) do |page_title|
   visit page_path(Page.find_by_title(page_title))
-  body.should match page_title
+  expect(body).to include(page_title)
   click_on 'Unsubscribe'
 end
 

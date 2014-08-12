@@ -4,7 +4,7 @@ Then(/^I can see an? "([^"]+)" error for the ([^"]+)$/) do |message, target|
   within_role "#{obj.downcase}-form" do
     within_role attribute.downcase do
       within_role "error" do
-        page.should have_content(message)
+        expect(page).to have_content(message)
       end
     end
   end
