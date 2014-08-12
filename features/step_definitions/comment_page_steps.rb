@@ -40,7 +40,7 @@ Then(/^I can see a comment "(.*?)" as (#{CAPTURE_ITEM_RECENCY}) comment on the p
 
   within("#comments") do
     within("li[data-comment-idx='#{index}']") do
-      page.should have_content(comment_content)
+      expect(page).to have_content(comment_content)
     end
   end
 end
@@ -49,7 +49,7 @@ Then(/^I can see a (?:comment|message) "(.*?)" on the page entitled "(.*?)"$/) d
   visit page_path(Page.find_by_title(page_title))
 
   within("#comments") do
-    page.should have_content(content)
+    expect(page).to have_content(content)
   end
 end
 
@@ -57,6 +57,6 @@ Then(/^I can(?:no|')t see a (?:comment|message) "(.*?)" on the page entitled "(.
   visit page_path(Page.find_by_title(page_title))
 
   within("#comments") do
-    page.should_not have_content(content)
+    expect(page).to_not have_content(content)
   end
 end

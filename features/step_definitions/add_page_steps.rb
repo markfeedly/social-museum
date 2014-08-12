@@ -21,12 +21,12 @@ def create_page(title: nil, content: "test content", tags: "", categories: "")
   @pages[title] = []
 end
 
-When(/^I (?:have )created? (a|\d+) pages?$/) do |pages|
+When(/^I (?:have )?created? (a|\d+) pages?$/) do |pages|
   pages = 1 if pages == "a"
   pages.to_i.times.each{ create_page }
 end
 
-When(/^I (?:have )created? a page entitled "([^"]*)"$/) do |title|
+When(/^I (?:have )?created? a page entitled "([^"]*)"$/) do |title|
   create_page(title: title)
 end
 

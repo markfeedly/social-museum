@@ -12,12 +12,12 @@ end
 
 Then(/^I can see Youtube video "(.*?)"$/) do |video_id|
   within( '.content-content') do
-    page.should have_css("iframe[src='//youtube.com/embed/#{video_id}']")
+    expect(page).to have_css("iframe[src='//youtube.com/embed/#{video_id}']")
   end
 end
 
 Then(/^I can see Vimeo video "(.*?)"$/) do |video_id|
   within( '.content-content') do
-    page.should have_css("iframe[src='//player.vimeo.com/video/#{video_id}']")
+    expect(page).to have_css("iframe[src='//player.vimeo.com/video/#{video_id}']")
   end
 end
