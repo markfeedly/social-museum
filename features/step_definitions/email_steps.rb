@@ -101,7 +101,7 @@ Then /^(?:I|they) should see "([^"]*?)" in the email subject$/ do |text|
   current_email.should have_subject(text)
 end
 
-Then /^(?:I|they) should see \/([^"]*?)\/ in the email subject$/ do |text|
+Then /^(?:I|they) should see ([^"]*?) in the email subject$/ do |text|
   current_email.should have_subject(Regexp.new(text))
 end
 
@@ -109,7 +109,7 @@ Then /^(?:I|they) should see "([^"]*?)" in the email body$/ do |text|
   current_email.default_part_body.to_s.should include(text)
 end
 
-Then /^(?:I|they) should see \/([^"]*?)\/ in the email body$/ do |text|
+Then /^(?:I|they) should see ([^"]*?) in the email body$/ do |text|
   current_email.default_part_body.to_s.should =~ Regexp.new(text)
 end
 
