@@ -16,12 +16,12 @@ Feature: Wiki page addition
   Scenario: Special characters won't submit as tags
   When I create a page with tags "a, bb, ccc, !£$%^&*()+={}[]@~'#<>?,./|\"
 
-  Then I can see a page with tags "a, bb"
+  Then I can see a page with tags "a, bb, ccc"
 
   Scenario: Special characters won't submit as categories
   When I create a page with categories "a, bb, ccc, !£$%^&*()+={}[]@~'#<>?,./|\"
 
-  Then I can see a page with categories "a, bb"
+  Then I can see a page with categories "a, bb, ccc"
 
   Scenario: Whitespace is compacted in tags
   When I create a page with tags "a, b  b"
