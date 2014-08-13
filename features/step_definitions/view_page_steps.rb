@@ -41,7 +41,7 @@ Then(/^I can(?:no|')t see the delete page button$/) do
   expect(page).to_not have_css("a[data-role='delete-page']")
 end
 
-Then(/^I can see one item of page history containing "(.*?)" as (#{CAPTURE_ITEM_RECENCY})$/) do |arg1, index|
+Then(/^I can see page history contains "(.*?)" as (#{CAPTURE_ITEM_RECENCY})$/) do |arg1, index|
   within("#history-tab") do
     within("li[data-history-idx='#{index}']") do
       expect(page).to have_content(arg1)
