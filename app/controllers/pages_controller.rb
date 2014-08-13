@@ -66,7 +66,7 @@ class PagesController < ApplicationController
     redirect_to page_path(page)
   end
 
-  def unsubscribe_via_email # /pages/:id/unsubscribe-via-email
+  def unsubscribe_via_email
     render :confirm_unsubscribe
   end
 
@@ -74,8 +74,6 @@ class PagesController < ApplicationController
     params.require(:page).permit(:categories,
                                  :content,
                                  :creator,
-                                 :item_number,
-                                 :location,
                                  :lock_version,
                                  :slug,
                                  :tags,

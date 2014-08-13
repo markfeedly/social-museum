@@ -27,8 +27,6 @@ class Page < ActiveRecord::Base
   history_attr :user
   history_attr :categories
   history_attr :tags
-  history_attr :item_number
-  history_attr :location
   history_attr :title
 
   attr_readonly :slug

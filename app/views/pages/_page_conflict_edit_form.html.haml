@@ -37,15 +37,6 @@
   = render partial: 'pages/conflict',
     locals: {f: f, field: :tags, current: conflict.tags, desired: page.tags}
 
-
-  - #TODO test this collection item number and location handling
-  - if page.has_page_type? "#{ENV['MUSEUM_NAME']} Collection"
-    .width-500px
-      = render partial: 'pages/conflict',
-        locals: {f: f, field: :item_number, current: conflict.item_number, desired: page.item_number}
-      = render partial: 'pages/conflict',
-        locals: {f: f, field: :location, current: conflict.location, desired: page.location}
-
   - if page.content != conflict.content
     %h3  Content differs
     %br/
