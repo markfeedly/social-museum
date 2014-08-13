@@ -1,11 +1,12 @@
 require 'csv'
+
 module UploadTypes
   def self.mimes_hash
-    @mimes ||= Hash.new{|h, k| h[k] = []}
+    @mimes ||= Hash.new{|h, k| h[k] = Set.new}
   end
 
   def self.extensions_hash
-    @exts_hash ||= Hash.new{|h,k| h[k] = []}
+    @exts_hash ||= Hash.new{|h,k| h[k] = Set.new}
   end
 
   def self.mimes_for(type)
@@ -22,4 +23,14 @@ module UploadTypes
       extensions_hash[row['type']] << row['extension']
     end
   end
+
+  def self.add_directory(dir)
+    Dir[dir].each do |upload_type|
+      UploadTypes.add_file(upload_type)
+    end
+  end
+end
+
+if Rails.env.development?
+  UploadTypes.add_directory(Rails.root + 'config/upload_types/*.csv')
 end
