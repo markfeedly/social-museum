@@ -59,6 +59,7 @@ group :development, :test do
   gem 'database_cleaner'
   gem 'pry-rails'
   gem 'pry-byebug'
+  gem 'simplecov'
 end
 
 group :test do
