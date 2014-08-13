@@ -73,10 +73,6 @@ class Page < ActiveRecord::Base
     history.last.try(:has_category?, c)
   end
 
-  def has_page_type?(t)
-    page_type == t
-  end
-
   def has_tag?(t)
     history.last.try(:has_tag?, t)
   end
