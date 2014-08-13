@@ -34,22 +34,6 @@
             = link_to( 'Subscribe', subscribe_page_path(page), class: 'btn btn-primary button-width')
   .clear
 
-  -# TODO Could be important when 'categories' changes
-  - if page.has_category?("#{ENV['MUSEUM_NAME']} Collection")
-    .content-footer.parent-div
-
-      .float-left
-        %span.bold
-          Item number
-        \:
-        = page.item_number
-      .float-right
-        %span.bold
-          Location
-        \:
-        =  page.location
-  .clear
-
 .std-width
   #comments.comments-spacer
     = render partial: 'comments/comments_page_tab'

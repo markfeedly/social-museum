@@ -70,16 +70,6 @@ describe Page do
       expect(page.content).to eq('new content')
     end
 
-    specify "item number" do
-      page.update(item_number: '123')
-      expect(page.item_number).to eq('123')
-    end
-
-    specify "location" do
-      page.update(location: user2)
-      expect(page.location).to eq(user2)
-    end
-
     specify "tags" do
       page.update(tags: 'tag1, tag2')
       expect(page.tags).to eq('tag1,tag2')
