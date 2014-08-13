@@ -1,5 +1,5 @@
 Hello!
-<%= @comment.user.name_or_anonymous_user %> has just commented on page
+<%= @comment.user.try(:name)|| 'A guest' %> has just commented on page
 <%= @comment.page.title %>
 
 <%= @comment.content %>

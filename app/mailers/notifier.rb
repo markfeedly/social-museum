@@ -7,6 +7,5 @@ class Notifier < ActionMailer::Base
     @user    = user
     mail(:to      => user.email,
          :subject => "[#{ENV['MUSEUM_NAME']}] New comment on page #{comment.page.title} at #{comment.created_at}")
-    #TODO should there be a global variable for the name of the system? Spit out in titles, emails etc
   end
 end

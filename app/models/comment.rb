@@ -6,9 +6,9 @@ class Comment < ActiveRecord::Base
   belongs_to :page
   belongs_to :user
 
-  rakismet_attrs :author       => proc { user.name  },
-                 :author_email => proc { user.email },
-                 :user_role    => proc { user.admin? ? 'administrator' : 'user' }
+  rakismet_attrs :author       => proc { user.try(:name) || 'guest'  },
+                 :author_email => proc { user.try(:email) || 'guest' },
+                 :user_role    => proc { user.try(:admin?) ? 'administrator' : 'user' }
 
   before_create :check_for_spam
   after_create  :subscribe_creator,
