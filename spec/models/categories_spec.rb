@@ -20,10 +20,6 @@ describe 'Page' do
       ['Zort', :isa, 'MU6G'] ]
   }
 
-  it 'should be available' do
-    expect(page.get_page_types).to eq [["Collection item", :isa, "Type"], ["Person", :isa, "Type"], ["Other", :isa, "Type"]]
-  end
-
   it 'should should set and get categories' do
     expect(page.categories).to eq 'Zorg'
     page.categories = 'Zorg, Atlas'

@@ -20,17 +20,6 @@
   = render partial: 'pages/conflict',
     locals: {f: f, field: :title, current: conflict.title, desired: page.title}
 
-  - if page.page_type != conflict.page_type
-    %h3 Page type differs
-    %br/
-    .width-500px
-      = (page.compare_versions conflict.page_type, page.page_type).html_safe
-      = f.select :page_type, page.get_page_types.collect{|t| [t[0], t[0]] }
-    %br/
-  -else
-    = f.hidden_field :page_type
-
-
   = render partial: 'pages/conflict',
     locals: {f: f, field: :categories, current: conflict.categories, desired: page.categories}
 

@@ -77,8 +77,7 @@ class PagesController < ApplicationController
                                  :lock_version,
                                  :slug,
                                  :tags,
-                                 :title,
-                                 :page_type )
+                                 :title)
   end
 
   private
@@ -87,8 +86,7 @@ class PagesController < ApplicationController
         page.title      != page_params[:title]      ||
         page.categories != page_params[:categories] ||
         page.tags       != page_params[:tags]       ||
-        page.content    != page_params[:content]    ||
-        page.page_type  != page_params[:page_type]
+        page.content    != page_params[:content]
   end
 
 end

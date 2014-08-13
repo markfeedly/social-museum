@@ -3,13 +3,6 @@ module Categories
     base.extend(self)
   end
 
-  def get_page_types
-    [  ['Collection item', :isa, 'Type'],
-       ['Person', :isa, 'Type'],
-       ['Other', :isa, 'Type']
-    ]
-  end
-
   def get_categories
     [ ['Ferranti Mark I', :isa, 'Computer'],
       ['MU5', :isa, 'Computer'],
