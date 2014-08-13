@@ -6,7 +6,7 @@ def resource_count
   @resources.length
 end
 
-def create_resource(title: nil, description: "", url: "http://broken.com/img.jpg", for_pages: [])
+def create_resource(title: nil, description: "", url: "http://broken.com/img.jpg", for_pages: [], file: nil)
   visit new_resource_path
 
   title ||= "Test me #{resource_count}"
@@ -14,7 +14,9 @@ def create_resource(title: nil, description: "", url: "http://broken.com/img.jpg
     fill_in('resource_title', :with => title)
     fill_in('resource_description', :with => description)
     fill_in('resource_url', :with => url)
-
+    if file.present?
+      attach_file('file', Rails.root + "features/upload_files/" + file)
+    end
     for_pages.each do |page_title|
       check('resource_pages_' + page_title)
       @pages[page_title] << title
@@ -43,4 +45,8 @@ end
 
 When(/^I create a new resource associated with a page entitled "(.*?)"$/) do |page_title|
   create_resource(for_pages: [page_title])
+end
+
+When(/^I create a new resource with an upload (\w+(?:\.[a-zA-Z]{2,4}){1,2})$/) do |upload|
+  create_resource(file: upload)
 end

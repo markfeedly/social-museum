@@ -48,6 +48,17 @@ Then(/^I can(?:no|')t delete a resource with title "(.*?)"$/) do |resource_title
   end
 end
 
-When(/I go to a resource entitled "([^"]+)"/) do |resource_title|
+When(/I go to a resource entitled "([^"]+)"$/) do |resource_title|
   visit_resource(resource_title: resource_title)
+end
+
+Then(/^I can see a resource with a link to (\w+(?:\.[a-zA-Z]{2,4}){1,2}) in ([a-zA-Z]+)$/) do |file, directory|
+  visit resources_path
+
+  within(".search-result") do
+    first('a').click
+  end
+
+  expect(page).to have_xpath("//a[contains(@href,'#{directory}')]")
+  expect(page).to have_xpath("//a[contains(@href,'#{file}')]")
 end

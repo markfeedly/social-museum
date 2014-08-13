@@ -9,7 +9,7 @@ Scenario: When I am not signed in I see the correct navigation menu
 Scenario: Admins see the correct navigation menu
   Given I am signed in as an admin
 
-  Then I see the user navigation menu
+  Then I see the admin navigation menu
 
 Scenario: Users see the correct navigation menu
   Given I have signed in with valid credentials
