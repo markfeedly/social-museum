@@ -19,8 +19,8 @@
           .pull-right
             %ul.nav
               -if current_user.guest?
-                %li= link_to 'Sign up', new_user_registration_path
-                %li= link_to 'Sign in',  new_user_session_path
+                %li= link_to 'Sign up', new_user_registration_path, data: {role: 'sign-up'}
+                %li= link_to 'Sign in',  new_user_session_path, data: {role: 'sign-in'}
               -else
                 %li.dropdown
                   = link_to '#', class: "dropdown-toggle #{current_user.admin? ? 'red' : ''}", data: {toggle: 'dropdown'} do

@@ -38,10 +38,10 @@ end
 When(/^I (?:am |have )?sign(?:ed)? in as an admin(?:istrator)?$/) do
   sign_out
   create_user("admin")
-  sign_in("admin")
   user = User.find_by_email(user_email("admin"))
   user.admin = true
   user.save!
+  sign_in("admin")
 end
 
 When(/^I sign up with an invalid email$/) do
@@ -102,9 +102,9 @@ Then(/^I should have signed up successfully$/) do
 end
 
 Then(/^I should be signed out$/) do
-  expect(page).to have_content "Sign up"
-  expect(page).to have_content "Sign in"
-  expect(page).to_not have_content "Sign out"
+  expect(page).to     have_css "[data-role='sign-up']"
+  expect(page).to     have_css "[data-role='sign-in']"
+  expect(page).to_not have_css "[data-role='sign-out']"
 end
 
 Then(/^I see a successful sign in message$/) do
@@ -124,9 +124,9 @@ Then (/^I should see a mismatched password message$/) do
 end
 
 Then(/^I should be signed in$/) do
-  expect(page).to have_css "[data-role='sign-out']"
-  expect(page).to_not have_content "Sign up"
-  expect(page).to_not have_content "Sign in"
+  expect(page).to     have_css "[data-role='sign-out']"
+  expect(page).to_not have_css "[data-role='sign-up']"
+  expect(page).to_not have_css "[data-role='sign-in']"
 end
 
 Then(/^I should see a missing password message$/)do
