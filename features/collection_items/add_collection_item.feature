@@ -1,7 +1,7 @@
 Feature: Adding items to the collection
 
   Background:
-    Given I have signed in with valid credentials
+    Given I have signed in as an admin
 
   Scenario: I add an item to the collection
     When I create a collection-item
@@ -43,7 +43,7 @@ Feature: Adding items to the collection
 
     Then I can see a collection-item located in "Storage room 3"
 
-  Scenario: Add a collection-item with an acquisition number
+  Scenario: Add a collection-item with an acquisition-number
     When I create a collection-item with acquisition-number 001
 
     Then I can see a collection-item with acquisition-number 001

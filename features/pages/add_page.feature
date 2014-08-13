@@ -1,4 +1,4 @@
-Feature: Creating Wiki Pages
+Feature: Wiki pages can be created
 
   Background:
     Given I have signed in with valid credentials
