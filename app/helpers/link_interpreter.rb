@@ -124,7 +124,7 @@ class LinkInterpreter
   def process_video_url(video_url)
     @rest &&= @rest.split(' ', 2)[0]
     @rest ||= '400'
-    @rest = 600 if @rest.to_i >600
+    @rest = 640 if @rest.to_i > 640
     aspect_ratio = 0.5625
     "<iframe src='//#{video_url}' width='#{@rest}' height='#{(@rest.to_i * aspect_ratio).ceil}' frameborder='0' allowfullscreen sandbox='allow-scripts allow-same-origin'></iframe>"
   end
