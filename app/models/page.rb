@@ -95,29 +95,6 @@ class Page < ActiveRecord::Base
       errors.add :content, I18n.t('errors.page.content.rakismet_failed')
   end
 
-  #---------------------------------------------------------
-  # used when invoking diffy
-  # or should be - it seems this is never called
-  # TODO establish what is happening with this.
-  def previous_content
-    history.length == 1 ? nil : history[-2].content
-  end
-
-  def previous_title
-    history.length == 1 ? nil : history[-2].title
-    #history.length == 1 ? nil : history[-2].send("tidtle")
-  end
-
-  def previous_categories
-    history.length == 1 ? nil : history[-2].categories
-  end
-
-  def previous_tags
-    history.length == 1 ? nil : history[-2].tags
-  end
-
-  #---------------------------------------------------------
-
   def set_slug
     if slug.blank?
       title_as_slug = title.parameterize
