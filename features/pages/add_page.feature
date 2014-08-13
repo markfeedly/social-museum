@@ -1,4 +1,4 @@
-Feature: Wiki page addition
+Feature: Creating Wiki Pages
 
   Background:
     Given I have signed in with valid credentials
@@ -18,20 +18,22 @@ Feature: Wiki page addition
     |0     |
     |1     |
     |2     |
-    |3     |
     |9     |
     |10    |
     |11    |
-    |19    |
-    |20    |
-    |21    |
 
   Scenario: Add a page with a title
     When I create a page entitled "Test"
 
     Then I can see a page entitled "Test"
 
-  Scenario: Add a page with  content
+  Scenario: Attempt to create a page with a duplicate title
+    When I create a page entitled "Pre-existing title"
+    Then I create a page entitled "Pre-existing title"
+
+    Then I can see a "has already been taken" error for the page title
+
+  Scenario: Add a page with content
     When I create a page with content "My content"
 
     Then I can see a page with content "My content"
