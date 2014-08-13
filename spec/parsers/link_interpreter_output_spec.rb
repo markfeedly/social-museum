@@ -3,8 +3,7 @@ require 'spec_helper'
 describe LinkInterpreter, "output" do
 
   def check_outputs(link_interpreter, li_method, html_output)
-    expect( link_interpreter.send(li_method)).to eq html_output
-    expect( link_interpreter.process).to eq html_output
+    expect(link_interpreter.send(li_method)).to eq html_output
   end
 
   context "Pages" do
