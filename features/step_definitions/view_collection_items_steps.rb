@@ -34,6 +34,11 @@ Then(/^I can see a collection item located in "([^"]*)"$/) do |location|
   expect(collection_item).to have_content(location)
 end
 
+Then(/^I can see a collection item with acquisition number (\d+)$/) do |number|
+  visit collection_items_path
+  expect(collection_item).to have_content(number)
+end
+
 Then(/^I can(?:no|')t see the delete collection item button$/) do
   visit collection_items_path
   expect(collection_item).to_not have_css("a[data-role='delete-collection_item']")
