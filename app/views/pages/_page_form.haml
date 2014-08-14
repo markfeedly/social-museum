@@ -6,7 +6,7 @@
   = f.input :content, as: :text, wrapper_html: {data: {role: 'content'}}, error_html: {data: {role: 'error'}}
   = f.input :tags, wrapper_html: {data: {role: 'tags'}}, error_html: {data: {role: 'error'}}
 
-  = f.button :submit
+  = f.button :submit, data: {role: 'create-page-button'}
 
 #dialog{title: "Formatting.help", display: 'none'}
   %p Use a blank line for a new paragraph.

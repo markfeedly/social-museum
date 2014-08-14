@@ -1,19 +1,20 @@
 Before do
-  @resources = Hash.new{|h,k| h[k] = []}
+  # [0] holds pages, [1] holds collection items
+  @resources = Hash.new{|h,k| h[k] = [[],[]]}
 end
 
 def resource_count
   @resources.length
 end
 
-def create_resource(title: nil, description: "", url: "http://broken.com/img.jpg", for_pages: [], file: nil)
+def create_resource(title: nil, description: "", url: "http://broken.com/img.jpg", for_pages: [], for_collection_items: [], file: nil)
   visit new_resource_path
 
   title ||= "Test me #{resource_count}"
   within_role 'resource-form' do
-    fill_in('resource_title', :with => title)
+    fill_in('resource_title',       :with => title)
     fill_in('resource_description', :with => description)
-    fill_in('resource_url', :with => url)
+    fill_in('resource_url',         :with => url)
     if file.present?
       attach_file('file', Rails.root + "features/upload_files/" + file)
     end
@@ -22,9 +23,15 @@ def create_resource(title: nil, description: "", url: "http://broken.com/img.jpg
       @pages[page_title] << title
     end
 
+    for_collection_items.each do |item_name|
+      check('resource_collection-items_' + item_name)
+      @pages[item_name] << title
+    end
+
     click_button('Create Resource')
   end
-  @resources[title] = for_pages
+  @resources[title][0] = for_pages
+  @resources[title][1] = for_collection_items
 end
 
 When(/^I create a new resource entitled "([^"]+)"$/) do |resource_title|

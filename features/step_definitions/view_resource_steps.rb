@@ -1,6 +1,6 @@
 def visit_resource(resource_title: nil, page_title: nil)
   visit resources_path
-  resource_title  ||= @resources.find{|_, v| v.include? page_title}.try(:first)
+  resource_title  ||= @resources.find{|_, v| v[0].include? page_title}.try(:first)
   within("[data-resource-title='#{resource_title}']") do
     click_link(resource_title)
   end

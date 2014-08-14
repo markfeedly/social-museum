@@ -11,6 +11,6 @@ Feature: Edit pre-existing collection items
 
   Scenario: Change location
 
-  Scenario: Change acquisition-number
+  Scenario: Change acquisition number
 
-  Scenario: Can't change acquisition-number to one which already exists
+  Scenario: Can't change acquisition number to one which already exists
