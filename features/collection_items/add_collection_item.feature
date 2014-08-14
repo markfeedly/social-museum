@@ -44,12 +44,12 @@ Feature: Adding items to the collection
     Then I can see a collection item located in "Storage room 3"
 
   Scenario: Add a collection item with an acquisition-number
-    When I create a collection item with acquisition-number 001
+    When I create a collection item with acquisition number 001
 
-    Then I can see a collection item with acquisition-number 001
+    Then I can see a collection item with acquisition number 001
 
   Scenario: Attempt to create a collection item with a duplicate acquisition-number
-    When I create a collection item with acquisition-number 001
-    Then I create a collection item with acquisition-number 001
+    When I create a collection item with acquisition number 001
+    Then I create a collection item with acquisition number 001
 
     Then I can see a "has already been taken" error for the collection item acquisition-number

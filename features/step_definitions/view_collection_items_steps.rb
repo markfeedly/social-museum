@@ -19,9 +19,9 @@ Then(/^I can see a collection item called "([^"]*)"$/) do |title|
   expect(collection_item).to have_content(title)
 end
 
-Then(/^I can(?:no|')t see a collection item called "([^"]*)"$/) do |title|
+Then(/^I can(?:no|')t see a collection item called "([^"]*)"$/) do |name|
   visit collection_items_path
-  expect(collection_item).to_not have_content(title)
+  expect(collection_item).to_not have_content(name)
 end
 
 Then(/^I can see a collection item with description "([^"]*)"$/) do |description|
