@@ -11,7 +11,7 @@ def create_page(title: nil, content: "test content", tags: "", categories: "")
 
   title ||= "Test me #{page_count}"
   within_role 'page-form' do
-    fill_in('page_title',      :with => title)
+    fill_in('page[page_title_attributes][title]',      :with => title)
     fill_in('page_content',    :with => content)
     fill_in('page_tags',       :with => tags)
     fill_in('page_categories', :with => categories)

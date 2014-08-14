@@ -1,0 +1,7 @@
+= simple_form_for(collection_item, :html => {:data => {:role => 'collection_item-form'}}) do |f|
+  = f.fields_for :title do |title_form|
+    = title_form.input :title, label: "Name"
+  = f.input :description, as: :text
+  = f.input :location
+  = f.input :item_number
+  = f.button :submit, data: {role: 'create-collection-item-button'}

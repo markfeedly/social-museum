@@ -1,5 +1,6 @@
 When(/^(?:I|another user) makes? (?:the|a) comment "(.*?)" on the page (?:entitled )?"(.*?)"$/) do |page_comment, page_title|
-  visit page_path(Page.find_by_title(page_title))
+  visit pages_path
+  page.first(:css, 'a', text: page_title).click
 
   within("#comments") do
     click_role('show-comment-form')
@@ -17,7 +18,8 @@ When(/^a spammer makes? the comment "(.*?)" on the page entitled "(.*?)"$/) do |
   create_user('viagra-test-123')
   sign_in('viagra-test-123')
 
-  visit page_path(Page.find_by_title(page_title))
+  visit pages_path
+  page.first(:css, 'a', text: page_title).click
 
   within("#comments") do
     click_role('show-comment-form')

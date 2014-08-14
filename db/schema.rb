@@ -11,10 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140813163101) do
+ActiveRecord::Schema.define(version: 20140814134757) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "collection_items", force: true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.string   "location"
+    t.string   "item_number"
+    t.string   "slug"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "comments", force: true do |t|
     t.text     "content"
@@ -56,6 +66,14 @@ ActiveRecord::Schema.define(version: 20140813163101) do
   add_index "pages", ["slug"], name: "index_pages_on_slug", using: :btree
   add_index "pages", ["title"], name: "index_pages_on_title", unique: true, using: :btree
 
+  create_table "related_collection_items", force: true do |t|
+    t.integer  "source_collection_item_id"
+    t.string   "relation_type"
+    t.integer  "target_collection_item_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "resource_usages", force: true do |t|
     t.integer "page_id"
     t.integer "resource_id"
@@ -85,6 +103,19 @@ ActiveRecord::Schema.define(version: 20140813163101) do
 
   add_index "subscriptions", ["page_id"], name: "index_subscriptions_on_page_id", using: :btree
   add_index "subscriptions", ["user_id"], name: "index_subscriptions_on_user_id", using: :btree
+
+  create_table "titles", force: true do |t|
+    t.string   "title"
+    t.string   "slug"
+    t.integer  "titleable_id"
+    t.string   "titleable_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "titles", ["slug"], name: "index_titles_on_slug", unique: true, using: :btree
+  add_index "titles", ["title"], name: "index_titles_on_title", unique: true, using: :btree
+  add_index "titles", ["titleable_type", "titleable_id"], name: "index_titles_on_titleable_type_and_titleable_id", using: :btree
 
   create_table "uploads", force: true do |t|
     t.string   "type"

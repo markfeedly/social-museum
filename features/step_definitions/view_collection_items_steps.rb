@@ -4,9 +4,9 @@ Then(/^I can see (a|\d+) collection items?$/) do |collection_items|
   collection_items = 1 if collection_items == "a"
 
   loop do
-    count += collection_item.all("div.search-result").count.to_i
-    if collection_item.has_css?("a[rel='next']")
-      collection_item.first("a[rel='next']").click
+    count += page.all(".search-result").count.to_i
+    if page.has_css?("a[rel='next']")
+      page.first("a[rel='next']").click
     else
       break
     end
@@ -16,38 +16,38 @@ end
 
 Then(/^I can see (?:a|the) collection item called "([^"]*)"$/) do |title|
   visit collection_items_path
-  expect(collection_item).to have_content(title)
+  expect(page).to have_content(title)
 end
 
 Then(/^I can(?:no|')t see (?:a|the) collection item called "([^"]*)"$/) do |name|
   visit collection_items_path
-  expect(collection_item).to_not have_content(name)
+  expect(page).to_not have_content(name)
 end
 
 Then(/^I can see (?:a|the) collection item with description "([^"]*)"$/) do |description|
   visit collection_items_path
-  expect(collection_item).to have_content(description)
+  expect(page).to have_content(description)
 end
 
 Then(/^I can see (?:a|the) collection item located in "([^"]*)"$/) do |location|
   visit collection_items_path
-  expect(collection_item).to have_content(location)
+  expect(page).to have_content(location)
 end
 
 Then(/^I can see (?:a|the) collection item with acquisition number (\d+)$/) do |number|
   visit collection_items_path
-  expect(collection_item).to have_content(number)
+  expect(page).to have_content(number)
 end
 
 Then(/^I can(?:no|')t see the delete collection item button$/) do
   visit collection_items_path
-  expect(collection_item).to_not have_css("a[data-role='delete-collection-item']")
+  expect(page).to_not have_css("a[data-role='delete-collection-item']")
 end
 
 Then(/^I can see collection item history contains "(.*?)" as (#{CAPTURE_ITEM_RECENCY})$/) do |arg1, index|
   within("#history-tab") do
     within("li[data-history-idx='#{index}']") do
-      expect(collection_item).to have_content(arg1)
+      expect(page).to have_content(arg1)
     end
   end
 end
@@ -55,5 +55,5 @@ end
 When(/^I visit (?:the |a )(?:first )?collection item$/) do
   visit collection_items_path
 
-  collection_item.first("a[class='summary-title']").click
+  page.first("a[class='summary-title']").click
 end

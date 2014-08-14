@@ -16,24 +16,13 @@ describe Page do
   # ----------------------------------------------------
 
   describe "Validations" do
-    it { expect(page).to validate_presence_of(:title)   }
-    it { expect(page).to validate_uniqueness_of(:title) }
-
     it { expect(page).to validate_presence_of(:content) }
-
-    it { expect(page).to validate_uniqueness_of(:slug)  }
   end
 
   describe "Assignment" do
-    it "of page title without recorded history" do
+    it "of page title" do
       page.update(title: 'new title')
       expect(page.title).to eq('new title')
-    end
-
-    it "of page title with recorded history" do
-      page.update(title: 'new title')
-      expect(page.history.count).to eq(2)
-      expect(page.history.last.title).to eq('new title')
     end
 
     it "of page content without recorded history" do
