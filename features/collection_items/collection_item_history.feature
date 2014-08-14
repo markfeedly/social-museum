@@ -22,7 +22,7 @@ Feature: Collection items should record their history
     And I can see collection item history contains "Some tubes" as third most recent
 
   Scenario: Changes to location should be recorded in history
-    When I create a collection item with location "Kilburn"
+    When I create a collection item located in "Kilburn"
     And I change the collection item location to "Kilburn floor 2"
     And I change the collection item location to "Kilburn 2.35"
 
@@ -31,7 +31,7 @@ Feature: Collection items should record their history
     And I can see collection item history contains "Kilburn" as third most recent
 
   Scenario: Changes to acquisition number should be recorded in history
-    When I create a collection item with acquisition number "000"
+    When I create a collection item with acquisition number 000
     And I change the collection item acquisition number to "001"
     And I change the collection item acquisition number to "007"
 

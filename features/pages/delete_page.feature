@@ -6,7 +6,7 @@ Feature: Wiki page removal
 
   Scenario: Admins can remove pages
     Given I am signed in as an admin
-    When I delete a page entitled "Test"
+    When I delete the page entitled "Test"
 
     Then I can't see a page entitled "Test"
 
