@@ -86,3 +86,4 @@ public/assets
 
 # Ignore content uploads folder
 /public/uploads
+/public/test_uploads
