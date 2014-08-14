@@ -2,7 +2,6 @@ require 'uri'
 require 'pp'
 
 class LinkInterpreter
-
   #TODO Large restructure of this file
   def url
     @first
@@ -66,10 +65,15 @@ class LinkInterpreter
     is_domain? 'vimeo.com'
   end
 
-  def process_page_title
-    pg = Page.where(title: @text).first
-    if pg
-      "<a href='/pages/#{pg.slug}' data-page>#{@text}</a>"
+  def process_title
+    title = Title.where(title: @text).first
+    if title
+      case title.titleable
+      when Page
+        "<a href='/pages/#{title.slug}' data-page>#{@text}</a>"
+      when CollectionItem
+        "<a href='/collection_items/#{title.slug}' data-collection-item>#{@text}</a>"
+      end
     else
       "<a href='/pages/new?page_title=#{@text}' data-new-page>#{@text}</a>"
     end
@@ -139,7 +143,7 @@ class LinkInterpreter
 
   def process
     if page_title?
-      process_page_title
+      process_title
 
     elsif image_url?
       process_image_url

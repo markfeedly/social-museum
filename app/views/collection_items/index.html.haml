@@ -1,0 +1,5 @@
+%h1 Collection Items
+%ul
+  - collection_items.each do |collection_item|
+    %li.search-result= link_to collection_item.name, collection_item_path(collection_item)
+

@@ -11,7 +11,7 @@ describe LinkInterpreter, "output" do
       @page = FactoryGirl.create(:page)
       li=LinkInterpreter.new(@page.title)
 
-      check_outputs(li, :process_page_title,
+      check_outputs(li, :process_title,
           "<a href='/pages/#{@page.title.downcase.gsub(/ /, '-')}' data-page>#{@page.title}</a>" )
     end
 
@@ -20,7 +20,7 @@ describe LinkInterpreter, "output" do
       new_page_title = "This is not the title of existing page #{@page.title}; rather for a page to be created by a user"
       li=LinkInterpreter.new(new_page_title)
 
-      check_outputs(li, :process_page_title,
+      check_outputs(li, :process_title,
           "<a href='/pages/new?page_title=#{new_page_title.to_param}' data-new-page>#{new_page_title}</a>" )
     end
   end

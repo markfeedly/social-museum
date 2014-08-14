@@ -1,5 +1,6 @@
 class PagesController < ApplicationController
-  expose(:page) { Page.find_by_slug(params[:id]).decorate  }
+  respond_to :html
+  expose(:page, finder: :find_by_slug) {|default| default.decorate }
   expose(:page_states) { Kaminari.paginate_array(page.history.reverse).page(params[:page_states]).per(5) }
   expose(:page_summaries) { Page.order('title ASC').page(params[:page_summaries]).per(10) }
 
@@ -7,8 +8,8 @@ class PagesController < ApplicationController
                 # :destroy requires admin, see method body
 
   def new
-    self.page = Page.new(title: params[:page_title]).decorate
-    render :new
+    page.build_page_title
+    respond_with(page)
   end
 
   def create
@@ -77,7 +78,7 @@ class PagesController < ApplicationController
                                  :lock_version,
                                  :slug,
                                  :tags,
-                                 :title)
+                                 page_title_attributes: [:title, :id])
   end
 
   private

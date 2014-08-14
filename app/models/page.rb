@@ -8,6 +8,10 @@ class Page < ActiveRecord::Base
 
   include Categories
 
+  has_one  :page_title, class_name: "Title", as: :titleable, autosave: true
+  validates_associated :page_title
+  accepts_nested_attributes_for :page_title
+
   has_many :history, class_name: 'PageState', dependent: :delete_all, autosave: true
   has_many :comments, dependent: :delete_all
   has_many :resource_usages
@@ -29,13 +33,8 @@ class Page < ActiveRecord::Base
   history_attr :tags
   history_attr :title
 
-  attr_readonly :slug
-
-  before_validation :set_slug, on: :create
   after_create      :subscribe_creator
 
-  validates :title,   presence: true, uniqueness: true
-  validates :slug,    presence: true, uniqueness: true
   validates :content, presence: true
   validate  :not_spam?
 
@@ -89,25 +88,28 @@ class Page < ActiveRecord::Base
       errors.add :content, I18n.t('errors.page.content.rakismet_failed')
   end
 
-  def set_slug
-    if slug.blank?
-      title_as_slug = title.parameterize
-      index = 0
-      until Page.where(slug: title_as_slug) == []
-        title_as_slug = "#{title.parameterize}" + "-#{index += 1}"
-      end
-      self.slug = title_as_slug
-    end
-  end
-
-  def slug=(new_slug)
-    if self[:slug].blank?
-      super
-    end
-  end
-
   def to_param
-    slug
+    page_title.to_param
   end
 
+  def title
+    page_title.title
+  end
+
+  def title=(new_title)
+    super
+    page_title.title = new_title
+  end
+
+  def slug
+    page_title.slug
+  end
+
+  def self.find_by_slug(slug)
+    joins(:page_title).where(titles: {slug: slug}).first
+  end
+
+  def self.find_by_title(title)
+    joins(:page_title).where(titles: {title: title}).first
+  end
 end

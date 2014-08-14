@@ -11,10 +11,10 @@ def create_collection_item(name: nil, description: '', location: '', acquisition
 
   name ||= "Item #{collection_item_count}"
   within_role 'collection_item-form' do
-    fill_in('collection-item-name',        :with => name)
-    fill_in('collection-item-description', :with => description)
-    fill_in('collection-item-location',    :with => location)
-    fill_in('collection-item-number',      :with => acquisition_number)
+    fill_in('collection_item[title_attributes][title]',        :with => name)
+    fill_in('collection_item_description', :with => description)
+    fill_in('collection_item_location',    :with => location)
+    fill_in('collection_item_item_number',      :with => acquisition_number)
     click_role('create-collection-item-button')
   end
   @collection_items[name] = []

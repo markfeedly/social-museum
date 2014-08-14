@@ -3,7 +3,6 @@ require 'spec_helper'
 describe 'Previous Page' do
 
   let(:page){ FactoryGirl.create(:page,
-                                 title: 'Title',
                                  content: 'Content',
                                  tags: 't1, t2',
                                  categories: 'c1, c2') }
@@ -11,10 +10,6 @@ describe 'Previous Page' do
 
   it { expect(page_state).to belong_to(:page) }
   it { expect(page_state).to belong_to(:user) }
-
-  it "should return the correct title" do
-    expect(page_state.title).to eq 'Title'
-  end
 
   it "should return the correct content" do
     expect(page_state.content).to eq 'Content'

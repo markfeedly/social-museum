@@ -9,16 +9,17 @@ end
 Given(/^I (?:have )?unsubscribed? from page entitled "(.*?)" via the emailed unsubscribe link$/) do |page_title|
   sign_out
   sign_in
-  click_email_link_matching /unsubscribe/
+  click_email_link_matching(/unsubscribe/)
 end
 
 Given(/^I unsubscribe from page entitled "(.*?)" via the page button$/) do |page_title|
-  visit page_path(Page.find_by_title(page_title))
+  visit pages_path
+  page.first(:css, 'a', text: page_title).click
   expect(body).to include(page_title)
   click_on 'Unsubscribe'
 end
 
-When /^I (?:try to )?sign in$/ do
+When(/^I (?:try to )?sign in$/) do
   sign_in
 end
 
@@ -27,7 +28,9 @@ When(/^"(.*?)" adds a comment "(.*?)" to the page entitled "(.*?)"$/) do |user_n
   sign_out
   create_user(user_name) unless user_exists?(user_name)
   sign_in(user_name)
-  visit page_path(Page.find_by_title(page_title).slug)
+
+  visit pages_path
+  page.first(:css, 'a', text: page_title).click
 
   click_on 'Add a comment'
   fill_in 'comment[content]', with: comment
@@ -44,7 +47,8 @@ When(/^"(.*?)" is subscribed to the page (?:entitled )?"(.*?)"$/) do |user_name,
   create_user(user_name) unless user_exists?(user_name)
   sign_in(user_name)
 
-  visit page_path(Page.find_by_title(page_title))
+  visit pages_path
+  page.first(:css, 'a', text: page_title).click
   click_on 'Subscribe'
 
   if previous_user

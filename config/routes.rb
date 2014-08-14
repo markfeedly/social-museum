@@ -3,6 +3,7 @@ VirtualMuseum::Application.routes.draw do
   devise_for :users, :controllers => {:registrations => "registrations",
                                       :omniauth_callbacks => "omniauth_callbacks" }
   resources :users
+  resources :collection_items
   resources :pages do
     get 'P:page_summaries', :action => :index, :on => :collection
     get ':id/P:page_states', :action => :show, :on => :collection

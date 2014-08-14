@@ -45,8 +45,9 @@ group :development, :test do
 
   gem 'spring'
   gem 'spring-commands-rspec'
+  gem 'spring-commands-cucumber'
   gem 'better_errors'
-  gem 'binding_of_caller', :platforms => [:mri_19, :mri_20, :rbx]
+  gem 'binding_of_caller'
   gem 'quiet_assets'
   gem 'rails_layout'
   gem 'factory_girl_rails'
