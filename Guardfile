@@ -10,10 +10,6 @@ guard 'puma', port: 3000 do
   watch(%r{^config|lib|app/models/upload_types/.*})
 end
 
-guard 'rake', :task => 'db:test:prepare' do
-  watch(%r{^db/schema.rb})
-end
-
 guard :rspec, cmd: 'bin/rspec' do
   watch(%r{^spec/.+_spec\.rb$})
   watch(%r{^lib/(.+)\.rb$})     { |m| "spec/lib/#{m[1]}_spec.rb" }
