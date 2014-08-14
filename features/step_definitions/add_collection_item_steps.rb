@@ -11,11 +11,11 @@ def create_collection_item(name: nil, description: '', location: '', acquisition
 
   name ||= "Item #{collection_item_count}"
   within_role 'collection_item-form' do
-    fill_in('collection_item-name',        :with => name)
-    fill_in('collection_item-description', :with => description)
-    fill_in('collection_item-location',    :with => location)
-    fill_in('collection_item-number',      :with => acquisition_number)
-    click_role('create-collection_item-button')
+    fill_in('collection-item-name',        :with => name)
+    fill_in('collection-item-description', :with => description)
+    fill_in('collection-item-location',    :with => location)
+    fill_in('collection-item-number',      :with => acquisition_number)
+    click_role('create-collection-item-button')
   end
   @collection_items[name] = []
 end
@@ -54,4 +54,12 @@ When(/^someone else creates a collection item$/) do
   if user_name
     sign_in(user_name)
   end
+end
+
+When(/^An admin has created a collection item$/) do
+  as_admin { create_collection_item }
+end
+
+When(/^An admin has created a collection item called "([^"]*)"$/) do |name|
+  as_admin { create_collection_item(name: name) }
 end

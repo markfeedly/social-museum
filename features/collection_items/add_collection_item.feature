@@ -33,6 +33,12 @@ Feature: Adding items to the collection
 
     Then I can see a "has already been taken" error for the collection item name
 
+  Scenario: Attempt to create a collection item with the name of an existent page title
+    Given I have created a page entitled "Baby"
+    When I create a collection item called "Baby"
+
+    Then I can see a "there is a page by this title" error for the collection item name
+
   Scenario: Add a collection item with a description
     When I create a collection item with description "Vacuum tube"
 

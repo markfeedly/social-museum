@@ -1,4 +1,5 @@
 Then(/^I can see an? "([^"]+)" error for the ([^"]+)$/) do |message, target|
+  target.gsub!('collection item', 'collection-item')
   obj, attribute = target.downcase.split(' ', 2)
   attribute.gsub!(' ', '-')
   within_role "#{obj.downcase}-form" do

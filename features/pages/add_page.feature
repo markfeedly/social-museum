@@ -27,6 +27,12 @@ Feature: Wiki pages can be created
 
     Then I can see a page entitled "Test"
 
+  Scenario: Attempt to create a page with the title of an already existent collection items name
+    Given I have created a collection item called "Baby"
+    When I create a page entitled "Baby"
+
+    Then I can see a "there is a collection item with this name" error for the page title
+
   Scenario: Attempt to create a page with a duplicate title
     When I create a page entitled "Pre-existing title"
     Then I create a page entitled "Pre-existing title"
