@@ -15,7 +15,7 @@ class Resource < ActiveRecord::Base
   tracks_association :pages
   tracks_association :user
 
-  validates :title, uniqueness: true, presence: true
+  validates :title, presence: true
   validates :source, presence: true
   validate  :validate_url
   validate  :validate_file
