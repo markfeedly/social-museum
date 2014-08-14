@@ -16,11 +16,10 @@ Feature: Resource editing
     Then I can see a resource with a link to "http://media.npr.org/images/picture-show-flickr-promo.jpg"
 
   Scenario: Edit resource title to a pre-existing title
-    When I create a new resource entitled "Test1"
-    And I create a new resource entitled "Test2"
-    And I change the resource title to "Test1"
+    When I create a new resource with a link to "http://media.npr.org/images/picture-show-flickr-promo.jpg"
+    And I create a new resource with a link to "http://media.npr.org/images/picture-show-flickr-promo.jpg"
 
-    Then I can see a "has already been taken" error for the resource title
+    Then I can see a "already exists" error for the resource url
 
   Scenario: Admins can edit resources
     When I create a new resource entitled "Test" with a link to "http://media.npr.org/images/picture-show-flickr-promo.jpg"
