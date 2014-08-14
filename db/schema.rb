@@ -11,17 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140814134757) do
+ActiveRecord::Schema.define(version: 20140814161237) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "collection_items", force: true do |t|
-    t.string   "name"
     t.text     "description"
     t.string   "location"
     t.string   "item_number"
-    t.string   "slug"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -58,13 +56,8 @@ ActiveRecord::Schema.define(version: 20140814134757) do
   create_table "pages", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "slug"
-    t.string   "title"
     t.integer  "lock_version"
   end
-
-  add_index "pages", ["slug"], name: "index_pages_on_slug", using: :btree
-  add_index "pages", ["title"], name: "index_pages_on_title", unique: true, using: :btree
 
   create_table "related_collection_items", force: true do |t|
     t.integer  "source_collection_item_id"
