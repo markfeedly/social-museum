@@ -33,11 +33,11 @@ When(/^I (?:have )?created? a collection item with description "([^"]*)"$/) do |
   create_collection_item(description: description)
 end
 
-When(/^I (?:have )?created? a collection item with location "([^"]*)"$/) do |location|
+When(/^I (?:have )?created? a collection item located in "([^"]*)"$/) do |location|
   create_collection_item(location: location)
 end
 
-When(/^I (?:have )?created? a collection item with acquisition-number (\d+)$/) do |number|
+When(/^I (?:have )?created? a collection item with acquisition number (\d+)$/) do |number|
   create_collection_item(acquisition_number: number)
 end
 
