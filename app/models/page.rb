@@ -33,6 +33,7 @@ class Page < ActiveRecord::Base
   history_attr :tags
   history_attr :title
 
+  before_save       :track_title_change
   after_create      :subscribe_creator
 
   validates :content, presence: true
@@ -103,6 +104,12 @@ class Page < ActiveRecord::Base
 
   def slug
     page_title.slug
+  end
+
+  def track_title_change
+    if page_title.title_changed?
+      self.title = page_title.title
+    end
   end
 
   def self.find_by_slug(slug)
