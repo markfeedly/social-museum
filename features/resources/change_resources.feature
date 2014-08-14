@@ -15,7 +15,7 @@ Feature: Resource editing
 
     Then I can see a resource with a link to "http://media.npr.org/images/picture-show-flickr-promo.jpg"
 
-  Scenario: Edit resource title to a pre-existing title
+  Scenario: Edit resource url to that of an existent resource
     When I create a new resource with a link to "http://media.npr.org/images/picture-show-flickr-promo.jpg"
     And I create a new resource with a link to "http://media.npr.org/images/picture-show-flickr-promo.jpg"
 
