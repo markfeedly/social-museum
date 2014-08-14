@@ -30,10 +30,10 @@ Feature: Collection items should record their history
     And I can see collection item history contains "Kilburn floor 2" as second most recent
     And I can see collection item history contains "Kilburn" as third most recent
 
-  Scenario: Changes to acquisition-number should be recorded in history
-    When I create a collection item with acquisition-number "000"
-    And I change the collection item acquisition-number to "001"
-    And I change the collection item acquisition-number to "007"
+  Scenario: Changes to acquisition number should be recorded in history
+    When I create a collection item with acquisition number "000"
+    And I change the collection item acquisition number to "001"
+    And I change the collection item acquisition number to "007"
 
     Then I can see collection item history contains "007" as most recent
     And I can see collection item history contains "001" as second most recent

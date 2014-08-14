@@ -11,13 +11,12 @@ def create_page(title: nil, content: "test content", tags: "", categories: "")
 
   title ||= "Test me #{page_count}"
   within_role 'page-form' do
-    fill_in('Title', :with => title)
-    fill_in('Content', :with => content)
-    fill_in('Tags', :with => tags)
-    fill_in('Categories', :with => categories)
-    click_button('Create Page')
+    fill_in('page_title',      :with => title)
+    fill_in('page_content',    :with => content)
+    fill_in('page_tags',       :with => tags)
+    fill_in('page_categories', :with => categories)
+    click_role('create-page-button')
   end
-  # TODO Change empty array to resource_title (or unique identifier)
   @pages[title] = []
 end
 
