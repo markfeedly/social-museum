@@ -4,15 +4,18 @@ class ResourcesController < ApplicationController
   before_action :authenticate_user!, :except => [:index, :show]
 
   expose(:resources) { Resource.all.page(params[:id]).page(params[:resources]).per(10) }
-  expose(:resource)  { Resource.where(id: params[:id]).first }
+  expose(:resource, attributes: :empty_params)
   expose(:pages) {|default| default.ordered_by_title}
 
+  authorize_actions_for Resource
+
   def new
-    self.resource = Resource.new
+    respond_with(resource)
   end
 
   def create
-    self.resource = current_user.resources.new(resource_params)
+    resource.attributes = resource_params
+    resource.user = current_user
     resource.save
     respond_with(resource)
   end
@@ -22,14 +25,18 @@ class ResourcesController < ApplicationController
   end
 
   def show
-    unless resource
+    if resource
+      respond_with(resource)
+    else
       flash[:warning] = ["Resource #{params[:id]} does not exist"]
       redirect_to resources_path
     end
   end
 
   def edit
-    unless resource
+    if resource
+      respond_with(resource)
+    else
       flash[:warning] = ["Resource #{params[:id]} does not exist"]
       redirect_to resources_path
     end
@@ -46,15 +53,18 @@ class ResourcesController < ApplicationController
   end
 
   def destroy
-    authorize_action_for resource # user must be an admin
     resource.destroy
     respond_with(resource)
   end
 
   private
 
+  def empty_params
+    params.require(:resource).permit()
+  end
+
   def resource_params
-    if resource.nil? || current_user.can_change_link?(resource)
+    if current_user.can_change_link?(resource)
       params.require(:resource).permit( :lock_version,
                                         :url,
                                         :file,
