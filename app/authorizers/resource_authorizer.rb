@@ -8,11 +8,11 @@ class ResourceAuthorizer < Authority::Authorizer
     !user.guest?
   end
 
-  def readable_by?(user, opts={})
+  def self.readable_by?(user, opts={})
     true
   end
 
-  def updatable_by?(user, opts={})
+  def self.updatable_by?(user, opts={})
     !user.guest?
   end
 
