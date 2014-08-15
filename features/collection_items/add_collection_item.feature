@@ -54,8 +54,8 @@ Feature: Adding items to the collection
 
     Then I can see a collection item with acquisition number 001
 
-  Scenario: Attempt to create a collection item with a duplicate acquisition-number
+  Scenario: Attempt to create a collection item with a duplicate acquisition number
     When I create a collection item with acquisition number 001
     Then I create a collection item with acquisition number 001
 
-    Then I can see a "has already been taken" error for the collection item acquisition-number
+    Then I can see a "has already been taken" error for the collection item acquisition number
