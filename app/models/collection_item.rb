@@ -2,6 +2,8 @@ class CollectionItem < ActiveRecord::Base
   include Authority::Abilities
 
   has_one :title, as: :titleable
+  validates :item_number, presence: true, uniqueness: true
+  validates :location, presence: true
   validates_associated :title
   accepts_nested_attributes_for :title
 

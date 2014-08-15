@@ -14,7 +14,7 @@ Feature: Edit pre-existing collection items
     When I create a collection item
     And I change the collection item name to "A tube"
 
-    Then I can see a "has already been taken" error for the collection-item name
+    Then I can see a "has already been taken" error for the collection item name
 
   Scenario: Edit description
     Given I have created a collection item
@@ -39,4 +39,4 @@ Feature: Edit pre-existing collection items
     When I create a collection item
     And I change the collection item acquisition number to "007"
 
-    Then I can see a "has already been taken" error for the collection-item acquisition number
+    Then I can see a "has already been taken" error for the collection item acquisition number

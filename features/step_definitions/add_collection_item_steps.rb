@@ -6,7 +6,7 @@ def collection_item_count
   @collection_items.length
 end
 
-def create_collection_item(name: nil, description: '', location: '', acquisition_number: '')
+def create_collection_item(name: nil, description: '', location: 'kilburn', acquisition_number: '001')
   visit new_collection_item_path
 
   name ||= "Item #{collection_item_count}"
@@ -14,7 +14,7 @@ def create_collection_item(name: nil, description: '', location: '', acquisition
     fill_in('collection_item[title_attributes][title]',        :with => name)
     fill_in('collection_item_description', :with => description)
     fill_in('collection_item_location',    :with => location)
-    fill_in('collection_item_item_number',      :with => acquisition_number)
+    fill_in('collection_item_acquisition_number',      :with => acquisition_number)
     click_role('create-collection-item-button')
   end
   @collection_items[name] = []
@@ -22,7 +22,7 @@ end
 
 When(/^I (?:have )?created? (a|\d+) collection items?$/) do |collection_items|
   collection_items = 1 if collection_items == "a"
-  collection_items.to_i.times.each{ create_collection_item }
+  collection_items.to_i.times {|i| create_collection_item acquisition_number: "00#{i}" }
 end
 
 When(/^I (?:have )?created? a collection item called "([^"]*)"$/) do |name|
