@@ -48,7 +48,7 @@ Then(/^I can see collection item history contains "(.*?)" as (#{CAPTURE_ITEM_REC
   end
 end
 
-When(/^I visit (?:the |a )(?:first )?collection item$/) do
+When(/^I visit (?:the|a) (?:first )?collection item$/) do
   visit collection_items_path
 
   page.first("a[class='summary-title']").click

@@ -1,7 +1,7 @@
 class CollectionItem < ActiveRecord::Base
   include Authority::Abilities
 
-  has_one :title, as: :titleable
+  has_one :title, as: :titleable, dependent: :destroy, autosave: true
   validates :item_number, presence: true, uniqueness: true
   validates :location, presence: true
   validates_associated :title

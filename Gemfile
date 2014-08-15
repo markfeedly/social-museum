@@ -14,6 +14,7 @@ gem 'jquery-rails'
 gem 'turbolinks'
 gem 'font-awesome-rails'
 gem 'bootstrap-sass', '2.3.2.2'
+gem 'responders'
 
 gem 'devise'
 gem 'figaro'
