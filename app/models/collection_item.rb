@@ -1,4 +1,5 @@
 class CollectionItem < ActiveRecord::Base
+  has_secretary
   include Authority::Abilities
 
   has_one :title, as: :titleable, dependent: :destroy, autosave: true
@@ -6,6 +7,8 @@ class CollectionItem < ActiveRecord::Base
   validates :location, presence: true
   validates_associated :title
   accepts_nested_attributes_for :title
+
+  tracks_association :title
 
   def name
     title.title
