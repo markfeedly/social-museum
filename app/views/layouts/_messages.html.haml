@@ -2,7 +2,12 @@
 
 - flash.each do |type, msgs|
   - msgs = [msgs] if msgs.class == String
-  - msgs.each do |m|
+  - if msgs.respond_to?(:each)
+    - msgs.each do |m|
+      %div{class: "alert alert-#{type == 'notice' ? 'success' : 'error'}"}
+        = content_tag :div, m
+  - else
     %div{class: "alert alert-#{type == 'notice' ? 'success' : 'error'}"}
-      = content_tag :div, m
+      = content_tag :div, msgs
+
 - flash = nil

@@ -65,7 +65,7 @@ module UserUtilities
 
   def confirm_via_emailed_link
     open_last_email
-    click_email_link_matching /confirm/
+    click_email_link_matching(/confirm/)
   end
 
   def current_user
@@ -95,6 +95,7 @@ module UserUtilities
   end
 
   def as_admin(&blk)
+    create_user unless User.where(email: user_email).exists?
     user = User.find_by_email(user_email)
     user.admin = true
     user.save!

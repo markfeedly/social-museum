@@ -33,6 +33,11 @@ class CollectionItemsController < ApplicationController
     respond_with(collection_items)
   end
 
+  def destroy
+    collection_item.destroy
+    respond_with(collection_item)
+  end
+
   private
 
   def collection_item_params

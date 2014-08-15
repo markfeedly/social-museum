@@ -1,5 +1,8 @@
 %h1 Collection Items
-%ul
+%ul{data: {role: "collection-items"}}
   - collection_items.each do |collection_item|
-    %li.search-result= link_to collection_item.name, collection_item_path(collection_item)
+    %li.search-result{data: {role: "collection-item", title: collection_item.name}}
+      = link_to collection_item.name, collection_item_path(collection_item), class: 'summary-title'
+      - if current_user.can_delete?(collection_item)
+        = link_to fa_icon('trash-o'), collection_item_path(collection_item), method: :delete, data: {role: "delete-collection-item"}
 

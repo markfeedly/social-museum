@@ -8,7 +8,7 @@ class Page < ActiveRecord::Base
 
   include Categories
 
-  has_one  :page_title, class_name: "Title", as: :titleable, autosave: true
+  has_one  :page_title, class_name: "Title", as: :titleable, autosave: true, dependent: :destroy
   validates_associated :page_title
   accepts_nested_attributes_for :page_title
 
