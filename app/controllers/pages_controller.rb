@@ -1,11 +1,14 @@
 class PagesController < ApplicationController
   respond_to :html
-  expose(:page, finder: :find_by_slug) {|default| default.decorate }
+  expose(:page, attributes: :page_params, finder: :find_by_slug) {|default| default.decorate }
+  expose(:pages)
   expose(:page_states) { Kaminari.paginate_array(page.history.reverse).page(params[:page_states]).per(5) }
-  expose(:page_summaries) { Page.order('title ASC').page(params[:page_summaries]).per(10) }
+  expose(:page_summaries) { Page.joins(:page_title).order('titles.title ASC').page(params[:page_summaries]).per(10) }
 
   before_filter :authenticate_user!, :except => [:index, :show]
                 # :destroy requires admin, see method body
+
+  authorize_actions_for :page
 
   def new
     page.build_page_title
@@ -13,36 +16,26 @@ class PagesController < ApplicationController
   end
 
   def create
-    page = Page.new(page_params.merge(user: current_user))
-    if page.save
-      redirect_to page_url(page)
-    else
-      self.page = page.decorate
-      render :new
-    end
+    page.user = current_user
+    page.save
+    respond_with(page)
   end
 
   def index
+    respond_with(pages)
   end
 
   def show
+    respond_with(page)
   end
 
   def edit
+    respond_with(page)
   end
 
   def update
-    success = true
-    Page.transaction do
-      if need_to_update?
-        success = page.update_attributes(page_params.merge(user:current_user))
-      end
-    end
-    if success
-      redirect_to page_url(page)
-    else
-      render :edit
-    end
+    page.update_attributes(page_params.merge(user:current_user))
+    respond_with(page)
   rescue ActiveRecord::StaleObjectError
     flash.now[:warning] =
       'Another user has made a conflicting change, you can resolve the differences and save the page again'
@@ -52,9 +45,8 @@ class PagesController < ApplicationController
   end
 
   def destroy
-    authorize_action_for page
     page.destroy
-    redirect_to pages_path
+    respond_with(page)
   end
 
   def subscribe
@@ -71,6 +63,8 @@ class PagesController < ApplicationController
     render :confirm_unsubscribe
   end
 
+  private
+
   def page_params
     params.require(:page).permit(:categories,
                                  :content,
@@ -80,14 +74,4 @@ class PagesController < ApplicationController
                                  :tags,
                                  page_title_attributes: [:title, :id])
   end
-
-  private
-
-  def need_to_update?
-        page.title      != page_params[:title]      ||
-        page.categories != page_params[:categories] ||
-        page.tags       != page_params[:tags]       ||
-        page.content    != page_params[:content]
-  end
-
 end
