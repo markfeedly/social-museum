@@ -1,5 +1,5 @@
 class Title < ActiveRecord::Base
-  has_secretary
+  has_secretary on: ["title"]
 
   belongs_to :titleable, polymorphic: true
 

@@ -4,3 +4,29 @@
 %p= collection_item.item_number
 - if current_user.can_update?(collection_item)
   %p= link_to "Edit Collection Item", edit_collection_item_path(collection_item)
+
+#history-tab
+  %h1 History
+  %ul{data: {role: "collection-item-versions"}}
+  - collection_item.versions.each_with_index do |v, idx|
+    %li{data: {role: "collection-item-version", "history-idx" => idx}}
+      %h2= "Version #{v.version_number}"
+      %p
+        - if v.object_changes["title"]
+          -if v.object_changes["title"].first.blank?
+            Added title
+            = v.object_changes["title"].last["title"]
+          -else
+            Changed title from
+            = v.object_changes["title"].first["title"]
+            to
+            = v.object_changes["title"].last["title"]
+      - %w(description item_number location).each do |attr|
+        %p
+          -if v.object_changes[attr]
+            -if v.object_changes[attr].first.blank?
+              = "Added #{attr.humanize} #{v.object_changes[attr].last}"
+            -elsif v.object_changes[attr].last.blank?
+              = "Removed #{attr.humanize} #{v.object_changes[attr].first}"
+            -else
+              = "Changed #{attr.humanize} from #{v.object_changes[attr].first} to #{v.object_changes[attr].last}"
