@@ -7,7 +7,7 @@ describe Resource do
 
   describe "Validations" do
     it { expect(resource).to validate_presence_of(:title)   }
-    it { expect(resource).to validate_uniqueness_of(:title) }
+
     it "should pass validation if the resource is a valid URL" do
       resource.update(url: 'http://hedtek.com')
       expect(resource).to be_valid
