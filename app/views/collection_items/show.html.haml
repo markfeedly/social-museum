@@ -1,1 +1,6 @@
 %h1= collection_item.name
+%p= collection_item.description
+%p= collection_item.location
+%p= collection_item.item_number
+- if current_user.can_update?(collection_item)
+  %p= link_to "Edit Collection Item", edit_collection_item_path(collection_item)

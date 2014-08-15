@@ -1,7 +1,7 @@
 = simple_form_for(collection_item, :html => {:data => {:role => 'collection_item-form'}}) do |f|
   = f.fields_for :title do |title_form|
-    = title_form.input :title, label: "Name"
+    = title_form.input :title, input_html: {id: "collection_item_name"}, wrapper_html: {data: {role: "name"}}, error_html: {data: {role: "error"}}
   = f.input :description, as: :text
-  = f.input :location
-  = f.input :item_number
+  = f.input :location, wrapper_html: {data: {role: "location"}}, error_html: {data: {role: "error"}}
+  = f.input :item_number, wrapper_html: {data: {role: "acquisition_number"}}, error_html: {data: {role: "error"}}, input_html: {id: 'collection_item_acquisition_number'}
   = f.button :submit, data: {role: 'create-collection-item-button'}

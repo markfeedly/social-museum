@@ -20,6 +20,15 @@ class CollectionItemsController < ApplicationController
     respond_with(collection_item)
   end
 
+  def edit
+    respond_with(collection_item)
+  end
+
+  def update
+    collection_item.update_attributes(collection_item_params)
+    respond_with(collection_item)
+  end
+
   def index
     respond_with(collection_items)
   end
