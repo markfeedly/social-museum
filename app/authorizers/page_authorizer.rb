@@ -8,6 +8,10 @@ class PageAuthorizer < Authority::Authorizer
     !user.guest?
   end
 
+  def self.readable_by?(user, opts={})
+    true
+  end
+
   def deletable_by?(user, opts={})
     user.admin?
   end

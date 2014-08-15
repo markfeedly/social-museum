@@ -5,6 +5,7 @@ class ResourcesController < ApplicationController
 
   expose(:resources) { Resource.all.page(params[:id]).page(params[:resources]).per(10) }
   expose(:resource)  { Resource.where(id: params[:id]).first }
+  expose(:pages) {|default| default.ordered_by_title}
 
   def new
     self.resource = Resource.new

@@ -20,6 +20,8 @@ class Page < ActiveRecord::Base
   has_many :subscriptions
   has_many :subscribers, through: :subscriptions, source: :user
 
+  scope    :ordered_by_title, ->{joins(:page_title).order("titles.title")}
+
   rakismet_attrs :author       => proc { user.name  },
                  :author_email => proc { user.email },
                  :user_role    => proc { user.admin? ? 'administrator' : 'user' },
