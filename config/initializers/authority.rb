@@ -28,6 +28,8 @@ config.controller_action_map = {
     edit:    'update',
     update:  'update',
     destroy: 'delete',
+    subscribe: 'subscribe',
+    unsubscribe: 'unsubscribe',
     disapprove: 'disapprove',
     approve:    'approve'
  }

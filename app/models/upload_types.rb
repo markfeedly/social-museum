@@ -31,6 +31,6 @@ module UploadTypes
   end
 end
 
-if Rails.env.development?
+if Rails.env.development? || Rails.env.test?
   UploadTypes.add_directory(Rails.root + 'config/upload_types/*.csv')
 end
