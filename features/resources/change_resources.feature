@@ -19,7 +19,7 @@ Feature: Resource editing
     When I create a new resource with a link to "http://media.npr.org/images/picture-show-flickr-promo.jpg"
     And I create a new resource with a link to "http://media.npr.org/images/picture-show-flickr-promo.jpg"
 
-    Then I can see a "already exists" error for the resource url
+    Then I can see a "has already been taken" error for the resource link-field
 
   Scenario: Admins can edit resources
     When I create a new resource entitled "Test" with a link to "http://media.npr.org/images/picture-show-flickr-promo.jpg"
