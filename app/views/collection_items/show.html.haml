@@ -8,7 +8,7 @@
 #history-tab
   %h1 History
   %ul{data: {role: "collection-item-versions"}}
-  - collection_item.versions.each_with_index do |v, idx|
+  - collection_item.versions.order("version_number DESC").each_with_index do |v, idx|
     %li{data: {role: "collection-item-version", "history-idx" => idx}}
       %h2= "Version #{v.version_number}"
       %p
