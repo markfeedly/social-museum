@@ -1,6 +1,8 @@
+require 'sec-versioning'
+
 class CollectionItem < ActiveRecord::Base
-  has_secretary
   include Authority::Abilities
+  include SecVersioning
 
   has_one :title, as: :titleable, dependent: :destroy, autosave: true
   validates :item_number, presence: true, uniqueness: true
