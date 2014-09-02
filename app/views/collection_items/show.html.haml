@@ -11,6 +11,11 @@
   - collection_item.versions.order("version_number DESC").each_with_index do |v, idx|
     %li{data: {role: "collection-item-version", "history-idx" => idx}}
       %h2= "Version #{v.version_number}"
+      - state = collection_item.version(v.version_number)
+      - xxx
+      = p state.title
+      = p state.description
+      %hr
       %p
         - if v.object_changes["title"]
           -if v.object_changes["title"].first.blank?
