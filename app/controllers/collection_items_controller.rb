@@ -7,6 +7,7 @@ class CollectionItemsController < ApplicationController
   authorize_actions_for CollectionItem
 
   def show
+    xxx
     respond_with(collection_item)
   end
 

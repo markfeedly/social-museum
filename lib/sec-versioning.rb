@@ -13,6 +13,7 @@ module SecVersioning
   def version(version_number, versions: nil)
     reversion = self.class.new
     reversion.id = id
+    reversion.created_at = created_at
     reversion.version_object_changes = {}
     self.class.versioned_attributes.each do |v|
       reversion.send("#{v}=", nil)
@@ -29,7 +30,6 @@ module SecVersioning
   end
 
   def merge_version(v, reversion)
-    reversion.created_at ||= v.created_at
     reversion.updated_at ||= v.created_at
     v.object_changes.each do |key, (from, change)|
       unless reversion.version_object_changes.has_key?(key)
