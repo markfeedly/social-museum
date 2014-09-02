@@ -22,7 +22,7 @@ module SecVersioning
   end
 
   def load_versions
-    versions.pluck(:version_number).map do |v|
+    versions.order("version_number DESC").pluck(:version_number).map do |v|
       version(v)
     end
   end
