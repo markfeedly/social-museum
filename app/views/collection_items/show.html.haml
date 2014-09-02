@@ -7,31 +7,17 @@
 
 #history-tab
   %h1 History
-  %ul{data: {role: "collection-item-versions"}}
-  - collection_item.versions.order("version_number DESC").each_with_index do |v, idx|
-    %li{data: {role: "collection-item-version", "history-idx" => idx}}
-      %h2= "Version #{v.version_number}"
-      - state = collection_item.version(v.version_number)
-      - xxx
-      = p state.title
-      = p state.description
-      %hr
-      %p
-        - if v.object_changes["title"]
-          -if v.object_changes["title"].first.blank?
-            Added title
-            = v.object_changes["title"].last["title"]
-          -else
-            Changed title from
-            = v.object_changes["title"].first["title"]
-            to
-            = v.object_changes["title"].last["title"]
-      - %w(description item_number location).each do |attr|
-        %p
-          -if v.object_changes[attr]
-            -if v.object_changes[attr].first.blank?
-              = "Added #{attr.humanize} #{v.object_changes[attr].last}"
-            -elsif v.object_changes[attr].last.blank?
-              = "Removed #{attr.humanize} #{v.object_changes[attr].first}"
-            -else
-              = "Changed #{attr.humanize} from #{v.object_changes[attr].first} to #{v.object_changes[attr].last}"
+  %div{data: {role: "collection-item-versions"}}
+    = paginate collection_item_states, param_name: :page_ci
+
+    - collection_item_states.each do |state|
+      %li.no-bullets{data: {role: "collection-item-version", "history-idx" => 'x'}}
+        .history-title
+          = state.title.title
+        %br
+        = p state.description
+        %br
+        = p state.item_number
+        %br
+        = p state.location
+        %hr
