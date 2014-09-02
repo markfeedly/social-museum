@@ -3,11 +3,18 @@ class CollectionItemsController < ApplicationController
 
   expose(:collection_item, attributes: :collection_item_params, finder: :find_by_slug)
   expose(:collection_items)
+  expose(:collection_item_states) do
+    number_of_versions = collection_item.versions.count
+    arr = []
+    for i in 1..number_of_versions do
+      arr.append collection_item.version(i)
+    end
+    Kaminari.paginate_array(arr).page(params[:page_ci]).per(2)
+  end
 
   authorize_actions_for CollectionItem
 
   def show
-    xxx
     respond_with(collection_item)
   end
 
