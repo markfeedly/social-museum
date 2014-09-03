@@ -6,10 +6,10 @@ def page_count
   @pages.length
 end
 
-def create_page(title: nil, content: "test content", tags: "", categories: "")
+def create_page(title: "Test me #{page_count}", content: "test content",
+                                                    tags: "", categories: "")
   visit new_page_path
 
-  title ||= "Test me #{page_count}"
   within_role 'page-form' do
     fill_in('page[page_title_attributes][title]',      :with => title)
     fill_in('page_content',    :with => content)
@@ -34,11 +34,11 @@ When(/^I create a page with content "([^"]*)"$/) do |content|
 end
 
 When(/^I create a page with tags "([^"]*)"$/) do |tags|
-  create_page(title: title, tags: tags)
+  create_page(tags: tags)
 end
 
 When(/^I create a page with categories "([^"]*)"$/) do |categories|
-  create_page(title: title, categories: categories)
+  create_page(categories: categories)
 end
 
 When(/^someone else creates a page$/) do

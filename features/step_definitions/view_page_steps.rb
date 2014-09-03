@@ -1,3 +1,7 @@
+def visit_page_with_title(title)
+  visit pages_path(Page.find_by_title(title))
+end
+
 Then(/^I can see (a|\d+) pages?$/) do |pages|
   visit pages_path
   count = 0
@@ -15,24 +19,25 @@ Then(/^I can see (a|\d+) pages?$/) do |pages|
 end
 
 Then(/^I can see a page entitled "([^"]*)"$/) do |title|
-  visit pages_path
+  visit_page_with_title(title)
   expect(page).to have_content(title)
 end
 
 Then(/^I can(?:no|')t see a page entitled "([^"]*)"$/) do |title|
-  visit pages_path
+  visit_page_with_title(title)
   expect(page).to_not have_content(title)
 end
 
 Then(/^I can see a page with content "([^"]*)"$/) do |content|
-  visit pages_path
+  visit pages_path(Page.find_by_title(title))
   expect(page).to have_content(content)
 end
 
-Then(/^I can see a page with (tags|categories) "([^"]*)"$/) do |type, content|
-  visit pages_path
-  within("span[class=#{type}]") do
-    expect(page).to have_content(content)
+Then(/^I can see a page with (tags|categories) "([^"]*)"$/) do |type, tags_or_categories|
+  within("#content-tab") do
+    within("span[class=#{type}]") do
+      expect(page).to have_content(tags_or_categories)
+    end
   end
 end
 
