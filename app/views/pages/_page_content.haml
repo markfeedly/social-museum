@@ -9,13 +9,9 @@
 
   .content-footer.parent-div
     .content-t-and-c.float-left
-      .bold
-        Tags
       = render  'tags/tags', tags: page.tags_as_arr
       %br
-      .bold
-        Categories
-      = category_list(page.categories_as_arr)
+      = render 'categories/categories', categories: page.categories_as_arr
     .content-edit-button.float-right.button-width
       - if current_user.can_update?(page)
         .float-right

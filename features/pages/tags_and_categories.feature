@@ -4,19 +4,16 @@ Feature: Wiki page addition
     Given I have signed in with valid credentials
 
   Scenario: I can add a page with tags which are just letters, which are made lowercase
-  When I create a page with tags "a, BB"
-
-  Then I can see a page with tags "a, bb"
+    When I create a page with tags "a, BB"
+    Then I can see a page with tags "a, bb"
 
   Scenario: I can add a page with categories which are just letters
-  When I create a page with categories "a, BB"
-
-  Then I can see a page with categories "a, BB"
+    When I create a page with categories "a, BB"
+    Then I can see a page with categories "a, BB"
 
   Scenario: Special characters won't submit as tags
-  When I create a page with tags "a, bb, ccc, !£$%^&*()+={}[]@~'#<>?,./|\"
-
-  Then I can see a page with tags "a, bb, ccc"
+    When I create a page with tags "a, bb, ccc, !£$%^&*()+={}[]@~'#<>?,./|\"
+    Then I can see a page with tags "a, bb, ccc"
 
   Scenario: Special characters won't submit as categories
   When I create a page with categories "a, bb, ccc, !£$%^&*()+={}[]@~'#<>?,./|\"

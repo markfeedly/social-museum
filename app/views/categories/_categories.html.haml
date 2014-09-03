@@ -1,7 +1,8 @@
 %span.categories
   - if categories == []
-    = 'No categories'
+    .bold
+      No categories
   - else
-    = 'Categories'
-    %br
+    .bold
+      Categories
     = category_list(categories)
