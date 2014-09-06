@@ -8,6 +8,10 @@ class PageAuthorizer < Authority::Authorizer
     !user.guest?
   end
 
+  def self.collectionitemscreatable_by?(user, opts={})
+    user.admin?
+  end
+
   def self.readable_by?(user, opts={})
     true
   end

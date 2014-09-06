@@ -42,6 +42,7 @@ class Page < ActiveRecord::Base
 
   validates :content, presence: true
   validate  :not_spam?
+  validate  :validate_if_collection_item_page
 
   #---------------------------------------------------------
 
@@ -82,6 +83,10 @@ class Page < ActiveRecord::Base
   end
 
   #---------------------------------------------------------
+
+  def validate_if_collection_item_page
+    !item_number || (item_number && user.admin?)
+  end
 
   def not_spam?
     if user.present?
