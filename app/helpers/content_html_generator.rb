@@ -1,6 +1,7 @@
 class ContentHtmlGenerator
-  def self.generate_full(page)
-    new_markdown = page.content.gsub(/\[([^\]]*)\]/) { LinkInterpreter.new($1).process }
+  def self.generate_full(page_or_collection_item)
+
+    new_markdown = ContentHtmlGenerator.chomp_this(page_or_collection_item).gsub(/\[([^\]]*)\]/) { LinkInterpreter.new($1).process }
 
     markdown_renderer = Redcarpet::Markdown.new(Redcarpet::Render::HTML.new(render_options = {}),
                                                     extensions = {})
@@ -8,8 +9,8 @@ class ContentHtmlGenerator
 
   end
 
-  def self.generate_part(page)
-    new_markdown = page.content.gsub(/\[([^\]]*)\]/) do
+  def self.generate_part(page_or_collection_item)
+    new_markdown = ContentHtmlGenerator.chomp_this(page_or_collection_item).gsub(/\[([^\]]*)\]/) do
       li = LinkInterpreter.new($1)
       li.process unless li.image_url? || li.is_youtube_url? || li.is_vimeo_url?
     end
@@ -20,13 +21,22 @@ class ContentHtmlGenerator
 
   end
 
-  def self.page_image(page)
+  def self.page_image(page_or_collection_item)
     image = nil
-    page.content.gsub(/\[([^\]]*)\]/) do
+    ContentHtmlGenerator.chomp_this(page_or_collection_item).gsub(/\[([^\]]*)\]/) do
       li = LinkInterpreter.new($1)
       image = li.url if ! image && li.image_url?
     end
-    image = page.resources.first.source if !image && page.resources.first
+    image = page_or_collection_item.resources.first.source if !image && page_or_collection_item.resources.first
     image
   end
+
+  def self.chomp_this(page_or_collection_item)
+    if page_or_collection_item.respond_to?(:content)
+      page_or_collection_item.content
+    else
+      page_or_collection_item.description
+    end
+  end
+
 end

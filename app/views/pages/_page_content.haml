@@ -1,7 +1,7 @@
 .std-width
 
   .content-content
-    = page.content_as_html(page)
+    = ContentHtmlGenerator.generate_full(page).html_safe
 
   .content-footer.parent-div
     .content-t-and-c.float-left

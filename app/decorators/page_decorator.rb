@@ -3,10 +3,6 @@ class PageDecorator < Draper::Decorator
 
   # contents tab
 
-  def content_as_html(thing)
-    ContentHtmlGenerator.generate_full(thing).html_safe
-  end
-
   def categories_as_arr
     categories == '' ? [] : categories.split(',').collect{|t| t.strip}
   end
