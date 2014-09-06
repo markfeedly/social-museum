@@ -5,12 +5,10 @@ Feature: Wiki pages can be created
 
   Scenario: I add one page
     When I create a page
-
     Then I can see a page
 
   Scenario Outline: I add pages
     When I create <Number> pages
-
     Then I can see <Number> pages
 
   Examples:
@@ -24,7 +22,6 @@ Feature: Wiki pages can be created
 
   Scenario: Add a page with a title
     When I create a page entitled "Test"
-
     Then I can see a page entitled "Test"
 
   Scenario: Attempt to create a page with the title of an already existent collection items name

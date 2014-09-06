@@ -19,7 +19,6 @@ Then(/^I can see (a|\d+) pages?$/) do |pages|
 end
 
 Then(/^I can see a page entitled "([^"]*)"$/) do |title|
-  visit_page_with_title(title)
   expect(page).to have_content(title)
 end
 
