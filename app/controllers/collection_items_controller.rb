@@ -2,7 +2,9 @@ class CollectionItemsController < ApplicationController
   respond_to :html
 
   expose(:collection_item, attributes: :collection_item_params, finder: :find_by_slug)
-  expose(:collection_items)
+  #expose(:collection_items) { Page.all.reject {|p| p.history.last.item_number==nil } }
+  expose(:page_summaries) { Kaminari.paginate_array(Page.joins(:page_title).order('titles.title ASC').reject {|p| p.history.last.item_number==nil }).page(params[:page_summaries]).per(10) }
+
   expose(:collection_item_states) do
     Kaminari.paginate_array(collection_item.load_versions).page(params[:page_ci]).per(10)
   end
@@ -33,7 +35,7 @@ class CollectionItemsController < ApplicationController
   end
 
   def index
-    respond_with(collection_items)
+    respond_with(page_summaries)
   end
 
   def destroy
