@@ -16,26 +16,21 @@ Feature: Wiki page addition
     Then I can see a page with tags "a, bb, ccc"
 
   Scenario: Special characters won't submit as categories
-  When I create a page with categories "a, bb, ccc, !£$%^&*()+={}[]@~'#<>?,./|\"
-
-  Then I can see a page with categories "a, bb, ccc"
+    When I create a page with categories "a, bb, ccc, !£$%^&*()+={}[]@~'#<>?,./|\"
+    Then I can see a page with categories "a, bb, ccc"
 
   Scenario: Whitespace is compacted in tags
-  When I create a page with tags "a, b  b"
-
-  Then I can see a page with tags "a, b b"
+    When I create a page with tags "a, b  b"
+    Then I can see a page with tags "a, b b"
 
   Scenario: Whitespace is compacted in categories
-  When I create a page with categories "a, b  b"
-
-  Then I can see a page with categories "a, b b"
+    When I create a page with categories "a, b  b"
+    Then I can see a page with categories "a, b b"
 
   Scenario: Tags are alphabetised
-  When I create a page with tags "bb, a"
-
-  Then I can see a page with tags "a, bb"
+    When I create a page with tags "bb, a"
+    Then I can see a page with tags "a, bb"
 
   Scenario: Categories are alphabetised
-  When I create a page with categories "bb, a, BB, A"
-
-  Then I can see a page with categories "A, a, BB, bb"
+    When I create a page with categories "bb, a, BB, A"
+    Then I can see a page with categories "A, a, BB, bb"
