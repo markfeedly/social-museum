@@ -5,10 +5,11 @@
         .span12
           = link_to ENV['MUSEUM_NAME'], root_path, class: 'brand'
           %ul.nav
+            - if current_user.can_read?(Page)
+              %li= link_to 'Content', pages_path
             - if current_user.can_read?(CollectionItem)
               %li= link_to 'Collection', collection_items_path
-            - if current_user.can_read?(Page)
-              %li= link_to 'Pages', pages_path
+
             - if current_user.can_read?(Resource)
               %li= link_to 'Resources', resources_path
             - if current_user.can_read?(Page)

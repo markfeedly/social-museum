@@ -1,3 +1,19 @@
 // import the CSS framework
 @import "bootstrap";
 @import "bootstrap-responsive";
+
+.navbar {
+  height: 40px;
+}
+.navbar.navbar-inverse {
+    background-color: #3D0B74;
+}
+.navbar .navbar-inner {
+  background-color: #3D0B74;
+  border-color: #3D0B74;
+  background-image: none;
+}
+
+.navbar-inverse .brand, .navbar-inverse .nav > li > a {
+  color: #ccc;
+}
