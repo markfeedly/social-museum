@@ -7,7 +7,7 @@
           %ul.nav
             - if current_user.can_read?(Page)
               %li= link_to 'Content', pages_path
-            - if current_user.can_read?(CollectionItem)
+            - if current_user.can_read?(Page)
               %li= link_to 'Collection', collection_items_path
 
             - if current_user.can_read?(Resource)
@@ -15,8 +15,8 @@
             - if current_user.can_read?(Page)
               %li= link_to 'Recent', recent_index_path
 
-            - if current_user.can_create?(CollectionItem)
-              %li= link_to "New Collection Item", new_collection_item_path, id: 'add_collection_item'
+            - if current_user.can_read?(User)
+              %li= link_to "New Collection Item", new_page_path, id: 'add_collection_item'
             - if current_user.can_create?(Page)
               %li= link_to 'New Page', new_page_path, :id => 'add_page_link'
             - if current_user.can_create?(Resource)
