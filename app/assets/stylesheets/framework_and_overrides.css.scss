@@ -14,6 +14,8 @@
   background-image: none;
 }
 
-.navbar-inverse .brand, .navbar-inverse .nav > li > a {
+.navbar-inverse .nav > li > a {
   color: #ccc;
 }
+
+.navbar-inverse .brand { color: rgb(204, 114, 255); }
