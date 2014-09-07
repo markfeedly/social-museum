@@ -1,4 +1,9 @@
 - pages.each do |p|
-  - titles = pages_for_partial.collect{ |pg| pg.title }
+
+  - if params[:for_page]
+    - page_id = params[:for_page].to_i
+    - titles =  [ Page.find(page_id).title ]
+  - else
+    - titles = pages_for_partial.collect{ |pg| pg.title }
   .checkbox-item.relative
     = ('<span class="tick-box">' + check_box(:resource_pages, p.title, checked: titles.include?(p.title) ) + '</span>' + p.title).html_safe
