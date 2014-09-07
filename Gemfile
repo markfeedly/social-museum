@@ -31,6 +31,7 @@ gem 'omniauth-twitter'
 gem 'rakismet', github: "hedtek/rakismet"
 gem 'secretary-rails'
 gem 'carrierwave'
+gem 'rails4-autocomplete'
 
 gem 'puma'
 gem 'newrelic_rpm'

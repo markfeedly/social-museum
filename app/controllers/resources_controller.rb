@@ -7,7 +7,9 @@ class ResourcesController < ApplicationController
   expose(:resource, attributes: :empty_params)
   expose(:pages) {|default| default.ordered_by_title}
 
-  authorize_actions_for Resource
+  autocomplete :page, :title
+
+  #authorize_actions_for Resource
 
   def new
     respond_with(resource)

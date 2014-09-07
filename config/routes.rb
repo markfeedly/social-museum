@@ -19,6 +19,7 @@ VirtualMuseum::Application.routes.draw do
   end
   resources :resources do
     get 'P:resources', :action => :index, :on => :collection
+    get :autocomplete_page_title, :on => :collection
   end
 
   resources :tags,       only: [:show]
