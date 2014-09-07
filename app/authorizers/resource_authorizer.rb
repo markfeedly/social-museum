@@ -19,4 +19,8 @@ class ResourceAuthorizer < Authority::Authorizer
   def link_changeable_by?(user, opts={})
     !user.guest? && (user == resource.user || resource.new_record? || super)
   end
+
+  def autocomplete_page_titleable_by(user, opts={})
+    !user.guest?
+  end
 end

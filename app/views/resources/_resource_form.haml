@@ -46,4 +46,8 @@
   .scrolling-div
     = render partial: 'resources/resource_check_boxes', locals: {pages_for_partial: resource.pages, f: f}
   %br
+
   = f.button :submit, class: 'btn btn-primary'
+
+= form_tag do
+  =text_field_tag 'name', '', :autocomplete => autocomplete_page_title_resources_path
