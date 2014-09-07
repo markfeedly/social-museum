@@ -22,6 +22,7 @@
   %fieldset
     %legend Resource
   = f.input :title, wrapper_html: {data: {role: 'title'}}, error_html: {data: {role: 'error'}}
+  = f.input :title, as: :autocomplete, url: autocomplete_page_title_resources_path
   = f.input :description
   - if current_user.can_change_link?(resource)
     = f.input :url, label: 'Resource on the web to link to (this must be a URL beginning with http)', wrapper_html: {data: {role: "link-field"}}, error_html: {data: {role: "error"}}

@@ -36,6 +36,7 @@ gem 'rails4-autocomplete'
 gem 'puma'
 gem 'newrelic_rpm'
 gem 'lograge_params', github: "hedtek/lograge-params"
+gem 'jquery-ui-rails'
 
 group :development, :test do
   gem 'guard'
