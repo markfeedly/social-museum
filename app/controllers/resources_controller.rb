@@ -59,6 +59,10 @@ class ResourcesController < ApplicationController
     respond_with(resource)
   end
 
+  def autocomplete_page_title
+    render json: pages.collect{|p| p.title.downcase.match("#{params[:term]}".downcase) ? p.title : nil }.compact
+  end
+
   private
 
   def empty_params
