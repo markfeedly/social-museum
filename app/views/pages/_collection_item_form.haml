@@ -2,10 +2,17 @@
   = f.input :lock_version, as: :hidden
   = f.fields_for :page_title do |title_form|
     = title_form.input :title, input_html: {id: "page_title"}, wrapper_html: {data: {role: 'title'}}, error_html: {data: {role: 'error'}}
+  - if current_user.admin?
+    #page_collection_item_info.parent-div
+      .float-left
+        = f.input :item_number, wrapper_html: {data: {role: 'tags'}}, error_html: {data: {role: 'error'}}
+      .float-right
+        = f.input :location, wrapper_html: {data: {role: 'tags'}}, error_html: {data: {role: 'error'}}
   = f.input :categories, wrapper_html: {data: {role: 'categories'}}, error_html: {data: {role: 'error'}}
   = f.hint link_to("Show content editing help", '#', class: "btn btn-primary" ), id: 'help-button'
   = f.input :content, as: :text, wrapper_html: {data: {role: 'content'}}, error_html: {data: {role: 'error'}}
   = f.input :tags, wrapper_html: {data: {role: 'tags'}}, error_html: {data: {role: 'error'}}
+
 
   = f.button :submit, data: {role: 'create-page-button'}
 

@@ -13,7 +13,7 @@
     %fieldset
       %legend Preview
       -if resource.valid_image_url?
-        %img.width-600px{src: resource.source}
+        %img.width-400px{src: resource.source}
       -elsif resource.valid_url?
         = link_to resource.url.split('/')[-1], resource.url
       - else
