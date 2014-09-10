@@ -63,8 +63,8 @@
 #comment-title     { font-size: 25px; margin-top: 11px; margin-bottom: 15px; font-weight: bold; color: #2c0275; }
 
 // content tab, reveal comments
-.hiddenx                      { display: none;  min-height: 200px; }
-#comment-form     { margin: 20px 13px 10px 20px; }
+.hidden-entity { display: none }
+#comment-form     { margin: 20px 13px 10px 20px;  min-height: 200px; }
 #button-to-unhide-add_comment {margin: 8px 0 0 0; }
 #comment_content { width: 619px; height: 150px}
 
