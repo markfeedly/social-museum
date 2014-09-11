@@ -8,6 +8,7 @@ class Title < ActiveRecord::Base
   attr_readonly :slug
 
   before_validation :set_slug, on: :create
+  before_validation :title_strip
 
   def set_slug
     if slug.blank?
@@ -32,5 +33,11 @@ class Title < ActiveRecord::Base
 
   def self.exists?(t)
     Title.where(title: t) != []
+  end
+
+  private
+
+  def title_strip
+    self.title.strip!
   end
 end
