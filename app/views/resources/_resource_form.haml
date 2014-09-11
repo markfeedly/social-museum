@@ -44,13 +44,12 @@
           = "This resource asset may only be changed by this resource's creator (#{resource.user.name}) or by an administrator."
   = f.label 'Optionally add the resource to one or more pages (you can also do this later if you want to)'
   = f.fields_for :resource_usages do |title_form|
-    = title_form.input :page_title, as: :autocomplete, url: autocomplete_page_title_resources_path
-    = title_form.link_to_remove fa_icon('times'), class: 'btn btn-mini btn-error'
+    .parent-div.width-400px
+      .float-left
+        = title_form.input :page_title, as: :autocomplete, url: autocomplete_page_title_resources_path, label: false
+      .float-right
+        = title_form.link_to_remove fa_icon('times'), class: 'btn btn-mini btn-error red'
   = f.link_to_add "Add a page", :resource_usages, class: 'btn'
-  %br
-
+  %br/
+  %br/
   = f.button :submit, class: 'btn btn-primary'
-
-- name = ''
-= form_tag do
-  = text_field_tag 'name', '', :autocomplete => autocomplete_page_title_resources_path
