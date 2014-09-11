@@ -4,25 +4,21 @@
   #comment-title.float-left
     Comments
 
-
   - if current_user.can_create?(Comment, for_page: page)
     = link_to("Add a comment", '#', id: 'comment-button', class: "btn btn-primary button-wider-width float-right",
                                     :data => {:role => 'show-comment-form'})
     #comment-form.hidden-entity
-      = render :partial => 'comments/comment_form'
+      = render 'comments/comment_form'
     .clear
   - else
     .clear
     You need to
-    %a{href: new_user_session_path}
-      sign in
+    = link_to 'sign in', new_user_session_path
     to comment
 
   %hr.clear
   -if page.comments.present?
     %ul.no-bullets
-      = render partial: 'comments/comment',
-                        collection: page.comments.order(:approved,
-                                                        :created_at).reverse_order
+      = render 'comments/comment', page.comments.order(:approved, created_at: :desc)
   - else
     No comments yet

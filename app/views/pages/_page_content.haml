@@ -1,5 +1,5 @@
 .std-width
-  - if page.item_number
+  - if ! page.item_number.to_s.strip.empty?
     .content-item-header.parent-div
       .float-left.bold= "Collection item #{page.item_number}"
       .float-right= "Location: #{page.location}"
@@ -31,4 +31,4 @@
 
 .std-width
   #comments.comments-spacer
-    = render partial: 'comments/comments_page_tab'
+    = render 'comments/comments_page_tab'

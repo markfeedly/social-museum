@@ -1,4 +1,4 @@
-= simple_form_for(resource, :html => {:data => {:role => 'resource-form'}, :multipart => true}) do |f|
+= simple_nested_form_for(resource, :html => {:data => {:role => 'resource-form'}, :multipart => true}) do |f|
   = f.input :lock_version, as: :hidden
   - if resource.new_record? && !resource.valid_url?
     %div
@@ -22,7 +22,6 @@
   %fieldset
     %legend Resource
   = f.input :title, wrapper_html: {data: {role: 'title'}}, error_html: {data: {role: 'error'}}
-  = f.input :title, as: :autocomplete, url: autocomplete_page_title_resources_path
   = f.input :description
   - if current_user.can_change_link?(resource)
     = f.input :url, label: 'Resource on the web to link to (this must be a URL beginning with http)', wrapper_html: {data: {role: "link-field"}}, error_html: {data: {role: "error"}}
@@ -44,8 +43,10 @@
         .instruction.change-note
           = "This resource asset may only be changed by this resource's creator (#{resource.user.name}) or by an administrator."
   = f.label 'Optionally add the resource to one or more pages (you can also do this later if you want to)'
-  .scrolling-div
-    = render partial: 'resources/resource_check_boxes', locals: {pages_for_partial: resource.pages, f: f}
+  = f.fields_for :resource_usages do |title_form|
+    = title_form.input :page_title, as: :autocomplete, url: autocomplete_page_title_resources_path
+    = title_form.link_to_remove fa_icon('times'), class: 'btn btn-mini btn-error'
+  = f.link_to_add "Add a page", :resource_usages, class: 'btn btn-primary'
   %br
 
   = f.button :submit, class: 'btn btn-primary'

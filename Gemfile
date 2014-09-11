@@ -15,6 +15,7 @@ gem 'turbolinks'
 gem 'font-awesome-rails'
 gem 'bootstrap-sass', '2.3.2.2'
 gem 'responders'
+gem 'nested_form'
 
 gem 'devise'
 gem 'figaro'

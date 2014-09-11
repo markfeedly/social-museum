@@ -2,10 +2,10 @@ class PagesController < ApplicationController
   respond_to :html
   expose(:page, attributes: :page_params, finder: :find_by_slug) {|default| default.decorate }
   expose(:pages)
-  expose(:page_states) { Kaminari.paginate_array(page.history.reverse).page(params[:page_states]).per(5) }
-  expose(:page_summaries) { Page.joins(:page_title).order('titles.title ASC').page(params[:page_summaries]).per(10) }
+  expose(:page_states) { page.history.order(created_at: :desc).page(params[:page_states]).per(5) }
+  expose(:page_summaries) { pages.joins(:page_title).order('titles.title ASC').page(params[:page_summaries]).per(10) }
 
-  before_filter :authenticate_user!, :except => [:index, :show]
+  before_action :authenticate_user!, :except => [:index, :show]
                 # :destroy requires admin, see method body
 
   authorize_actions_for :page

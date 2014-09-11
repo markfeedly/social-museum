@@ -60,7 +60,7 @@ class ResourcesController < ApplicationController
   end
 
   def autocomplete_page_title
-    render json: pages.collect{|p| p.title.downcase.match("#{params[:term]}".downcase) ? p.title : nil }.compact
+    render json: Title.where(Title.arel_table[:title].matches("%#{params[:term]}%")).pluck(:title)
   end
 
   private
@@ -76,20 +76,13 @@ class ResourcesController < ApplicationController
                                         :file,
                                         :description,
                                         :title,
-                                        :resource_usages)
-                               .merge(pages: get_selected_pages)
+                                        resource_usages_attributes: [:id, :page_title, :_destroy])
     else
       params.require(:resource).permit( :lock_version,
                                         :description,
                                         :title,
-                                        :resource_usages)
-                               .merge(pages: get_selected_pages)
+                                        resource_usages_attributes: [:id, :page_title, :_destroy])
     end
-  end
-
-  def get_selected_pages
-    resource_pages_params.reject{ |_, checked| checked == '0' }
-                         .map   { |title| Page.find_by_title(title.first) }
   end
 
   def resource_pages_params
