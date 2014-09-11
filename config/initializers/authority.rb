@@ -42,6 +42,7 @@ config.controller_action_map = {
   #
   # Defaults are as follows:
   #
+  # permission: Authorizer's method minus suffix  _by?
 config.abilities =  {
     create:     'creatable',
     read:       'readable',
@@ -51,7 +52,8 @@ config.abilities =  {
     approve:    'approve',
     subscribe:  'subscribable',
     unsubscribe: 'unsubscribable',
-    change_link: 'link_changeable'
+    change_link: 'link_changeable',
+    create_collection_item: 'collection_item_creatable'
  }
 
   # LOGGER

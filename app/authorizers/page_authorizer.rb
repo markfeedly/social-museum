@@ -8,10 +8,6 @@ class PageAuthorizer < Authority::Authorizer
     !user.guest?
   end
 
-  def self.collectionitemscreatable_by?(user, opts={})
-    user.admin?
-  end
-
   def self.readable_by?(user, opts={})
     true
   end
@@ -30,5 +26,9 @@ class PageAuthorizer < Authority::Authorizer
 
   def unsubscribable_by?(user, opts={})
     !user.guest? && resource.subscribed?(user)
+  end
+
+  def collection_item_creatable_by?(user, opts = {})
+    user.admin?
   end
 end

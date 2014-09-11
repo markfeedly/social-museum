@@ -9,6 +9,9 @@ class Resource < ActiveRecord::Base
 
   has_many :resource_usages
   has_many :pages, through: :resource_usages
+  has_many :page_titles, through: :pages
+
+  accepts_nested_attributes_for :resource_usages, allow_destroy: true
 
   belongs_to :user
 
@@ -48,6 +51,13 @@ class Resource < ActiveRecord::Base
 
   def image_url
     Upload.image_url_for(url)
+  end
+
+  def resource_usages_attributes=(new_resource_usages)
+    seen_title = []
+    super(new_resource_usages.reject{|_, v| v['_destroy'] == 'false' && seen_title.include?(v['page_title']).tap{seen_title << v['page_title']}}
+      .reject{|_, v| v['_destroy'] == 'false' && !Title.exists?(v['page_title']) }
+    )
   end
 
   private

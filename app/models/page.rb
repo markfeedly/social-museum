@@ -37,7 +37,7 @@ class Page < ActiveRecord::Base
   history_attr :item_number
   history_attr :location
 
-  before_save       :track_title_change
+  before_save       :track_title_change, :clean_collection_item
   after_create      :subscribe_creator
 
   validates :content, presence: true
@@ -127,5 +127,11 @@ class Page < ActiveRecord::Base
 
   def self.find_by_title(title)
     joins(:page_title).where(titles: {title: title}).first
+  end
+
+  private
+
+  def clean_collection_item
+    self.item_number = nil if item_number.to_s.strip.empty?
   end
 end
