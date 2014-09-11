@@ -55,9 +55,10 @@ class Resource < ActiveRecord::Base
 
   def resource_usages_attributes=(new_resource_usages)
     seen_title = []
-    super(new_resource_usages.reject{|_, v| v['_destroy'] == 'false' && seen_title.include?(v['page_title']).tap{seen_title << v['page_title']}}
-      .reject{|_, v| v['_destroy'] == 'false' && !Title.exists?(v['page_title']) }
-    )
+    deduped_new_resource_usages = new_resource_usages.reject{|_, v| v['_destroy'] == 'false' &&
+                             seen_title.include?(v['page_title']).tap{seen_title << v['page_title']}}
+    nrw = deduped_new_resource_usages.reject{|_, v| v['_destroy'] == 'false' && !Title.exists?(v['page_title']) }
+    super(nrw)
   end
 
   private
