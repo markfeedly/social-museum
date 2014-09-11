@@ -1,0 +1,21 @@
+- if resource.new_record? && !resource.valid_url?
+  %div
+    .notice-para
+      A resource is typically an image (but may be any document or file).
+    .notice-para
+      Each resource will typically be added to one or more pages.
+    .notice-para
+      Resources that have been added to a page are displayed in the page's resources' tab.
+  %br
+- else
+  %fieldset
+    %legend Preview
+    -if resource.valid_image_url?
+      %img.width-400px{src: resource.source}
+    -elsif resource.valid_url?
+      = link_to resource.url.split('/')[-1], resource.url
+    - else
+      %span.red
+        The resource could not be previewed because the link provided was not valid
+    %fieldset
+      %legend Resource
