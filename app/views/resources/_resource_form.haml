@@ -46,7 +46,7 @@
   = f.fields_for :resource_usages do |title_form|
     = title_form.input :page_title, as: :autocomplete, url: autocomplete_page_title_resources_path
     = title_form.link_to_remove fa_icon('times'), class: 'btn btn-mini btn-error'
-  = f.link_to_add "Add a page", :resource_usages, class: 'btn btn-primary'
+  = f.link_to_add "Add a page", :resource_usages, class: 'btn'
   %br
 
   = f.button :submit, class: 'btn btn-primary'

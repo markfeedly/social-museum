@@ -29,4 +29,8 @@ class Title < ActiveRecord::Base
   def to_param
     slug
   end
+
+  def self.exists?(t)
+    Title.where(title: t) != []
+  end
 end
