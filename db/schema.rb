@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140906135522) do
+ActiveRecord::Schema.define(version: 20140912150108) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,8 +33,10 @@ ActiveRecord::Schema.define(version: 20140906135522) do
     t.string   "user_ip"
     t.string   "user_agent"
     t.string   "referrer"
-    t.boolean  "approved",   default: false, null: false
-    t.boolean  "notified",   default: false
+    t.boolean  "approved",         default: false, null: false
+    t.boolean  "notified",         default: false
+    t.integer  "commentable_id"
+    t.string   "commentable_type"
   end
 
   add_index "comments", ["page_id"], name: "index_comments_on_page_id", using: :btree
@@ -94,6 +96,8 @@ ActiveRecord::Schema.define(version: 20140906135522) do
   create_table "subscriptions", force: true do |t|
     t.integer "page_id"
     t.integer "user_id"
+    t.integer "subscribable_id"
+    t.string  "subscribable_type"
   end
 
   add_index "subscriptions", ["page_id"], name: "index_subscriptions_on_page_id", using: :btree

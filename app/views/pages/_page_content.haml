@@ -19,16 +19,10 @@
         -# TODO Phrase button more appropriately, or create a means to select existing resource.
         .float-right
           = link_to("Add new resource", new_resource_path+"?for_page=#{page.id}", class: 'btn btn-primary button-width button-spacing')
-        - if current_user.can_unsubscribe?(page)
-
-          .float-right
-            = link_to( 'Unsubscribe', unsubscribe_page_path(page), class: 'btn btn-primary button-width')
-        - if current_user.can_subscribe?(page)
-
-          .float-right
-            = link_to( 'Subscribe', subscribe_page_path(page), class: 'btn btn-primary button-width')
+        .float-right
+          = render 'shared/subscriptions', subscribable: page
   .clear
 
 .std-width
   #comments.comments-spacer
-    = render 'comments/comments_page_tab'
+    = render 'comments/comments_page_tab', commentable: page

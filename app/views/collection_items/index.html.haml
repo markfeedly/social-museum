@@ -1,15 +1,13 @@
 .page-title Collection
-- if page_summaries == []
+- if collection_items.empty?
+  No pages yet
   - if current_user
-    No pages yet
     %br/
     You can add them via the new page menu item above
-  - else
-    No pages yet
 - else
-  = paginate page_summaries, param_name: "page_summaries"
+  = paginate paginated_collection_items, param_name: "collection_item_summaries"
   .page-summary-width-plus
     %hr
-  - page_summaries.each do |pg|
-    = render partial: 'pages/page_summary', locals: {page: pg.decorate}
-  = paginate page_summaries, param_name: "page_summaries"
+  - paginated_collection_items.each do |ci|
+    = render 'collection_items/list_summary', collection_item: ci
+  = paginate paginated_collection_items, param_name: "collection_item_summaries"

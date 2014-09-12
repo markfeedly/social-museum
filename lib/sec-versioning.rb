@@ -4,6 +4,14 @@ module SecVersioning
     base.send(:attr_accessor, :version_object_changes)
   end
 
+  def user
+    @user ||= User.find(versions.order(version_number: :desc).first.user_id)
+  end
+
+  def user=(user_id)
+    @user = User.find(versions.order(version_number: :desc).first.user_id)
+  end
+
   def load_versions
     versions.order(version_number: :desc).map do |v|
       version(v.version_number, versions: versions)
@@ -31,6 +39,7 @@ module SecVersioning
 
   def merge_version(v, reversion)
     reversion.updated_at ||= v.created_at
+    reversion.user ||= v.user_id
     v.object_changes.each do |key, (from, change)|
       unless reversion.version_object_changes.has_key?(key)
         reversion.version_object_changes[key] = {}

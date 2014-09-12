@@ -2,25 +2,11 @@
   = f.input :lock_version, as: :hidden
   = f.fields_for :page_title do |title_form|
     = title_form.input :title, input_html: {id: "page_title"}, wrapper_html: {data: {role: 'title'}}, error_html: {data: {role: 'error'}}
-  - if current_user.can_create_collection_item?(page)
-    #page_collection_item_edit_fields.hidden-entity
-      .parent-div
-        .float-left
-          = f.input :item_number, wrapper_html: {data: {role: 'tags'}}, error_html: {data: {role: 'error'}}
-        .float-right
-          = f.input :location, wrapper_html: {data: {role: 'tags'}}, error_html: {data: {role: 'error'}}
-    #page_collection_item_info
-      - if page.item_number
-        .content-item-header.parent-div
-          .float-left.bold= "Collection item #{page.item_number}"
-          .float-right= "Location: #{page.location}"
-      = f.hint link_to("Edit collection item info", '#', class: "btn " ), id: 'collection-info-button'
 
   = f.input :categories, wrapper_html: {data: {role: 'categories'}}, error_html: {data: {role: 'error'}}
   = f.input :content, as: :text, wrapper_html: {data: {role: 'content'}}, error_html: {data: {role: 'error'}}
   = f.hint link_to("Show content editing help", '#', class: 'btn' ), id: 'help-button'
   = f.input :tags, wrapper_html: {data: {role: 'tags'}}, error_html: {data: {role: 'error'}}
-
 
   = f.button :submit, class: 'btn-primary', data: {role: 'create-page-button'}
 
