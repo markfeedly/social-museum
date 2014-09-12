@@ -3,7 +3,7 @@ class Comment < ActiveRecord::Base
   include Authority::Abilities
   self.authorizer_name = 'CommentAuthorizer'
 
-  belongs_to :page
+  belongs_to :commentable, polymorphic: true
   belongs_to :user
 
   rakismet_attrs :author       => proc { user.try(:name) || 'guest'  },
@@ -35,12 +35,12 @@ class Comment < ActiveRecord::Base
   end
 
   def subscribe_creator
-    page.subscribe(user)
+    commentable.subscribe(user)
   end
 
   def notify_subscribers
     if self.approved
-      (page.subscribers - [user]).select{|usr| usr.can_read?(self)}.each do |usr|
+      (commentable.subscribers - [user]).select{|usr| usr.can_read?(self)}.each do |usr|
         Notifier.comment_updated(self, usr).deliver
       end
       self.notified = true

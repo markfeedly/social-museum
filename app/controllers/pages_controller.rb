@@ -69,9 +69,7 @@ class PagesController < ApplicationController
     params.require(:page).permit(:categories,
                                  :content,
                                  :creator,
-                                 :location,
                                  :lock_version,
-                                 :item_number,
                                  :slug,
                                  :tags,
                                  page_title_attributes: [:title, :id])

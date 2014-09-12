@@ -1,5 +1,6 @@
 require 'set'
 require 'uri'
+require 'subscription_management'
 
 class Page < ActiveRecord::Base
   include Rakismet::Model
@@ -13,11 +14,11 @@ class Page < ActiveRecord::Base
   accepts_nested_attributes_for :page_title
 
   has_many :history, class_name: 'PageState', dependent: :delete_all, autosave: true
-  has_many :comments, dependent: :delete_all
+  has_many :comments, as: :commentable, dependent: :delete_all
   has_many :resource_usages
   has_many :resources, through: :resource_usages
 
-  has_many :subscriptions
+  has_many :subscriptions, as: :subscribable, dependent: :delete_all
   has_many :subscribers, through: :subscriptions, source: :user
 
   scope    :ordered_by_title, ->{joins(:page_title).order("titles.title")}
@@ -38,30 +39,14 @@ class Page < ActiveRecord::Base
   history_attr :location
 
   before_save       :track_title_change, :clean_collection_item
-  after_create      :subscribe_creator
+
 
   validates :content, presence: true
   validate  :not_spam?
-  validate  :validate_if_collection_item_page
 
+  include SubscriptionManagement
+  after_create  :subscribe_creator
   #---------------------------------------------------------
-
-  def subscribe_creator
-    subscribe(user)
-  end
-
-  def subscribe(usr)
-    self.subscribers << usr unless self.subscribers.exists?(usr)
-  end
-
-  def unsubscribe(usr)
-    self.subscribers -= [usr] if subscribed?(usr)
-  end
-
-  def subscribed?(usr)
-    subscribers.exists?(usr)
-  end
-
   #---------------------------------------------------------
 
   def self.find_with_category(cat)
@@ -83,10 +68,6 @@ class Page < ActiveRecord::Base
   end
 
   #---------------------------------------------------------
-
-  def validate_if_collection_item_page
-    !item_number || (item_number && user.admin?)
-  end
 
   def not_spam?
     if user.present?
