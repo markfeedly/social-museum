@@ -57,10 +57,28 @@ class Resource < ActiveRecord::Base
     seen_title = []
     deduped_new_resource_usages = new_resource_usages.reject{|_, v| v['_destroy'] == 'false' &&
                                     seen_title.include?(v['page_title']).tap{seen_title << v['page_title']}}
-    deduped_existing_to_set = deduped_new_resource_usages.reject{|_, v| v['_destroy'] == 'false' &&
+    deduped_existing = deduped_new_resource_usages.reject{|_, v| v['_destroy'] == 'false' &&
                                     !Title.exists?(v['page_title']) }
-    super(deduped_existing_to_set)
+    zzz = deduped_existing.map do |_,ru|
+      if ru[:id]
+        source_ru = ResourceUsage.find(ru[:id])
+        ru[:resourceable_type]=source_ru.resourceable_type
+        ru[:resourceable_id]=source_ru.resourceable_id
+      else
+        if p = Page.find_by_title(ru[:page_title])
+          ru[:resourceable_type]='Page'
+          ru[:resourceable_id]=p.id
+        else
+          ru[:resourceable_id]=CollectionItem.find_by_title(ru[:page_title]).id
+          ru[:resourceable_type]='CollectionItem'
+        end
+      end
+      ru
+    end
+    super(zzz)
   end
+
+
 
   private
 
