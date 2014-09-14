@@ -26,7 +26,10 @@
               - resource.resourceables.sort{ |a,b| a.hacky_title <=> b.hacky_title }.each do |r|
                 = ', ' if started
                 - started = true
-                %a{href: page_path(r.slug)} #{r.hacky_title}
+                - if r.is_a?(Page)
+                  = link_to r.title, page_path(r)
+                - else
+                  = link_to r.title.title, collection_item_path(r)
           - else
             This is not a resource for any pages yet, edit to associate with pages
           .color-bbb
