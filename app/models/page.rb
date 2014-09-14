@@ -5,28 +5,21 @@ require 'subscription_management'
 class Page < ActiveRecord::Base
   include Rakismet::Model
   include Authority::Abilities
+  include Categories
+  include SubscriptionManagement
+
   self.authorizer_name = 'PageAuthorizer'
 
-  include Categories
-
-  has_one  :page_title, class_name: "Title", as: :titleable, autosave: true, dependent: :destroy
-  validates_associated :page_title
-  accepts_nested_attributes_for :page_title
-
-  has_many :history, class_name: 'PageState', dependent: :delete_all, autosave: true
-  has_many :comments, as: :commentable, dependent: :delete_all
-  has_many :resource_usages
-  has_many :resources, through: :resource_usages
-
-  has_many :subscriptions, as: :subscribable, dependent: :delete_all
-  has_many :subscribers, through: :subscriptions, source: :user
+  has_one  :page_title,      as: :titleable, class_name: "Title", autosave: true, dependent: :destroy
+  has_many :history,         class_name: 'PageState', dependent: :delete_all, autosave: true
+  has_many :comments,        as: :commentable, dependent: :delete_all
+  has_many :resource_usages, as: :resourceable
+  has_many :resources,       through: :resource_usages
+  has_many :subscriptions,   as: :subscribable, dependent: :delete_all
+  has_many :subscribers,     through: :subscriptions, source: :user
 
   scope    :ordered_by_title, ->{joins(:page_title).order("titles.title")}
-
-  rakismet_attrs :author       => proc { user.name  },
-                 :author_email => proc { user.email },
-                 :user_role    => proc { user.admin? ? 'administrator' : 'user' },
-                 :comment_type => proc { 'page' }
+  accepts_nested_attributes_for :page_title
 
   extend HistoryControl
   history_attr :content
@@ -36,15 +29,18 @@ class Page < ActiveRecord::Base
   history_attr :tags
   history_attr :title
 
-  before_save       :track_title_change, :clean_collection_item
-
-
   validates :content, presence: true
   validate  :not_spam?
+  validates_associated :page_title
 
-  include SubscriptionManagement
+  before_save       :track_title_change, :clean_collection_item
   after_create  :subscribe_creator
-  #---------------------------------------------------------
+
+  rakismet_attrs :author       => proc { user.name  },
+                 :author_email => proc { user.email },
+                 :user_role    => proc { user.admin? ? 'administrator' : 'user' },
+                 :comment_type => proc { 'page' }
+
   #---------------------------------------------------------
 
   def self.find_with_category(cat)
