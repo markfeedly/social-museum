@@ -29,6 +29,22 @@ class CollectionItem < ActiveRecord::Base
     title.to_param
   end
 
+  def categories_as_arr
+    self.categories = '' unless self.categories
+    self.categories == '' ? [] : self.categories.split(',').collect{|t| t.strip}
+  end
+
+  def tags_as_arr
+    #todo remove kludge
+    self.tags = '' unless self.tags
+    self.tags == '' ? [] : self.tags.split(',').collect{|t| t.strip}
+  end
+
+# used in conflicting edits
+  def compare_versions(previous, current)
+    Diffy::Diff.new(previous, current).to_s(:html)
+  end
+
   def self.find_by_slug(slug)
     joins(:title).where(titles: {slug: slug}).first
   end
