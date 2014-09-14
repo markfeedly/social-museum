@@ -7,15 +7,15 @@ class Resource < ActiveRecord::Base
   include UploadHelper
   self.authorizer_name = 'ResourceAuthorizer'
 
-  has_many :resource_usages
-  has_many :pages,       through: :resource_usages
-  has_many :page_titles, through: :pages
+  has_many :resource_usages,   as: :resourceable
+  has_many :page_or_collection_items, through: :resource_usages, source_type: :PageOrCollectionItem
+  has_many :page_titles,       through: :page_or_collection_item
 
   accepts_nested_attributes_for :resource_usages, allow_destroy: true
 
   belongs_to :user
 
-  tracks_association :pages
+  tracks_association :page_or_collection_items
   tracks_association :user
 
   validates :title, presence: true

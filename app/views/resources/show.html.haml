@@ -19,7 +19,7 @@
       %br
       .content-footer.parent-div
         .content-t-and-c.float-left
-          - if resource.pages != nil && resource.pages != []
+          - if resource.page_or_collection_item != nil && resource.page_or_collection_item != []
             Resource belongs to
             %div
               - started = false
