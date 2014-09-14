@@ -35,8 +35,6 @@ class Page < ActiveRecord::Base
   history_attr :categories
   history_attr :tags
   history_attr :title
-  history_attr :item_number
-  history_attr :location
 
   before_save       :track_title_change, :clean_collection_item
 

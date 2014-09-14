@@ -1,21 +1,11 @@
 .page-title-main= collection_item.title.title
-Collection item
 
 = render partial: 'layouts/tab_nav'
 
 #my-tab-content.tab-content
 
   #content-tab.tab-pane.active
-    = ContentHtmlGenerator.generate_full(collection_item).html_safe
-    %p= collection_item.description
-    %p= collection_item.location
-    %p= collection_item.item_number
-    - if current_user.can_update?(collection_item)
-      %p= link_to "Edit Collection Item", edit_collection_item_path(collection_item)
-    = render 'shared/subscriptions', subscribable: collection_item
-    .std-width
-      #comments.comments-spacer
-        = render 'comments/comments_page_tab', commentable: collection_item
+    = render partial: 'collection_items/collection_item_content'
 
   #resource-tab.tab-pane
     resources not implemented yet

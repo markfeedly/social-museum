@@ -5,10 +5,15 @@
         .span12
           = link_to ENV['MUSEUM_NAME'], root_path, class: 'brand'
           %ul.nav
-            - if current_user.can_read?(Page)
-              %li= link_to 'Content', pages_path
-            - if current_user.can_read?(CollectionItem)
-              %li= link_to 'Collection', collection_items_path
+
+            %li.dropdown
+              = link_to pages_path, class: "dropdown-toggle", data: {toggle: 'dropdown'} do
+                Content
+              %ul.dropdown-menu
+                - if current_user.can_read?(CollectionItem)
+                  %li= link_to 'Collection Items', collection_items_path
+                - if current_user.can_read?(Page)
+                  %li= link_to 'Other Information', pages_path
 
             - if current_user.can_read?(Resource)
               %li= link_to 'Resources', resources_path

@@ -14,7 +14,7 @@
   background-image: none;
 }
 
-.navbar-inverse .nav > li > a {
+.navbar-inverse .nav > li > a, a.dropdown-toggle {
   color: #ccc;
   font-size: 13.5px ;
   padding-top: 13px;
