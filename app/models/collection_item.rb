@@ -28,6 +28,10 @@ class CollectionItem < ActiveRecord::Base
     title.title
   end
 
+  def hacky_title
+    title.title
+  end
+
   def to_param
     title.to_param
   end
