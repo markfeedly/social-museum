@@ -40,6 +40,10 @@ class CollectionItem < ActiveRecord::Base
     self.tags == '' ? [] : self.tags.split(',').collect{|t| t.strip}
   end
 
+  def slug
+    self.title.slug
+  end
+
 # used in conflicting edits
   def compare_versions(previous, current)
     Diffy::Diff.new(previous, current).to_s(:html)

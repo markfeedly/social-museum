@@ -1,11 +1,9 @@
-.page-title Content
+.page-title Additional information
 - if page_summaries == []
+  No pages yet
+  %br/
   - if current_user
-    No pages yet
-    %br/
     You can add them via the new page menu item above
-  - else
-    No pages yet
 - else
   = paginate page_summaries, param_name: "page_summaries"
   .page-summary-width-plus
