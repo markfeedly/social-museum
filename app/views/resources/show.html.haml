@@ -19,14 +19,14 @@
       %br
       .content-footer.parent-div
         .content-t-and-c.float-left
-          - if resource.page_or_collection_item != nil && resource.page_or_collection_item != []
+          - if resource.resourceables != nil && resource.resourceables != []
             Resource belongs to
             %div
               - started = false
-              - resource.pages.sort{ |a,b| a.title <=> b.title }.each do |r|
+              - resource.resourceables.sort{ |a,b| a.hacky_title <=> b.hacky_title }.each do |r|
                 = ', ' if started
                 - started = true
-                %a{href: page_path(r.slug)} #{r.title}
+                %a{href: page_path(r.slug)} #{r.hacky_title}
           - else
             This is not a resource for any pages yet, edit to associate with pages
           .color-bbb

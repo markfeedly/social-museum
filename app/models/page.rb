@@ -104,6 +104,10 @@ class Page < ActiveRecord::Base
     joins(:page_title).where(titles: {title: title}).first
   end
 
+  def hacky_title
+    title
+  end
+
   private
 
   def clean_collection_item
