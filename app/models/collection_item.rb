@@ -6,20 +6,23 @@ class CollectionItem < ActiveRecord::Base
   include SecVersioning
   include SubscriptionManagement
 
-  has_one :title, as: :titleable, dependent: :destroy, autosave: true
+  has_one :title,            as: :titleable,    dependent: :destroy, autosave: true
+  has_many :comments,        as: :commentable,  dependent: :delete_all
+  has_many :resource_usages, as: :resourceable
+  has_many :resources,       through: :resource_usages
+  has_many :subscriptions,   as: :subscribable, dependent: :delete_all
+  has_many :subscribers,     through: :subscriptions, source: :user
 
-  has_many :comments, as: :commentable, dependent: :delete_all
-
-  has_many :subscriptions, as: :subscribable, dependent: :delete_all
-  has_many :subscribers, through: :subscriptions, source: :user
+  accepts_nested_attributes_for :title
+  tracks_association :title
 
   validates :item_number, presence: true, uniqueness: true
   validates :location, presence: true
   validates_associated :title
-  accepts_nested_attributes_for :title
 
-  tracks_association :title
   after_create  :subscribe_creator
+
+  #---------------------------------------------------------
 
   def name
     title.title
@@ -44,10 +47,12 @@ class CollectionItem < ActiveRecord::Base
     self.title.slug
   end
 
-# used in conflicting edits
+# TO BE used in conflicting edits (maybe)
   def compare_versions(previous, current)
     Diffy::Diff.new(previous, current).to_s(:html)
   end
+
+  #---------------------------------------------------------
 
   def self.find_by_slug(slug)
     joins(:title).where(titles: {slug: slug}).first

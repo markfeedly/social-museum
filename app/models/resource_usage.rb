@@ -1,5 +1,6 @@
 class ResourceUsage < ActiveRecord::Base
-  belongs_to :page
+  belongs_to :resourceable, polymorphic: true
+  #belongs_to :page
   belongs_to :resource
 
   def page_title

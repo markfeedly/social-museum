@@ -8,7 +8,7 @@ class Resource < ActiveRecord::Base
   self.authorizer_name = 'ResourceAuthorizer'
 
   has_many :resource_usages
-  has_many :pages, through: :resource_usages
+  has_many :pages,       through: :resource_usages
   has_many :page_titles, through: :pages
 
   accepts_nested_attributes_for :resource_usages, allow_destroy: true
