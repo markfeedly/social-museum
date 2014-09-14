@@ -33,7 +33,7 @@ class Page < ActiveRecord::Base
   validate  :not_spam?
   validates_associated :page_title
 
-  before_save       :track_title_change, :clean_collection_item
+  before_save       :track_title_change #, :clean_collection_item
   after_create  :subscribe_creator
 
   rakismet_attrs :author       => proc { user.name  },

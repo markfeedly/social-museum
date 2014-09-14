@@ -1,5 +1,5 @@
 = simple_form_for(collection_item, :html => {:data => {:role => 'collection_item-form'}}) do |f|
-  = f.input :lock_version, as: :hidden
+  = f.input :lock_version # , as: :hidden
 
   = f.fields_for :title do |title_form|
     = title_form.input :title, input_html: {id: 'page_title'}, wrapper_html: {data: {role: 'title'}}, error_html: {data: {role: 'error'}}

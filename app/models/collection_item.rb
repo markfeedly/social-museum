@@ -20,7 +20,7 @@ class CollectionItem < ActiveRecord::Base
   validates :location, presence: true
   validates_associated :title
 
-  after_create  :subscribe_creator
+  ############ after_create  :subscribe_creator
 
   #---------------------------------------------------------
 
