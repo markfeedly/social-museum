@@ -4,10 +4,7 @@
       = render 'users/user_and_time', user: page_state.user.name, thing: page_state
     .history-title
       = page_state.title
-    - if page.item_number
-      .history-tags-and-categories.parent-div
-        .float-left.bold= "Collection item #{page.item_number}"
-        .float-right= "Location: #{page.location}"
+
     = ContentHtmlGenerator.generate_full(page_state).html_safe
     .history-tags-and-categories
       .tags-and-categories

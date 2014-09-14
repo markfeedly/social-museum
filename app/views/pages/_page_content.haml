@@ -1,8 +1,4 @@
 .std-width
-  - if ! page.item_number.to_s.strip.empty?
-    .content-item-header.parent-div
-      .float-left.bold= "Collection item #{page.item_number}"
-      .float-right= "Location: #{page.location}"
 
   .content-content
     = ContentHtmlGenerator.generate_full(page).html_safe
