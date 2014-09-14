@@ -59,7 +59,7 @@ class Resource < ActiveRecord::Base
                                     seen_title.include?(v['page_title']).tap{seen_title << v['page_title']}}
     deduped_existing = deduped_new_resource_usages.reject{|_, v| v['_destroy'] == 'false' &&
                                     !Title.exists?(v['page_title']) }
-    zzz = deduped_existing.map do |_,ru|
+    attribute_data = deduped_existing.map do |_,ru|
       if ru[:id]
         source_ru = ResourceUsage.find(ru[:id])
         ru[:resourceable_type]=source_ru.resourceable_type
@@ -75,7 +75,7 @@ class Resource < ActiveRecord::Base
       end
       ru
     end
-    super(zzz)
+    super(attribute_data)
   end
 
 
