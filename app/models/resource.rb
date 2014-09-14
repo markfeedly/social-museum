@@ -9,9 +9,6 @@ class Resource < ActiveRecord::Base
 
   has_many :resource_usages
   def resourceables; resource_usages.map(&:resourceable); end
-  #has_many :resourceables, through: :resource_usages
-
-  # has_many :page_titles,   through: :resourceables
 
   accepts_nested_attributes_for :resource_usages, allow_destroy: true
 
@@ -59,8 +56,9 @@ class Resource < ActiveRecord::Base
     new_resource_usages.reject!{|_, r| r['page_title'] == ''}
     seen_title = []
     deduped_new_resource_usages = new_resource_usages.reject{|_, v| v['_destroy'] == 'false' &&
-                             seen_title.include?(v['page_title']).tap{seen_title << v['page_title']}}
-    deduped_existing_to_set = deduped_new_resource_usages.reject{|_, v| v['_destroy'] == 'false' && !Title.exists?(v['page_title']) }
+                                    seen_title.include?(v['page_title']).tap{seen_title << v['page_title']}}
+    deduped_existing_to_set = deduped_new_resource_usages.reject{|_, v| v['_destroy'] == 'false' &&
+                                    !Title.exists?(v['page_title']) }
     super(deduped_existing_to_set)
   end
 

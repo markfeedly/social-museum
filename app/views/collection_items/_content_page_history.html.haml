@@ -1,0 +1,14 @@
+%div{data: {role: "collection-item-versions"}}
+  = paginate collection_item_states, param_name: :page_ci
+
+  - collection_item_states.each_with_index do |state, ind|
+    %li.no-bullets{data: {role: "collection-item-version", "history-idx" => ind}}
+      .history-title
+        = state.title.title
+      %br
+      = state.description
+      %br
+      = state.item_number
+      %br
+      = state.location
+      %hr
