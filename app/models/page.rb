@@ -22,10 +22,9 @@ class Page < ActiveRecord::Base
   accepts_nested_attributes_for :page_title
 
   extend HistoryControl
-  history_attrs_from PageState
+  history_attributes
+
 =begin
-  cl=PageState
-  (cl.columns.map {|c| c.name.to_sym }+[:user]).each{|attr| history_attr(attr) }
   history_attr :categories
   history_attr :content
   history_attr :tags

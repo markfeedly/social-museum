@@ -1,7 +1,14 @@
 module HistoryControl
 
+  def history_attributes
+    target_class = (self.name+'State')
+    history_attrs_from target_class
+  end
+
   def history_attrs_from class_name
-    class_name.columns.map{|c| c.name.to_sym }.each{|attr| history_attr(attr) }
+    ((class_name.constantize.column_names
+        .select{|attr| attr=='id'||attr=='created_at'||attr=='updated_at' ? nil : attr } ) + ['user'] )
+           .each{|attr| history_attr(attr.to_sym) }
   end
 
   def history_attrs
