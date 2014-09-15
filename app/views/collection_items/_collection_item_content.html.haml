@@ -12,7 +12,7 @@
     .content-edit-button.float-right.button-width
       - if current_user.can_update?(collection_item)
         .float-right
-          = link_to("Edit page", edit_collection_item_path(collection_item), class: 'btn btn-primary button-width button-spacing')
+          = link_to("Edit", edit_collection_item_path(collection_item), class: 'btn btn-primary button-width button-spacing')
           %clear
         -# TODO Phrase button more appropriately, or create a means to select existing resource.
         .float-right

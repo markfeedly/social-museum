@@ -2,7 +2,7 @@ class PagesController < ApplicationController
   respond_to :html
   expose(:page, attributes: :page_params, finder: :find_by_slug) {|default| default.decorate }
   expose(:pages)
-  expose(:page_states) { page.history.order(created_at: :desc).page(params[:page_states]).per(5) }
+  expose(:page_states) { page.history.page(params[:page_states]).per(5) }
   expose(:page_summaries) { pages.joins(:page_title).order('titles.title ASC').page(params[:page_summaries]).per(10) }
 
   before_action :authenticate_user!, :except => [:index, :show]
