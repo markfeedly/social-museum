@@ -1,5 +1,5 @@
 class PageState < ActiveRecord::Base
-  default_scope -> { order('created_at ASC') }
+  default_scope -> { order('created_at DESC') }
 
   belongs_to :page, touch: true
   belongs_to :user
