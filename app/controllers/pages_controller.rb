@@ -34,7 +34,7 @@ class PagesController < ApplicationController
   end
 
   def update
-    page.update_attributes(page_params.merge(user:current_user))
+    page.update_attributes(page_params.merge(user_id: current_user.id))
     respond_with(page)
   rescue ActiveRecord::StaleObjectError
     flash.now[:warning] =
