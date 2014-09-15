@@ -22,12 +22,17 @@ class Page < ActiveRecord::Base
   accepts_nested_attributes_for :page_title
 
   extend HistoryControl
-  history_attr :content
-  history_attr :user_id
-  history_attr :user
+  history_attrs_from PageState
+=begin
+  cl=PageState
+  (cl.columns.map {|c| c.name.to_sym }+[:user]).each{|attr| history_attr(attr) }
   history_attr :categories
+  history_attr :content
   history_attr :tags
   history_attr :title
+  history_attr :user
+  history_attr :user_id
+=end
 
   validates :content, presence: true
   validate  :not_spam?

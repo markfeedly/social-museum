@@ -1,4 +1,9 @@
 module HistoryControl
+
+  def history_attrs_from class_name
+    class_name.columns.map{|c| c.name.to_sym }.each{|attr| history_attr(attr) }
+  end
+
   def history_attrs
     @history_attrs ||= Set.new
   end
