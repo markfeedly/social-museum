@@ -16,10 +16,10 @@
 
       %div
         .float-left.width-150px.page-summary-image-indent.page-summary-image-align
-
-          = # HERE HERE HERE HERE HERE HERE HERE HERE HERE HERE HERE HERE HERE HERE
-
-          = ContentHtmlGenerator.generate_full(collection_item).html_safe
+          = link_to image_tag(ContentHtmlGenerator.page_image(collection_item) || 'http://localhost/Pictures/no_image.png'), page_url(collection_item)
+          %br
+        .content-preview
+          = ContentHtmlGenerator.generate_part(collection_item).html_safe
 
       .history-tags-and-categories.page-summary-footer-indent_and_spacing.clear
         .tags-and-categories

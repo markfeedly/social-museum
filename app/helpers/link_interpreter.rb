@@ -159,4 +159,13 @@ class LinkInterpreter
     end
   end
 
+  def process_summary_image
+    "<img src=#{@text} style='height:40px;'/>"
+  end
+
+  def process_summary_video
+     "<span style='color:gray;background-color:whitesmoke;'>&nbsp;includes a <a href=#{@text}>video</a> here&nbsp;<span>"
+     # "[ includes <a href=#{@text}>video</a> ]"
+  end
+
 end

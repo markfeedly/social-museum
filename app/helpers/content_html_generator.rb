@@ -10,14 +10,20 @@ class ContentHtmlGenerator
   end
 
   def self.generate_part(page_or_collection_item)
-    new_markdown = ContentHtmlGenerator.chomp_this(page_or_collection_item).gsub(/\[([^\]]*)\]/) do
-      li = LinkInterpreter.new($1)
-      li.process unless li.image_url? || li.is_youtube_url? || li.is_vimeo_url?
-    end
-
     markdown_renderer = Redcarpet::Markdown.new(Redcarpet::Render::HTML.new(render_options = {}),
                                                 extensions = {})
-    markdown_renderer.render new_markdown
+    new_markdown = ContentHtmlGenerator.chomp_this(page_or_collection_item).gsub(/\[([^\]]*)\]/) do
+                                          li = LinkInterpreter.new($1)
+                                          if li.image_url?
+                                            li.process_summary_image
+                                          elsif li.is_youtube_url? || li.is_vimeo_url?
+                                            li.process_summary_video
+                                          else
+                                            li.process
+                                          end
+                                        end
+
+    markdown_renderer.render(new_markdown)
 
   end
 

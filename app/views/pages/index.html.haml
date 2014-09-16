@@ -9,5 +9,5 @@
   .page-summary-width-plus
     %hr
   - page_summaries.each do |pg|
-    = render partial: 'pages/page_summary', locals: {page: pg.decorate}
+    = render 'pages/page_summary', page_decorator: pg.decorate
   = paginate page_summaries, param_name: "page_summaries"
