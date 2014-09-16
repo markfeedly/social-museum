@@ -22,7 +22,8 @@ class PagesController < ApplicationController
   end
 
   def index
-    respond_with(pages)
+    # this was pages, not page_summaries, ask!!
+    respond_with(page_summaries)
   end
 
   def show
