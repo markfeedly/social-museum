@@ -9,18 +9,8 @@
       No resources yet
   - else
     = paginate resources, param_name: "resources"
+    .page-summary-width-plus
+      %hr
     - resources.each do |r|
-      .search-result{data: {'resource-title' => r.title}}
-        .float-right
-          - if current_user && current_user.can_delete?(r)
-            = link_to fa_icon('trash-o'), r,
-                 :data   => { :confirm => 'Are you sure you want to remove this resource? This cannot be undone.',
-                              :role    => 'delete-resource' },
-                 :method =>   :delete
-        .summary-title
-          = link_to r.title, resource_path(r)
-
-        = link_to image_tag(r.image_url, class: 'width-150px'), resource_path(r), class: 'resources-summary-width-and-margin'
-        %br
-        %hr
+      = render 'resources/resource_summary', resource: r
     = paginate resources, param_name: "resources"

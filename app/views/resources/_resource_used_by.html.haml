@@ -1,0 +1,16 @@
+.content-t-and-c
+  - if resource.resourceables != nil && resource.resourceables != []
+    Resource belongs to
+    %div
+      - started = false
+      - resource.resourceables.sort{ |a,b| a.hacky_title <=> b.hacky_title }.each do |r|
+        = ', ' if started
+        - started = true
+        - if r.is_a?(Page)
+          = link_to r.title, page_path(r)
+        - else
+          = link_to r.title.title, collection_item_path(r)
+  - else
+    This is not a resource for any collection items or information pages yet, edit to associate with these
+.color-bbb
+  = "Resource created by #{resource.user.name}"
