@@ -112,6 +112,27 @@ class Page < ActiveRecord::Base
     title
   end
 
+  # TODO remove after I sort resource usage deletions when a page or a collection item is deleted
+  def clean_up
+    bad_resources = []
+    ResourceUsage.all.each do |ru|
+      if ru[:resourceable_type] == 'Page'
+        begin
+          Page.find(ru[:resourceable_id])
+        rescue
+          bad_resources << "missing page in resource #{ru[:id]}"
+        end
+      else
+        begin
+          CollectionItem.find(ru[:resourceable_id])
+        rescue
+          bad_resources << "missing collection item in resource #{ru[:id]}"
+        end
+      end
+    end
+    bad_resources
+  end
+
   private
 
   def clean_collection_item

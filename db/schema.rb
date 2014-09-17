@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140914131849) do
+ActiveRecord::Schema.define(version: 20140917153218) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -74,13 +74,11 @@ ActiveRecord::Schema.define(version: 20140914131849) do
   end
 
   create_table "resource_usages", force: true do |t|
-    t.integer "page_id"
     t.integer "resource_id"
     t.integer "resourceable_id"
     t.string  "resourceable_type"
   end
 
-  add_index "resource_usages", ["page_id"], name: "index_resource_usages_on_page_id", using: :btree
   add_index "resource_usages", ["resource_id"], name: "index_resource_usages_on_resource_id", using: :btree
 
   create_table "resources", force: true do |t|
