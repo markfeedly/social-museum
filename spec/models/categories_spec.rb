@@ -37,17 +37,17 @@ describe 'Page' do
   end
 
   it 'should find pages in the inverse set' do
-    expect(page.categorised_page_in_inverse_set('Zorg', :isa)).to eq true
-    expect(page.categorised_page_in_inverse_set('Computer', :isa)).to eq true
-    expect(page.categorised_page_in_inverse_set('MU6G', :isa)).to eq false
+    expect(page.categorised_in_inverse_set?('Zorg', :isa)).to eq true
+    expect(page.categorised_in_inverse_set?('Computer', :isa)).to eq true
+    expect(page.categorised_in_inverse_set?('MU6G', :isa)).to eq false
     page.categories = 'c1, MU6G'
     page.save
     expect(page.categories).to eq 'c1,MU6G'
-    expect(page.categorised_page_in_inverse_set('MU6G', :isa)).to eq true
-    expect(page.categorised_page_in_inverse_set('Atlas', :isa)).to eq false
+    expect(page.categorised_in_inverse_set?('MU6G', :isa)).to eq true
+    expect(page.categorised_in_inverse_set?('Atlas', :isa)).to eq false
     page.categories = 'c1'
     page.save
-    expect(page.categorised_page_in_inverse_set('Atlas', :isa)).to eq false
+    expect(page.categorised_in_inverse_set?('Atlas', :isa)).to eq false
   end
 
 end

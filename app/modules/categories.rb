@@ -8,7 +8,7 @@ module Categories
       ['MU5', :isa, 'Computer'],
       ['Atlas', :isa, 'Computer'],
       ['MU6G', :isa, 'Computer'],
-      ['The baby', :isa, 'Computer'],
+      ['The Baby', :isa, 'Computer'],
       ['Manchester Mark 1', :isa, 'Computer'],
       ['Hardware', :is_part_of, 'Computer'],
       ['Software', :is_part_of, 'Computer'],
@@ -39,7 +39,8 @@ module Categories
     ([object] + category_inverse_relations(object, predicate).map{|cat| category_inverse_set(cat[0], predicate)}).flatten.sort
   end
 
-  def categorised_page_in_inverse_set(object, predicate)
+  def categorised_in_inverse_set?(object, predicate)
+    return nil unless categories
     categories.split(',').any? do |cat|
       category_inverse_set(object, predicate).include?(cat)
     end

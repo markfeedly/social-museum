@@ -3,6 +3,7 @@ require 'subscription_management'
 
 class CollectionItem < ActiveRecord::Base
   include Authority::Abilities
+  include Categories
   include SecVersioning
   include SubscriptionManagement
 
