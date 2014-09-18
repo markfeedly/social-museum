@@ -18,7 +18,7 @@
           - if resource.description == nil || resource.description.strip == ''
             = 'No resource description'
           - else
-            = resource.description
+            = ContentHtmlGenerator.generate_part(resource).html_safe
           = # ContentHtmlGenerator.generate_part(collection_item).html_safe
 
       .history-tags-and-categories.page-summary-footer-indent_and_spacing.clear

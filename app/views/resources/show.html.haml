@@ -15,7 +15,7 @@
       %br
       %br
       %p
-        = resource.description
+      = ContentHtmlGenerator.generate_full(resource).html_safe
       %br
       .content-footer.parent-div
         .float-left
