@@ -11,6 +11,9 @@
                 Content
               %ul.dropdown-menu
                 - if current_user.can_read?(CollectionItem)
+                  %li= link_to 'Table of Contents', table_of_contents_path
+
+                - if current_user.can_read?(CollectionItem)
                   %li= link_to 'Collection Items', collection_items_path
                 - if current_user.can_read?(Page)
                   %li= link_to 'Other Information', pages_path
@@ -37,7 +40,7 @@
             - if current_user.can_read?(User)
               %li= link_to 'Users', users_path, :id => 'users_link'
 
-            %li= link_to 'Help'
+            %li- # link_to 'Help'
 
           .pull-right
             %ul.nav

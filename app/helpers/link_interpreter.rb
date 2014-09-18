@@ -21,7 +21,7 @@ class LinkInterpreter
   end
 
   def page_title?
-    !(url? || empty?)
+    ! (url? || empty?)
   end
 
   def empty?
@@ -87,6 +87,16 @@ class LinkInterpreter
     "<a href='#{@first}' external-link>#{@rest}</a>"
   end
 
+  #TODO refactor
+  def process_rel_url
+    @first.gsub!(/rel:\/\//, ENV['SITE']+'/')
+    process_url
+  end
+
+  def is_rel_url?
+    !! (@first =~ /^rel:\/\//)
+  end
+
   def process_url
     @rest ? process_url_with_text : process_url_without_text
   end
@@ -142,7 +152,10 @@ class LinkInterpreter
   end
 
   def process
-    if page_title?
+    if is_rel_url?
+      process_rel_url
+
+    elsif page_title?
       process_title
 
     elsif image_url?
