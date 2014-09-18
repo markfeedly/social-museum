@@ -18,6 +18,8 @@ VirtualMuseum::Application.routes.draw do
     post :disapprove
   end
 
+  resources :help, only: [:index]
+
   resources :pages do
     get 'P:page_summaries', :action => :index, :on => :collection
     get ':id/P:page_states', :action => :show, :on => :collection
