@@ -3,7 +3,7 @@ class ResourcesController < ApplicationController
 
   before_action :authenticate_user!, :except => [:index, :show]
 
-  expose(:resources) { Resource.all.page(params[:id]).page(params[:resources]).per(10) }
+  expose(:resources) { Resource.order(title: :asc).page(params[:id]).per(5) }
   expose(:resource, attributes: :empty_params)
   expose(:pages) {|default| default.ordered_by_title}
 
