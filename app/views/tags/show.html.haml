@@ -1,11 +1,12 @@
-- @pages = Kaminari.paginate_array(Page.find_with_tag(params[:id])).page(params[:page]).per(10)
+- @tagged_pages_and_coll_items = Kaminari.paginate_array( (Title.all.select{|t| t.titleable.has_tag?(params[:id]) ? t.titleable : nil }.collect{|t| t.titleable} )).page(params[:page]).per(10)
 
-%h1#top Pages tagged #{params[:id]}
+%h1#top Tagged #{params[:id]}
 
-= paginate @pages
+= paginate @tagged_pages_and_coll_items
 
-- @pages.each do |p|
-  = render :partial => 'pages/page_summary', :locals => {:page => p.decorate}
+- @tagged_pages_and_coll_items.each do |pci|
+  = render 'collection_items/collection_item_summary', collection_item: pci if pci.respond_to?(:description)
+  = render 'pages/page_summary', page: pci if pci.respond_to?(:content)
   %br/
 
-= paginate @pages
+= paginate @tagged_pages_and_coll_items

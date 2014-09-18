@@ -59,10 +59,12 @@ class CollectionItemsController < ApplicationController
   private
 
   def collection_item_params
-    params.require(:collection_item).permit(:description,
+    params.require(:collection_item).permit(:categories,
+                                            :description,
                                             :item_number,
                                             :location,
                                             :lock_version,
+                                            :tags,
                                             title_attributes: [:title, :id])
   end
 end
