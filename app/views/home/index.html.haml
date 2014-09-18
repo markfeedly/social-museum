@@ -1,6 +1,5 @@
 .width-800px
-  -# =image_tag 'templeman.jpg', width: '900'
   %br/
   %p
-    Landing page for social museum system
+    = ContentHtmlGenerator.generate_full(Page.find_by_title('SPECIAL: splash page')).html_safe
   %br/
