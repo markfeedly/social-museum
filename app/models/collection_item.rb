@@ -41,6 +41,10 @@ class CollectionItem < ActiveRecord::Base
     self.categories == '' ? [] : self.categories.split(',').collect{|t| t.strip}
   end
 
+  def has_tag?(tag)
+    tags_as_arr.include?(tag)
+  end
+
   def tags_as_arr
     #todo remove kludge
     self.tags = '' unless self.tags

@@ -48,11 +48,11 @@ class Page < ActiveRecord::Base
   #---------------------------------------------------------
 
   def self.find_with_category(cat)
-    Page.order(:title).select{ |p| p.has_category?( cat ) ? p : nil}
+    all.select{ |p| p.has_category?( cat ) }
   end
 
   def self.find_with_tag(tag)
-    Page.order(:title).select{ |p| p.has_tag?( tag ) }
+    all.select{ |p| p.has_tag?( tag ) }
   end
 
   #---------------------------------------------------------
@@ -63,6 +63,14 @@ class Page < ActiveRecord::Base
 
   def has_tag?(t)
     history.last.try(:has_tag?, t)
+  end
+
+  def categories_as_arr
+    categories == '' ? [] : categories.split(',').collect{|t| t.strip}
+  end
+
+  def tags_as_arr
+    tags == '' ? [] : tags.split(',').collect{|t| t.strip}
   end
 
   #---------------------------------------------------------

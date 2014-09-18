@@ -3,7 +3,7 @@ class ContentHtmlGenerator
 
     new_markdown = ContentHtmlGenerator.chomp_this(page_or_collection_item).gsub(/\[([^\]]*)\]/) { LinkInterpreter.new($1).process }
 
-    markdown_renderer = Redcarpet::Markdown.new(Redcarpet::Render::HTML.new(render_options = {}),
+    markdown_renderer = Redcarpet::Markdown.new(Redcarpet::Render::HTML.new(),
                                                     extensions = {})
     markdown_renderer.render new_markdown
 

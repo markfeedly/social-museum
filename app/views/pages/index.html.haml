@@ -9,5 +9,5 @@
   .page-summary-width-plus
     %hr
   - page_summaries.each do |pg|
-    = render 'pages/page_summary', page_decorator: pg.decorate
+    = render 'pages/page_summary', page: pg
   = paginate page_summaries, param_name: "page_summaries"
