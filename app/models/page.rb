@@ -37,7 +37,7 @@ class Page < ActiveRecord::Base
   validate  :not_spam?
   validates_associated :page_title
 
-  before_save       :track_title_change #, :clean_collection_item
+  before_save       :track_title_change
   after_create  :subscribe_creator
 
   rakismet_attrs :author       => proc { user.name  },
@@ -141,9 +141,4 @@ class Page < ActiveRecord::Base
     bad_resources
   end
 
-  private
-
-  def clean_collection_item
-    self.item_number = nil if item_number.to_s.strip.empty?
-  end
 end
