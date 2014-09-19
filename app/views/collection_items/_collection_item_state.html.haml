@@ -1,29 +1,29 @@
 .page-summary-width
-  %li.no-bullets{data: {role: "collection-item-version", "history-idx" => index}}
+  %li.no-bullets{data: {role: "collection-item-version", "history-idx" => collection_item_state_counter }}
 
     .time-and-user
-      = render 'users/user_and_time', user: state.user.name, thing: state
+      = render 'users/user_and_time', user: collection_item_state.user.name, thing: collection_item_state
 
     .history-indent
 
       .history-title
-        = state.title.title
+        = collection_item_state.title.title
 
       .history-item-number-and-location
         .parent_div
           .float-left
-            = "Collection item #{state.item_number}"
+            = "Collection item #{collection_item_state.item_number}"
           .float-right
-            = "Location: #{state.location}"
+            = "Location: #{collection_item_state.location}"
       .clear
 
-      = ContentHtmlGenerator.generate_full(state).html_safe
+      = ContentHtmlGenerator.generate_full(collection_item_state).html_safe
 
       .history-tags-and-categories
         .tags-and-categories
-          = render 'tags/tags', tags: state.tags_as_arr
+          = render 'tags/tags', tags: collection_item_state.tags_as_arr
         .tags-and-categories
-          = render 'categories/categories', categories: state.categories_as_arr
+          = render 'categories/categories', categories: collection_item_state.categories_as_arr
 
 .page-summary-width-plus
   %hr
