@@ -1,5 +1,9 @@
 .width-800px
   %br/
   %p
-    = ContentHtmlGenerator.generate_full(Page.find_by_title('SPECIAL: splash page')).html_safe
+    - @page = Page.find_by_title('SPECIAL: splash page')
+    - if @page
+      = ContentHtmlGenerator.generate_full(@page).html_safe
+    - else
+      = 'Make page with title \'SPECIAL: splash page\' to generate splash page content from that page'
   %br/
