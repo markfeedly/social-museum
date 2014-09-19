@@ -34,7 +34,7 @@
 .red           { color: red !important; }
 .relative      { position: relative; }
 .std-width     { width: 640px; }
-.time-and-user { color: lightseagreen; font-size: 0.96em; margin: 0 0 6px 0; }
+.time-and-user { color: lightseagreen; font-size: 0.96em; margin: 0 0 20px 0; }
 [yellow-background] { background-color: yellow; }
 .page-summary-rh { left: 200px; top: 0; width: '800px'; }
 .page-summary-lh { left: 0; top: 0; }
@@ -74,7 +74,6 @@
 // history tab
 #history-width     { width: 500px; font-size: 0.95em; }
 #history-width p   { margin: 0 0 1.4em 0; font-size: inherit; }
-#history-tab li   { margin-bottom: 40px; }
 #history-tab p   { font-size: 1em; }
 
 // TODO various titles - homogenise?
@@ -86,15 +85,20 @@
 .container .content-content h2,
 .container .content-content h3  { font-weight: normal;}
 #dialog { display: none; }
-.history-title     { font-size: 1.3em;   font-weight: bold; margin: 10px 0 3px 0; }
+.history-title     { font-size: 1.3em;   font-weight: bold; margin: 0 0 14px 0; }
 .summary-title     { font-size: 1.4em; font-weight: bold; }
 .summary-header    { margin-bottom: 10px; }
 a.summary-title    { color: #2c0275; }
 a.summary-title:hover {color: #2132F8;}
 
+.history-indent    { margin-left: 10px; }
+
 // TODO tags and categories - homogenise?
 .history-tags-and-categories { line-height: 1.4em; font-size: 0.8em; color: gray;
-     background-color: rgba(135, 202, 250, 0.18); padding: 0.5em 1em 0.5em 1em ; }
+  background-color: rgba(135, 202, 250, 0.18); padding: 0.5em 1em 0.5em 1em ; }
+.history-item-number-and-location { line-height: 1.4em; font-size: 0.8em; color: gray;
+  background-color: rgba(135, 202, 250, 0.18); padding: 0.5em 1em 0.5em 1em ;
+  height:1.5em; margin-bottom: 1em}
 .tags-and-categories { margin: 0px 0 0 0; }
 
 // page listing pages, two lines of text ------------------

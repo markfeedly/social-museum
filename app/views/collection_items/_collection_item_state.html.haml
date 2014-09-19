@@ -1,23 +1,29 @@
 .page-summary-width
-  .time-and-user
-    = render 'users/user_and_time', user: state.user.name, thing: state
+  %li.no-bullets{data: {role: "collection-item-version", "history-idx" => index}}
 
+    .time-and-user
+      = render 'users/user_and_time', user: state.user.name, thing: state
 
-  .history-title= state.title.title
-  .history-tags-and-categories.page-summary-footer-indent_and_spacing{style: 'height:1.5em'}
-    .parent_div
-      .float-left
-        = "Collection item #{state.item_number}"
-      .float-right
-        = "Location: #{state.location}"
-  .clear
-  .content
-    = ContentHtmlGenerator.generate_full(state).html_safe
+    .history-indent
 
-  .history-tags-and-categories.page-summary-footer-indent_and_spacing
-    .tags-and-categories
-      = render 'tags/tags', tags: state.tags_as_arr
-    .tags-and-categories
-      = render 'categories/categories', categories: state.categories_as_arr
+      .history-title
+        = state.title.title
+
+      .history-item-number-and-location
+        .parent_div
+          .float-left
+            = "Collection item #{state.item_number}"
+          .float-right
+            = "Location: #{state.location}"
+      .clear
+
+      = ContentHtmlGenerator.generate_full(state).html_safe
+
+      .history-tags-and-categories
+        .tags-and-categories
+          = render 'tags/tags', tags: state.tags_as_arr
+        .tags-and-categories
+          = render 'categories/categories', categories: state.categories_as_arr
+
 .page-summary-width-plus
   %hr
