@@ -9,7 +9,7 @@ class ContentHtmlGenerator
 
   end
 
-  def self.generate_part(page_or_collection_item)
+  def self.generate_with_small_images(page_or_collection_item)
     markdown_renderer = Redcarpet::Markdown.new(Redcarpet::Render::HTML.new(render_options = {}),
                                                 extensions = {})
     new_markdown = ContentHtmlGenerator.chomp_this(page_or_collection_item).gsub(/\[([^\]]*)\]/) do

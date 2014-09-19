@@ -173,7 +173,7 @@ class LinkInterpreter
   end
 
   def process_summary_image
-    "<img src=#{@text} style='height:40px;'/>"
+    "<img src=#{@text} style='height:50px;'/>"
   end
 
   def process_summary_video
