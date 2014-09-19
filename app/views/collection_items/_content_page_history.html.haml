@@ -3,6 +3,5 @@
 
   - collection_item_history.each_with_index do |state, ind|
     = render 'collection_items/collection_item_state', state: state, index: ind
-    %li.no-bullets{data: {role: "collection-item-version", "history-idx" => ind}}
 
   = paginate collection_item_history, param_name: :page_ci
