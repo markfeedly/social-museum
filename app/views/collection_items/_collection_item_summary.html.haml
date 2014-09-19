@@ -19,7 +19,7 @@
           = link_to image_tag(ContentHtmlGenerator.page_image(collection_item) || 'http://localhost/Pictures/no_image.png'), page_url(collection_item)
           %br
         .content-preview
-          = ContentHtmlGenerator.generate_part(collection_item).html_safe
+          = ContentHtmlGenerator.generate_with_small_images(collection_item).html_safe
 
       .history-tags-and-categories.page-summary-footer-indent_and_spacing.clear
         .tags-and-categories

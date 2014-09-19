@@ -9,7 +9,7 @@
       .history-title
         = page_state.title
 
-      = ContentHtmlGenerator.generate_full(page_state).html_safe
+      = ContentHtmlGenerator.generate_with_small_images(page_state).html_safe
 
       .history-tags-and-categories
         .tags-and-categories
