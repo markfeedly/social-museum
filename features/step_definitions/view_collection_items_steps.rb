@@ -41,10 +41,8 @@ Then(/^I can(?:no|')t see (?:a|the) delete collection item button$/) do
 end
 
 Then(/^I can see collection item history contains "(.*?)" as (#{CAPTURE_ITEM_RECENCY})$/) do |arg1, index|
-  within("#history-tab") do
-    within("li[data-history-idx='#{index}']") do
-      expect(page).to have_content(arg1)
-    end
+  within("li[data-history-idx='#{index}']") do
+    expect(page).to have_content(arg1)
   end
 end
 

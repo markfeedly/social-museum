@@ -6,8 +6,14 @@ When(/^I change the (.*) to "(.*?)"$/) do |target, new_value|
   attribute.gsub!(' ', '_')
   click_link('Edit')
 
-  within_role "#{obj}-form" do
+  if obj=='collection_item' && attribute=='name'
+    fill_in('page_title', with: new_value)
+  else
+    within_role "#{obj}-form" do
     fill_in("#{obj}_#{attribute}", with: new_value)
-    click_button 'Update'
+    end
   end
-end
+
+  click_button 'Update'
+
+  end

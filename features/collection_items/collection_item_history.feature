@@ -13,13 +13,13 @@ Feature: Collection items should record their history
     And I can see collection item history contains "Vac tubes" as third most recent
 
   Scenario: Changes to description should be recorded in history
-    When I create a collection item with description "Some tubes"
-    And I change the collection item description to "Vacuum tubes for the Atlas"
-    And I change the collection item description to "Vacuum tubes for the Atlas."
+    When I create a collection item with description "First description"
+    And I change the collection item description to "Second description"
+    And I change the collection item description to "Third description"
 
-    Then I can see collection item history contains "Vacuum tubes for the Atlas." as most recent
-    And I can see collection item history contains "Vacuum tubes for the Atlas" as second most recent
-    And I can see collection item history contains "Some tubes" as third most recent
+    Then I can see collection item history contains "Third description" as most recent
+    And I can see collection item history contains "Second description" as second most recent
+    And I can see collection item history contains "First description" as third most recent
 
   Scenario: Changes to location should be recorded in history
     When I create a collection item located in "Kilburn"
