@@ -7,7 +7,7 @@ class CollectionItem < ActiveRecord::Base
   include SecVersioning
   include SubscriptionManagement
 
-  has_one :title,            as: :titleable,    dependent: :destroy, autosave: true
+  has_one  :title,           as: :titleable,    dependent: :destroy, autosave: true
   has_many :comments,        as: :commentable,  dependent: :delete_all
   has_many :resource_usages, as: :resourceable
   has_many :resources,       through: :resource_usages
