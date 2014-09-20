@@ -48,6 +48,14 @@ describe Page do
     end
   end
 
+  describe "automatic deletions" do
+    it "of title when page is destroyed" do
+      page
+      page.destroy
+      expect(Title.count).to eq 0
+    end
+  end
+
   describe "History controlled fields, set and get:" do
     specify "categories" do
       page.update(categories: 'Cat1, Cat2')
