@@ -14,7 +14,6 @@ module SecVersioning
 
   def load_versions
     version_numbers = versions.order(version_number: :desc).map{|v|v.version_number}
-    xxx
     versions.order(version_number: :desc).map do |v|
       version(v.version_number, versions: versions)
     end
