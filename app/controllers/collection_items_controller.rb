@@ -11,8 +11,8 @@ class CollectionItemsController < ApplicationController
   authorize_actions_for CollectionItem
 
   def get_versions
-    version_numbers = collection_item.versions.map{|v| v.version_number}
-    version_numbers.reverse.each.map{|v_num|collection_item.version(v_num)}
+    version_numbers = collection_item.versions.map{|v| v.version_number}.sort.reverse
+    version_numbers.each.map{|v_num|collection_item.version(v_num)}
   end
 
   def show
