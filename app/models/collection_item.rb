@@ -13,6 +13,11 @@ class CollectionItem < ActiveRecord::Base
   has_many :resources,       through: :resource_usages
   has_many :subscriptions,   as: :subscribable, dependent: :delete_all
   has_many :subscribers,     through: :subscriptions, source: :user
+  has_many :tag_items,      as: :taggable
+  has_many :tags,            through: :tag_items
+  has_many :category_items,      as: :categorisable
+  has_many :categories,            through: :category_items
+
 
   accepts_nested_attributes_for :title
   tracks_association :title
@@ -38,8 +43,7 @@ class CollectionItem < ActiveRecord::Base
   end
 
   def categories_as_arr
-    self.categories = '' unless self.categories
-    self.categories == '' ? [] : self.categories.split(',').collect{|t| t.strip}
+    self.categories.length == 0 ? [] : self.categories.collect{|t| t.name.strip}
   end
 
   def has_tag?(tag)
@@ -47,9 +51,7 @@ class CollectionItem < ActiveRecord::Base
   end
 
   def tags_as_arr
-    #todo remove kludge
-    self.tags = '' unless self.tags
-    self.tags == '' ? [] : self.tags.split(',').collect{|t| t.strip}
+    self.tags.length == 0 ? [] : self.tags.collect{|t| t.name.strip}
   end
 
   def slug
