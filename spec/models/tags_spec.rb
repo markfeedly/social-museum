@@ -44,6 +44,4 @@ describe 'Page' do
     expect(page.tags_as_arr).to eq ['a', 'b', 'c']
   end
 
-
-
 end
