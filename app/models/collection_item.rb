@@ -37,20 +37,30 @@ class CollectionItem < ActiveRecord::Base
   def categories_as_str= str
     #self.categories = Category.new(name: 'abracdabra')
   end
+
   def tags_as_str
     self.tags.collect{ |tag|tag.name.strip.squeeze(' ')}.join(', ')
   end
+
   def tags_as_str= str
-    desired_tags_as_strs = str.split(',').collect{|t| t.strip.squeeze(' ')}
-    existing_tags_as_strs = tags.collect{ |tag|tag.name.strip.squeeze(' ')}
+    desired_tags_as_strs = str.split(',').collect{|t| t.strip.squeeze(' ')}.sort.uniq.reject{|t|t==''}
+
+    tags_to_remove = tags.reject{ |tag| desired_tags_as_strs.include?(tag.name)  }
+    self.tags -= tags_to_remove  if tags && tags_to_remove
+
+    existing_tags_as_strs = tags.collect{ |tag|tag.name}
     tags_to_add_as_strs = desired_tags_as_strs.reject { |t| existing_tags_as_strs.include?(t) }
-    tags_to_add = tags_to_add_as_strs.collect{ |t| Tag.new(name: t)}
-    tags_to_keep = tags.select{ |tag| existing_tags_as_strs.include?(tag.name.strip.squeeze(' '))  }
-    tags_to_remove = tags.reject{ |tag| desired_tags_as_strs.include?(tag.name.strip.squeeze(' '))  }
-    self.tags -= tags_to_remove if     tags
-    self.tags =  tags_to_add    unless tags
-    #self.tags += tags_to_add if     tags
+    tags_to_add_as_strs.each do |t|
+      existing_tag = Tag.where(name: t).first
+      if existing_tag
+        TagItem.create!(taggable: self, tag: existing_tag)
+      else
+        self.tags += [Tag.new(name: t)]
+      end
+    end
   end
+
+
 
   def name
     title.title
