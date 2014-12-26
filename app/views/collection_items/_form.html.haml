@@ -10,10 +10,10 @@
     .float-right
       = f.input :location, wrapper_html: {data: {role: 'location'}}, error_html: {data: {role: 'error'}}
 
-  = f.input :categories, wrapper_html: {data: {role: 'categories'}}, error_html: {data: {role: 'error'}}
+  = f.input :categories_as_str, label: 'Categories', wrapper_html: {data: {role: 'categories'}}, error_html: {data: {role: 'error'}}
 
   = f.input :description, as: :text, wrapper_html: {data: {role: 'description'}}, error_html: {data: {role: 'error'}}
 
-  = f.input :tags, wrapper_html: {data: {role: 'tags'}}, error_html: {data: {role: 'error'}}
+  = f.input :tags_as_str, label: 'Tags', wrapper_html: {data: {role: 'tags'}}, error_html: {data: {role: 'error'}}
 
   = f.button :submit, class: 'btn-primary', data: {role: 'create-collection-item-button'}

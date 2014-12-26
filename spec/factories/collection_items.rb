@@ -8,8 +8,8 @@ FactoryGirl.define do
     sequence(:item_number) { |n| "1" }
 
     lock_version  0
-    tags          ''
-    categories    ''
+    tags
+    categories
   end
 end
 
