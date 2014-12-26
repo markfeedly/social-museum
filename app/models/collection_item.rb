@@ -39,15 +39,21 @@ class CollectionItem < ActiveRecord::Base
   end
 
   def tags_as_str
-    self.tags.collect{ |tag|tag.name.strip.squeeze(' ')}.join(', ')
+    self.tags.collect{ |tag|tag.name.strip.squeeze(' ')}.sort.join(', ')
   end
 
-  def tags_as_str= str
+  def set_tags_from_string str
     desired_tags_as_strs = str.split(',').collect{|t| t.strip.squeeze(' ')}.sort.uniq.reject{|t|t==''}
+    remove_tags(desired_tags_as_strs)
+    add_tags(desired_tags_as_strs)
+  end
 
+  def remove_tags(desired_tags_as_strs)
     tags_to_remove = tags.reject{ |tag| desired_tags_as_strs.include?(tag.name)  }
     self.tags -= tags_to_remove  if tags && tags_to_remove
+  end
 
+  def add_tags(desired_tags_as_strs)
     existing_tags_as_strs = tags.collect{ |tag|tag.name}
     tags_to_add_as_strs = desired_tags_as_strs.reject { |t| existing_tags_as_strs.include?(t) }
     tags_to_add_as_strs.each do |t|
@@ -59,8 +65,6 @@ class CollectionItem < ActiveRecord::Base
       end
     end
   end
-
-
 
   def name
     title.title
