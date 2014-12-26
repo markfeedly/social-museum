@@ -13,14 +13,16 @@ class CollectionItem < ActiveRecord::Base
   has_many :resources,       through: :resource_usages
   has_many :subscriptions,   as: :subscribable, dependent: :delete_all
   has_many :subscribers,     through: :subscriptions, source: :user
-  has_many :tag_items,      as: :taggable
+  has_many :tag_items,       as: :taggable
   has_many :tags,            through: :tag_items
-  has_many :category_items,      as: :categorisable
-  has_many :categories,            through: :category_items
+  has_many :category_items,  as: :categorisable
+  has_many :categories,      through: :category_items
 
 
   accepts_nested_attributes_for :title
   tracks_association :title
+  tracks_association :tags
+  tracks_association :categories
 
   validates :item_number, presence: true, uniqueness: true
   validates :location, presence: true
@@ -29,7 +31,18 @@ class CollectionItem < ActiveRecord::Base
   ############ after_create  :subscribe_creator
 
   #---------------------------------------------------------
+  def categories_as_str
+    categories.length
+  end
+  def categories_as_str=
 
+  end
+  def tags_as_str
+    categories.all.length
+  end
+  def tags_as_str=
+
+  end
   def name
     title.title
   end
