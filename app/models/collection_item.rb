@@ -31,11 +31,33 @@ class CollectionItem < ActiveRecord::Base
   ############ after_create  :subscribe_creator
 
   #---------------------------------------------------------
+
   def categories_as_str
-    categories.length
+    self.categories.collect{ |tag|tag.name.strip.squeeze(' ')}.sort.join(', ')
   end
-  def categories_as_str= str
-    #self.categories = Category.new(name: 'abracdabra')
+
+  def set_categories_from_string str
+    desired_categories_as_strs = str.split(',').collect{|t| t.strip.squeeze(' ')}.sort.uniq.reject{|t|t==''}
+    remove_categories(desired_categories_as_strs)
+    add_categories(desired_categories_as_strs)
+  end
+
+  def remove_categories(desired_categories_as_strs)
+    categories_to_remove = categories.reject{ |c| desired_categories_as_strs.include?(c.name)  }
+    self.categories -= categories_to_remove  if categories && categories_to_remove
+  end
+
+  def add_categories(desired_categories_as_strs)
+    existing_categories_as_strs = categories.collect{ |c|c.name }
+    categories_to_add_as_strs = desired_categories_as_strs.reject { |c| existing_categories_as_strs.include?(c) }
+    categories_to_add_as_strs.each do |c|
+      existing_category = Category.where(name: c).first
+      if existing_category
+        CategoryItem.create!(taggable: self, tag: existing_category)
+      else
+        self.categories += [Category.new(name: c)]
+      end
+    end
   end
 
   def tags_as_str
@@ -65,6 +87,8 @@ class CollectionItem < ActiveRecord::Base
       end
     end
   end
+
+  # ----------------------------------------------------------------------------
 
   def name
     title.title
