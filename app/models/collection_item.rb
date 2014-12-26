@@ -34,15 +34,24 @@ class CollectionItem < ActiveRecord::Base
   def categories_as_str
     categories.length
   end
-  def categories_as_str=
-
+  def categories_as_str= str
+    #self.categories = Category.new(name: 'abracdabra')
   end
   def tags_as_str
-    categories.all.length
+    self.tags.collect{ |tag|tag.name.strip.squeeze(' ')}.join(', ')
   end
-  def tags_as_str=
+  def tags_as_str= str
+    desired_tags_as_strs = str.split(',').collect{|t| t.strip.squeeze(' ')}
+    existing_tags_as_strs = tags.collect{ |tag|tag.name.strip.squeeze(' ')}
+    tags_to_add_as_strs = desired_tags_as_strs.reject { |t| existing_tags_as_strs.include?(t) }
+    tags_to_add = tags_to_add_as_strs.collect{ |t| Tag.new(name: t)}
+    tags_to_keep = tags.select{ |tag| existing_tags_as_strs.include?(tag.name.strip.squeeze(' '))  }
+    tags_to_remove = tags.reject{ |tag| desired_tags_as_strs.include?(tag.name.strip.squeeze(' '))  }
+    self.tags -= tags_to_remove if     tags
+    self.tags =  tags_to_add    unless tags
+    #self.tags += tags_to_add if     tags
+  end
 
-  end
   def name
     title.title
   end
