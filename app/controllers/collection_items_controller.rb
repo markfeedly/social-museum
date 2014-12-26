@@ -25,7 +25,7 @@ class CollectionItemsController < ApplicationController
   end
 
   def create
-    collection_item.tags_as_str = params[:collection_item][:tags_as_str]
+    collection_item.set_tags_from_string( params[:collection_item][:tags_as_str] )
     collection_item.categories_as_str = params[:collection_item][:categories_as_str]
     collection_item.logged_user_id = current_user.id
     collection_item.save
@@ -37,7 +37,7 @@ class CollectionItemsController < ApplicationController
   end
 
   def update
-    collection_item.tags_as_str = params[:collection_item][:tags_as_str]
+    collection_item.set_tags_from_string( params[:collection_item][:tags_as_str] )
     collection_item.categories_as_str = params[:collection_item][:categories_as_str]
     collection_item.logged_user_id = current_user.id
     collection_item.update_attributes(collection_item_params)
