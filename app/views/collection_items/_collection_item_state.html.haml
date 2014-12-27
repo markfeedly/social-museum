@@ -1,3 +1,4 @@
+= # little rendition for collection item history
 .page-summary-width
   %li.no-bullets{data: {role: "collection-item-version", "history-idx" => collection_item_state_counter }}
 
@@ -21,9 +22,11 @@
 
       .history-tags-and-categories
         .tags-and-categories
-          = render 'tags/tags', tags: collection_item_state.tags_as_arr
-        .tags-and-categories
           = render 'categories/categories', categories: collection_item_state.categories_as_arr
+          = #render 'tags/tags', tags: collection_item_state.tags_as_arr
+          = tgs = collection_item_state.tag_items.collect{|ti| Tag.where(id: ti.tag_id).first.name}
+          =#CollectionItem.last.versions.each{|v| p v.object_changes['tag_items'] ? v.object_changes['tag_items'][1] : nil}
+          = render 'tags/tags', tags: tgs
 
 .page-summary-width-plus
   %hr

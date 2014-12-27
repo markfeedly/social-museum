@@ -1,3 +1,4 @@
+= # used to display a collection item in a list of collection items
 .page-summary-width
   .search-result{data: {'page-slug' => collection_item.slug}}
     .parent-div
@@ -23,8 +24,8 @@
 
       .history-tags-and-categories.page-summary-footer-indent_and_spacing.clear
         .tags-and-categories
-          = render 'tags/tags', tags: collection_item.tags_as_arr
-        .tags-and-categories
           = render 'categories/categories', categories: collection_item.categories_as_arr
+          = render 'tags/tags', tags: collection_item.tags_as_arr
+
 .page-summary-width-plus
   %hr
