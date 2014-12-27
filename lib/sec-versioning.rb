@@ -32,6 +32,12 @@ module SecVersioning
       end
     end
 
+=begin was (mvh change)
+    self.class.versioned_attributes.each do |v|
+      reversion.send("#{v}=", nil)
+    end
+=end
+
     versions ||= self.versions.where("version_number <= ?", version_number).order("version_number DESC")
     versions.each do |v|
       next if v.version_number > version_number
@@ -51,7 +57,7 @@ module SecVersioning
         reversion.version_object_changes[key][:to] = change
       end
 
-      if change.is_a?(Hash) || change.is_a?(Array)  # mvh added or
+      if change.is_a?(Hash) || change.is_a?(Array)  # mvh added or Array
         merge_association(key, reversion, change)
       else
         merge_attribute(key, reversion, change)
