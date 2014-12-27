@@ -25,11 +25,14 @@ module SecVersioning
     reversion.created_at = created_at
     reversion.version_object_changes = {}
     self.class.versioned_attributes.each do |v|
-      reversion.send("#{v}=", nil)
+      if v == 'tag_items' || v == 'category_items'
+        reversion.send("#{v}=", [])
+      else
+        reversion.send("#{v}=", nil)
+      end
     end
 
     versions ||= self.versions.where("version_number <= ?", version_number).order("version_number DESC")
-
     versions.each do |v|
       next if v.version_number > version_number
       merge_version(v, reversion)
@@ -48,7 +51,7 @@ module SecVersioning
         reversion.version_object_changes[key][:to] = change
       end
 
-      if change.is_a? Hash
+      if change.is_a?(Hash) || change.is_a?(Array)  # mvh added or
         merge_association(key, reversion, change)
       else
         merge_attribute(key, reversion, change)
