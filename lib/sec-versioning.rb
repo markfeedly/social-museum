@@ -2,18 +2,11 @@ module SecVersioning
   def self.included(base)
     base.send(:has_secretary)
     base.send(:attr_accessor, :version_object_changes)
-  end
-
-  def user
-    @user ||= User.find(versions.order(version_number: :desc).first.user_id)
-  end
-
-  def user=(user_id)
-    @user = User.find(versions.order(version_number: :desc).first.user_id)
+    base.send(:attr_reader, :user)
+    base.send(:prepend, PrependMethods)
   end
 
   def load_versions
-    version_numbers = versions.order(version_number: :desc).map{|v|v.version_number}
     versions.order(version_number: :desc).map do |v|
       version(v.version_number, versions: versions)
     end
@@ -21,9 +14,6 @@ module SecVersioning
 
   def version(version_number, versions: nil)
     reversion = self.class.new
-    reversion.id = id
-    reversion.created_at = created_at
-    reversion.version_object_changes = {}
     self.class.versioned_attributes.each do |v|
       if v == 'tag_items' || v == 'category_items'
         reversion.send("#{v}=", [])
@@ -32,11 +22,9 @@ module SecVersioning
       end
     end
 
-=begin was (mvh change)
-    self.class.versioned_attributes.each do |v|
-      reversion.send("#{v}=", nil)
-    end
-=end
+    reversion.id = id
+    reversion.created_at = created_at
+    reversion.version_object_changes = {}
 
     versions ||= self.versions.where("version_number <= ?", version_number).order("version_number DESC")
     versions.each do |v|
@@ -83,5 +71,28 @@ module SecVersioning
 
   def merge_attribute(name, reversion, change)
     reversion[name] ||= change
+  end
+
+  # This fixes the vanishing act of tags in history
+  module PrependMethods
+    def user=(user_id)
+      @user = User.find(user_id)
+    end
+
+    def tags
+      if version_object_changes.present?
+        Tag.where(id: tag_items.map(&:tag_id))
+      else
+        super
+      end
+    end
+
+    def categories
+      if version_object_changes.present?
+        Category.where(id: category_items.map(&:category_id))
+      else
+        super
+      end
+    end
   end
 end

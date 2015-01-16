@@ -4,8 +4,8 @@ require 'subscription_management'
 class CollectionItem < ActiveRecord::Base
   include Authority::Abilities
   include Categories
-  include SecVersioning
   include SubscriptionManagement
+  include SecVersioning
 
   has_one  :title,           as: :titleable,    dependent: :destroy, autosave: true
   has_many :comments,        as: :commentable,  dependent: :delete_all
@@ -43,8 +43,8 @@ class CollectionItem < ActiveRecord::Base
   end
 
   def remove_categories(desired_categories_as_strs)
-    categories_to_remove = categories.reject{ |c| desired_categories_as_strs.include?(c.name)  }
-    self.categories -= categories_to_remove  if categories && categories_to_remove
+    categories_to_remove = category_items.reject{ |c| desired_categories_as_strs.include?(c.category.name)  }
+    self.category_items -= categories_to_remove  if categories.present? && categories_to_remove.present?
   end
 
   def add_categories(desired_categories_as_strs)
@@ -53,9 +53,9 @@ class CollectionItem < ActiveRecord::Base
     categories_to_add_as_strs.each do |c|
       existing_category = Category.where(name: c).first
       if existing_category
-        CategoryItem.create!(categorisable: self, category: existing_category)
+        category_items.create!(categorisable: self, category: existing_category)
       else
-        self.categories += [Category.new(name: c)]
+        self.categories << Category.new(name: c)
       end
     end
   end
@@ -71,9 +71,8 @@ class CollectionItem < ActiveRecord::Base
   end
 
   def remove_tags(desired_tags_as_strs)
-    sssss
-    tags_to_remove = tags.reject{ |tag| desired_tags_as_strs.include?(tag.name)  }
-    self.tags -= tags_to_remove  if tags && tags_to_remove
+    tags_to_remove = tag_items.reject{ |tag_item| desired_tags_as_strs.include?(tag_item.tag.name)  }
+    self.tag_items -= tags_to_remove  if tag_items.present? && tags_to_remove.present?
   end
 
   def add_tags(desired_tags_as_strs)
@@ -81,8 +80,8 @@ class CollectionItem < ActiveRecord::Base
     tags_to_add_as_strs = desired_tags_as_strs.reject { |t| existing_tags_as_strs.include?(t) }
     tags_to_add_as_strs.each do |t|
       existing_tag = Tag.where(name: t).first
-      if existing_tag
-        TagItem.create!(taggable_type: 'CollectionItem', taggable_id: self.id, tag: existing_tag)
+      if existing_tag.present?
+        tag_items.create!(tag: existing_tag)
       else
         self.tags << Tag.new(name: t)
       end

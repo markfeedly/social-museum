@@ -5,15 +5,10 @@ class CollectionItemsController < ApplicationController
   expose(:collection_items)
   expose(:paginated_collection_items) { collection_items.page(params[:page]).per(10)}
   expose(:collection_item_history) do
-    Kaminari.paginate_array(get_versions).page(params[:page_ci]).per(10)
+    Kaminari.paginate_array(collection_item.load_versions).page(params[:page_ci]).per(10)
   end
 
   authorize_actions_for CollectionItem
-
-  def get_versions
-    version_numbers = collection_item.versions.map{|v| v.version_number}.sort.reverse
-    version_numbers.each.map{|v_num|collection_item.version(v_num)}
-  end
 
   def show
     respond_with(collection_item)
