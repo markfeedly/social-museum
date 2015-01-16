@@ -65,9 +65,10 @@ class CollectionItem < ActiveRecord::Base
   end
 
   def set_tags_from_string str
-    desired_tags_as_strs = str.split(',').collect{|t| t.strip.squeeze(' ')}.sort.uniq.reject{|t|t==''}
-    remove_tags(desired_tags_as_strs)
-    add_tags(desired_tags_as_strs)
+    desired_tag_names = str.split(',').collect{|t| t.strip.squeeze(' ')}.sort.uniq.reject{|t|t==''}
+    remove_tags(desired_tag_names)
+    add_tags(desired_tag_names)
+    #add_tags_or_categories(desired_tags_as_strs,     Tag,     tags,   tag_items )
   end
 
   def remove_tags(desired_tags_as_strs)
@@ -75,18 +76,36 @@ class CollectionItem < ActiveRecord::Base
     self.tag_items -= tags_to_remove  if tag_items.present? && tags_to_remove.present?
   end
 
-  def add_tags(desired_tags_as_strs)
-    existing_tags_as_strs = tags.collect{ |tag|tag.name}
-    tags_to_add_as_strs = desired_tags_as_strs.reject { |t| existing_tags_as_strs.include?(t) }
-    tags_to_add_as_strs.each do |t|
-      existing_tag = Tag.where(name: t).first
-      if existing_tag.present?
-        tag_items.create!(tag: existing_tag)
+
+  def add_tags(desired_tag_names)
+    existing_tag_names = tags.collect{ |tag|tag.name}
+    tag_names_to_add = desired_tag_names.reject { |t| existing_tag_names.include?(t) }
+    tag_names_to_add.each do |t|
+      a_tag = Tag.where(name: t).first
+      if a_tag.present?
+        tag_items.create!(tag: a_tag)
       else
         self.tags << Tag.new(name: t)
       end
     end
   end
+
+  #----------------------------
+
+=begin
+  def add_tags_or_categories(desired_as_strs, d_class, d_attr, d_assoc )
+    existing_desired_as_strs = d_attr.collect{ |d| d.name}
+    desired_to_add_as_strs = desired_as_strs.reject { |d| existing_desired_as_strs.include?(d) }
+    desired_to_add_as_strs.each do |d|
+      existing_desired = d_class.where(name: d).first
+      if existing_desired.present?
+        d_assoc.create!(tag: existing_desired)
+      else
+        self.d_attr << d_class.new(name: d)
+      end
+    end
+  end
+=end
 
   # ----------------------------------------------------------------------------
 
