@@ -32,12 +32,6 @@ class CollectionItem < ActiveRecord::Base
 
   #---------------------------------------------------------
 
-=begin
-  def categories_as_str
-    self.categories.collect{ |tag|tag.name.strip.squeeze(' ')}.sort.join(', ')
-  end
-=end
-
   def set_categories_from_string str
     desired_categories_as_strs = str.split(',').collect{|t| t.strip.squeeze(' ')}.sort.uniq.reject{|t|t==''}
     remove_categories(desired_categories_as_strs)
@@ -62,28 +56,31 @@ class CollectionItem < ActiveRecord::Base
     end
   end
 
-=begin
-  def tags_as_str
-    self.tags.collect{|t| t.name}.join(', ')
+  def categories_as_arr
+    self.categories.length == 0 ? [] : self.categories.collect{|t| t.name.strip}
   end
-=end
+
+  def categories_as_str
+    self.categories.collect{ |tag|tag.name.strip.squeeze(' ')}.sort.join(', ')
+  end
+
+
 
   def set_tags_from_string str
-    desired_tag_names = str.split(',').collect{|t| t.strip.squeeze(' ')}.sort.uniq.reject{|t|t==''}
-    remove_tags(desired_tag_names)
-    add_tags(desired_tag_names)
-    #add_tags_or_categories(desired_tags_as_strs,     Tag,     tags,   tag_items )
+    new_tag_names = str.split(',').collect{|t| t.strip.squeeze(' ')}.sort.uniq.reject{|t|t==''}
+    remove_tags(new_tag_names)
+   add_tags(new_tag_names)
   end
 
-  def remove_tags(desired_tags_as_strs)
-    tags_to_remove = tag_items.reject{ |tag_item| desired_tags_as_strs.include?(tag_item.tag.name)  }
-    self.tag_items -= tags_to_remove  if tag_items.present? && tags_to_remove.present?
+  def remove_tags(new_tag_names)
+    tag_names_to_remove = tag_items.reject{ |tag_item| new_tag_names.include?(tag_item.tag.name)  }
+    self.tag_items -= tag_names_to_remove  if tag_items.present? && tag_names_to_remove.present?
   end
 
 
-  def add_tags(desired_tag_names)
-    existing_tag_names = tags.collect{ |tag|tag.name}
-    tag_names_to_add = desired_tag_names.reject { |t| existing_tag_names.include?(t) }
+  def add_tags(new_tag_names)
+    old_tag_names = tags.collect{|t| t.name}
+    tag_names_to_add = new_tag_names.reject { |t| old_tag_names.include?(t) }
     tag_names_to_add.each do |t|
       a_tag = Tag.where(name: t).first
       if a_tag.present?
@@ -94,22 +91,17 @@ class CollectionItem < ActiveRecord::Base
     end
   end
 
-  #----------------------------
-
-=begin
-  def add_tags_or_categories(desired_as_strs, d_class, d_attr, d_assoc )
-    existing_desired_as_strs = d_attr.collect{ |d| d.name}
-    desired_to_add_as_strs = desired_as_strs.reject { |d| existing_desired_as_strs.include?(d) }
-    desired_to_add_as_strs.each do |d|
-      existing_desired = d_class.where(name: d).first
-      if existing_desired.present?
-        d_assoc.create!(tag: existing_desired)
-      else
-        self.d_attr << d_class.new(name: d)
-      end
-    end
+  def has_tag?(tag)
+    tags_as_arr.include?(tag)
   end
-=end
+
+  def tags_as_arr
+    self.tags.length == 0 ? [] : self.tags.collect{|t| t.name}
+  end
+
+  def tags_as_str
+    self.tags.collect{|t| t.name}.join(', ')
+  end
 
   # ----------------------------------------------------------------------------
 
@@ -123,18 +115,6 @@ class CollectionItem < ActiveRecord::Base
 
   def to_param
     title.to_param
-  end
-
-  def categories_as_arr
-    self.categories.length == 0 ? [] : self.categories.collect{|t| t.name.strip}
-  end
-
-  def has_tag?(tag)
-    tags_as_arr.include?(tag)
-  end
-
-  def tags_as_arr
-    self.tags.length == 0 ? [] : self.tags.collect{|t| t.name}
   end
 
   def slug
