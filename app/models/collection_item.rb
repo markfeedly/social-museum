@@ -30,7 +30,7 @@ class CollectionItem < ActiveRecord::Base
 
   ############ after_create  :subscribe_creator
 
-  #---------------------------------------------------------
+  #categories --------------------------------------------------------------------------------------------
 
   def set_categories_from_string str
     desired_categories_as_strs = str.split(',').collect{|t| t.strip.squeeze(' ')}.sort.uniq.reject{|t|t==''}
@@ -57,14 +57,12 @@ class CollectionItem < ActiveRecord::Base
   end
 
   def categories_as_arr
-    self.categories.length == 0 ? [] : self.categories.collect{|t| t.name.strip}
+    self.categories.length == 0 ? [] : self.categories.collect{|t| t.name}
   end
 
   def categories_as_str
     self.categories.collect{ |tag|tag.name.strip.squeeze(' ')}.sort.join(', ')
   end
-
-
 
   def set_tags_from_string str
     new_tag_names = str.split(',').collect{|t| t.strip.squeeze(' ')}.sort.uniq.reject{|t|t==''}
@@ -77,6 +75,7 @@ class CollectionItem < ActiveRecord::Base
     self.tag_items -= tag_names_to_remove  if tag_items.present? && tag_names_to_remove.present?
   end
 
+# tags -----------------------------------------------------------------------------------------
 
   def add_tags(new_tag_names)
     old_tag_names = tags.collect{|t| t.name}
@@ -103,7 +102,7 @@ class CollectionItem < ActiveRecord::Base
     self.tags.collect{|t| t.name}.join(', ')
   end
 
-  # ----------------------------------------------------------------------------
+  # misc -----------------------------------------------------------------------------------------
 
   def name
     title.title
@@ -126,7 +125,7 @@ class CollectionItem < ActiveRecord::Base
     Diffy::Diff.new(previous, current).to_s(:html)
   end
 
-  #---------------------------------------------------------
+  # finding ----------------------------------------------------------------------------------------
 
   def self.find_by_slug(slug)
     joins(:title).where(titles: {slug: slug}).first
