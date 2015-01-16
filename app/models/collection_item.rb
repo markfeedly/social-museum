@@ -32,9 +32,11 @@ class CollectionItem < ActiveRecord::Base
 
   #---------------------------------------------------------
 
+=begin
   def categories_as_str
     self.categories.collect{ |tag|tag.name.strip.squeeze(' ')}.sort.join(', ')
   end
+=end
 
   def set_categories_from_string str
     desired_categories_as_strs = str.split(',').collect{|t| t.strip.squeeze(' ')}.sort.uniq.reject{|t|t==''}
@@ -60,9 +62,11 @@ class CollectionItem < ActiveRecord::Base
     end
   end
 
+=begin
   def tags_as_str
-    self.tags.collect{ |tag|tag.name.strip.squeeze(' ')}.sort.join(', ')
+    self.tags.collect{|t| t.name}.join(', ')
   end
+=end
 
   def set_tags_from_string str
     desired_tag_names = str.split(',').collect{|t| t.strip.squeeze(' ')}.sort.uniq.reject{|t|t==''}
@@ -130,7 +134,7 @@ class CollectionItem < ActiveRecord::Base
   end
 
   def tags_as_arr
-    self.tags.length == 0 ? [] : self.tags.collect{|t| t.name.strip}
+    self.tags.length == 0 ? [] : self.tags.collect{|t| t.name}
   end
 
   def slug
