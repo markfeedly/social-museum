@@ -5,7 +5,7 @@ class ResourcesController < ApplicationController
 
   expose(:resources) { Resource.order(title: :asc).page(params[:id]).per(10) }
   # expose(:resource, attributes: :empty_params)
-  expose(:resource) { Resource.where(id: params[:id]).count == 0 ? Resource.new : Resource.find(params[:id])}
+  expose(:resource) { r = Resource.where(id: params[:id]).first ; r == nil ? Resource.new : r }
   expose(:pages) {|default| default.ordered_by_title}
 
   autocomplete :page, :title

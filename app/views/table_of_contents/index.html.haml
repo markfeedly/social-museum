@@ -6,6 +6,6 @@
   - if @page
     = ContentHtmlGenerator.generate_full(@page).html_safe
   - else
-    = "Make page #{pages_url}/SPECIAL%20table%20of%20contents to generate splash page content from that page"
+    = "Make page <a href=\"#{pages_path}/new?title=SPECIAL%20table%20of%20contents\">SPECIAL table of contents</a> to generate splash page content from that page".html_safe
 
 
