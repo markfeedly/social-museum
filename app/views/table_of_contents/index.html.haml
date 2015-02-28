@@ -1,4 +1,11 @@
 %h1#top.page-title Table of contents
 
-= ContentHtmlGenerator.generate_full(Page.find_by_title('SPECIAL: table of contents')).html_safe
+%br
+%p
+  - @page = Page.find_by_title('SPECIAL: table of contents')
+  - if @page
+    = ContentHtmlGenerator.generate_full(@page).html_safe
+  - else
+    = "Make page #{pages_url}/SPECIAL%20table%20of%20contents to generate splash page content from that page"
+
 
