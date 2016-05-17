@@ -41,7 +41,7 @@ class LinkInterpreter
   end
 
   def image_url?
-    url_suffix? && ( !!(@first.downcase =~ /\.png$/) || !!(@first.downcase =~ /\.jpg$/) || !!(@first.downcase =~ /\.jpeg$/))
+    url_suffix? && ( !!(@first.downcase =~ /\.png$/) || !!(@first.downcase =~ /\.jpg$/) || !!(@first.downcase =~ /\.jpeg$/) || !!(@first.downcase =~ /\.jpeg$/))
   end
 
   def domain
