@@ -3,6 +3,8 @@ class PageState < ActiveRecord::Base
 
   belongs_to :page, touch: true
   belongs_to :user
+  has_many :categories,      as: :categorisable, dependent: :delete_all
+  has_many :tags,            as: :taggable, dependent: :delete_all
 
   def categories=(new_categories)
     self['categories'] = clean(new_categories || '')
