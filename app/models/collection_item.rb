@@ -9,15 +9,20 @@ class CollectionItem < ActiveRecord::Base
 
   has_one  :title,           as: :titleable,    dependent: :destroy, autosave: true
   has_many :comments,        as: :commentable,  dependent: :delete_all
+
   has_many :resource_usages, as: :resourceable
   has_many :resources,       through: :resource_usages
+
   has_many :subscriptions,   as: :subscribable, dependent: :delete_all
   has_many :subscribers,     through: :subscriptions, source: :user
+
   has_many :tag_items,       as: :taggable
   has_many :tags,            through: :tag_items
-  has_many :category_items,  as: :categorisable
+
+  has_many :category_items,  as: :categorisable, dependent: :delete_all
   has_many :categories,      through: :category_items
 
+  before_destroy {category_items.clear}
 
   accepts_nested_attributes_for :title
   tracks_association :title
@@ -34,24 +39,17 @@ class CollectionItem < ActiveRecord::Base
 
   def set_categories_from_string str
     desired_categories = str.split(',').collect{|t| t.strip.squeeze(' ')}.sort.uniq.reject{|t|t==''}
-    remove_categories(desired_categories)
-    add_categories(desired_categories)
+    categories.destroy_all
+    set_categories(desired_categories)
   end
 
-  def remove_categories(desired_categories)
-    categories_to_remove = categories.collect{ |c|c.name }.reject{ |nm| desired_categories.include?(nm)  }
-    self.category_items -= categories_to_remove  if categories.present? && categories_to_remove.present?
-  end
-
-  def add_categories(new_categories)
-    existing_categories = categories.collect{ |c|c.name }
-    categories_to_add = new_categories.reject { |c| existing_categories.include?(c) }
-    categories_to_add.each do |c|
-      existing_category = Category.where(name: c).first
-      if existing_category
-        category_items.create!(categorisable: self, category: existing_category)
+  def set_categories(categories)
+    categories.each do |nme|
+      existing_category = Category.where(name: nme).first
+      if existing_category.present?
+        self.categories << existing_category
       else
-        self.categories << Category.new(name: c)
+        self.categories << Category.new(name: nme)
       end
     end
   end
@@ -64,6 +62,9 @@ class CollectionItem < ActiveRecord::Base
     self.categories.collect{ |tag|tag.name.strip.squeeze(' ')}.sort.join(', ')
   end
 
+  # tags -----------------------------------------------------------------------------------------
+
+
   def set_tags_from_string str
     new_tag_names = str.split(',').collect{|t| t.strip.squeeze(' ')}.sort.uniq.reject{|t|t==''}
     remove_tags(new_tag_names)
@@ -75,7 +76,6 @@ class CollectionItem < ActiveRecord::Base
     self.tag_items -= tag_names_to_remove  if tag_items.present? && tag_names_to_remove.present?
   end
 
-# tags -----------------------------------------------------------------------------------------
 
   def add_tags(new_tag_names)
     old_tag_names = tags.collect{|t| t.name}
