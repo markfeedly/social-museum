@@ -62,6 +62,18 @@ describe 'CollectionItem' do
     expect(CategoryItem.count).to eq 0
   end
 
+  it 'should return category arrays' do
+    expect(collection_item.categories_as_arr).to eq %w{cat1 cat2}
+    collection_item.set_categories_from_string( '' )
+    expect(collection_item.categories_as_arr).to eq []
+  end
+
+  it 'should return category strings' do
+    expect(collection_item.categories_as_str).to eq 'cat1, cat2'
+    collection_item.set_categories_from_string( '' )
+    expect(collection_item.categories_as_str).to eq ''
+  end
+
   it 'should get the right trail' do
     expect(collection_item.category_trail('VUM Atlas', :isa)).to eq ['VUM Atlas', 'Atlas', 'Computer']
   end
@@ -73,16 +85,15 @@ describe 'CollectionItem' do
   end
 
   it 'should find collection items in the inverse set' do
+    collection_item.set_categories_from_string( 'VUM Atlas' )
     expect(collection_item.categorised_in_inverse_set?('VUM Atlas', :isa)).to eq true
+    expect(collection_item.categorised_in_inverse_set?('Atlas', :isa)).to eq true
     expect(collection_item.categorised_in_inverse_set?('Computer', :isa)).to eq true
     expect(collection_item.categorised_in_inverse_set?('MU6G', :isa)).to eq false
-    collection_item.categories = 'c1, MU6G'
-    collection_item.save
-    expect(collection_item.categories).to eq 'c1,MU6G'
+    collection_item.set_categories_from_string('not in table, MU6G')
     expect(collection_item.categorised_in_inverse_set?('MU6G', :isa)).to eq true
     expect(collection_item.categorised_in_inverse_set?('Atlas', :isa)).to eq false
-    collection_item.categories = 'c1'
-    collection_item.save
+    collection_item.set_categories_from_string('not in table')
     expect(collection_item.categorised_in_inverse_set?('Atlas', :isa)).to eq false
   end
 
