@@ -32,7 +32,7 @@ class Page < ActiveRecord::Base
   history_attr :user_id
 
   validates :content, presence: true
-  validate  :not_spam?
+  validate  :not_spam? if ENV['WORDPRESS_KEY'] != nil
   validates_associated :page_title
 
   before_save       :track_title_change
