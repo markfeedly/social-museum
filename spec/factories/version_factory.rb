@@ -1,6 +1,6 @@
 FactoryGirl.define do
 
-  factory :version, :class => "Secretary::Version" do
+  factory :versions, :class => "Secretary::Version" do
     user_id 1
     versioned { |v| v.association :collection_item }
     sequence(:version_number)    { |n| "#{n}" }

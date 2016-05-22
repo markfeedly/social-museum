@@ -33,20 +33,20 @@ class CollectionItem < ActiveRecord::Base
   #categories --------------------------------------------------------------------------------------------
 
   def set_categories_from_string str
-    desired_categories_as_strs = str.split(',').collect{|t| t.strip.squeeze(' ')}.sort.uniq.reject{|t|t==''}
-    remove_categories(desired_categories_as_strs)
-    add_categories(desired_categories_as_strs)
+    desired_categories = str.split(',').collect{|t| t.strip.squeeze(' ')}.sort.uniq.reject{|t|t==''}
+    remove_categories(desired_categories)
+    add_categories(desired_categories)
   end
 
-  def remove_categories(desired_categories_as_strs)
-    categories_to_remove = category_items.reject{ |c| desired_categories_as_strs.include?(c.category.name)  }
+  def remove_categories(desired_categories)
+    categories_to_remove = categories.collect{ |c|c.name }.reject{ |nm| desired_categories.include?(nm)  }
     self.category_items -= categories_to_remove  if categories.present? && categories_to_remove.present?
   end
 
-  def add_categories(desired_categories_as_strs)
-    existing_categories_as_strs = categories.collect{ |c|c.name }
-    categories_to_add_as_strs = desired_categories_as_strs.reject { |c| existing_categories_as_strs.include?(c) }
-    categories_to_add_as_strs.each do |c|
+  def add_categories(new_categories)
+    existing_categories = categories.collect{ |c|c.name }
+    categories_to_add = new_categories.reject { |c| existing_categories.include?(c) }
+    categories_to_add.each do |c|
       existing_category = Category.where(name: c).first
       if existing_category
         category_items.create!(categorisable: self, category: existing_category)
