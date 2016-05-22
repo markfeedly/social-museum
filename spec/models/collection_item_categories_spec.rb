@@ -12,6 +12,7 @@ describe 'CollectionItem' do
     c.save!
     CollectionItem.find(1)
   }
+=begin
   let(:get_categories){
     [ ['Ferranti Mark I', :isa, 'Computer'],
       ['MU5', :isa, 'Computer'],
@@ -24,10 +25,11 @@ describe 'CollectionItem' do
       ['Memory', :is_part_of, 'Hardware'],
       ['Disc Drive', :is_part_of, 'Hardware'],
       ['CPU', :is_part_of, 'Hardware'],
-      ['Zorg', :isa, 'Atlas'],
+      ['VUM Atlas', :isa, 'Atlas'],
       ['Zorb', :isa, 'Atlas'],
       ['Zort', :isa, 'MU6G'] ]
   }
+=end
 
   it 'basic' do
     collection_item
@@ -61,18 +63,17 @@ describe 'CollectionItem' do
   end
 
   it 'should get the right trail' do
-    collection_item.set_categories_from_string( 'Zorg' )
-    expect(collection_item.category_trail(collection_item.categories[0].name, :isa)).to eq [ 'Zorg', 'Atlas', 'Computer']
+    expect(collection_item.category_trail('VUM Atlas', :isa)).to eq ['VUM Atlas', 'Atlas', 'Computer']
   end
 
   it 'should find the inverse set' do
-    expect(collection_item.category_inverse_set('Zorg', :isa)).to include('Zorg')
-    expect(collection_item.category_inverse_set('Atlas', :isa)).to include('Atlas', 'Zorg')
-    expect(collection_item.category_inverse_set('Computer', :isa)).to include("Computer", "MU5", "Atlas", "MU6G", "The baby", "Manchester Mark 1", "Zorg", "Ferranti Mark I")
+    expect(collection_item.category_inverse_set('VUM Atlas', :isa)).to eq(['VUM Atlas'])
+    expect(collection_item.category_inverse_set('Atlas', :isa)).to eq(['Atlas', 'VUM Atlas'])
+    expect(collection_item.category_inverse_set('Computer', :isa)).to eq(["Atlas", "Computer", "Ferranti Mark I", "MU5", "VUM Atlas"])
   end
 
   it 'should find collection items in the inverse set' do
-    expect(collection_item.categorised_in_inverse_set?('Zorg', :isa)).to eq true
+    expect(collection_item.categorised_in_inverse_set?('VUM Atlas', :isa)).to eq true
     expect(collection_item.categorised_in_inverse_set?('Computer', :isa)).to eq true
     expect(collection_item.categorised_in_inverse_set?('MU6G', :isa)).to eq false
     collection_item.categories = 'c1, MU6G'

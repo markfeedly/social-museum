@@ -7,15 +7,13 @@ module Categories
     [ ['Ferranti Mark I', :isa, 'Computer'],
       ['MU5', :isa, 'Computer'],
       ['Atlas', :isa, 'Computer'],
-      ['MU6G', :isa, 'Computer'],
-      ['The Baby', :isa, 'Computer'],
-      ['Manchester Mark 1', :isa, 'Computer'],
+      ['VUM Atlas', :isa, 'Atlas'],
       ['Hardware', :is_part_of, 'Computer'],
       ['Software', :is_part_of, 'Computer'],
       ['Memory', :is_part_of, 'Hardware'],
       ['Disc Drive', :is_part_of, 'Hardware'],
-      ['CPU', :is_part_of, 'Hardware'],
-      ['Zorg', :isa, 'Atlas'] ]
+      ['CPU', :is_part_of, 'Hardware']
+    ]
   end
 
   def category_trail(subject, predicate)
