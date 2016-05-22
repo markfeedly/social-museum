@@ -55,7 +55,7 @@ class CollectionItem < ActiveRecord::Base
   end
 
   def categories_as_arr
-    self.categories.length == 0 ? [] : self.categories.collect{|t| t.name}
+    self.categories.collect{|t| t.name}
   end
 
   def categories_as_str

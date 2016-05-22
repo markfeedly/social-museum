@@ -38,9 +38,9 @@ module Categories
   end
 
   def categorised_in_inverse_set?(object, predicate)
-    return nil unless categories
-    categories.split(',').any? do |cat|
-      category_inverse_set(object, predicate).include?(cat)
+    return nil unless categories.any?
+    categories.each do |cat|
+      category_inverse_set(object, predicate).include?(cat.name)
     end
   end
 end
