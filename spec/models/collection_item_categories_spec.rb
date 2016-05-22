@@ -33,33 +33,36 @@ describe 'CollectionItem' do
     collection_item
     expect(CollectionItem.count).to eq 1
     expect(Category.count).to eq 2
+    expect(CategoryItem.count).to eq 2
     expect(collection_item.categories_as_arr).to eq %w{cat1 cat2}
     expect(collection_item.categories_as_str).to eq 'cat1, cat2'
-    collection_item.add_categories(['cat0'])
-    expect(collection_item.categories_as_str).to eq 'cat0, cat1, cat2'
-    collection_item.add_categories(['cat3', 'cat0'])
-    expect(collection_item.categories_as_str).to eq 'cat0, cat1, cat2, cat3'
-    collection_item.add_categories(['cat4', 'cat5'])
-    expect(collection_item.categories_as_str).to eq 'cat0, cat1, cat2, cat3, cat4, cat5'
-    expect(Category.count).to eq 6
 
-    collection_item.set_categories_from_string('unknown')
-    expect(collection_item.categories_as_str).to eq 'cat0, cat1, cat2, cat3, cat4, cat5'
+    collection_item.set_categories_from_string( 'cat2, cat1, cat3' )
+    expect(collection_item.categories_as_str).to eq 'cat1, cat2, cat3'
+    expect(Category.count).to eq 3
+    expect(CategoryItem.count).to eq 3
 
-    collection_item.set_categories_from_string(['cat2'])
-    expect(collection_item.categories_as_str).to eq 'cat0, cat1, cat2, cat3, cat4, catn'
+    collection_item.set_categories_from_string( 'cat4' )
+    expect(collection_item.categories_as_str).to eq 'cat4'
+    expect(Category.count).to eq 4
+    expect(CategoryItem.count).to eq 1
 
-
+    collection_item.set_categories_from_string( '' )
+    expect(collection_item.categories_as_str).to eq ''
+    expect(Category.count).to eq 4
+    expect(CategoryItem.count).to eq 0
   end
 
-  it 'should should set and get categories' do
-    expect(collection_item.categories).to eq 'Zorg'
-    collection_item.categories = 'Zorg, Atlas'
-    expect(collection_item.categories).to eq 'Atlas,Zorg'
+  it 'should delete category items and preserve categories on deleting a collection item' do
+    collection_item.destroy
+    expect(CollectionItem.count).to eq 0
+    expect(Category.count).to eq 2
+    expect(CategoryItem.count).to eq 0
   end
 
   it 'should get the right trail' do
-    expect(collection_item.category_trail(collection_item.categories, :isa)).to eq [ 'Zorg', 'Atlas', 'Computer']
+    collection_item.set_categories_from_string( 'Zorg' )
+    expect(collection_item.category_trail(collection_item.categories[0].name, :isa)).to eq [ 'Zorg', 'Atlas', 'Computer']
   end
 
   it 'should find the inverse set' do
