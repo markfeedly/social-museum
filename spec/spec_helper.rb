@@ -44,10 +44,6 @@ RSpec.configure do |config|
   #     --seed 1234
   #mvh config.order = "random"
 
-  # mvh add exclusion filter
-  config.filter_run_excluding :broken => true
-
-
 end
 
 OmniAuth.config.test_mode = true
