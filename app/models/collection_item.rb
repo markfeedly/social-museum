@@ -23,7 +23,6 @@ class CollectionItem < ActiveRecord::Base
 
   has_many :category_items,  as: :categorisable, dependent: :delete_all
   has_many :categories,      through: :category_items
-  before_destroy {category_items.clear}
 
   accepts_nested_attributes_for :title
   tracks_association :title

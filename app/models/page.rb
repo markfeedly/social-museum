@@ -1,77 +1,82 @@
-require 'set'
-require 'uri'
+require 'set' # needed? copied from old page
+require 'uri' # needed? copied from old page
+require 'sec-versioning'
 require 'subscription_management'
 
 class Page < ActiveRecord::Base
-  include Rakismet::Model
   include Authority::Abilities
-  include Categories
+  include Rakismet::Model
+  include SecVersioning
   include SubscriptionManagement
+  include Tags
+  include Categories
 
-  self.authorizer_name = 'PageAuthorizer'
+  has_one  :title,           as: :titleable,    dependent: :destroy, autosave: true
+  has_many :comments,        as: :commentable,  dependent: :delete_all
 
-  has_one  :page_title,      as: :titleable, class_name: "Title", autosave: true, dependent: :destroy
-  has_many :history,         class_name: 'PageState', dependent: :delete_all, autosave: true
-  has_many :comments,        as: :commentable, dependent: :delete_all
   has_many :resource_usages, as: :resourceable
   has_many :resources,       through: :resource_usages
+
   has_many :subscriptions,   as: :subscribable, dependent: :delete_all
   has_many :subscribers,     through: :subscriptions, source: :user
 
+  has_many :tag_items,       as: :taggable, dependent: :delete_all
+  has_many :tags,            through: :tag_items
+
+  has_many :category_items,  as: :categorisable, dependent: :delete_all
+  has_many :categories,      through: :category_items
+
   scope    :ordered_by_title, ->{joins(:page_title).order("titles.title")}
-  accepts_nested_attributes_for :page_title
 
-  extend HistoryControl
-  # history_attributes
+  accepts_nested_attributes_for :title
 
-  history_attr :categories
-  history_attr :content
-  history_attr :tags
-  history_attr :title
-  history_attr :user
-  history_attr :user_id
+  tracks_association :title
+  tracks_association :tag_items
+  tracks_association :category_items
+  tracks_association :resources
 
-  validates :content, presence: true
+  validates_associated :title
   validate  :not_spam? if ENV['WORDPRESS_KEY'] != nil
-  validates_associated :page_title
 
-  before_save       :track_title_change
-  after_create  :subscribe_creator
+  ############ after_create  :subscribe_creator
 
   rakismet_attrs :author       => proc { user.name  },
                  :author_email => proc { user.email },
                  :user_role    => proc { user.admin? ? 'administrator' : 'user' },
                  :comment_type => proc { 'page' }
 
-  #---------------------------------------------------------
+  # misc -----------------------------------------------------------------------------------------
 
-  def self.find_with_category(cat)
-    all.select{ |p| p.has_category?( cat ) }
+  def title
+    title.title
   end
 
-  def self.find_with_tag(tag)
-    all.select{ |p| p.has_tag?( tag ) }
+  def hacky_title
+    title.title
   end
 
-  #---------------------------------------------------------
-
-  def has_category?(c)
-    history.last.try(:has_category?, c)
+  def to_param
+    title.to_param
   end
 
-  def has_tag?(t)
-    history.last.try(:has_tag?, t)
+  def slug
+    self.title.slug
   end
 
-  def categories_as_arr
-    categories == '' ? [] : categories.split(',').collect{|t| t.strip}
+# TO BE used in conflicting edits (maybe)
+  def compare_versions(previous, current)
+    Diffy::Diff.new(previous, current).to_s(:html)
   end
 
-  def tags_as_arr
-    tags == '' ? [] : tags.split(',').collect{|t| t.strip}
+  # finding ----------------------------------------------------------------------------------------
+
+  def self.find_by_slug(slug)
+    joins(:title).where(titles: {slug: slug}).first
   end
 
-  #---------------------------------------------------------
+  def self.find_by_title(title)
+    joins(:title).where(titles: {title: title}).first
+  end
 
   def not_spam?
     if user.present?
@@ -79,64 +84,8 @@ class Page < ActiveRecord::Base
     else
       errors.add :content, I18n.t('errors.page.content.rakismet_skipped')
     end
-    rescue
-      errors.add :content, I18n.t('errors.page.content.rakismet_failed')
-  end
-
-  def to_param
-    page_title.to_param
-  end
-
-  def title
-    page_title.title
-  end
-
-  def title=(new_title)
-    super
-    page_title.title = new_title
-  end
-
-  def slug
-    page_title.slug
-  end
-
-  def track_title_change
-    if page_title.title_changed?
-      self.title = page_title.title
-    end
-  end
-
-  def self.find_by_slug(slug)
-    joins(:page_title).where(titles: {slug: slug}).first
-  end
-
-  def self.find_by_title(title)
-    joins(:page_title).where(titles: {title: title}).first
-  end
-
-  def hacky_title
-    title
-  end
-
-  # TODO remove after I sort resource usage deletions when a page or a collection item is deleted
-  def clean_up
-    bad_resources = []
-    ResourceUsage.all.each do |ru|
-      if ru[:resourceable_type] == 'Page'
-        begin
-          Page.find(ru[:resourceable_id])
-        rescue
-          bad_resources << "missing page in resource #{ru[:id]}"
-        end
-      else
-        begin
-          CollectionItem.find(ru[:resourceable_id])
-        rescue
-          bad_resources << "missing collection item in resource #{ru[:id]}"
-        end
-      end
-    end
-    bad_resources
+  rescue
+    errors.add :content, I18n.t('errors.page.content.rakismet_failed')
   end
 
 end
