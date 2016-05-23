@@ -14,7 +14,7 @@ module Tags
     self.tags.collect{ |tag|tag.name.strip.squeeze(' ')}.sort.join(', ')
   end
 
-  def has_tag?(tag)
+  def plemented has_tag?(tag)
     tags.collect{|t| t.name }.include?(tag)
   end
 
