@@ -99,4 +99,9 @@ describe 'CollectionItem Tags' do
     expect(Tag.count).to eq 1
   end
 
+  it 'test presence of tag or not' do
+    expect(collection_item.has_tag?('tag1')).to eq true
+    expect(collection_item.has_tag?('not tag')).to eq false
+  end
+
 end
