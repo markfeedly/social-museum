@@ -3,9 +3,10 @@ require 'subscription_management'
 
 class CollectionItem < ActiveRecord::Base
   include Authority::Abilities
-  include Categories
   include SubscriptionManagement
   include SecVersioning
+  include Categories
+  include CategoryExtensions
 
   has_one  :title,           as: :titleable,    dependent: :destroy, autosave: true
   has_many :comments,        as: :commentable,  dependent: :delete_all
@@ -21,7 +22,6 @@ class CollectionItem < ActiveRecord::Base
 
   has_many :category_items,  as: :categorisable, dependent: :delete_all
   has_many :categories,      through: :category_items
-
   before_destroy {category_items.clear}
 
   accepts_nested_attributes_for :title
@@ -35,34 +35,7 @@ class CollectionItem < ActiveRecord::Base
 
   ############ after_create  :subscribe_creator
 
-  #categories --------------------------------------------------------------------------------------------
-
-  def set_categories_from_string str
-    desired_categories = str.split(',').collect{|t| t.strip.squeeze(' ')}.sort.uniq.reject{|t|t==''}
-    categories.destroy_all
-    set_categories(desired_categories)
-  end
-
-  def set_categories(categories)
-    categories.each do |nme|
-      existing_category = Category.where(name: nme).first
-      if existing_category.present?
-        self.categories << existing_category
-      else
-        self.categories << Category.new(name: nme)
-      end
-    end
-  end
-
-  def categories_as_arr
-    self.categories.collect{|t| t.name}
-  end
-
-  def categories_as_str
-    self.categories.collect{ |tag|tag.name.strip.squeeze(' ')}.sort.join(', ')
-  end
-
-  # tags -----------------------------------------------------------------------------------------
+   # tags -----------------------------------------------------------------------------------------
 
 
   def set_tags_from_string str

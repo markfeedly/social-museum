@@ -112,6 +112,7 @@ describe 'CollectionItem' do
   end
 
   it 'should find collection items in the inverse set', :broken => true do
+    pending("todo/getting finished")
     collection_item.set_categories_from_string( 'VUM Atlas' )
     expect(collection_item.categorised_in_inverse_set?('VUM Atlas', :isa)).to eq true
     expect(collection_item.categorised_in_inverse_set?('Atlas', :isa)).to eq true

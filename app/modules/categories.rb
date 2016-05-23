@@ -1,46 +1,28 @@
 module Categories
-  def self.included(base)
-    base.extend(self)
+
+  def set_categories_from_string str
+    desired_categories = str.split(',').collect{|t| t.strip.squeeze(' ')}.sort.uniq.reject{|t|t==''}
+    categories.destroy_all
+    set_categories(desired_categories)
   end
 
-  def get_categories
-    [ ['Ferranti Mark I', :isa, 'Computer'],
-      ['MU5', :isa, 'Computer'],
-      ['Atlas', :isa, 'Computer'],
-      ['VUM Atlas', :isa, 'Atlas'],
-      ['Hardware', :is_part_of, 'Computer'],
-      ['Software', :is_part_of, 'Computer'],
-      ['Memory', :is_part_of, 'Hardware'],
-      ['Disc Drive', :is_part_of, 'Hardware'],
-      ['CPU', :is_part_of, 'Hardware']
-    ]
-  end
-
-  def category_trail(subject, predicate)
-    parent = category_relation(subject,predicate)
-    if parent
-      category_trail(parent[2], predicate).unshift(subject)
-    else
-      [subject]
+  def set_categories(categories)
+    categories.each do |nme|
+      existing_category = Category.where(name: nme).first
+      if existing_category.present?
+        self.categories << existing_category
+      else
+        self.categories << Category.new(name: nme)
+      end
     end
   end
 
-  def category_relation(subject, predicate)
-    get_categories.find{|t| t[0..1] == [subject, predicate]}
+  def categories_as_arr
+    self.categories.collect{|t| t.name}
   end
 
-  def category_inverse_relations(object, predicate)
-    get_categories.find_all{ |t| t[1] == predicate && t[2] == object }
+  def categories_as_str
+    self.categories.collect{ |tag|tag.name.strip.squeeze(' ')}.sort.join(', ')
   end
 
-  def category_inverse_set(object, predicate)
-    ([object] + category_inverse_relations(object, predicate).map{|cat| category_inverse_set(cat[0], predicate)}).flatten.sort
-  end
-
-  def categorised_in_inverse_set?(object, predicate)
-    return nil unless categories.any?
-    categories.each do |cat|
-      category_inverse_set(object, predicate).include?(cat.name)
-    end
-  end
 end
