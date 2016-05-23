@@ -105,23 +105,36 @@ describe 'CollectionItem Categories' do
   end
 
   it 'should find the inverse set' do
-    expect(collection_item.category_inverse_set('VUM Atlas', :isa)).to eq(['VUM Atlas'])
-    expect(collection_item.category_inverse_set('Atlas', :isa)).to eq(['Atlas', 'VUM Atlas'])
-    expect(collection_item.category_inverse_set('Computer', :isa)).to eq(["Atlas", "Computer", "Ferranti Mark I", "MU5", "VUM Atlas"])
+    expect(collection_item.category_and_children('VUM Atlas')).to eq(['VUM Atlas'])
+    expect(collection_item.category_and_children('Atlas')).to eq(['Atlas', 'VUM Atlas'])
+    expect(collection_item.category_and_children('Computer')).to eq(["Atlas", "Computer", "Ferranti Mark I", "MU5", "SSEM", "VUM Atlas"])
   end
 
-  it 'should find collection items in the inverse set', :broken => true do
-    pending("todo/getting finished")
+  it 'should find collection items in the inverse set' do
+
+    collection_item.set_categories_from_string( 'not in table' )
+    expect(collection_item.in_categories_and_children?('VUM Atlas')).to eq false
+    expect(collection_item.in_categories_and_children?('Atlas')).to eq false
+    expect(collection_item.in_categories_and_children?('Computer')).to eq false
+
     collection_item.set_categories_from_string( 'VUM Atlas' )
-    expect(collection_item.categorised_in_inverse_set?('VUM Atlas', :isa)).to eq true
-    expect(collection_item.categorised_in_inverse_set?('Atlas', :isa)).to eq true
-    expect(collection_item.categorised_in_inverse_set?('Computer', :isa)).to eq true
-    expect(collection_item.categorised_in_inverse_set?('MU6G', :isa)).to eq false
-    collection_item.set_categories_from_string('not in table, MU6G')
-    expect(collection_item.categorised_in_inverse_set?('MU6G', :isa)).to eq true
-    expect(collection_item.categorised_in_inverse_set?('Atlas', :isa)).to eq false
-    collection_item.set_categories_from_string('not in table')
-    expect(collection_item.categorised_in_inverse_set?('Atlas', :isa)).to eq false
+    expect(collection_item.in_categories_and_children?('VUM Atlas')).to eq true
+    expect(collection_item.in_categories_and_children?('Atlas')).to eq true
+    expect(collection_item.in_categories_and_children?('Computer')).to eq true
+    expect(collection_item.in_categories_and_children?('SSEM')).to eq false
+
+    collection_item.set_categories_from_string('not in table, VUM Atlas')
+    expect(collection_item.in_categories_and_children?('VUM Atlas')).to eq true
+    expect(collection_item.in_categories_and_children?('Atlas')).to eq true
+    expect(collection_item.in_categories_and_children?('Computer')).to eq true
+    expect(collection_item.in_categories_and_children?('SSEM')).to eq false
+
+    collection_item.set_categories_from_string('SSEM, Computer, not in table, VUM Atlas')
+    expect(collection_item.in_categories_and_children?('VUM Atlas')).to eq true
+    expect(collection_item.in_categories_and_children?('Atlas')).to eq true
+    expect(collection_item.in_categories_and_children?('Computer')).to eq true
+    expect(collection_item.in_categories_and_children?('SSEM')).to eq true
+    expect(collection_item.in_categories_and_children?('MU5')).to eq false
   end
 
 end
