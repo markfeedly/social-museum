@@ -2,18 +2,9 @@ require 'spec_helper'
 
 describe 'CollectionItem Categories' do
 
-  def create_collection_item(item_num)
-    c = CollectionItem.new
-    c.title = Title.create!(title: "Collection item #{item_num}")
-    c.item_number = item_num
-    c.location = 'LF.23'
-    c.set_categories_from_string( 'cat2, cat1' )
-    c.save!
-  end
-
   let(:collection_item){
     CollectionItem.delete_all
-    create_collection_item(1)
+    FactoryGirl.create(:collection_item)
     CollectionItem.first
   }
 
@@ -71,7 +62,7 @@ describe 'CollectionItem Categories' do
   it 'should deal with the repeated use of the same category' do
     collection_item
     expect_category_count('cat1', 1)
-    create_collection_item(2)
+    FactoryGirl.create(:collection_item)
     expect_category_count('cat1', 1)
     cat = Category.where(name: 'cat1').first
     cat_id = cat.id
@@ -80,7 +71,7 @@ describe 'CollectionItem Categories' do
 
   it 'should destroy a CollectionItem and its CategoryItems ' do
     collection_item
-    create_collection_item(2)
+    FactoryGirl.create(:collection_item)
     expect(CategoryItem.count).to eq 4
     CollectionItem.first.destroy
     expect_category_count('cat1', 1)
@@ -89,7 +80,7 @@ describe 'CollectionItem Categories' do
 
   it 'should destroy a Category and its CategoryItems ' do
     collection_item
-    create_collection_item(2)
+    FactoryGirl.create(:collection_item)
     expect(CollectionItem.count).to eq 2
     expect(CategoryItem.count).to eq 4
     expect(Category.count).to eq 2
@@ -98,7 +89,6 @@ describe 'CollectionItem Categories' do
     expect(CategoryItem.count).to eq 2
     expect(Category.count).to eq 1
   end
-
 
   it 'should get the right trail' do
     expect(collection_item.category_trail('VUM Atlas', :isa)).to eq ['VUM Atlas', 'Atlas', 'Computer']

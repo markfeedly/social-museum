@@ -15,10 +15,6 @@ describe Page do
 
   # ----------------------------------------------------
 
-  describe "Validations" do
-    it { expect(page).to validate_presence_of(:content) }
-  end
-
   describe "Assignment" do
     it "of page title" do
       page.update(title: 'new title')
