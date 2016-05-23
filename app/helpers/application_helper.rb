@@ -13,9 +13,8 @@ module ApplicationHelper
   end
 
   def category_list(categories)
-    # categories.map do |cat|
-    #   Page.category_trail(cat, :isa).map{|c| link_to c, category_path(c)}.join(' > ')
-    # end.join(', ').html_safe
-    ''
+    categories.map do |cat|
+      collection_item.category_trail(cat, :isa).map{|c| link_to c, category_path(c)}.join(' > ')
+    end.join(', ').html_safe
   end
 end
