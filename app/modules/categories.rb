@@ -6,6 +6,16 @@ module Categories
     set_categories(desired_categories)
   end
 
+  def categories_as_arr
+    self.categories.collect{|t| t.name}
+  end
+
+  def categories_as_str
+    self.categories.collect{ |tag|tag.name.strip.squeeze(' ')}.sort.join(', ')
+  end
+
+  private
+
   def set_categories(categories)
     categories.each do |nme|
       existing_category = Category.where(name: nme).first
@@ -15,14 +25,6 @@ module Categories
         self.categories << Category.new(name: nme)
       end
     end
-  end
-
-  def categories_as_arr
-    self.categories.collect{|t| t.name}
-  end
-
-  def categories_as_str
-    self.categories.collect{ |tag|tag.name.strip.squeeze(' ')}.sort.join(', ')
   end
 
 end
