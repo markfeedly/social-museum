@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'CollectionItem' do
+describe 'CollectionItem Categories' do
 
   def create_collection_item(item_num)
     c = CollectionItem.new
@@ -8,7 +8,6 @@ describe 'CollectionItem' do
     c.item_number = item_num
     c.location = 'LF.23'
     c.set_categories_from_string( 'cat2, cat1' )
-    c.logged_user_id = 1
     c.save!
   end
 

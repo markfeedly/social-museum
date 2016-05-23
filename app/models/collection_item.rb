@@ -3,8 +3,9 @@ require 'subscription_management'
 
 class CollectionItem < ActiveRecord::Base
   include Authority::Abilities
-  include SubscriptionManagement
   include SecVersioning
+  include SubscriptionManagement
+  include Tags
   include Categories
   include CategoryExtensions
 
@@ -17,7 +18,7 @@ class CollectionItem < ActiveRecord::Base
   has_many :subscriptions,   as: :subscribable, dependent: :delete_all
   has_many :subscribers,     through: :subscriptions, source: :user
 
-  has_many :tag_items,       as: :taggable
+  has_many :tag_items,       as: :taggable, dependent: :delete_all
   has_many :tags,            through: :tag_items
 
   has_many :category_items,  as: :categorisable, dependent: :delete_all
@@ -34,46 +35,6 @@ class CollectionItem < ActiveRecord::Base
   validates_associated :title
 
   ############ after_create  :subscribe_creator
-
-   # tags -----------------------------------------------------------------------------------------
-
-
-  def set_tags_from_string str
-    new_tag_names = str.split(',').collect{|t| t.strip.squeeze(' ')}.sort.uniq.reject{|t|t==''}
-    remove_tags(new_tag_names)
-   add_tags(new_tag_names)
-  end
-
-  def remove_tags(new_tag_names)
-    tag_names_to_remove = tag_items.reject{ |tag_item| new_tag_names.include?(tag_item.tag.name)  }
-    self.tag_items -= tag_names_to_remove  if tag_items.present? && tag_names_to_remove.present?
-  end
-
-
-  def add_tags(new_tag_names)
-    old_tag_names = tags.collect{|t| t.name}
-    tag_names_to_add = new_tag_names.reject { |t| old_tag_names.include?(t) }
-    tag_names_to_add.each do |t|
-      a_tag = Tag.where(name: t).first
-      if a_tag.present?
-        tag_items.create!(tag: a_tag)
-      else
-        self.tags << Tag.new(name: t)
-      end
-    end
-  end
-
-  def has_tag?(tag)
-    tags_as_arr.include?(tag)
-  end
-
-  def tags_as_arr
-    self.tags.length == 0 ? [] : self.tags.collect{|t| t.name}
-  end
-
-  def tags_as_str
-    self.tags.collect{|t| t.name}.join(', ')
-  end
 
   # misc -----------------------------------------------------------------------------------------
 
