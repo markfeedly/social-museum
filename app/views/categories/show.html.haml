@@ -4,10 +4,10 @@
 
 = paginate @categorised_pages_and_coll_items
 
-- @categorised_pages_and_coll_items.each do |pci|
+- @categorised_pages_and_coll_items.each do |pg_or_cln_item|
 
-  = render 'collection_items/collection_item_summary', collection_item: pci if pci.respond_to?(:description)
-  = render 'pages/page_summary', page: pci if pci.respond_to?(:content)
+  = render 'collection_items/collection_item_summary', collection_item: pg_or_cln_item if pg_or_cln_item.respond_to?(:description)
+  = render 'pages/page_summary', page: pg_or_cln_item if pg_or_cln_item.respond_to?(:content)
   %br/
 
 = paginate @categorised_pages_and_coll_items
