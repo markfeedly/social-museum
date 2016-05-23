@@ -6,6 +6,7 @@ module CategoryExtensions
   def get_categories
     [ ['Ferranti Mark I', :isa, 'Computer'],
       ['MU5', :isa, 'Computer'],
+      ['SSEM', :isa, 'Computer'],
       ['Atlas', :isa, 'Computer'],
       ['VUM Atlas', :isa, 'Atlas'],
       ['Hardware', :is_part_of, 'Computer'],
@@ -33,14 +34,16 @@ module CategoryExtensions
     get_categories.find_all{ |t| t[1] == predicate && t[2] == object }
   end
 
-  def category_inverse_set(object, predicate)
-    ([object] + category_inverse_relations(object, predicate).map{|cat| category_inverse_set(cat[0], predicate)}).flatten.sort
+  def category_and_children(object)
+    ([object] + category_inverse_relations(object, :isa).map{|cat| category_and_children(cat[0])}).flatten.sort
   end
 
-  def categorised_in_inverse_set?(object, predicate)
-    return nil unless categories.any?
+  def in_categories_and_children?(object)
+    return false unless categories.any?
+    found = false
     categories.each do |cat|
-      category_inverse_set(object, predicate).include?(cat.name)
+      found = true if category_and_children(object).include?(cat.name)
     end
+    found
   end
 end

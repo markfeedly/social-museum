@@ -1,4 +1,4 @@
-- @categorised_pages_and_coll_items = Kaminari.paginate_array( (Title.all.select{|t| t.titleable.categorised_in_inverse_set?(params[:id], :isa) ? t.titleable : nil }.collect{|t| t.titleable} )).page(params[:page]).per(10)
+- @categorised_pages_and_coll_items = Kaminari.paginate_array( (Title.all.select{|t| t.titleable.in_categories_and_children?(params[:id]) ? t.titleable : nil }.collect{|t| t.titleable} )).page(params[:page]).per(10)
 
 %h1#top.page-title Categorised #{params[:id]}
 
