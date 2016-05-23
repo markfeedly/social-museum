@@ -2,18 +2,9 @@ require 'spec_helper'
 
 describe 'CollectionItem Tags' do
 
-  def create_collection_item(item_num)
-    c = CollectionItem.new
-    c.title = Title.create!(title: "Collection item #{item_num}")
-    c.item_number = item_num
-    c.location = 'LF.23'
-    c.set_tags_from_string( 'tag2, tag1' )
-    c.save!
-  end
-
   let(:collection_item){
     CollectionItem.delete_all
-    create_collection_item(1)
+    FactoryGirl.create(:collection_item)
     CollectionItem.first
   }
 
@@ -71,7 +62,7 @@ describe 'CollectionItem Tags' do
   it 'should deal with the repeated use of the same tag' do
     collection_item
     expect_tag_count('tag1', 1)
-    create_collection_item(2)
+    FactoryGirl.create(:collection_item)
     expect_tag_count('tag1', 1)
     cat = Tag.where(name: 'tag1').first
     cat_id = cat.id
@@ -80,7 +71,7 @@ describe 'CollectionItem Tags' do
 
   it 'should destroy a CollectionItem and its TagItems ' do
     collection_item
-    create_collection_item(2)
+    FactoryGirl.create(:collection_item)
     expect(TagItem.count).to eq 4
     CollectionItem.first.destroy
     expect_tag_count('tag1', 1)
@@ -89,7 +80,7 @@ describe 'CollectionItem Tags' do
 
   it 'should destroy a Tag and its TagItems ' do
     collection_item
-    create_collection_item(2)
+    FactoryGirl.create(:collection_item)
     expect(CollectionItem.count).to eq 2
     expect(TagItem.count).to eq 4
     expect(Tag.count).to eq 2
