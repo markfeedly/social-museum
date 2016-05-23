@@ -2,20 +2,18 @@ require 'spec_helper'
 
 describe 'CollectionItem Categories' do
 
-  let(:collection_item){
-    CollectionItem.delete_all
-    FactoryGirl.create(:collection_item)
-    CollectionItem.first
-  }
+  let(:collection_item){ FactoryGirl.create(:collection_item) }
 
-  it 'basic' do
-    collection_item
+  it 'basic creation of collection item' do
+    expect(collection_item.name).to eq 'Some title 1'
     expect(CollectionItem.count).to eq 1
     expect(Category.count).to eq 2
     expect(CategoryItem.count).to eq 2
     expect(collection_item.categories_as_arr).to eq %w{cat1 cat2}
     expect(collection_item.categories_as_str).to eq 'cat1, cat2'
+  end
 
+  it 'should be able to set categories' do
     collection_item.set_categories_from_string( 'cat2, cat1, cat3' )
     expect(collection_item.categories_as_str).to eq 'cat1, cat2, cat3'
     expect(Category.count).to eq 3
@@ -51,21 +49,12 @@ describe 'CollectionItem Categories' do
     expect(collection_item.categories_as_str).to eq ''
   end
 
-  def get_collection_items(cat)
-    Category.where(name: cat).first.all_categorised
-  end
-
-  def expect_category_count(cat, cnt)
-    expect(Category.where(name: cat).length).to eq cnt
-  end
-
   it 'should deal with the repeated use of the same category' do
     collection_item
-    expect_category_count('cat1', 1)
+    expect(Category.where(name: 'cat1').length).to eq 1
     FactoryGirl.create(:collection_item)
-    expect_category_count('cat1', 1)
-    cat = Category.where(name: 'cat1').first
-    cat_id = cat.id
+    expect(Category.where(name: 'cat1').length).to eq 1
+    cat_id = Category.where(name: 'cat1').first.id
     expect(CategoryItem.where(category_id: cat_id).length).to eq 2
   end
 
@@ -74,7 +63,7 @@ describe 'CollectionItem Categories' do
     FactoryGirl.create(:collection_item)
     expect(CategoryItem.count).to eq 4
     CollectionItem.first.destroy
-    expect_category_count('cat1', 1)
+    expect(Category.where(name: 'cat1').length).to eq 1
     expect(CategoryItem.count).to eq 2
   end
 
