@@ -10,8 +10,8 @@ require 'shoulda/matchers'
 require 'simplecov'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
-# in spec/support/ and its subdirectories.
-Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
+# in spec/support/
+Dir[Rails.root.join("spec/support/*.rb")].each { |f| require f }
 
 RSpec.configure do |config|
   config.include(EmailSpec::Helpers)
@@ -43,6 +43,10 @@ RSpec.configure do |config|
   # the seed, which is printed after each run.
   #     --seed 1234
   #mvh config.order = "random"
+
+  # mvh add exclusion filter
+  config.filter_run_excluding :broken => true
+
 
 end
 
