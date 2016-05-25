@@ -1,0 +1,21 @@
+= # little rendition for collection item history
+.page-summary-width
+  %li.no-bullets{data: {role: "collection-item-version", "history-idx" => page_state_counter }}
+
+    .time-and-user
+      = render 'users/user_and_time', user: page_state.user.name, thing: page_state
+
+    .history-indent
+
+      .history-title
+        = page_state.title.titleages
+
+      = ContentHtmlGenerator.generate_with_small_images(page_state).html_safe
+
+      .history-tags-and-categories
+        .tags-and-categories
+          = render 'categories/categories', categories: page_state.categories.collect{|t| t.name }
+          = render 'tags/tags', tags: page_state.tags.collect{|t| t.name }
+
+.page-summary-width-plus
+  %hr
