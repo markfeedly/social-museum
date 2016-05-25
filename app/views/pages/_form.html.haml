@@ -1,4 +1,4 @@
-= simple_form_for(collection_item, :html => {:data => {:role => 'collection_item-form'}}) do |f|
+= simple_form_for(page, :html => {:data => {:role => 'page-form'}}) do |f|
   = f.input :lock_version, as: :hidden
 
   = f.fields_for :title do |title_form|
@@ -6,7 +6,7 @@
 
   .parent-div.width-500px
     .float-left
-      = f.input :item_number, wrapper_html: {data: {role: 'acquisition_number'}}, error_html: {data: {role: 'error'}}, input_html: {id: 'collection_item_acquisition_number'}
+      = f.input :item_number, wrapper_html: {data: {role: 'acquisition_number'}}, error_html: {data: {role: 'error'}}, input_html: {id: 'page_acquisition_number'}
     .float-right
       = f.input :location, wrapper_html: {data: {role: 'location'}}, error_html: {data: {role: 'error'}}
 
