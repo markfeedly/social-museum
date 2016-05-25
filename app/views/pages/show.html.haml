@@ -1,14 +1,14 @@
-.page-title-main= collection_item.title.title
+.page-title-main= page.title.title
 
 = render 'layouts/tab_nav'
 
 #my-tab-content.tab-content
 
   #content-tab.tab-pane.active
-    = render 'pages/collection_item_content'
+    = render 'pages/page_content'
 
   #resource-tab.tab-pane
-    = render  'resources/page_resources', page: collection_item
+    = render  'resources/page_resources', page: page
 
   #history-tab.tab-pane
     = render 'pages/content_page_history'

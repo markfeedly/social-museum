@@ -25,6 +25,7 @@ class CollectionItem < ActiveRecord::Base
   has_many :categories,      through: :category_items
 
   accepts_nested_attributes_for :title
+
   tracks_association :title
   tracks_association :tag_items
   tracks_association :category_items

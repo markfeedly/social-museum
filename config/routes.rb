@@ -21,13 +21,10 @@ VirtualMuseum::Application.routes.draw do
   resources :help, only: [:index]
 
   resources :pages do
-    get 'P:page_summaries', :action => :index, :on => :collection
-    get ':id/P:page_states', :action => :show, :on => :collection
-    resources :comments, only: :create, controller: 'page_comments'
+    resources :comments, only: :create, controller: 'collection_comments'
     member do
       get :subscribe
       get :unsubscribe
-      get 'unsubscribe-via-email' => :unsubscribe_via_email, as: :unsubscribe_via_email
     end
   end
 
