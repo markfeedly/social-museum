@@ -1,5 +1,5 @@
 %h1.page-title
-  Edit page
-  #{page.title}
+  Edit collection item
+  = collection_item.name
+= render 'collection_items/form'
 
-= render :partial => 'pages/page_form'

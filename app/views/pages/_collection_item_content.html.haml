@@ -1,0 +1,26 @@
+.std-width
+  .content-item-header.parent-div
+    .float-left.bold= "Collection item #{collection_item.item_number}"
+    .float-right= "Location: #{collection_item.location}"
+
+  = ContentHtmlGenerator.generate_full(collection_item).html_safe
+
+  .content-footer.parent-div
+    .content-t-and-c.float-left
+      = render 'categories/categories', categories: collection_item.categories.collect{|c| c.name }
+      = render  'tags/tags', tags: collection_item.tags.collect{|t| t.name }
+
+    .content-edit-button.float-right.button-width
+      - if current_user.can_update?(collection_item)
+        .float-right
+          = link_to("Edit", edit_collection_item_path(collection_item), class: 'btn btn-primary button-width button-spacing')
+          %clear
+        -# TODO Phrase button more appropriately, or create a means to select existing resource.
+        .float-right
+          = link_to("Add new resource", new_resource_path+"?for_page=#{collection_item.id}", class: 'btn btn-primary button-width button-spacing')
+        .float-right
+          = render 'shared/subscriptions', subscribable: collection_item
+  .clear
+
+  #comments.comments-spacer
+    = render 'comments/comments_page_tab', commentable: collection_item
