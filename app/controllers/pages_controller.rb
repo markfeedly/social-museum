@@ -1,70 +1,68 @@
-class CollectionItemsController < ApplicationController
+class PagesController < ApplicationController
   respond_to :html
 
-  expose(:collection_item, attributes: :collection_item_params, finder: :find_by_slug)
-  expose(:collection_items)
-  expose(:paginated_collection_items) { collection_items.page(params[:page]).per(10)}
-  expose(:collection_item_history) do
-    Kaminari.paginate_array(collection_item.load_versions).page(params[:page_ci]).per(10)
+  expose(:page, attributes: :page_params, finder: :find_by_slug)
+  expose(:pages)
+  expose(:paginated_pages) { pages.page(params[:page]).per(10)}
+  expose(:page_history) do
+    Kaminari.paginate_array(page.load_versions).page(params[:page_ci]).per(10)
   end
 
-  authorize_actions_for CollectionItem
+  authorize_actions_for Page
 
   def show
-    respond_with(collection_item)
+    respond_with(page)
   end
 
   def new
-    collection_item.build_title
-    respond_with(collection_item)
+    page.build_title
+    respond_with(page)
   end
 
   def create
-    collection_item.set_tags_from_string(       params[:collection_item][:tags_as_str] )
-    collection_item.set_categories_from_string( params[:collection_item][:categories_as_str] )
-    collection_item.logged_user_id = current_user.id
-    collection_item.save
-    respond_with(collection_item)
+    page.set_tags_from_string(       params[:page][:tags_as_str] )
+    page.set_categories_from_string( params[:page][:categories_as_str] )
+    page.logged_user_id = current_user.id
+    page.save
+    respond_with(page)
   end
 
   def edit
-    respond_with(collection_item)
+    respond_with(page)
   end
 
   def update
-    collection_item.set_tags_from_string(       params[:collection_item][:tags_as_str] )
-    collection_item.set_categories_from_string( params[:collection_item][:categories_as_str] )
-    collection_item.logged_user_id = current_user.id
-    collection_item.update_attributes(collection_item_params)
-    respond_with(collection_item)
+    page.set_tags_from_string(       params[:page][:tags_as_str] )
+    page.set_categories_from_string( params[:page][:categories_as_str] )
+    page.logged_user_id = current_user.id
+    page.update_attributes(page_params)
+    respond_with(page)
   end
 
   def index
-    respond_with(collection_items)
+    respond_with(pages)
   end
 
   def destroy
-    collection_item.destroy
-    respond_with(collection_item)
+    page.destroy
+    respond_with(page)
   end
 
   def subscribe
-    collection_item.subscribe(current_user)
-    redirect_to collection_item_path(collection_item)
+    page.subscribe(current_user)
+    redirect_to page_path(page)
   end
 
   def unsubscribe
-    collection_item.unsubscribe(current_user)
-    redirect_to collection_item_path(collection_item)
+    page.unsubscribe(current_user)
+    redirect_to page_path(page)
   end
 
   private
 
-  def collection_item_params
-    params.require(:collection_item).permit(:categories,
+  def page_params
+    params.require(:page).permit(:categories,
                                             :description,
-                                            :item_number,
-                                            :location,
                                             :lock_version,
                                             :tags,
                                             :categories,

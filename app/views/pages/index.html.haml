@@ -1,13 +1,13 @@
-.page-title Collection items
-- if collection_items.empty?
-  No collection items yet
+.page-title Pages
+- if page.empty?
+  No pages yet
   - if current_user.admin?
     %br/
-    You can add them via the new collection item menu item in the menu at the top of the page
+    You can add new pages via the new page menu item in the menu at the top of the page
 - else
-  = paginate paginated_collection_items, param_name: "collection_item_summaries"
+  = paginate paginated_pages, param_name: "page_summaries"
   .page-summary-width-plus
     %hr
-  - paginated_collection_items.each do |ci|
-    = render 'collection_items/collection_item_summary', collection_item: ci
-  = paginate paginated_collection_items, param_name: "collection_item_summaries"
+  - paginated_pages.each do |ci|
+    = render 'pages/page_item_summary', collection_item: ci
+  = paginate paginated_pages, param_name: "page_summaries"
