@@ -4,16 +4,10 @@
   = f.fields_for :title do |title_form|
     = title_form.input :title, input_html: {id: 'page_title'}, wrapper_html: {data: {role: 'title'}}, error_html: {data: {role: 'error'}}
 
-  .parent-div.width-500px
-    .float-left
-      = f.input :item_number, wrapper_html: {data: {role: 'acquisition_number'}}, error_html: {data: {role: 'error'}}, input_html: {id: 'page_acquisition_number'}
-    .float-right
-      = f.input :location, wrapper_html: {data: {role: 'location'}}, error_html: {data: {role: 'error'}}
-
   = f.input :categories_as_str, label: 'Categories', wrapper_html: {data: {role: 'categories'}}, error_html: {data: {role: 'error'}}
 
   = f.input :description, as: :text, wrapper_html: {data: {role: 'description'}}, error_html: {data: {role: 'error'}}
 
   = f.input :tags_as_str, label: 'Tags', wrapper_html: {data: {role: 'tags'}}, error_html: {data: {role: 'error'}}
 
-  = f.button :submit, class: 'btn-primary', data: {role: 'create-collection-item-button'}
+  = f.button :submit, class: 'btn-primary', data: {role: 'page-item-button'}

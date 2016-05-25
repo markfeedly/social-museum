@@ -47,7 +47,7 @@ class Page < ActiveRecord::Base
 
   # misc -----------------------------------------------------------------------------------------
 
-  def title
+  def name
     title.title
   end
 
