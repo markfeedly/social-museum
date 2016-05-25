@@ -1,14 +1,14 @@
-.page-title-main #{page.title}
+.page-title-main= collection_item.title.title
 
-= render partial: 'layouts/tab_nav'
+= render 'layouts/tab_nav'
 
 #my-tab-content.tab-content
 
   #content-tab.tab-pane.active
-    = render partial: 'pages/page_content'
+    = render 'collection_items/collection_item_content'
 
   #resource-tab.tab-pane
-    = render partial: 'resources/page_resources'
+    = render  'resources/page_resources', page: collection_item
 
   #history-tab.tab-pane
-    = render partial: 'pages/page_history'
+    = render 'collection_items/content_page_history'

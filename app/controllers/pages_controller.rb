@@ -1,78 +1,73 @@
-class PagesController < ApplicationController
+class CollectionItemsController < ApplicationController
   respond_to :html
-  expose(:page, attributes: :page_params, finder: :find_by_slug) {|default| default.decorate }
-  expose(:pages)
-  expose(:page_states) { Kaminari.paginate_array(page.history.to_a.reverse).page(params[:page_states]).per(10) }
-  expose(:page_summaries) { pages.joins(:page_title).order('titles.title ASC').page(params[:page_summaries]).per(10) }
 
-  before_action :authenticate_user!, :except => [:index, :show]
-                # :destroy requires admin, see method body
+  expose(:collection_item, attributes: :collection_item_params, finder: :find_by_slug)
+  expose(:collection_items)
+  expose(:paginated_collection_items) { collection_items.page(params[:page]).per(10)}
+  expose(:collection_item_history) do
+    Kaminari.paginate_array(collection_item.load_versions).page(params[:page_ci]).per(10)
+  end
 
-  authorize_actions_for :page
+  authorize_actions_for CollectionItem
+
+  def show
+    respond_with(collection_item)
+  end
 
   def new
-    page.build_page_title
-    respond_with(page)
+    collection_item.build_title
+    respond_with(collection_item)
   end
 
   def create
-    page.user_id = current_user.id
-    page.save
-    respond_with(page)
-  end
-
-  def index
-    # this was pages, not page_summaries, ask!!
-    respond_with(page_summaries)
-  end
-
-  def show
-    respond_with(page)
+    collection_item.set_tags_from_string(       params[:collection_item][:tags_as_str] )
+    collection_item.set_categories_from_string( params[:collection_item][:categories_as_str] )
+    collection_item.logged_user_id = current_user.id
+    collection_item.save
+    respond_with(collection_item)
   end
 
   def edit
-    respond_with(page)
+    respond_with(collection_item)
   end
 
   def update
-    page.update_attributes(page_params.merge(user_id: current_user.id))
-    respond_with(page)
-  rescue ActiveRecord::StaleObjectError
-    flash.now[:warning] =
-      'Another user has made a conflicting change, you can resolve the differences and save the page again'
-    page.reload
-    @conflict = Page.new(page_params)
-    render :edit_with_conflicts
+    collection_item.set_tags_from_string(       params[:collection_item][:tags_as_str] )
+    collection_item.set_categories_from_string( params[:collection_item][:categories_as_str] )
+    collection_item.logged_user_id = current_user.id
+    collection_item.update_attributes(collection_item_params)
+    respond_with(collection_item)
+  end
+
+  def index
+    respond_with(collection_items)
   end
 
   def destroy
-    page.destroy
-    respond_with(page)
+    collection_item.destroy
+    respond_with(collection_item)
   end
 
   def subscribe
-    page.subscribe(current_user)
-    redirect_to page_path(page)
+    collection_item.subscribe(current_user)
+    redirect_to collection_item_path(collection_item)
   end
 
   def unsubscribe
-    page.unsubscribe(current_user)
-    redirect_to page_path(page)
-  end
-
-  def unsubscribe_via_email
-    render :confirm_unsubscribe
+    collection_item.unsubscribe(current_user)
+    redirect_to collection_item_path(collection_item)
   end
 
   private
 
-  def page_params
-    params.require(:page).permit(:categories,
-                                 :content,
-                                 :creator,
-                                 :lock_version,
-                                 :slug,
-                                 :tags,
-                                 page_title_attributes: [:title, :id])
+  def collection_item_params
+    params.require(:collection_item).permit(:categories,
+                                            :description,
+                                            :item_number,
+                                            :location,
+                                            :lock_version,
+                                            :tags,
+                                            :categories,
+                                            title_attributes: [:title, :id])
   end
 end

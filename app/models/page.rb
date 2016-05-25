@@ -33,7 +33,7 @@ class Page < ActiveRecord::Base
   tracks_association :title
   tracks_association :tag_items
   tracks_association :category_items
-  tracks_association :resources
+  #tracks_association :resources
 
   validates_associated :title
   validate  :not_spam? if ENV['WORDPRESS_KEY'] != nil

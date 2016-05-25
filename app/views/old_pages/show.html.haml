@@ -1,0 +1,14 @@
+.page-title-main #{page.title}
+
+= render partial: 'layouts/tab_nav'
+
+#my-tab-content.tab-content
+
+  #content-tab.tab-pane.active
+    = render partial: 'pages/page_content'
+
+  #resource-tab.tab-pane
+    = render partial: 'resources/page_resources'
+
+  #history-tab.tab-pane
+    = render partial: 'pages/page_history'

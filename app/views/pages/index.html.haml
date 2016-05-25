@@ -1,13 +1,13 @@
-.page-title Other information
-- if page_summaries == []
-  No pages yet
-  %br/
-  - if current_user
-    You can add them via the new page menu item above
+.page-title Collection items
+- if collection_items.empty?
+  No collection items yet
+  - if current_user.admin?
+    %br/
+    You can add them via the new collection item menu item in the menu at the top of the page
 - else
-  = paginate page_summaries, param_name: "page_summaries"
+  = paginate paginated_collection_items, param_name: "collection_item_summaries"
   .page-summary-width-plus
     %hr
-  - page_summaries.each do |pg|
-    = render 'pages/page_summary', page: pg
-  = paginate page_summaries, param_name: "page_summaries"
+  - paginated_collection_items.each do |ci|
+    = render 'collection_items/collection_item_summary', collection_item: ci
+  = paginate paginated_collection_items, param_name: "collection_item_summaries"

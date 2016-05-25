@@ -1,0 +1,29 @@
+= # little rendition for collection item history
+.page-summary-width
+  %li.no-bullets{data: {role: "collection-item-version", "history-idx" => collection_item_state_counter }}
+
+    .time-and-user
+      = render 'users/user_and_time', user: collection_item_state.user.name, thing: collection_item_state
+
+    .history-indent
+
+      .history-title
+        = collection_item_state.title.title
+
+      .history-item-number-and-location
+        .parent_div
+          .float-left
+            = "Collection item #{collection_item_state.item_number}"
+          .float-right
+            = "Location: #{collection_item_state.location}"
+      .clear
+
+      = ContentHtmlGenerator.generate_with_small_images(collection_item_state).html_safe
+
+      .history-tags-and-categories
+        .tags-and-categories
+          = render 'categories/categories', categories: collection_item_state.categories.collect{|t| t.name }
+          = render 'tags/tags', tags: collection_item_state.tags.collect{|t| t.name }
+
+.page-summary-width-plus
+  %hr
