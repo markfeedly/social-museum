@@ -13,8 +13,8 @@
 
 
       .history-tags-and-categories.page-summary-footer-indent_and_spacing.clear
-        = "Collection item #{collection_item.item_number}"
-
+        .float-left= "Collection item #{collection_item.item_number}"
+        .float-right= "Location: #{collection_item.location}"
       %div
         .float-left.width-150px.page-summary-image-indent.page-summary-image-align
           = link_to image_tag(ContentHtmlGenerator.page_image(collection_item) || 'http://vignette2.wikia.nocookie.net/horrormovies/images/e/e3/No_Image.png/revision/latest/scale-to-width-down/100'), collection_item_url(collection_item)
