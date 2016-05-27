@@ -12,7 +12,7 @@
 
       %div
         .float-left.width-150px.page-summary-image-indent.page-summary-image-align
-          = link_to image_tag(resource.image_url, class: 'width-150px'), resource_path(resource), class: 'resources-summary-width-and-margin'
+          = link_to image_tag(make_url(resource), class: 'width-150px'), resource_path(resource), class: 'resources-summary-width-and-margin'
           %br
         .content-preview
           - if resource.description == nil || resource.description.strip == ''
