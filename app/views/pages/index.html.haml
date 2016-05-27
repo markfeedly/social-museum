@@ -1,5 +1,5 @@
 .page-title Pages
-- if page.empty?
+- if pages.empty?
   No pages yet
   - if current_user.admin?
     %br/
@@ -8,6 +8,6 @@
   = paginate paginated_pages, param_name: "page_summaries"
   .page-summary-width-plus
     %hr
-  - paginated_pages.each do |ci|
-    = render 'pages/page_item_summary', collection_item: ci
+  - paginated_pages.each do |pg|
+    = render 'pages/page_summary', page: pg
   = paginate paginated_pages, param_name: "page_summaries"

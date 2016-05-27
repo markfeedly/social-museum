@@ -1,4 +1,4 @@
-= # used to display a collection item in a list of collection items
+= # used to display a page item in a list of page items
 .page-summary-width
   .search-result{data: {'page-slug' => page.slug}}
     .parent-div
@@ -13,7 +13,7 @@
 
       %div
         .float-left.width-150px.page-summary-image-indent.page-summary-image-align
-          = link_to image_tag(ContentHtmlGenerator.page_image(page) || 'http://vignette2.wikia.nocookie.net/horrormovies/images/e/e3/No_Image.png/revision/latest/scale-to-width-down/100'), page_url(page)
+          = link_to image_tag(ContentHtmlGenerator.page_image(page) || 'http://localhost/Pictures/no_image.png'), page_url(page)
           %br
         .content-preview
           = ContentHtmlGenerator.generate_with_small_images(page).html_safe
