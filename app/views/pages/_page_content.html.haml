@@ -2,22 +2,7 @@
 
   = ContentHtmlGenerator.generate_full(page).html_safe
 
-  .content-footer.parent-div
-    .content-t-and-c.float-left
-      = render 'categories/categories', categories: page.categories.collect{|c| c.name }
-      = render  'tags/tags', tags: page.tags.collect{|t| t.name }
-
-    .content-edit-button.float-right.button-width
-      - if current_user.can_update?(page)
-        .float-right
-          = link_to("Edit", edit_page_path(page), class: 'btn btn-primary button-width button-spacing')
-          %clear
-        -# TODO Phrase button more appropriately, or create a means to select existing resource.
-        .float-right
-          = link_to("Add new resource", new_resource_path+"?for_page=#{page.id}", class: 'btn btn-primary button-width button-spacing')
-        .float-right
-          = render 'shared/subscriptions', subscribable: page
-  .clear
+  = render 'content/content_footer', content_source: page, edit_content_source_path: edit_collection_item_path(page)
 
   #comments.comments-spacer
     = render 'comments/comments_page_tab', commentable: page
