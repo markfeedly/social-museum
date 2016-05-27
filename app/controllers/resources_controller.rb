@@ -12,6 +12,12 @@ class ResourcesController < ApplicationController
 
   #authorize_actions_for Resource
 
+  def get_uploaded_file
+    upload_dir = "/Users/mark/RubymineProjects/social-museum/uploads/"
+    file_name = upload_dir + "#{params[:type]}/#{params[:id]}/#{params[:name]}.#{params[:format]}"
+    send_file file_name, type: 'image/jpeg', disposition: 'inline'
+  end
+
   def new
     respond_with(resource)
   end

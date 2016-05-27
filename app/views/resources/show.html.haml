@@ -3,9 +3,11 @@
     .std-width
       .page-title
         = resource.title
-      %a{href: resource.url, class: "content-content"}
-        -if resource.valid_image_url?
-          %img.width-600px{src: resource.source}
+      - res_url = String.new(resource.url)
+      - res_url.gsub!( /^\/.*uploads/, "/get_uploaded_file" )
+      %a{href: res_url, class: "content-content"}
+        -if Resource.valid_image_url?(res_url)
+          %img.width-600px{src: res_url}
         -elsif resource.valid_url?
           = resource.url.split('/')[-1]
         - else

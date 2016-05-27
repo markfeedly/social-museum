@@ -48,6 +48,10 @@ class Resource < ActiveRecord::Base
     valid_url? && url =~ /\.(jpe?g|gif|png)\z/
   end
 
+  def self.valid_image_url?(url)
+    url =~ /\.(jpe?g|gif|png)\z/
+  end
+
   def image_url
     Upload.image_url_for(url)
   end

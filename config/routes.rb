@@ -40,5 +40,8 @@ VirtualMuseum::Application.routes.draw do
   resources :tags, only: [:show]
 
   resources :users
+
+  get '/get_uploaded_file/:type/:id/:name', to: 'resources#get_uploaded_file', as: 'uploaded'
+
 end
 
