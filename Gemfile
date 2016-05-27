@@ -67,6 +67,10 @@ group :development, :test do
   gem 'simplecov', require: false
 end
 
+group :development do
+  gem 'meta_request'
+end
+
 group :test do
   gem 'cucumber-rails', :require => false
   gem 'capybara-screenshot'

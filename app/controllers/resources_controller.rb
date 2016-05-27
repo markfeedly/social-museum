@@ -1,6 +1,8 @@
 class ResourcesController < ApplicationController
   respond_to :html
 
+  include ResourceHelper
+
   before_action :authenticate_user!, :except => [:index, :show]
 
   expose(:resources) { Resource.order(title: :asc).page(params[:id]).per(10) }
@@ -15,7 +17,9 @@ class ResourcesController < ApplicationController
   def get_uploaded_file
     upload_dir = "/Users/mark/RubymineProjects/social-museum/uploads/"
     file_name = upload_dir + "#{params[:type]}/#{params[:id]}/#{params[:name]}.#{params[:format]}"
-    send_file file_name, type: 'image/jpeg', disposition: 'inline'
+puts '==========='
+    puts get_mime(params[:format])
+    send_file file_name, type: get_mime(params[:format]), disposition: 'inline'
   end
 
   def new
