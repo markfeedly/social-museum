@@ -1,16 +1,6 @@
 class ResourcesController < ApplicationController
-  respond_to :html
-
   include ResourceHelper
-
-  before_action :authenticate_user!, :except => [:index, :show]
-
-=begin
-  expose(:resources) { Resource.page(params[:id]).per(10) }
-  # expose(:resource, attributes: :empty_params)
-  expose(:resource) { r = Resource.where(id: params[:id]).first ; r == nil ? Resource.new : r }
-  expose(:pages) {|default| default.ordered_by_title}
-=end
+  respond_to :html
 
   expose(:resource, attributes: :resource_params, finder: :find_by_slug)
   expose(:resources)
@@ -21,7 +11,9 @@ class ResourcesController < ApplicationController
 
   autocomplete :page, :title
 
-  #authorize_actions_for Resource
+  #todo use: authorize_actions_for Resource
+  before_action :authenticate_user!, :except => [:index, :show]
+
 
   def get_uploaded_file
     upload_dir = "/Users/mark/RubymineProjects/social-museum/uploads/"
@@ -68,6 +60,13 @@ class ResourcesController < ApplicationController
   end
 
   def update
+    resource.set_tags_from_string(       params[:resource][:tags_as_str] )
+    resource.set_categories_from_string( params[:resource][:categories_as_str] )
+    resource.logged_user_id = current_user.id
+    resource.update_attributes(resource_params)
+    respond_with(resource)
+    #todo sort out conflicting edits
+=begin
     resource.update_attributes(resource_params)
     respond_with(resource)
   rescue ActiveRecord::StaleObjectError
@@ -75,6 +74,7 @@ class ResourcesController < ApplicationController
     resource.reload
     @conflict = 'set me appropriately'
     render :edit_with_conflicts
+=end
   end
 
   def destroy

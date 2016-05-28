@@ -1,13 +1,20 @@
-- @categorised_pages_and_coll_items = Kaminari.paginate_array( (Title.all.select{|t| t.titleable.in_categories_and_children?(params[:id]) ? t.titleable : nil }.collect{|t| t.titleable} )).page(params[:page]).per(10)
+- @content_objects = Kaminari.paginate_array( (Title.all.select{|t| t.titleable.in_categories_and_children?(params[:id]) ? t.titleable : nil }.collect{|t| t.titleable} )).page(params[:page]).per(10)
 
 %h1#top.page-title Categorised #{params[:id]}
 
-= paginate @categorised_pages_and_coll_items
+= paginate @content_objects
 
-- @categorised_pages_and_coll_items.each do |pg_or_cln_item|
+- @content_objects.each do |cont_obj|
 
-  = render 'collection_items/collection_item_summary', collection_item: pg_or_cln_item if pg_or_cln_item.respond_to?(:description)
-  = render 'pages/page_summary', page: pg_or_cln_item if pg_or_cln_item.respond_to?(:content)
+  - if cont_obj.respond_to?(:item_number)
+    = render 'collection_items/collection_item_summary', collection_item: cont_obj
+
+  - elsif cont_obj.respond_to?(:url)
+    = render 'resources/resource_summary', resource: cont_obj
+
+  - else
+    = render 'pages/page_summary', page: cont_obj
+
   %br/
 
-= paginate @categorised_pages_and_coll_items
+= paginate @content_objects
