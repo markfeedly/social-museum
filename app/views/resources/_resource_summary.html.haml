@@ -1,8 +1,8 @@
 .page-summary-width
-  .search-result{data: {'resource-title' => resource.title}}
+  .search-result{data: {'resource-title' => resource.name}}
     .parent-div
       .summary-header.page-summary-width-plus
-        = link_to resource.title, resource_path(resource), class: 'summary-title'
+        = link_to resource.name, resource_path(resource), class: 'summary-title'
         .float-right
           - if current_user && current_user.can_delete?(resource)
             = link_to fa_icon('trash-o'), resource,
