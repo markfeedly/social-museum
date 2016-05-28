@@ -3,6 +3,6 @@
   %p
     - @page = Page.find_by_title('SPECIAL: splash page')
     - if @page
-      = ContentHtmlGenerator.generate_full(@page).html_safe
+      = ContentHtmlGenerator.generate_full(@page)
     - else
       = 'Make page with title \'SPECIAL: splash page\' to generate splash page content from that page'

@@ -4,7 +4,7 @@
 %p
   - @page = Page.find_by_title('SPECIAL: table of contents')
   - if @page
-    = ContentHtmlGenerator.generate_full(@page).html_safe
+    = ContentHtmlGenerator.generate_full(@page)
   - else
     = "Make page <a href=\"#{pages_path}/new?title=SPECIAL%20table%20of%20contents\">SPECIAL table of contents</a> to generate splash page content from that page".html_safe
 

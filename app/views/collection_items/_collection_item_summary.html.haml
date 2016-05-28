@@ -20,7 +20,7 @@
           = link_to image_tag(ContentHtmlGenerator.page_image(collection_item) || 'http://vignette2.wikia.nocookie.net/horrormovies/images/e/e3/No_Image.png/revision/latest/scale-to-width-down/100'), collection_item_url(collection_item)
           %br
         .content-preview
-          = ContentHtmlGenerator.generate_with_small_images(collection_item).html_safe
+          = ContentHtmlGenerator.generate_with_small_images(collection_item)
 
       .history-tags-and-categories.page-summary-footer-indent_and_spacing.clear
         .tags-and-categories
