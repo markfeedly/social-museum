@@ -5,7 +5,7 @@ class ContentHtmlGenerator
 
     markdown_renderer = Redcarpet::Markdown.new(Redcarpet::Render::HTML.new(),
                                                     extensions = {})
-    markdown_renderer.render new_markdown
+    markdown_renderer.render(new_markdown).html_safe
 
   end
 
@@ -23,7 +23,7 @@ class ContentHtmlGenerator
                                           end
                                         end
 
-    markdown_renderer.render(new_markdown)
+    markdown_renderer.render(new_markdown).html_safe
 
   end
 

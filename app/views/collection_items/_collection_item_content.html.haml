@@ -3,7 +3,7 @@
     .float-left.bold= "Collection item #{collection_item.item_number}"
     .float-right= "Location: #{collection_item.location}"
 
-  = ContentHtmlGenerator.generate_full(collection_item).html_safe
+  = ContentHtmlGenerator.generate_full(collection_item)
 
   = render 'content/content_footer', content_source: collection_item, edit_content_source_path: edit_collection_item_path(collection_item)
 
