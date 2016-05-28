@@ -16,7 +16,7 @@ class ResourcesController < ApplicationController
   expose(:resources)
   expose(:paginated_resources) { resources.resource(params[:resource]).per(10)}
   expose(:resource_history) do
-    Kaminari.paginate_array(resource.load_versions).resource(params[:resource_ci]).per(10)
+    Kaminari.paginate_array(resource.load_versions).page(params[:resource_ci]).per(10)
   end
 
   autocomplete :page, :title

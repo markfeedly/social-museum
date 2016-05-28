@@ -5,7 +5,7 @@ describe 'Category Extensions' do
   let(:collection_item){ FactoryGirl.create(:collection_item) }
 
   it 'should get the right trail' do
-    expect(collection_item.category_trail('VUM Atlas', :isa)).to eq ['VUM Atlas', 'Atlas', 'Computer']
+    expect(Category.category_trail('VUM Atlas', :isa)).to eq ['VUM Atlas', 'Atlas', 'Computer']
   end
 
   it 'should find the inverse set' do

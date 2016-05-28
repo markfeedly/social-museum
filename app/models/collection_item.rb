@@ -9,7 +9,6 @@ class CollectionItem < ActiveRecord::Base
   include Titles
   include Tags
   include Categories
-  include CategoryExtensions
 
   has_one  :title,           as: :titleable,    dependent: :destroy, autosave: true
   has_many :comments,        as: :commentable,  dependent: :delete_all

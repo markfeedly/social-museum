@@ -11,7 +11,6 @@ class Resource < ActiveRecord::Base
   include Titles
   include Tags
   include Categories
-  include CategoryExtensions
   include UploadHelper
 
   has_one  :title,           as: :titleable,    dependent: :destroy, autosave: true
@@ -37,7 +36,7 @@ class Resource < ActiveRecord::Base
   accepts_nested_attributes_for :resource_usages, allow_destroy: true
 
 
-  tracks_association :resource_usages
+  #tracks_association :resource_usages
   #tracks_association :user
   tracks_association :title
   tracks_association :tag_items
