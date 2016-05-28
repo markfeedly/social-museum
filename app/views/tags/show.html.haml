@@ -5,8 +5,13 @@
 = paginate @tagged_pages_and_coll_items
 
 - @tagged_pages_and_coll_items.each do |pci|
-  = render 'collection_items/collection_item_summary', collection_item: pci if pci.respond_to?(:description)
-  = render 'pages/page_summary', page: pci if pci.respond_to?(:content)
+  - if pci.respond_to?(:item_number)
+    = render 'collection_items/collection_item_summary', collection_item: pci
+  - elsif pci.respond_to?(:content)
+    = render 'pages/page_summary', page: pci
+  - else
+    = render 'resources/resource_summary', resource: pci
+
   %br/
 
 = paginate @tagged_pages_and_coll_items
