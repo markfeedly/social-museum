@@ -19,7 +19,7 @@
       %br
       .content-footer.parent-div
         .float-left
-          = '&nbsp;'.html_safe #render 'resources/resource_used_by'
+          = render 'resources/resource_used_by'
         .content-edit-button.float-right
           - if current_user.can_update?(resource)
             = link_to("Edit resource", edit_resource_path(params), class: "btn btn-primary")

@@ -8,6 +8,7 @@ class Page < ActiveRecord::Base
   include Rakismet::Model
   include SecVersioning
   include SubscriptionManagement
+  include Titles
   include Tags
   include Categories
 
@@ -45,25 +46,7 @@ class Page < ActiveRecord::Base
                  :user_role    => proc { user.admin? ? 'administrator' : 'user' },
                  :comment_type => proc { 'page' }
 
-  # misc -----------------------------------------------------------------------------------------
-
-  def name
-    title.title
-  end
-
-  def hacky_title
-    title.title
-  end
-
-  def to_param
-    title.to_param
-  end
-
-  def slug
-    self.title.slug
-  end
-
-# TO BE used in conflicting edits (maybe)
+# TO BE used in conflicting edits (maybe) -----------------------
   def compare_versions(previous, current)
     Diffy::Diff.new(previous, current).to_s(:html)
   end

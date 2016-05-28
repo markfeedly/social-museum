@@ -3,8 +3,10 @@ require 'subscription_management'
 
 class CollectionItem < ActiveRecord::Base
   include Authority::Abilities
+  #todo include Rakismet::Model
   include SecVersioning
   include SubscriptionManagement
+  include Titles
   include Tags
   include Categories
   include CategoryExtensions
@@ -24,6 +26,8 @@ class CollectionItem < ActiveRecord::Base
   has_many :category_items,  as: :categorisable, dependent: :delete_all
   has_many :categories,      through: :category_items
 
+  scope    :ordered_by_title, ->{joins(:page_title).order("titles.title")}
+
   accepts_nested_attributes_for :title
 
   tracks_association :title
@@ -39,22 +43,6 @@ class CollectionItem < ActiveRecord::Base
   ############ after_create  :subscribe_creator
 
   # misc -----------------------------------------------------------------------------------------
-
-  def name
-    title.title
-  end
-
-  def hacky_title
-    title.title
-  end
-
-  def to_param
-    title.to_param
-  end
-
-  def slug
-    self.title.slug
-  end
 
 # TO BE used in conflicting edits (maybe)
   def compare_versions(previous, current)
