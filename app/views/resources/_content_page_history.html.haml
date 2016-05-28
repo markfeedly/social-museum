@@ -1,0 +1,8 @@
+%div{data: {role: "page-versions"}}
+  = paginate resource_history, param_name: :page_ci, params: {anchor: :"history-tab"}
+  .page-summary-width-plus
+    %hr
+
+  = render partial: 'resources/resource_state', collection: resource_history
+
+  = paginate resource_history, param_name: :page_ci, params: {anchor: :"history-tab"}
