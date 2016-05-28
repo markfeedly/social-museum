@@ -1,0 +1,10 @@
+%ul.no-bullets
+  - if page.resources == []
+    There are no resources associated with this page.
+  - else
+    - page.resources.each do |r|
+      %li
+        %p.bold
+          =link_to r.title, resource_path(r)
+        =link_to image_tag(r.source, title: r.description, class: 'resource-image'), resource_path(r)
+        %hr

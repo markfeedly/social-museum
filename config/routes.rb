@@ -31,9 +31,21 @@ VirtualMuseum::Application.routes.draw do
   resources :recent, only: [:index]
 
   resources :resources do
+    resources :comments, only: :create, controller: 'collection_comments'
+    member do
+      get :subscribe
+      get :unsubscribe
+    end
     get 'P:resources', :action => :index, :on => :collection
     get :autocomplete_page_title, :on => :collection
   end
+
+=begin
+  resources :resources do
+    get 'P:resources', :action => :index, :on => :collection
+    get :autocomplete_page_title, :on => :collection
+  end
+=end
 
   resources :table_of_contents, only: [:index]
 

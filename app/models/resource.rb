@@ -1,29 +1,60 @@
 require 'uri'
+require 'sec-versioning'
+#todo require 'subscription_management'
 
 class Resource < ActiveRecord::Base
-  has_secretary
-
   include Authority::Abilities
-  include UploadHelper
   self.authorizer_name = 'ResourceAuthorizer'
+  #todo include Rakismet::Model
+  include SecVersioning
+  #todo include SubscriptionManagement
+  include Titles
+  include Tags
+  include Categories
+  include CategoryExtensions
+  include UploadHelper
+
+  has_one  :title,           as: :titleable,    dependent: :destroy, autosave: true
+  has_many :comments,        as: :commentable,  dependent: :delete_all
+
+  has_many :subscriptions,   as: :subscribable, dependent: :delete_all
+  has_many :subscribers,     through: :subscriptions, source: :user
+
+  has_many :tag_items,       as: :taggable, dependent: :delete_all
+  has_many :tags,            through: :tag_items
+
+  has_many :category_items,  as: :categorisable, dependent: :delete_all
+  has_many :categories,      through: :category_items
 
   has_many :resource_usages
   def resourceables; resource_usages.map(&:resourceable); end
 
+  belongs_to :user
+
+  #scope    :ordered_by_title, ->{joins(:page_title).order("titles.title")}
+
+  accepts_nested_attributes_for :title
   accepts_nested_attributes_for :resource_usages, allow_destroy: true
 
-  belongs_to :user
 
   tracks_association :resource_usages
   #tracks_association :user
+  tracks_association :title
+  tracks_association :tag_items
+  tracks_association :category_items
+  #todo ? tracks_association :resources
 
+  #todo ? validates_associated :title
+  #--
   validates :title, presence: true
-  validates :source, presence: true
-  validates :url, presence: true, uniqueness: true
-  validate  :validate_url
-  validate  :validate_file
+  #validates :source, presence: true
+  #validates :url, presence: true, uniqueness: true
+  #validate  :validate_url
+  #validate  :validate_file
 
   alias_attribute :source, :url
+
+  #todo after_create  :subscribe_creator
 
   def file
     @upload
@@ -56,33 +87,24 @@ class Resource < ActiveRecord::Base
     Upload.image_url_for(url)
   end
 
-  def resource_usages_attributes=(new_resource_usages)
-    new_resource_usages.reject!{|_, r| r['page_title'] == ''}
-    seen_title = []
-    deduped_new_resource_usages = new_resource_usages.reject{|_, v| v['_destroy'] == 'false' &&
-                                    seen_title.include?(v['page_title']).tap{seen_title << v['page_title']}}
-    deduped_existing = deduped_new_resource_usages.reject{|_, v| v['_destroy'] == 'false' &&
-                                    !Title.exists?(v['page_title']) }
-    attribute_data = deduped_existing.map do |_,ru|
-      if ru[:id]
-        source_ru = ResourceUsage.find(ru[:id])
-        ru[:resourceable_type]=source_ru.resourceable_type
-        ru[:resourceable_id]=source_ru.resourceable_id
-      else
-        if p = Page.find_by_title(ru[:page_title])
-          ru[:resourceable_type]='Page'
-          ru[:resourceable_id]=p.id
-        else
-          ru[:resourceable_id]=CollectionItem.find_by_title(ru[:page_title]).id
-          ru[:resourceable_type]='CollectionItem'
-        end
-      end
-      ru
-    end
-    super(attribute_data)
+  # misc -----------------------------------------------------------------------------------------
+
+# TO BE used in conflicting edits (maybe)
+  def compare_versions(previous, current)
+    Diffy::Diff.new(previous, current).to_s(:html)
   end
 
+  # finding ----------------------------------------------------------------------------------------
 
+  def self.find_by_slug(slug)
+    joins(:title).where(titles: {slug: slug}).first
+  end
+
+  def self.find_by_title(title)
+    joins(:title).where(titles: {title: title}).first
+  end
+
+  # validations ----------------------------------------------------------------------------------------
 
   private
 

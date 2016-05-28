@@ -3,16 +3,8 @@
 
   = render 'resources/resource_form_preamble'
 
-  = f.fields_for :title do |title_form|
-    = title_form.input :title, input_html: {id: 'page_title'}, wrapper_html: {data: {role: 'title'}}, error_html: {data: {role: 'error'}}
-
-    = f.input :categories_as_str, label: 'Categories', wrapper_html: {data: {role: 'categories'}}, error_html: {data: {role: 'error'}}
-
-    = f.input :description
-
-    = f.input :tags_as_str, label: 'Tags', wrapper_html: {data: {role: 'tags'}}, error_html: {data: {role: 'error'}}
-
-
+  = f.input :title, wrapper_html: {data: {role: 'title'}}, error_html: {data: {role: 'error'}}
+  = f.input :description
   - if current_user.can_change_link?(resource)
     = f.input :url, label: 'Resource on the web to link to (this must be a URL beginning with http)', wrapper_html: {data: {role: "link-field"}}, error_html: {data: {role: "error"}}
     %div.hide{data: {role: 'upload-field'}}
