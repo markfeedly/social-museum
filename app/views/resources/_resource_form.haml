@@ -1,8 +1,6 @@
 = simple_nested_form_for(resource, :html => {:data => {:role => 'resource-form'}, :multipart => true}) do |f|
   = f.input :lock_version, as: :hidden
 
-  = render 'resources/resource_form_preamble'
-
   = f.fields_for :title do |title_form|
     = title_form.input :title, input_html: {id: 'page_title'}, wrapper_html: {data: {role: 'title'}}, error_html: {data: {role: 'error'}}
 
@@ -29,7 +27,7 @@
         %input.string#resource_url{type: 'text', value: resource.url, disabled: true}
         %br
         .instruction.change-note
-          = "This resource asset may only be changed by this resource's creator (#{resource.user.name}) or by an administrator."
+          = "This resource asset may only be changed by this resource's creator or by an administrator."
   %br
   %br
   %br

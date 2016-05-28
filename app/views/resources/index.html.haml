@@ -1,16 +1,13 @@
-.container
-  .page-title Resources
-  - if @resources == []
-    - if current_user
-      No resources yet
-      %br/
-      You can add them and associate them with pages via the new resource menu item above
-    - else
-      No resources yet
-  - else
-    = paginate resources, param_name: "resources"
-    .page-summary-width-plus
-      %hr
-    - resources.each do |r|
-      = render 'resources/resource_summary', resource: r
-    = paginate resources, param_name: "resources"
+.page-title Resources
+- if resources.empty?
+  No resources yet
+  - if current_user.admin?
+    %br/
+    You can add new pages via the new resourecs menu item in the menu at the top of the page
+- else
+  = paginate paginated_resources, param_name: "resource_summaries"
+  .page-summary-width-plus
+    %hr
+  - paginated_resources.each do |res|
+    = render 'resources/resource_summary', resource: res
+  = paginate paginated_resources, param_name: "resource_summaries"
