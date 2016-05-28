@@ -14,6 +14,15 @@ module Categories
     self.categories.collect{ |tag|tag.name.strip.squeeze(' ')}.sort.join(', ')
   end
 
+  def in_categories_and_children?(object)
+    return false unless categories.any?
+    found = false
+    categories.each do |cat|
+      found = true if Category.category_and_children(object).include?(cat.name)
+    end
+    found
+  end
+
   private
 
   def set_categories(categories)
