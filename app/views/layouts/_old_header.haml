@@ -6,11 +6,17 @@
           = link_to ENV['MUSEUM_NAME'], root_path, class: 'brand'
           %ul.nav
 
-            - if current_user.can_read?(CollectionItem)
-              %li= link_to 'Contents', table_of_contents_path
-              %li= link_to 'Collection', collection_items_path
-              %li= link_to 'Background', pages_path
-              %li= link_to 'Resources', resources_path
+            %li.dropdown
+              = link_to pages_path, class: "dropdown-toggle", data: {toggle: 'dropdown'} do
+                Content
+              %ul.dropdown-menu
+                - if current_user.can_read?(CollectionItem)
+                  %li= link_to 'Table of Contents', table_of_contents_path
+
+                - if current_user.can_read?(CollectionItem)
+                  %li= link_to 'Collection Items', collection_items_path
+                - if current_user.can_read?(Page)
+                  %li= link_to 'Other Information', pages_path
 
             %li.dropdown
               = link_to pages_path, class: "dropdown-toggle", data: {toggle: 'dropdown'} do
@@ -25,6 +31,8 @@
                 - if ! (current_user.can_create?(CollectionItem) || current_user.can_create?(Page) || current_user.can_create?(Resource))
                   %li= link_to 'Login to create (or edit) content', new_user_session_path
 
+            - if current_user.can_read?(Page)
+              %li= link_to 'Resources', resources_path
 
             - if current_user.can_read?(Page)
               %li= link_to 'Recent', recent_index_path
