@@ -2,7 +2,7 @@
 
   = ContentHtmlGenerator.generate_full(page)
 
-  = render 'content/content_footer', content_source: page, edit_content_source_path: edit_collection_item_path(page)
+  = render 'content/content_footer', content_source: page, edit_content_source_path: edit_page_path(page)
 
   #comments.comments-spacer
-    = render 'comments/comments_page_tab', commentable: page
+    = render 'comments/comments', commentable: page
