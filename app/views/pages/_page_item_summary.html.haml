@@ -12,16 +12,14 @@
                       :method => :delete
 
       %div
-        .float-left.width-150px.page-summary-image-indent.page-summary-image-align
+        .float-left.width-150px
+          .page-summary-image-indent.page-summary-image-align
           = link_to image_tag(ContentHtmlGenerator.page_image(page) || 'http://localhost/Pictures/no_image.png'), page_url(page)
           %br
         .content-preview
           = ContentHtmlGenerator.generate_with_small_images(page)
 
-      .history-tags-and-categories.page-summary-footer-indent_and_spacing.clear
-        .tags-and-categories
-          = render 'categories/categories', categories: page.categories_as_arr
-          = render 'tags/tags', tags: page.tags_as_arr
+          = render 'layouts/header_and_footers/in_list_footer', categories: page.categories_as_arr, tags: page.tags_as_arr
 
 .page-summary-width-plus
   %hr
