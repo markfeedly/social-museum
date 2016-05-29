@@ -7,17 +7,21 @@
 - @tagged_pages =            Kaminari.paginate_array( (Title.all.select{|t| t.titleable.has_tag?(params[:id]) && t.titleable.class == Page ? t.titleable : nil }.collect{|t| t.titleable} )).page(params[:page]).per(10)
 - @tagged_resources =        Kaminari.paginate_array( (Title.all.select{|t| t.titleable.has_tag?(params[:id]) && t.titleable.class == Resource   ? t.titleable : nil }.collect{|t| t.titleable} )).page(params[:page]).per(10)
 
+- @ci_class = 'unused'
+- @p_class = 'unused'
+- @r_class = 'unused'
+
 - if @ci_count > 0
-  = render 'layouts/categorised_or_tagged/collection_items_active', collection_item_count: @ci_count, resource_count: @r_count, page_count: @p_count
-  = render 'tags/show-tag/collection_item'
+  - @ci_class = 'active'
 - elsif @p_count > 0
-  = render 'layouts/categorised_or_tagged/pages_active', collection_item_count: @ci_count, resource_count: @r_count, page_count: @p_count
-  = render 'tags/show-tag/page'
+  - @p_class = 'active'
 - elsif @r_count > 0
-  = render 'layouts/categorised_or_tagged/resources_active', collection_item_count: @ci_count, resource_count: @r_count, page_count: @p_count
-  = render 'tags/show-tag/resource'
+  - @r_class = 'active'
 - else
   = @which = 'none'
+
+= render 'layouts/categorised_or_tagged/tab_header', collection_item_count: @ci_count, resource_count: @r_count, page_count: @p_count
+= render 'layouts/categorised_or_tagged/tab_contents'
 
 
 
