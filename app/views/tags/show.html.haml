@@ -1,26 +1,6 @@
 %h1#top Tagged '#{params[:id]}'
 
-- @ci_count = Tag.where(name: params[:id]).first.collection_items.count
-- @p_count = Tag.where(name: params[:id]).first.pages.count
-- @r_count = Tag.where(name: params[:id]).first.resources.count
-- @tagged_collection_items = Kaminari.paginate_array( (Title.all.select{|t| t.titleable.has_tag?(params[:id]) && t.titleable.class == CollectionItem ? t.titleable : nil }.collect{|t| t.titleable} )).page(params[:page]).per(10)
-- @tagged_pages =            Kaminari.paginate_array( (Title.all.select{|t| t.titleable.has_tag?(params[:id]) && t.titleable.class == Page ? t.titleable : nil }.collect{|t| t.titleable} )).page(params[:page]).per(10)
-- @tagged_resources =        Kaminari.paginate_array( (Title.all.select{|t| t.titleable.has_tag?(params[:id]) && t.titleable.class == Resource   ? t.titleable : nil }.collect{|t| t.titleable} )).page(params[:page]).per(10)
-
-- @ci_class = 'unused'
-- @p_class = 'unused'
-- @r_class = 'unused'
-
-- if @ci_count > 0
-  - @ci_class = 'active'
-- elsif @p_count > 0
-  - @p_class = 'active'
-- elsif @r_count > 0
-  - @r_class = 'active'
-- else
-  = @which = 'none'
-
-= render 'layouts/categorised_or_tagged/tab_header', collection_item_count: @ci_count, resource_count: @r_count, page_count: @p_count
+= render 'layouts/categorised_or_tagged/tab_header'
 = render 'layouts/categorised_or_tagged/tab_contents'
 
 
