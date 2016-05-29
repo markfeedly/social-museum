@@ -1,6 +1,6 @@
 #my-tab-content.tab-content
 
-  #collection-item-tab.tab-pane
+  #collection-item-tab.tab-pane{class: "#{@ci_class}"}
 
     = paginate @tagged_collection_items, param_name: :ci_page, params: {anchor: :"collection-item-tab"}
 
@@ -10,7 +10,7 @@
 
     = paginate @tagged_collection_items, param_name: :ci_page, params: {anchor: :"collection-item-tab"}
 
-  #page-tab.tab-pane.active
+  #page-tab.tab-pane{class: "#{@p_class}"}
 
     = paginate @tagged_pages, param_name: :p_page, params: {anchor: :"page-tab"}
 
@@ -20,7 +20,7 @@
 
     = paginate @tagged_pages, param_name: :p_page, params: {anchor: :"page-tab"}
 
-  #resource-tab.tab-pane
+  #resource-tab.tab-pane{class: "#{@r_class}"}
 
     = paginate @tagged_resources, param_name: :r_page, params: {anchor: :"resource-tab"}
 

@@ -1,13 +1,13 @@
 %ul#tabs.nav.nav-tabs{data: {tabs: 'tabs'}}
 
-  %li
+  %li{class: "#{@ci_class}"}
 
     %a{ href: '#collection-item-tab',     data: {toggle: 'tab'} } Collection Items (#{collection_item_count})
 
-  %li
+  %li{class: "#{@p_class}"}
 
     %a{ href: '#page-tab',    data: {toggle: 'tab'} } Pages (#{page_count})
 
-  %li.active
+  %li{class: "#{@r_class}"}
 
     %a{ href: '#resource-tab',     data: {toggle: 'tab'} } Resources (#{resource_count})
