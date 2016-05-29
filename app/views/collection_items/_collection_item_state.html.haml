@@ -7,23 +7,11 @@
 
     .history-indent
 
-      .history-title
-        = collection_item_state.title.title
-
-      .history-item-number-and-location
-        .parent_div
-          .float-left
-            = "Collection item #{collection_item_state.item_number}"
-          .float-right
-            = "Location: #{collection_item_state.location}"
-      .clear
+      = render 'layouts/header_and_footers/in_list_header'
 
       = ContentHtmlGenerator.generate_with_small_images(collection_item_state)
 
-      .history-tags-and-categories
-        .tags-and-categories
-          = render 'categories/categories', categories: collection_item_state.categories.collect{|t| t.name }
-          = render 'tags/tags', tags: collection_item_state.tags.collect{|t| t.name }
+      = render 'layouts/header_and_footers/in_list_footer', categories: collection_item.categories_as_arr, tags: collection_item.tags_as_arr
 
 .page-summary-width-plus
   %hr
