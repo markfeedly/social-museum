@@ -95,12 +95,13 @@ a.summary-title:hover {color: #2132F8;}
 
 // TODO tags and categories - homogenise?
 .history-tags-and-categories { line-height: 1.4em; font-size: 0.8em; color: gray;
-  background-color: rgba(135, 202, 250, 0.18); padding: 0.5em 1em 0.5em 1em ; }
-.one-off-line-for-ci-summary { line-height: 1.4em; font-size: 0.8em; color: gray;
-  background-color: rgba(135, 202, 250, 0.18); padding: 0.5em 1em 1.8em 1em ; }
+  background-color: rgba(135, 202, 250, 0.18); padding: 0.5em 1em 0.5em 1em ; border: 1px solid #eeeeee;
+  margin-bottom: 1em; }
+//.one-off-line-for-ci-summary { line-height: 1.4em; font-size: 0.8em; color: gray;
+//  background-color: rgba(135, 202, 250, 0.18); padding: 0.5em 1em 1.8em 1em ; }
 .history-item-number-and-location { line-height: 1.4em; font-size: 0.8em; color: gray;
   background-color: rgba(135, 202, 250, 0.18); padding: 0.5em 1em 0.5em 1em ;
-  height:1.5em; margin-bottom: 1em}
+  height:1.5em; margin-bottom: 1em; border: 1px solid #eeeeee; }
 .tags-and-categories { margin: 0px 0 0 0; }
 
 // page listing pages, two lines of text ------------------
@@ -132,7 +133,7 @@ a.summary-title:hover {color: #2132F8;}
 .page-summary-width { width: 600px; }
 .page-summary-width-plus { width: 630px; }
 .page-summary-image-indent { margin-left: 10px; }
-.page-summary-image-align  { margin-top: 2px; }
+.page-summary-image-align  { margin-top: 0px; }
 .page-summary-footer-indent_and_spacing { margin: 0 0 25px 10px; }
 .page-summary-width-plus hr {border-top: 1px solid #33244D; }
 
