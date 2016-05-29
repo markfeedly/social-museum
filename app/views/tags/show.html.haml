@@ -1,20 +1,48 @@
-- @content_objects = Kaminari.paginate_array( (Title.all.select{|t| t.titleable.has_tag?(params[:id]) ? t.titleable : nil }.collect{|t| t.titleable} )).page(params[:page]).per(10)
+- @tagged_collection_items = Kaminari.paginate_array( (Title.all.select{|t| t.titleable.has_tag?(params[:id]) && t.titleable.class == CollectionItem ? t.titleable : nil }.collect{|t| t.titleable} )).page(params[:page]).per(10)
+- @tagged_pages =            Kaminari.paginate_array( (Title.all.select{|t| t.titleable.has_tag?(params[:id]) && t.titleable.class == Page ? t.titleable : nil }.collect{|t| t.titleable} )).page(params[:page]).per(10)
+- @tagged_resources =        Kaminari.paginate_array( (Title.all.select{|t| t.titleable.has_tag?(params[:id]) && t.titleable.class == Resource   ? t.titleable : nil }.collect{|t| t.titleable} )).page(params[:page]).per(10)
 
-%h1#top Tagged #{params[:id]}
 
-= paginate @content_objects
+%h1#top Tagged '#{params[:id]}'
 
-- @content_objects.each do |cont_obj|
+%h2 Collection Items
 
-  - if cont_obj.respond_to?(:item_number)
-    = render 'collection_items/collection_item_summary', collection_item: cont_obj
+= paginate @tagged_collection_items
 
-  - elsif cont_obj.respond_to?(:url)
-    = render 'resources/resource_summary', resource: cont_obj
+- @tagged_collection_items.each do |cont_obj|
 
-  - else
-    = render 'pages/page_summary', page: cont_obj
+  = render 'collection_items/collection_item_summary', collection_item: cont_obj
 
-  %br/
 
-= paginate @content_objects
+= paginate @tagged_collection_items
+
+%br/
+%hr
+
+%h2 Pages
+
+= paginate @tagged_pages
+
+- @tagged_pages.each do |cont_obj|
+
+  = render 'pages/page_summary', page: cont_obj
+
+= paginate @tagged_pages
+
+%br/
+%hr
+
+%h2 Resources
+
+= paginate @tagged_resources
+
+- @tagged_resources.each do |cont_obj|
+
+  = render 'resources/resource_summary', resource: cont_obj
+
+= paginate @tagged_resources
+
+%br/
+%hr
+
+

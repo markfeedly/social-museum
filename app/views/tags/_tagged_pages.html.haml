@@ -1,0 +1,8 @@
+%div{data: {role: "tagged_pages"}}
+  = paginate page_history, param_name: :page_ci, params: {anchor: :"history-tab"}
+  .page-summary-width-plus
+    %hr
+
+  = render partial: 'pages/page_state', collection: tagged_pages
+
+  = paginate page_history, param_name: :page_ci, params: {anchor: :"history-tab"}
