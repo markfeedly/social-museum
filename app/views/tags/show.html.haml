@@ -1,7 +1,9 @@
-%h1#top Tagged '#{params[:id]}'
-
-= render 'layouts/categorised_or_tagged/tab_header'
-= render 'layouts/categorised_or_tagged/tab_contents', collection_items: tagged_collection_items, pages: tagged_pages, resources: tagged_resources
+- if ! none
+  %h2 Nothing is taged with '#{params[:id]}'
+- else
+  %h1#top Tagged '#{params[:id]}'
+  = render 'layouts/categorised_or_tagged/tab_header'
+  = render 'layouts/categorised_or_tagged/tab_contents', collection_items: tagged_collection_items, pages: tagged_pages, resources: tagged_resources
 
 
 

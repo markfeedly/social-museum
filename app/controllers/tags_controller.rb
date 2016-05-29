@@ -4,14 +4,23 @@ class TagsController < ApplicationController
 
   expose(:tag_is) { Tag.where(name: params[:id]).first }
 
-  expose(:tagged_collection_items) { Kaminari.paginate_array( (Title.all.select{|t| t.titleable.has_tag?(params[:id]) && t.titleable.class == CollectionItem ? t.titleable : nil }.collect{|t| t.titleable} )).page(params[:page]).per(10) }
-  expose(:tagged_pages)            { Kaminari.paginate_array( (Title.all.select{|t| t.titleable.has_tag?(params[:id]) && t.titleable.class == Page ? t.titleable : nil }.collect{|t| t.titleable} )).page(params[:page]).per(10) }
-  expose(:tagged_resources)        { Kaminari.paginate_array( (Title.all.select{|t| t.titleable.has_tag?(params[:id]) && t.titleable.class == Resource   ? t.titleable : nil }.collect{|t| t.titleable} )).page(params[:page]).per(10) }
+  expose(:tagged_collection_items) do
+    collection = tag_is ? tag_is.collection_items.select { |ci| ci.has_tag?(params[:id]) ? ci : nil } : []
+    Kaminari.paginate_array(collection).page(params[:page]).per(10)
+  end
+  expose(:tagged_pages) do
+    collection = tag_is ? tag_is.pages.select { |ci| ci.has_tag?(params[:id]) ? ci : nil } : []
+    Kaminari.paginate_array(collection).page(params[:page]).per(10)
+  end
+  expose(:tagged_resources) do
+    collection = tag_is ? tag_is.resources.select { |ci| ci.has_tag?(params[:id]) ? ci : nil } : []
+    Kaminari.paginate_array(collection).page(params[:page]).per(10)
+  end
 
-  expose(:ci_count) { tag_is.collection_items.count }
-  expose(:p_count)  { tag_is.pages.count }
-  expose(:r_count)  { tag_is.resources.count }
-  expose(:none)     { (ci_count + p_count + r_count ) == 0 }
+  expose(:ci_count) { tag_is ? tag_is.collection_items.count : 0 }
+  expose(:p_count)  { tag_is ? tag_is.pages.count : 0 }
+  expose(:r_count)  { tag_is ? tag_is.resources.count : 0 }
+  expose(:none)     { tag_is ? true : false }
 
   expose(:ci_class) { ci_count > 0 ? 'active' : '' }
   expose(:p_class)  { ci_count == 0 && p_count > 0 ? 'active' : '' }
