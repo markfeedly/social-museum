@@ -1,48 +1,27 @@
+%h1#top Tagged '#{params[:id]}'
+
+- @ci_count = Tag.where(name: params[:id]).first.collection_items.count
+- @p_count = Tag.where(name: params[:id]).first.pages.count
+- @r_count = Tag.where(name: params[:id]).first.resources.count
 - @tagged_collection_items = Kaminari.paginate_array( (Title.all.select{|t| t.titleable.has_tag?(params[:id]) && t.titleable.class == CollectionItem ? t.titleable : nil }.collect{|t| t.titleable} )).page(params[:page]).per(10)
 - @tagged_pages =            Kaminari.paginate_array( (Title.all.select{|t| t.titleable.has_tag?(params[:id]) && t.titleable.class == Page ? t.titleable : nil }.collect{|t| t.titleable} )).page(params[:page]).per(10)
 - @tagged_resources =        Kaminari.paginate_array( (Title.all.select{|t| t.titleable.has_tag?(params[:id]) && t.titleable.class == Resource   ? t.titleable : nil }.collect{|t| t.titleable} )).page(params[:page]).per(10)
 
+- if @ci_count > 0
+  = render 'layouts/categorised_or_tagged/collection_items_active', collection_item_count: @ci_count, resource_count: @r_count, page_count: @p_count
+  = render 'tags/show-tag/collection_item'
+- elsif @p_count > 0
+  = render 'layouts/categorised_or_tagged/pages_active', collection_item_count: @ci_count, resource_count: @r_count, page_count: @p_count
+  = render 'tags/show-tag/page'
+- elsif @r_count > 0
+  = render 'layouts/categorised_or_tagged/resources_active', collection_item_count: @ci_count, resource_count: @r_count, page_count: @p_count
+  = render 'tags/show-tag/resource'
+- else
+  = @which = 'none'
 
-%h1#top Tagged '#{params[:id]}'
-
-%h2 Collection Items
-
-= paginate @tagged_collection_items
-
-- @tagged_collection_items.each do |cont_obj|
-
-  = render 'collection_items/collection_item_summary', collection_item: cont_obj
 
 
-= paginate @tagged_collection_items
 
-%br/
-%hr
 
-%h2 Pages
-
-= paginate @tagged_pages
-
-- @tagged_pages.each do |cont_obj|
-
-  = render 'pages/page_summary', page: cont_obj
-
-= paginate @tagged_pages
-
-%br/
-%hr
-
-%h2 Resources
-
-= paginate @tagged_resources
-
-- @tagged_resources.each do |cont_obj|
-
-  = render 'resources/resource_summary', resource: cont_obj
-
-= paginate @tagged_resources
-
-%br/
-%hr
 
 
