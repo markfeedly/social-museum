@@ -14,6 +14,10 @@ module Categories
     self.categories.collect{ |tag|tag.name.strip.squeeze(' ')}.sort.join(', ')
   end
 
+  def has_category?(tag)
+    self.categories.collect{|t| t.name }.include?(tag)
+  end
+
   def in_categories_and_children?(object)
     return false unless categories.any?
     found = false
