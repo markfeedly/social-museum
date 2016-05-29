@@ -1,0 +1,35 @@
+#my-tab-content.tab-content
+
+  #collection-item-tab.tab-pane
+
+    = paginate @tagged_collection_items, param_name: :ci_page, params: {anchor: :"collection-item-tab"}
+
+    - @tagged_collection_items.each do |cont_obj|
+
+      = render 'collection_items/collection_item_summary', collection_item: cont_obj
+
+    = paginate @tagged_collection_items, param_name: :ci_page, params: {anchor: :"collection-item-tab"}
+
+  #page-tab.tab-pane
+
+    = paginate @tagged_pages, param_name: :p_page, params: {anchor: :"page-tab"}
+
+    - @tagged_pages.each do |cont_obj|
+
+      = render 'pages/page_summary', page: cont_obj
+
+    = paginate @tagged_pages, param_name: :p_page, params: {anchor: :"page-tab"}
+
+  #resource-tab.tab-pane.active
+
+    = paginate @tagged_resources, param_name: :r_page, params: {anchor: :"resource-tab"}
+
+    - @tagged_resources.each do |cont_obj|
+
+      = render 'resources/resource_summary', resource: cont_obj
+
+    = paginate @tagged_resources, param_name: :r_page, params: {anchor: :"resource-tab"}
+
+
+
+
