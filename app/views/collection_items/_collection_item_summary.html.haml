@@ -11,9 +11,9 @@
                                  :role    => 'delete-page'},
                       :method => :delete
 
-      .page-summary-image-indent
+      .summary-indent
 
-        = render 'layouts/header_and_footers/in_list_header'
+        = render 'layouts/header_and_footers/in_list_header', ci: collection_item
 
         %div
           .float-left.width-150px.page-summary-image-align

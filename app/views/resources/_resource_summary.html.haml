@@ -10,8 +10,8 @@
                                  :role    => 'delete-resource'},
                       :method => :delete
 
-      %div
-        .float-left.width-150px.page-summary-image-indent.page-summary-image-align
+      .summary-indent
+        .float-left.width-150px.page-summary-image-align
           = link_to image_tag(make_upload_url(resource), class: 'width-150px'), resource_path(resource), class: 'resources-summary-width-and-margin'
           %br
         .content-preview
@@ -20,9 +20,7 @@
           - else
             = ContentHtmlGenerator.generate_with_small_images(resource)
 
-      .history-tags-and-categories.page-summary-footer-indent_and_spacing.clear
-        .tags-and-categories
-          = render 'resources/resource_used_by', resource: resource
+        = render 'layouts/header_and_footers/in_list_footer', categories: resource.categories_as_arr, tags: resource.tags_as_arr
 
 .page-summary-width-plus
   %hr
