@@ -1,7 +1,5 @@
 class TagsController < ApplicationController
 
-  expose(:paginated_pages) { Tag.where(name: params[:id]).first.pages}
-
   expose(:tag_is) { Tag.where(name: params[:id]).first }
 
   expose(:tagged_collection_items) do
