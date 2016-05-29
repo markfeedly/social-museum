@@ -11,8 +11,9 @@
                                  :role    => 'delete-page'},
                       :method => :delete
 
-      %div
-        .float-left.width-150px.page-summary-image-indent.page-summary-image-align
+      .summary-indent
+
+        .float-left.width-150px.page-summary-image-align
           = link_to image_tag(ContentHtmlGenerator.page_image(page) || 'http://vignette2.wikia.nocookie.net/horrormovies/images/e/e3/No_Image.png/revision/latest/scale-to-width-down/100'), page_url(page)
           %br
         .content-preview
