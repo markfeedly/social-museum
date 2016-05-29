@@ -1,20 +1,13 @@
-- @content_objects = Kaminari.paginate_array( (Title.all.select{|t| t.titleable.in_categories_and_children?(params[:id]) ? t.titleable : nil }.collect{|t| t.titleable} )).page(params[:page]).per(10)
+- if ! none
+  %h2'Nothing is catgorised as #{params[:id]}'
+- else
+  %h1#top Categorised '#{params[:id]}'
+  = render 'layouts/categorised_or_tagged/tab_header'
+  = render 'layouts/categorised_or_tagged/tab_contents', collection_items: tagged_collection_items, pages: tagged_pages, resources: tagged_resources
 
-%h1#top.page-title Categorised #{params[:id]}
 
-= paginate @content_objects
 
-- @content_objects.each do |cont_obj|
 
-  - if cont_obj.respond_to?(:item_number)
-    = render 'collection_items/collection_item_summary', collection_item: cont_obj
 
-  - elsif cont_obj.respond_to?(:url)
-    = render 'resources/resource_summary', resource: cont_obj
 
-  - else
-    = render 'pages/page_summary', page: cont_obj
 
-  %br/
-
-= paginate @content_objects
