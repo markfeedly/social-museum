@@ -1,0 +1,13 @@
+- if ! all_none
+  %h2 Nothing is catgorised as #{params[:category_id]} or its children
+- else
+  %h1#top All categorised '#{params[:category_id]}'
+  = render 'layouts/categorised_or_tagged/tab_header', ci_claz: all_ci_class, p_claz: all_p_class, r_claz: all_r_class, ci_cnt: all_ci_count, p_cnt: all_p_count, r_cnt: all_r_count
+  = render 'layouts/categorised_or_tagged/tab_contents', collection_items: paginated_all_collection_items, pages: paginated_all_categorised_pages, resources: paginated_all_resources, ci_claz: all_ci_class, p_claz: all_p_class, r_claz: all_r_class
+
+
+
+
+
+
+

@@ -3,7 +3,9 @@ VirtualMuseum::Application.routes.draw do
   devise_for :users, :controllers => {:registrations => "registrations",
                                       :omniauth_callbacks => "omniauth_callbacks" }
 
-  resources :categories, only: [:show]
+  resources :categories, only: :show do
+    get :show_full
+  end
 
   resources :collection_items do
     resources :comments, only: :create, controller: 'collection_comments'
