@@ -2,8 +2,8 @@
   %h2'Nothing is catgorised as #{params[:id]}'
 - else
   %h1#top Categorised '#{params[:id]}'
-  = render 'layouts/categorised_or_tagged/tab_header'
-  = render 'layouts/categorised_or_tagged/tab_contents', collection_items: categorised_collection_items, pages: categorised_pages, resources: categorised_resources
+  = render 'layouts/categorised_or_tagged/tab_header', ci_claz: ci_class, p_claz: p_class, r_claz: r_class, ci_cnt: ci_count, p_cnt: p_count, r_cnt: r_count
+  = render 'layouts/categorised_or_tagged/tab_contents', collection_items: paginated_caegorised_collection_items, pages: paginated_categorised_pages, resources: paginated_categorised_resources, ci_claz: ci_class, p_claz: p_class, r_claz: r_class
 
 
 
