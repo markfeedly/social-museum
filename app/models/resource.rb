@@ -11,6 +11,7 @@ class Resource < ActiveRecord::Base
   include Titles
   include Tags
   include Categories
+  include CategoryExtensions
   include UploadHelper
 
   has_one  :title,           as: :titleable,    dependent: :destroy, autosave: true
