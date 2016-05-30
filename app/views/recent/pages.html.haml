@@ -1,0 +1,7 @@
+.recent-page-font
+
+  = render 'recent/column', title: 'New pages', recent: recently_created_pages, time_method: :created_at, path_method: :page_path
+
+  = render 'recent/column', title: 'Recent page edits', recent: recently_edited_pages, time_method: :updated_at, path_method: :page_path
+
+  = render 'recent/column', title: 'Constrain comments to only for pages', recent: recently_created_comments, time_method: :created_at, path_method: :page_path

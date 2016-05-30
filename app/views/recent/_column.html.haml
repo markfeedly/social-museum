@@ -1,0 +1,14 @@
+.float-left
+  %div
+    %h4.recent-underlining-spacing= title
+  %hr
+  .recent-entries-col.recent-underlining-spacing
+    - recent.each do |p|
+      .float-left.recent-name-col
+        = link_to p.name, send(path_method, p.slug)
+      .float-right.recent-date-col.recent-date-color
+        = p.send(time_method).strftime('%e %B %Y')
+      .clear
+      %hr
+.float-left.recent-entries-col-spacer
+  &nbsp; &nbsp; &nbsp; &nbsp;
