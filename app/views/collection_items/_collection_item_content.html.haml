@@ -6,7 +6,7 @@
 
   = ContentHtmlGenerator.generate_full(collection_item)
 
-  = render 'content/content_footer', content_source: collection_item, edit_content_source_path: edit_collection_item_path(collection_item)
+  = render 'layouts/header_and_footers/content_footer', content_source: collection_item, edit_content_source_path: edit_collection_item_path(collection_item)
 
   #comments.comments-spacer
     = render 'comments/comments', commentable: collection_item

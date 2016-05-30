@@ -38,4 +38,11 @@ module CategoryExtensions
     ([object] + category_inverse_relations(object, :isa).map{|cat| category_and_children(cat[0])}).flatten.sort
   end
 
+  def in_category_and_its_children?(str)
+    cats = category_and_children(str)
+    found = false
+    cats.each{|c| found = true if has_category?(c) }
+    found
+  end
+
 end

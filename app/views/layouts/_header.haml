@@ -8,9 +8,9 @@
 
             - if current_user.can_read?(CollectionItem)
               %li= link_to 'Contents', table_of_contents_path
-              %li= link_to 'Collection', collection_items_path
-              %li= link_to 'Background', pages_path
-              %li= link_to 'Resources', resources_path
+              %li.menu-highlight= link_to 'Collection', collection_items_path
+              %li.menu-highlight= link_to 'More', pages_path
+              %li.menu-highlight= link_to 'Resources', resources_path
 
             %li.dropdown
               = link_to pages_path, class: "dropdown-toggle", data: {toggle: 'dropdown'} do

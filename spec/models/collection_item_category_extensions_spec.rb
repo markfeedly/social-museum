@@ -14,6 +14,13 @@ describe 'Category Extensions' do
     expect(collection_item.category_and_children('Computer')).to eq(["Atlas", "Computer", "Ferranti Mark I", "MU5", "SSEM", "VUM Atlas"])
   end
 
+  it 'should support finding' do
+    collection_item.set_categories_from_string( 'Atlas, Hydrostatic' )
+    expect(collection_item.in_category_and_its_children?('Computer')).to eq true
+    expect(collection_item.in_category_and_its_children?('SSEM')).to eq false
+
+  end
+
   it 'should find collection items in the inverse set' do
 
     collection_item.set_categories_from_string( 'not in table' )
