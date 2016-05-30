@@ -1,0 +1,7 @@
+.recent-page-font
+
+  = render 'recent/column', title: 'New resources', recent: recently_created_resources, time_method: :created_at, path_method: :resource_path
+
+  = render 'recent/column', title: 'Recent resource edits', recent: recently_edited_resources, time_method: :updated_at, path_method: :resource_path
+
+  = render 'recent/column', title: 'Constrain comments to only for resources', recent: recently_created_comments, time_method: :created_at, path_method: :resource_path

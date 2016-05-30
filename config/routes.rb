@@ -30,7 +30,15 @@ VirtualMuseum::Application.routes.draw do
     end
   end
 
-  resources :recent, only: [:index]
+  resources :recent, only: [:collection_items, :pages, :resources] do
+    collection do
+
+      get :collection_items
+      get :pages
+      get :resources
+    end
+
+  end
 
   resources :resources do
     resources :comments, only: :create, controller: 'collection_comments'
