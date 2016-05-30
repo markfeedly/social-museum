@@ -1,6 +1,19 @@
 .std-width
 
+  = render 'resources/resource_used_by'
+  %br/
+
+  %a{href: resource.url, class: "content-content"}
+    -if resource.valid_image_url?
+      %img.width-600px{src: resource.source}
+    -elsif resource.valid_url?
+      = resource.url.split('/')[-1]
+    - else
+      %span.red
+        The resource could not be previewed because the link provided was not valid
+
   = ContentHtmlGenerator.generate_full(resource)
+
 
   = render 'layouts/header_and_footers/content_footer', content_source: resource, edit_content_source_path: edit_resource_path(resource)
 

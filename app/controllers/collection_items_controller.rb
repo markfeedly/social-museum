@@ -4,6 +4,7 @@ class CollectionItemsController < ApplicationController
   expose(:collection_item, attributes: :collection_item_params, finder: :find_by_slug)
   expose(:collection_items)
   expose(:paginated_collection_items) { collection_items.page(params[:page]).per(10)}
+  #todo folloing does not have correct times
   expose(:collection_item_history) do
     Kaminari.paginate_array(collection_item.load_versions).page(params[:page_ci]).per(10)
   end
