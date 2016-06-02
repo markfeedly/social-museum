@@ -38,7 +38,7 @@ class Page < ActiveRecord::Base
   #tracks_association :resources
 
   validates_associated :title
-  validate  :not_spam? if ENV['WORDPRESS_KEY'] != nil
+  #validate  :not_spam? # if ENV['WORDPRESS_KEY'] != nil
 
   ############ after_create  :subscribe_creator
 

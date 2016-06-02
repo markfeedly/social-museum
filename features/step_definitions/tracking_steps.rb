@@ -61,6 +61,8 @@ Then(/^"([^"]+)" is emailed about a comment "([^"]+)" by "([^"]+)" on (?:a |the 
 end
 
 Then(/^I am emailed about a comment "([^"]+)" by "([^"]+)" on (?:a |the )?page entitled "(.*?)"$/) do |comment, user, page_title|
+  puts Page.count
+  puts Comment.count
   check_comment_email_content(current_user, comment, user, page_title)
 end
 

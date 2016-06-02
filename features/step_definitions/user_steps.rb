@@ -6,6 +6,10 @@ Given /^I exist as a user$/ do
   create_user
 end
 
+Then /^I should have a confirmation email$/ do
+
+end
+
 Given /^I do not exist as a user$/ do
   create_user_data
   delete_user

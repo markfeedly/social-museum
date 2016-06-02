@@ -1,10 +1,10 @@
 Feature: Tracking
   In order to keep up to date with page related information
-  Interested users
-  Should receive emails about new comments and major page edits
+  Interested users should receive emails about new pages and comments and page edits
 
   Background:
     Given I exist as a user
+    And I confirm my email identity
     And I have signed in
     And I have created a page entitled "Test me"
 

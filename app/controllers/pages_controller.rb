@@ -61,11 +61,11 @@ class PagesController < ApplicationController
   private
 
   def page_params
-    params.require(:page).permit(:categories,
-                                            :description,
-                                            :lock_version,
-                                            :tags,
-                                            :categories,
-                                            title_attributes: [:title, :id])
+    params.require(:page).permit( :categories,
+                                  :description,
+                                  :lock_version,
+                                  :tags,
+                                  :categories,
+                                  title_attributes: [:title, :id])
   end
 end
