@@ -11,11 +11,11 @@ def create_page(title: "Test me #{page_count}", content: "test content",
   visit new_page_path
 
   within_role 'page-form' do
-    fill_in('page[page_title_attributes][title]',      :with => title)
-    fill_in('page_content',    :with => content)
-    fill_in('page_tags',       :with => tags)
-    fill_in('page_categories', :with => categories)
-    click_role('create-page-button')
+    fill_in('page_title',      :with => title)
+    fill_in('page_description',    :with => content)
+    fill_in('page_tags_as_str',       :with => tags)
+    fill_in('page_categories_as_str', :with => categories)
+    click_role('page-item-button')
   end
   @pages[title] = []
 end

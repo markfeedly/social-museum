@@ -10,7 +10,7 @@ class Comment < ActiveRecord::Base
                  :author_email => proc { user.try(:email) || 'guest' },
                  :user_role    => proc { user.try(:admin?) ? 'administrator' : 'user' }
 
-  before_create :check_for_spam
+  #before_create :check_for_spam
   after_create  :subscribe_creator,
                 :notify_subscribers
 

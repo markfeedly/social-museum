@@ -1,106 +1,177 @@
-git status
-git add .
-git commit -m "Updating versions"
-got push
-git fetch
-git rebase origin/update-mail
-git push
+Day three of Gonnie's 80s Classics Challenge, and I can't get out of 1983 (yet). Today, remixes of the day's classic choice and the usual rejects section.
 
-class CollectionItemsController < ApplicationController
-  respond_to :html
+1983 Indeep - Last Night A DJ saved my life
+https://www.youtube.com/watch?v=GtfZbj4J71A
+https://www.youtube.com/watch?v=k1QPdXNiN-0
 
-  expose(:collection_item, attributes: :collection_item_params, finder: :find_by_slug)
-  expose(:collection_items)
-  expose(:paginated_collection_items) { collection_items.page(params[:page]).per(10)}
-  expose(:collection_item_states) do
-    Kaminari.paginate_array(collection_item.load_versions).page(params[:page_ci]).per(10)
-  end
+Seminal tune from 83. I remember being out and hearing a remix, contemporary electro on the dark side of things, genius.
+"What was that remix?"
+"I'll just look on the disc." DJ pulls out a CD or DVD with, uh, something helpful like 'top tunes' on it.
+Anyway I tracked it down in some obscure Webby place, but can I find it again on the Web or on a computer passim? Where
+I was making it longer on the general "can't have too much of  a good thing " principle. Is that missing drive where the VERY IMPORTANT document I'm searching for is? Oh no, I see booting all 'dead' machines in my near future.
 
-  authorize_actions_for CollectionItem
+Anyway, turns out there are loads of remixes, 400 or so. Beatport is your home from home here.
+http://tinyurl.com/lastnighta
 
-  def show
-    respond_with(collection_item)
-  end
+And if you play them all you are a sick puppy. I wimped out on even flicking through them after a page and a bit. The Stomebridge remix is good, first two minutes at
+http://geo-samples.beatport.com/lofi/7933434.LOFI.mp3
 
-  def new
-    collection_item.build_title
-    respond_with(collection_item)
-  end
+Alternately the remix and dance off vid at will almost certainly amuse you.
+https://www.youtube.com/watch?v=Xwc7ymDKlhg
 
-  def create
-    clean_parameters
-    collection_item.logged_user_id = current_user.id
-    collection_item.save
-    respond_with(collection_item)
-  end
+----
 
-  def edit
-    respond_with(collection_item)
-  end
+So, onto rejects for today, all somewhat related in my past listening pleasure, roll in
 
-  def update
-    #clean_parameters
-    #if need_to_update?
-      collection_item.logged_user_id = current_user.id
-      collection_item.update_attributes(collection_item_params)
-    #end
-    respond_with(collection_item)
-  end
+1983 Indeep - The Record Keeps Spinning
+A good year for Indeep; this is a close contender for the Indeep slot.
+https://www.youtube.com/watch?v=J0-69Av9a0E
 
-  def index
-    respond_with(collection_items)
-  end
+1983 The Gap Band - Just Be Good To Me
+Another tune inextricably linked to the 1983 in my life.
+https://www.youtube.com/watch?v=khj9jyNvhpQ
 
-  def destroy
-    collection_item.destroy
-    respond_with(collection_item)
-  end
+1980 The Gap Band - Burn Rubber On Me
+The version which starts with the car burning rubber sound...
+https://www.youtube.com/watch?v=bb1cpSJtIqM
 
-  def subscribe
-    collection_item.subscribe(current_user)
-    redirect_to collection_item_path(collection_item)
-  end
+In the hunt for some electro I accidentally skipped over this with my 1983 post yesterday
 
-  def unsubscribe
-    collection_item.unsubscribe(current_user)
-    redirect_to collection_item_path(collection_item)
-  end
+1982 Tyrone Brunson - The Smurf
+Electro. And what a fab instrumental. Con this vid title says this tune came out in 82.
+https://www.youtube.com/watch?v=RXGHpzgnCpg
 
-  private
+1983 Hashim - Al Naafiysh (The Soul)
+On an electro compilation I made when I thought burning a CD might be the way to go after the era of mix tapes. Anyway gave a bunch of these outto mates for Xmas sometime in the noughties, eliciting from one friend 'We putut it on and thought what the fuck is this. But by the end we were dancing round our bedroom.' Al Naafiysh is the last tune on the CD. Nuff said.
+https://www.youtube.com/watch?v=i46sF1PcqL8
 
-  def clean_parameters
-    ci = params['collection_item']
-    ci['title_attributes']['title'].strip!
-    ci['description'].strip!
-    ci['item_number'].strip!
-    ci['location'].strip!
-    ci['categories'] = clean_categories_or_tags(ci['categories'])
-    ci['tags'] = clean_categories_or_tags(ci['tags'])
+Ok, I've listened to too much electro in the last few days and I'm electro'd out for now... but see ya tomoz pop pickers.
 
-  end
+=====================
 
-  def clean_categories_or_tags(str)
-    str.strip.split(',').collect{|t| t.strip}.sort.join(', ')
-  end
+Day four of Gonnie's 80s Classics Challenge, and I'm going to jump from the rich pickings in 1983 to 1986. Should make for a good pre-86 rejects section.
 
-  def need_to_update?
-    old = CollectionItem.find_by_slug(params[:id])
-    new = params['collection_item']
-    new['title_attributes']['title'] != old.title ||
-      new['description'] != old.description ||
-      new['item_number'] != old.item_number ||
-      new['location']    != old.location ||
-      new['categories']  != old.categories ||
-      new['tags']        != old.tags
-  end
+1986 Phillip Glass - Changing Opinion, off Liquid Days
+https://www.youtube.com/watch?v=68-ThG8D_jg&list=RD68-ThG8D_jg#t=14
 
-  def collection_item_params
-    params.require(:collection_item).permit(:categories,
-                                            :description,
-                                            :item_number,
-                                            :location,
-                                            :lock_version,
-                                            :tags,
-                                            title_attributes: [:title, :id])
-  end
-end
+Had this for ages, return to it once in a while; love the cyclic piano and the Roache sisters' vocals.
+
+Of course Phillip Glass is lurking elsewhere in the 80s, with soundtracks for Koyaanisqatsi (82) and Powaqqatsi (88).
+
+And, of course, Laurie Anderson is pretty much Glass-like her 81 O Superman; I was led from her to him a couple of days ago.
+
+1981 Lawrie Anderson - O Superman (For Massenet)
+https://www.youtube.com/watch?v=Vkfpi2H8tOE
+More about the song, including some Bowie stuff I haven't bothered to chase up
+https://bowiesongs.wordpress.com/2013/09/12/o-superman/
+Little spiel on the making
+https://www.theguardian.com/culture/2016/apr/19/how-we-made-laurie-anderson-o-superman
+
+----
+
+Some of several 83-85 rejects
+
+1983 Soul Sonic Force - Planet Rock
+Arther Baker alert. I've always had some minor ambivalence about this track, but it's rocking despite imho being nownere near the next tune in greatnesss.
+https://www.youtube.com/watch?v=9lDCYjb8RHk
+
+1983 New Order - Blue Monday
+I'm not a big fan of New Order, but sometimes they kill it. This is one example. Could easily be a classic in this list.
+https://www.youtube.com/watch?v=FYH8DsU2WCk
+
+1983 Lime - On the Grid
+I dont know what toe-staring sub-genre this is.
+And unfortunately atypical for Lime; they never did anything like it again.
+This surfaced in the Hac, maybe it was Mike Pickering playing it.
+https://www.youtube.com/watch?v=am1c-bbKEP4
+Or the Morales dub version, also on youtube
+http://www.beardodisco.com/beatelectric/music/lime_on_the_grid_dub_version.mp3
+
+1983 Barbara Mason - Another Man
+Ha ha, Barbara Mason steals someone else's husband only to find he's not all he seems.
+When I first heard it I thought it was a novelty tune, but it has grown considerably with me.
+https://www.youtube.com/watch?v=nBpgT6a6d7I
+
+1984 Jocelyn Browne - Somebody Else's Guy
+Seems infidelity was gunning it in 83-84... The 12 inch version is a notably-bouncy discofunk number, celebratory in parts of its instrumental rendition; a happiness inducer. Which is a strange contrast to the lyrical content. But hey, ruminations aside, its a great tune.
+https://www.youtube.com/watch?v=MdC2jPPxAwk
+Here's a different version, preseumably the original, definitely worth a watch. And in contrast with the twelve this version both sad and angstful. Which just goes to show you can't trust a dance remix when it comes to rendering emotions. Great vid here.
+https://www.youtube.com/watch?v=mdGNeC2G1AU
+
+1985 James Brown - Living in America
+Smooth funk, James Brown's paen to America, again a great vid.
+https://www.youtube.com/watch?v=c5BL4RNFr58
+
+Ok, onto day five tomorrow.
+
+==========
+
+Day five of Gonnie's 80s Classics Challenge, and, wow, is it challenging time-wise to write these. But I always wanted to
+be able to look at a record in a record bin and hear the tune in my head, and I have found with this exercise
+that while digging around on the interwebs for detail about records is an interesting exercise, sometimes one can approach
+(but only approach) that 'look at record and hear it' thing.
+
+OK so slit five is kinda wide open to up to something from xxx for classic six. And its about time in the decase for some house to get mentioned. And I really can't choose.
+
+First a precursor to the house thing, almost-pardoxically also in the mainstream charts. I include it because its a fave of mine from that time.
+
+Now the house, and I think that without exception I only got to hear all of these later than when published.
+
+
+
+===========
+
+Abdulliah ibrahim
+
+-----------
+
+Joe Smooth
+
+808 state
+https://www.youtube.com/watch?v=jmMuwuC1RuM quadrant or last ome
+
+A guy called gerald
+https://www.youtube.com/watch?v=emDEFtJIjy0
+
+=====
+
+http://beardodisco.com/beatelectric/music/raven_so_in_love.mp3
+http://beardodisco.com/beatelectric/music/the_chance_i_wanna_freak.mp3
+http://beardodisco.com/beatelectric/music/thanya_freedom_instrumental.mp3
+http://www.beardodisco.com/beatelectric/music/Beat%20Electric%20mix%20-%20dogtones.mp3
+http://www.beardodisco.com/beatelectric/music/Kenny%20Smith%20-%20Witness.mp3
+http://beardodisco.com/beatelectric/music/Master%20Jam%20-%20Freak%20With%20You.mp3
+http://www.beardodisco.com/beatelectric/music/i_want_to_feel_your_love.mp3
+http://www.beardodisco.com/beatelectric/music/logic_system.mp3
+http://beardodisco.com/beatelectric/music/risky.mp3
+http://www.beardodisco.com/beatelectric/music/enjoy_your_life.mp3
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

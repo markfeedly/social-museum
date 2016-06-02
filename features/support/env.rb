@@ -62,3 +62,5 @@ end
 # See https://github.com/cucumber/cucumber-rails/blob/master/features/choose_javascript_database_strategy.feature
 
 require 'capybara-screenshot/cucumber'
+
+Capybara.asset_host = "http://localhost:3000"
