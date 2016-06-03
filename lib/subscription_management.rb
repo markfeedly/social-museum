@@ -1,7 +1,7 @@
 module SubscriptionManagement
 
   def subscribe_creator
-    Subscription.subscribe_to(user: user, subscribable: self)
+    Subscription.subscribe_to(user: user_id, subscribable: self)
   end
 
   def subscribe(user)

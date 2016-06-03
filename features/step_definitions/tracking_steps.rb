@@ -6,6 +6,24 @@ Given(/^"(.*?)" is signed in$/) do |user_name|
   sign_in(user_name)
 end
 
+Then(/^I am subscribed to page "(.*?)"$/) do |page_title|
+  p = Page.first
+  expect(p.subscribers).to eq true
+end
+
+
+And(/^There is one page with title "(.*?)"$/) do |arg1|
+  p = Page.first
+  expect(p.name).to eq "Test me"
+  expect(Page.count).to eq 1
+end
+
+And(/^I an not emailed about page "(.*?)"$/) do |arg1|
+  pending # express the regexp above with the code you wish you had
+end
+
+
+
 Given(/^I (?:have )?unsubscribed? from page entitled "(.*?)" via the emailed unsubscribe link$/) do |page_title|
   sign_out
   sign_in
