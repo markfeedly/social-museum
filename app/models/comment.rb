@@ -45,7 +45,8 @@ class Comment < ActiveRecord::Base
       ( commentable.subscribers - [user] ).each do |usr|
         Notifier.comment_updated(self, usr).deliver if usr.can_read?(self)
       end
-      self.notified = true
+      # ( commentable.subscribers - [user] ).select {|u| u.can_read?(self) }.map {|u| Notifier.comment_updated(self, u).deliver }
+        self.notified = true
     elsif
       self.notified = false
     end
