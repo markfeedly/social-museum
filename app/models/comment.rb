@@ -10,7 +10,7 @@ class Comment < ActiveRecord::Base
                  :author_email => proc { user.try(:email) || 'guest' },
                  :user_role    => proc { user.try(:admin?) ? 'administrator' : 'user' }
 
-  #before_create :check_for_spam
+  before_create :check_for_spam
   after_create  :subscribe_creator,
                 :notify_subscribers
 
@@ -30,7 +30,9 @@ class Comment < ActiveRecord::Base
   private
 
   def check_for_spam
-    self.approved = !self.spam?
+    puts 'cfs========='
+    self.approved = true #!self.spam?
+    puts "#{self.approved} -------------"
     true
   end
 
@@ -40,10 +42,12 @@ class Comment < ActiveRecord::Base
 
   def notify_subscribers
     if self.approved
-      (commentable.subscribers - [user]).select{|usr| usr.can_read?(self)}.each do |usr|
-        Notifier.comment_updated(self, usr).deliver
+      ( commentable.subscribers - [user] ).each do |usr|
+        Notifier.comment_updated(self, usr).deliver if usr.can_read?(self)
       end
       self.notified = true
+    elsif
+      self.notified = false
     end
   end
 
