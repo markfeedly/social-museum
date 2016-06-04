@@ -2,8 +2,9 @@ require 'sec-versioning'
 require 'subscription_management'
 
 class CollectionItem < ActiveRecord::Base
+  extend FindBy
   include Authority::Abilities
-  #todo include Rakismet::Model
+  include Rakismet::Model
   include SecVersioning
   include SubscriptionManagement
   include Titles
@@ -28,34 +29,18 @@ class CollectionItem < ActiveRecord::Base
 
   scope    :ordered_by_title, ->{joins(:page_title).order("titles.title")}
 
+  #todo rakismet validate
+  validates :item_number, presence: true, uniqueness: true
+  validates :location, presence: true
+  validates_associated :title
+
+  #todo after_create  :subscribe_creator
+
   accepts_nested_attributes_for :title
 
   tracks_association :title
   tracks_association :tag_items
   tracks_association :category_items
-  #tracks_association :resources
-  #todo
+  #todo tracks_association :resources - any more?
 
-  validates :item_number, presence: true, uniqueness: true
-  validates :location, presence: true
-  validates_associated :title
-
-  ############ after_create  :subscribe_creator
-
-  # misc -----------------------------------------------------------------------------------------
-
-# TO BE used in conflicting edits (maybe)
-  def compare_versions(previous, current)
-    Diffy::Diff.new(previous, current).to_s(:html)
-  end
-
-  # finding ----------------------------------------------------------------------------------------
-
-  def self.find_by_slug(slug)
-    joins(:title).where(titles: {slug: slug}).first
-  end
-
-  def self.find_by_title(title)
-    joins(:title).where(titles: {title: title}).first
-  end
 end

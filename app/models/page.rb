@@ -4,6 +4,7 @@ require 'sec-versioning'
 require 'subscription_management'
 
 class Page < ActiveRecord::Base
+  extend FindBy
   include Authority::Abilities
   include Rakismet::Model
   include SecVersioning
@@ -30,7 +31,7 @@ class Page < ActiveRecord::Base
 
   scope    :ordered_by_title, ->{joins(:page_title).order("titles.title")}
 
-  # validates  :check_for_spam
+  #todo validates  :check_for_spam
   validates_associated :title
   after_create :subscribe_creator
 
@@ -47,20 +48,7 @@ class Page < ActiveRecord::Base
                  :user_role    => proc { User.find(user_id).admin? ? 'administrator' : 'user' },
                  :comment_type => proc { 'page' }
 
-# TO BE used in conflicting edits (maybe) -----------------------
-  def compare_versions(previous, current)
-    Diffy::Diff.new(previous, current).to_s(:html)
-  end
-
-  # finding ----------------------------------------------------------------------------------------
-
-  def self.find_by_slug(slug)
-    joins(:title).where(titles: {slug: slug}).first
-  end
-
-  def self.find_by_title(title)
-    joins(:title).where(titles: {title: title}).first
-  end
+  # -------------------
 
   def check_for_spam
     puts 'check for spam ---------------'
