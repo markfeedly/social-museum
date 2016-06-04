@@ -30,23 +30,21 @@ class Page < ActiveRecord::Base
 
   scope    :ordered_by_title, ->{joins(:page_title).order("titles.title")}
 
+  # validates  :check_for_spam
+  validates_associated :title
+  after_create :subscribe_creator
+
   accepts_nested_attributes_for :title
 
   tracks_association :title
   tracks_association :tag_items
   tracks_association :category_items
-  #tracks_association :resources
+  #todo tracks_association :resources
 
-  after_create :subscribe_creator
 
-  validates_associated :title
-  #validate  :not_spam? # if ENV['WORDPRESS_KEY'] != nil
-
-  ############ after_create  :subscribe_creator
-
-  rakismet_attrs :author       => proc { user.name  },
-                 :author_email => proc { user.email },
-                 :user_role    => proc { user.admin? ? 'administrator' : 'user' },
+  rakismet_attrs :author       => proc { User.find(user_id).name  },
+                 :author_email => proc { User.find(user_id).email },
+                 :user_role    => proc { User.find(user_id).admin? ? 'administrator' : 'user' },
                  :comment_type => proc { 'page' }
 
 # TO BE used in conflicting edits (maybe) -----------------------
@@ -62,6 +60,13 @@ class Page < ActiveRecord::Base
 
   def self.find_by_title(title)
     joins(:title).where(titles: {title: title}).first
+  end
+
+  def check_for_spam
+    puts 'check for spam ---------------'
+    self.approved = true # !self.spam?
+    #puts "page#check_for_spam approval #{self.approved}"
+    true
   end
 
   def not_spam?

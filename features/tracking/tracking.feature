@@ -9,12 +9,14 @@ Feature: Tracking
     And I have created a page entitled "Test me"
 
   Scenario: Basic page and user test
-    Then I am the only user and signed in
+    Then I am signed in
     And There is one page with title "Test me"
 
   Scenario: Page creator is subscribed and not emailed
+    Then I am the only user and signed in
+    And There is one page with title "Test me"
     Then I am subscribed to page "Test me"
-    And I an not emailed about page "Test me"
+    And I am not emailed
 
   Scenario: Page creator is notified when a user makes a comment
     When "Jane Doe" adds a comment "Meh" to the page entitled "Test me"

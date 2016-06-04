@@ -1,11 +1,12 @@
 module SubscriptionManagement
 
   def subscribe_creator
-    Subscription.subscribe_to(user: user_id, subscribable: self)
+    Subscription.subscribe_to(user: User.find(user_id), subscribable: self)
   end
 
   def subscribe(user)
-    Subscription.subscribe_to(user: user, subscribable: self)
+    subscribers << user
+    # Subscription.subscribe_to(user: user, subscribable: self)
   end
 
   def unsubscribe(user)

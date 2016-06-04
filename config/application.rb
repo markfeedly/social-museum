@@ -40,7 +40,6 @@ module VirtualMuseum
 
     config.lograge.static_data = { site: ENV['SITE'] }
 
-    config.rakismet.test = true
     config.rakismet.key  = ENV['WORDPRESS_KEY']
     config.rakismet.url  = ENV['SITE']
   end

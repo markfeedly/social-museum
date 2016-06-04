@@ -20,7 +20,7 @@ class PagesController < ApplicationController
   end
 
   def create
-    page.set_tags_from_string(       params[:page][:tags_as_str] )
+    page.set_tags_from_string( params[:page][:tags_as_str] )
     page.set_categories_from_string( params[:page][:categories_as_str] )
     page.logged_user_id = current_user.id
     page.user_id = current_user.id
