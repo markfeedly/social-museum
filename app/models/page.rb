@@ -1,7 +1,6 @@
 require 'set' # needed? copied from old page
 require 'uri' # needed? copied from old page
 require 'sec-versioning'
-require 'subscription_management'
 
 class Page < ActiveRecord::Base
   extend FindBy
@@ -33,7 +32,7 @@ class Page < ActiveRecord::Base
 
   #todo validates  :check_for_spam
   #validates_associated :title
-  after_create :subscribe_creator
+  after_create  :subscribe_creator
 
   accepts_nested_attributes_for :title
 
@@ -49,6 +48,10 @@ class Page < ActiveRecord::Base
                  :comment_type => proc { 'page' }
 
   # -------------------
+
+  def subscribe_creator
+    subscribe(user)
+  end
 
   def check_for_spam
     puts 'check for spam ---------------'

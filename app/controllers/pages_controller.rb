@@ -25,6 +25,7 @@ class PagesController < ApplicationController
     page.logged_user_id = current_user.id
     page.user_id = current_user.id
     page.save
+    page.subscribe_creator(currrent_user)
     respond_with(page)
   end
 
@@ -37,6 +38,7 @@ class PagesController < ApplicationController
     page.set_categories_from_string( params[:page][:categories_as_str] )
     page.logged_user_id = current_user.id
     page.update_attributes(page_params)
+    page.subscribe_creator
     respond_with(page)
   end
 

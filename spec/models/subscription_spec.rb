@@ -9,8 +9,10 @@ describe 'Subscription' do
                                     title:   title,
                                     user:     user,
                                     description: 'any' ) }
+  before {page}
 
   it "should subscribe page creator" do
+    expect(Page.count).to eq 1
     expect(page.subscribers.count).to eq 1
     expect(page.subscribers.last).to eq user
   end
@@ -23,7 +25,6 @@ describe 'Subscription' do
   end
 
   it "should add a subscriber once only" do
-    page.subscribe(user)
     page.subscribe(user1)
     page.subscribe(user1)
     expect(page.subscribers.count).to eq 2
@@ -44,15 +45,17 @@ describe 'Subscription' do
 
   it "should allow a user to subscribe to multiple pages" do
     page1 = FactoryGirl.create(:page,
-                                title:   'second title',
+                                title:   FactoryGirl.create(:title),
                                 user:     user,
-                                content: 'anyway' )
+                                description: 'anyway' )
+    page1.subscribe(user)
     expect(user.subscribed_pages).to include(page, page1)
 
     page2 = FactoryGirl.create(:page,
-                                title:   'fourth title',
+                                title:   FactoryGirl.create(:title),
                                 user:     user,
-                                content: 'racy' )
+                                description: 'racy' )
+    page2.subscribe(user)
     user.reload
 
     expect(user.subscribed_pages.count).to eq 3

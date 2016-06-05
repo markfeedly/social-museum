@@ -1,5 +1,4 @@
 require 'sec-versioning'
-require 'subscription_management'
 
 class CollectionItem < ActiveRecord::Base
   extend FindBy
