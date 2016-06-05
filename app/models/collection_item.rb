@@ -6,7 +6,7 @@ class CollectionItem < ActiveRecord::Base
   include Authority::Abilities
   include Rakismet::Model
   include SecVersioning
-  include SubscriptionManagement
+  include Subscriptions
   include Titles
   include Tags
   include Categories

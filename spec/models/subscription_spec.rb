@@ -4,10 +4,11 @@ describe 'Subscription' do
 
   let(:user)  { FactoryGirl.create(:user) }
   let(:user1) { FactoryGirl.create(:user) }
+  let(:title) { FactoryGirl.create(:title) }
   let(:page)  { FactoryGirl.create(:page,
-                                    title:   'first title',
+                                    title:   title,
                                     user:     user,
-                                    content: 'any' ) }
+                                    description: 'any' ) }
 
   it "should subscribe page creator" do
     expect(page.subscribers.count).to eq 1

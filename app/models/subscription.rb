@@ -1,6 +1,6 @@
 class Subscription < ActiveRecord::Base
-  belongs_to :user, presence: true
-  belongs_to :subscribable, polymorphic: true, presence: true
+  belongs_to :user
+  belongs_to :subscribable, polymorphic: true
 
   def self.subscribe_to(user:, subscribable:)
     create(user: user, subscribable: subscribable)

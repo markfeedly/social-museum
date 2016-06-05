@@ -8,7 +8,7 @@ class Page < ActiveRecord::Base
   include Authority::Abilities
   include Rakismet::Model
   include SecVersioning
-  include SubscriptionManagement
+  include Subscriptions
   include Titles
   include Tags
   include Categories
@@ -32,7 +32,7 @@ class Page < ActiveRecord::Base
   scope    :ordered_by_title, ->{joins(:page_title).order("titles.title")}
 
   #todo validates  :check_for_spam
-  validates_associated :title
+  #validates_associated :title
   after_create :subscribe_creator
 
   accepts_nested_attributes_for :title

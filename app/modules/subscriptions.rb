@@ -1,7 +1,9 @@
-module SubscriptionManagement
+module Subscriptions
 
   def subscribe_creator
-    Subscription.subscribe_to(user: User.find(user_id), subscribable: self)
+    #Subscription.subscribe_to(user: User.find(user_id), subscribable: self)
+    Subscription.create(subscribable_type: 'Page', subscribable_id: self.id, user_id: user_id, page_id: -1)
+    1 == 1
   end
 
   def subscribe(user)
