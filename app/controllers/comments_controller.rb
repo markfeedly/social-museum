@@ -24,6 +24,7 @@ class CommentsController < ApplicationController
     authorize_action_for comment
     comment.ham!
     comment.save
+    comment.commentable.subscribe(comment.user)
     redirect_to :back
   end
 
@@ -31,6 +32,7 @@ class CommentsController < ApplicationController
     authorize_action_for comment
     comment.spam!
     comment.save
+    comment.commentable.unsubscribe(comment.user)
     redirect_to :back
   end
 
