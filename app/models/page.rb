@@ -33,9 +33,9 @@ class Page < ActiveRecord::Base
   scope    :ordered_by_title, ->{joins(:page_title).order("titles.title")}
 
   #todo validates  :check_for_spam
-  #validates_associated :title
-  after_create  :subscribe_creator
-  after_update  :subscribe_creator
+  validates_associated :title
+  after_create  :subscribe_user
+  after_update  :subscribe_user
 
   accepts_nested_attributes_for :title
 
@@ -52,7 +52,7 @@ class Page < ActiveRecord::Base
 
   # -------------------
 
-  def subscribe_creator
+  def subscribe_user
     subscribe(User.find(user_id))
   end
 
