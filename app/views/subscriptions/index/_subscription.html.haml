@@ -1,0 +1,11 @@
+%li{'data-subscription-idx' => subscription_counter }
+  .float-left
+    = link_to "#{page.name}", page_path(page)
+  .float-right
+    - if current_user.can_delete?(Subscription.where(subscribable_id: page.id, user_id: user.id).first)
+      = link_to fa_icon('trash-o')+' subscription', delete_subscription_on_page_subscriptions_path(page.id),
+                :data => { :confirm => 'Are you sure you want to remove this subscription? This cannot be undone.',
+                           :role    => 'delete-subscription' },
+                :method  => :delete
+
+%hr.clear
