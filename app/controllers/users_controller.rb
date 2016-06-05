@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  expose (:user){User.find(params[:id])}
   before_action :authenticate_user!
 
   def index
@@ -6,7 +7,6 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
   end
 
 #TODO Either scrap this or implement?
