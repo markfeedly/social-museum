@@ -7,7 +7,7 @@ describe 'Subscription' do
   let(:title) { FactoryGirl.create(:title) }
   let(:page)  { FactoryGirl.create(:page,
                                     title:   title,
-                                    user:     user,
+                                    user_id:     user.id,
                                     description: 'any' ) }
   before {page}
 
@@ -43,7 +43,7 @@ describe 'Subscription' do
     expect(user1.subscribed_pages).to eq [page]
     page1 = FactoryGirl.create(:page,
                                title:   FactoryGirl.create(:title),
-                               user:     user,
+                               user_id:     user.id,
                                description: 'anyway' )
     user.reload
     expect(user.subscribed_pages).to eq [page1, page]
@@ -52,14 +52,14 @@ describe 'Subscription' do
   it "should allow a user to subscribe to multiple pages" do
     page1 = FactoryGirl.create(:page,
                                 title:   FactoryGirl.create(:title),
-                                user:     user,
+                               user_id:     user.id,
                                 description: 'anyway' )
     page1.subscribe(user)
     expect(user.subscribed_pages).to include(page, page1)
 
     page2 = FactoryGirl.create(:page,
                                 title:   FactoryGirl.create(:title),
-                                user:     user,
+                               user_id:     user.id,
                                 description: 'racy' )
     page2.subscribe(user)
     user.reload
@@ -107,6 +107,11 @@ describe 'Subscription' do
     page.unsubscribe(user1)
     expect(page.subscribers.count).to eq 1
     expect(page.subscribers).to include(user)
+  end
+
+  it 'should subscribe page editor' do
+    page.update(description: 'new', user_id: user1.id)
+    expect(page.subscribers.count).to eq 'new'
   end
 
 end

@@ -13,6 +13,8 @@ class Page < ActiveRecord::Base
   include Categories
   include CategoryExtensions
 
+  belongs_to :user
+
   has_one  :title,           as: :titleable,    dependent: :destroy, autosave: true
   has_many :comments,        as: :commentable,  dependent: :delete_all
 
@@ -33,6 +35,7 @@ class Page < ActiveRecord::Base
   #todo validates  :check_for_spam
   #validates_associated :title
   after_create  :subscribe_creator
+  after_update  :subscribe_creator
 
   accepts_nested_attributes_for :title
 
