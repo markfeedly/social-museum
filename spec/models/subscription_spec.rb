@@ -41,6 +41,12 @@ describe 'Subscription' do
     expect(user.subscribed_pages).to eq [page]
     user1.reload
     expect(user1.subscribed_pages).to eq [page]
+    page1 = FactoryGirl.create(:page,
+                               title:   FactoryGirl.create(:title),
+                               user:     user,
+                               description: 'anyway' )
+    user.reload
+    expect(user.subscribed_pages).to eq [page1, page]
   end
 
   it "should allow a user to subscribe to multiple pages" do
