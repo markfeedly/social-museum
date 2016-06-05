@@ -14,7 +14,10 @@ class User < ActiveRecord::Base
   has_many :resources
 
   has_many :subscriptions
-  has_many :subscribed_pages, through: :subscriptions, source: :page
+
+  has_many :subscribed_collection_items, through: :subscriptions, source: :subscribable, source_type: 'CollectionItem'
+  has_many :subscribed_pages,            through: :subscriptions, source: :subscribable, source_type: 'Page'
+  #todo has_many :subscribed_resources,        through: :subscribable, source: :categorisable, source_type: 'Resource'
 
   # -----------------------------------------------------------
 
