@@ -1,7 +1,7 @@
 class Comment < ActiveRecord::Base
   include Rakismet::Model
-  include Authority::Abilities
-  self.authorizer_name = 'CommentAuthorizer'
+  #include Authority::Abilities
+  #self.authorizer_name = 'CommentAuthorizer'
 
   belongs_to :commentable, polymorphic: true
   belongs_to :user
@@ -10,7 +10,7 @@ class Comment < ActiveRecord::Base
                  :author_email => proc { user.try(:email) || 'guest' },
                  :user_role    => proc { user.try(:admin?) ? 'administrator' : 'user' }
 
-  before_create :check_for_spam
+  #before_create :check_for_spam
   after_create  :subscribe_creator,
                 :notify_subscribers
 
@@ -31,9 +31,9 @@ class Comment < ActiveRecord::Base
 
   def check_for_spam
     puts 'cfs========='
-    self.approved = true #!self.spam?
+    self.approved = false #!self.spam?
     puts "#{self.approved} -------------"
-    true
+    false
   end
 
   def subscribe_creator

@@ -8,8 +8,9 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable,
          :omniauthable, :omniauth_providers => [:twitter]
 
-  has_many :page_states
   has_many :comments
+  has_many :pages
+  has_many :collection_items
   has_many :resources
 
   has_many :subscriptions

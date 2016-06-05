@@ -3,9 +3,7 @@ Feature: Tracking
   Interested users should receive emails about new pages and comments and page edits
 
   Background:
-    Given I exist as a user
-    And I confirm my email identity
-    And I have signed in
+    Given I have signed in with valid credentials
     And I have created a page entitled "Test me"
 
   Scenario: Basic page and user test
@@ -13,7 +11,7 @@ Feature: Tracking
     And There is one page with title "Test me"
 
   Scenario: Page creator is subscribed and not emailed
-    Then I am the only user and signed in
+    Then I am signed in
     And There is one page with title "Test me"
     Then I am subscribed to page "Test me"
     And I am not emailed

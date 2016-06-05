@@ -2,10 +2,6 @@ Given /^I am not signed in$/ do
   sign_out
 end
 
-Then(/^I am the only user and signed in$/) do
-  expect(page).to have_content "@"
-end
-
 
 Given /^I exist as a user$/ do
   create_user

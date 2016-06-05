@@ -44,7 +44,10 @@ When(/^"(.*?)" adds a comment "(.*?)" to the page entitled "(.*?)"$/) do |user_n
   visit pages_path
   page.first(:css, 'a', text: page_title).click
 
-  click_on 'Add a comment'
+  page.first("[data-role='show-comment-form']").click
+  #page.first("[data-role='show-comment-form']").click
+  #click_on 'Add a comment'
+
   fill_in 'comment[content]', with: comment
   click_on 'Add comment'
 
@@ -73,8 +76,8 @@ Then(/^"([^"]+)" is emailed about a comment "([^"]+)" by "([^"]+)" on (?:a |the 
 end
 
 Then(/^I am emailed about a comment "([^"]+)" by "([^"]+)" on (?:a |the )?page entitled "(.*?)"$/) do |comment, user, page_title|
-  puts Page.count
-  puts Comment.count
+  puts 'pages     ' +Page.count.to_s
+  puts 'comments  ' +Comment.count.to_s
   check_comment_email_content(current_user, comment, user, page_title)
 end
 
