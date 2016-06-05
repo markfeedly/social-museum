@@ -5,7 +5,6 @@
     Comments
 
   - if current_user.can_create?(Comment, for_commentable: commentable)
-    - xxxx
     = link_to("Add a comment", '#', id: 'comment-button', class: "btn btn-primary button-wider-width float-right",
                                     :data => {:role => 'show-comment-form'}) if CommentAuthorizer.creatable_by?(current_user)
     #comment-form.hidden-entity
