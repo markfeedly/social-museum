@@ -13,6 +13,8 @@ class Page < ActiveRecord::Base
   include Categories
   include CategoryExtensions
 
+  #todo belongs_to :user doesnt work
+
   has_one  :title,           as: :titleable,    dependent: :destroy, autosave: true
   has_many :comments,        as: :commentable,  dependent: :delete_all
 
