@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   expose (:user){User.find(params[:id])}
+
   before_action :authenticate_user!
 
   def index
@@ -8,6 +9,9 @@ class UsersController < ApplicationController
 
   def show
   end
+
+
+
 
 #TODO Either scrap this or implement?
 =begin

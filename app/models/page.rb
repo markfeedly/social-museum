@@ -34,8 +34,8 @@ class Page < ActiveRecord::Base
 
   #todo validates  :check_for_spam
   validates_associated :title
-  after_create  :subscribe_user
-  after_update  :subscribe_user
+  after_create  :auto_subscribe_user
+  after_update  :auto_subscribe_user
 
   accepts_nested_attributes_for :title
 
@@ -52,7 +52,7 @@ class Page < ActiveRecord::Base
 
   # -------------------
 
-  def subscribe_user
+  def auto_subscribe_user
     subscribe(User.find(user_id))
   end
 

@@ -33,7 +33,7 @@ class CollectionItem < ActiveRecord::Base
   validates :location, presence: true
   validates_associated :title
 
-  #todo after_create  :subscribe_creator
+  after_create  :auto_subscribe_user
 
   accepts_nested_attributes_for :title
 
@@ -41,5 +41,9 @@ class CollectionItem < ActiveRecord::Base
   tracks_association :tag_items
   tracks_association :category_items
   #todo tracks_association :resources - any more?
+
+  def auto_subscribe_user
+    subscribe(User.find(user_id))
+  end
 
 end
