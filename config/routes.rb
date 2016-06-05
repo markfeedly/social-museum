@@ -49,11 +49,14 @@ VirtualMuseum::Application.routes.draw do
 
   resources :subscriptions, only: :index do
     collection do
+      delete 'delete_subscription_on_page/:id', action: 'delete_subscription_on_page', as: 'delete_subscription_on_page'
+      get 'delete_all_page_subscriptions'
+      get 'delete_all_collection_item_subscriptions'
       get 'delete_all_subscriptions'
     end
   end
 
-  delete '/delete_page_subscription_for_current_user/:id', controller: 'subscriptions', action: 'delete_subscription_on_page', as: 'delete_page_subscription_for_current_user'
+  #delete '/delete_page_subscription_for_current_user/:id', controller: 'subscriptions', action: 'delete_subscription_on_page', as: 'delete_page_subscription_for_current_user'
 
   resources :table_of_contents, only: [:index]
 
