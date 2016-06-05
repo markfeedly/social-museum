@@ -1,7 +1,7 @@
 class Comment < ActiveRecord::Base
   include Rakismet::Model
-  #include Authority::Abilities
-  #self.authorizer_name = 'CommentAuthorizer'
+  include Authority::Abilities
+  self.authorizer_name = 'CommentAuthorizer'
 
   belongs_to :commentable, polymorphic: true
   belongs_to :user

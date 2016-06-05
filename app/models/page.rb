@@ -50,7 +50,7 @@ class Page < ActiveRecord::Base
   # -------------------
 
   def subscribe_creator
-    subscribe(user)
+    subscribe(User.find(user_id))
   end
 
   def check_for_spam

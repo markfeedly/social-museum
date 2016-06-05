@@ -10,7 +10,7 @@ class CommentsController < ApplicationController
                     commentable_id: params[:comment][:commentable_id].to_i,
                     user_agent: request.env["HTTP_USER_AGENT"],
                     referrer:   request.env["HTTP_REFERRER"] )
-    redirect_to after_comment_create_path
+    redirect_to page_path(Page.find(params[:comment][:commentable_id].to_i))
   end
 
   def destroy

@@ -25,7 +25,6 @@ class PagesController < ApplicationController
     page.logged_user_id = current_user.id
     page.user_id = current_user.id
     page.save
-    page.subscribe_creator(currrent_user)
     respond_with(page)
   end
 
