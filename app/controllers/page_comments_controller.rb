@@ -4,7 +4,7 @@ class PageCommentsController < CommentsController
     page
   end
 
-  def after_comment_create_path
+  def after_page_create_path
     page_path(page)
   end
 end
