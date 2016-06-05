@@ -5,7 +5,10 @@
   .recent-entries-col.recent-underlining-spacing
     - recent.each do |p|
       .float-left.recent-name-col
-        = link_to p.name, send(path_method, p.slug)
+        - if p.try(:name)
+          = link_to p.name, send(path_method, p.slug)
+        -else
+          implement to permalink
       .float-right.recent-date-col.recent-date-color
         = p.send(time_method).strftime('%e %B %Y')
       .clear

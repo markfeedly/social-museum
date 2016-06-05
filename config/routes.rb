@@ -1,7 +1,6 @@
 VirtualMuseum::Application.routes.draw do
+
   root :to => "home#index"
-  devise_for :users, :controllers => {:registrations => "registrations",
-                                      :omniauth_callbacks => "omniauth_callbacks" }
 
   resources :categories, only: :show do
     get :show_full
@@ -48,15 +47,25 @@ VirtualMuseum::Application.routes.draw do
     get :autocomplete_page_title, :on => :collection
   end
 
+  resources :subscriptions, only: :index do
+    collection do
+      get 'delete_all_subscriptions'
+    end
+  end
+
+  delete '/delete_page_subscription_for_current_user/:id', controller: 'subscriptions', action: 'delete_subscription_on_page', as: 'delete_page_subscription_for_current_user'
+
   resources :table_of_contents, only: [:index]
 
   resources :tags, only: [:show]
 
-  resources :users do
-    member do
-      get 'subscriptions'
-    end
-  end
+
+  resources :users
+
+  devise_for :users, :controllers => {:registrations => "registrations",
+                                      :omniauth_callbacks => "omniauth_callbacks" }
+
+
 
   get '/get_uploaded_file/:type/:id/:name', to: 'resources#get_uploaded_file', as: 'uploaded'
 
