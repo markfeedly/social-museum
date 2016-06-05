@@ -13,8 +13,6 @@ class Page < ActiveRecord::Base
   include Categories
   include CategoryExtensions
 
-  belongs_to :user
-
   has_one  :title,           as: :titleable,    dependent: :destroy, autosave: true
   has_many :comments,        as: :commentable,  dependent: :delete_all
 
