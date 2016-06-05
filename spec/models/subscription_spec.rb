@@ -111,7 +111,7 @@ describe 'Subscription' do
 
   it 'should subscribe page editor' do
     page.update(description: 'new', user_id: user1.id)
-    expect(page.subscribers.count).to eq 'new'
+    expect(page.subscribers.count).to eq 2
   end
 
 end
