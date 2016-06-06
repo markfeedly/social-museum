@@ -7,8 +7,8 @@ Given(/^"(.*?)" is signed in$/) do |user_name|
 end
 
 Then(/^I am subscribed to page "(.*?)"$/) do |page_title|
-  p = Page.first
-  expect(p.subscribers.first).to eq User.first
+  p = Page.find_by_title(page_title)
+  expect(p.subscribers.count).to eq User.first
 end
 
 

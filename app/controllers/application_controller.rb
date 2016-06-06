@@ -28,4 +28,9 @@ class ApplicationController < ActionController::Base
   decent_configuration do
     strategy DecentExposure::StrongParametersStrategy
   end
+
+  def authority_forbidden(error)
+    Authority.logger.warn(error.message)
+    redirect_to  user_session_path, alert: 'You need to be sign in below before you can do that, or, alternately, click the back button to get back to where you wee and continue browsing'
+  end
 end

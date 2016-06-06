@@ -4,11 +4,9 @@
 
 .recent-page-font
 
-  = render 'subscriptions/index/column', title: 'Subscribed pages', subscriptions: page_subscriptions, descr: 'page'
-
   = render 'subscriptions/index/column', title: 'Subscribed collection items', subscriptions: collection_item_subscriptions, descr: 'collection item'
 
-  = #render 'recent/column', title: 'Constrain comments', recent: recently_created_comments, time_method: :created_at, path_method: :page_path
+  = render 'subscriptions/index/column', title: 'Subscribed pages', subscriptions: page_subscriptions, descr: 'page'
 
 
 

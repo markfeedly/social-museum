@@ -8,8 +8,8 @@
 
             - if current_user.can_read?(CollectionItem)
               %li= #link_to 'Contents', table_of_contents_path - not needed for now
-              %li.menu-highlight= link_to 'Collection', collection_items_path
-              %li.menu-highlight= link_to 'More', pages_path
+              %li.menu-highlight= link_to 'Collection Items', collection_items_path
+              %li.menu-highlight= link_to 'More Information', pages_path
               %li.menu-highlight= link_to 'Resources', resources_path
 
             %li.dropdown
@@ -36,8 +36,9 @@
                   %li= link_to 'Pages', pages_recent_index_path, :id => 'recent_page_link'
                 - if current_user.can_read?(Resource)
                   %li= link_to 'Resources', resources_recent_index_path, :id => 'add_resource_link'
-                - if current_user.can_read?(Subscription)
-                  %li= link_to 'Subscriptions', subscriptions_path
+
+            - if current_user.can_read?(Subscription)
+              %li= link_to 'Subscriptions', subscriptions_path
 
             - if current_user.can_read?(User)
               %li= link_to 'Users', users_path, :id => 'users_link'

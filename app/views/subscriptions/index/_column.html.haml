@@ -1,8 +1,12 @@
 .float-left
   %div
-    %h4.recent-underlining-spacing= title
-  %hr
-  .recent-entries-col.recent-underlining-spacing
+    %h4.recent-underlining-spacing.subscription-column-title-spacing= title
+
+    - path_helper_name = "delete_all_#{descr}_subscriptions_subscriptions_path"
+    - path_helper_name.gsub!(/ /,'_')
+    = link_to("Delete all #{descr} subscriptions", @_controller.send(path_helper_name.to_sym), class: 'btn btn-disabled button-spacing')
+
+  .recent-entries-col.no-bullets-in-list.subscription-column-above-list-spacing
     - if subscriptions.any?
       - subscriptions.each.with_index do |p, i|
         = render 'subscriptions/index/subscription', page: p, subscription_counter: i.to_s

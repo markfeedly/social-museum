@@ -17,7 +17,7 @@ class UsersController < ApplicationController
   end
 
   def sign_in
-
+    redirect_to :back
   end
 
 
