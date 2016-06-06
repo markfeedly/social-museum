@@ -6,14 +6,16 @@ Given(/^"(.*?)" is signed in$/) do |user_name|
   sign_in(user_name)
 end
 
-Then(/^I am subscribed to page "(.*?)"$/) do |page_title|
+Then(/^I am the only subscriber to page "(.*?)"$/) do |page_title|
   p = Page.find_by_title(page_title)
-  expect(p.subscribers.count).to eq User.first
+  #todo expect(p.subscribers.count).to eq 1
+  expect(p.subscriptions.count).to eq 1
+  expect(p.subscriptions.first.user).to eq User.first
 end
 
 
-And(/^There is one page with title "(.*?)"$/) do |arg1|
-  p = Page.first
+And(/^There is one page with title "(.*?)"$/) do |page_title|
+  p = Page.find_by_title(page_title)
   expect(p.name).to eq "Test me"
   expect(Page.count).to eq 1
 end

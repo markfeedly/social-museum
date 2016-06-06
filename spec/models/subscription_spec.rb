@@ -9,6 +9,7 @@ describe 'Subscription' do
                                     title:   title,
                                     user_id:     user.id,
                                     description: 'any' ) }
+
   before {page}
 
   it "should subscribe page creator" do

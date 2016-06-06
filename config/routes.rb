@@ -52,6 +52,7 @@ VirtualMuseum::Application.routes.draw do
       delete 'delete_subscription_on_page/:id', action: 'delete_subscription_on_page', as: 'delete_subscription_on_page'
       get 'delete_all_page_subscriptions'
       get 'delete_all_collection_item_subscriptions'
+      get 'delete_all_resource_subscriptions'
       get 'delete_all_subscriptions'
     end
   end

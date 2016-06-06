@@ -6,14 +6,11 @@ Feature: Tracking
     Given I have signed in with valid credentials
     And I have created a page entitled "Test me"
 
-  Scenario: Basic page and user test
-    Then I am signed in
+  Scenario: Basic page test
     And There is one page with title "Test me"
 
-  Scenario: Page creator is subscribed and not emailed
-    Then I am signed in
-    And There is one page with title "Test me"
-    Then I am subscribed to page "Test me"
+  Scenario: Page creator is subscribed but not emailed
+    Then I am the only subscriber to page "Test me"
     And I am not emailed
 
   Scenario: Page creator is notified when a user makes a comment
