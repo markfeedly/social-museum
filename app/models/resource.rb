@@ -1,6 +1,5 @@
 require 'uri'
 require 'sec-versioning'
-#todo require 'subscription_management'
 
 class Resource < ActiveRecord::Base
   include Authority::Abilities

@@ -1,4 +1,3 @@
-
 - if current_user.can_unsubscribe?(subscribable)
   = link_to( 'Unsubscribe', url_for(id: subscribable, action: :unsubscribe), class: 'btn btn-primary button-width')
 - if current_user.can_subscribe?(subscribable)
