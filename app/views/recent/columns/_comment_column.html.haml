@@ -1,0 +1,19 @@
+.float-left
+  %div
+    %h4= title
+  %hr
+  .recent-entries-col.recent-underlining-spacing
+    - recent.each do |comment|
+      - ci_p_or_r = comment.commentable
+      .float-left.recent-name-col
+        #{User.find(comment.user_id).name} commented on
+        %br
+        - if ci_p_or_r.try(:name)
+          = link_to ci_p_or_r.name, send(path_method, ci_p_or_r.slug)
+
+      .float-right.recent-date-col.recent-date-color
+        = ci_p_or_r.send(time_method).strftime('%e %B %Y')
+      .clear
+      %hr
+.float-left.recent-entries-col-spacer
+  &nbsp; &nbsp; &nbsp; &nbsp;
