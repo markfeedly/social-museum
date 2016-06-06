@@ -1,5 +1,6 @@
 class SubscriptionsController < ApplicationController
 
+  #todo more method calls like this in controllers before_action :authenticate_user!
   before_action :authenticate_user!
 
   expose(:user){ current_user }
