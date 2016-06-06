@@ -1,12 +1,33 @@
 class ContentHtmlGenerator
+
+  @@link = /\[([^\]]*)\]/
+
+  @@open_double_square_brackets_pattern  = /[\[\\]\[/
+  @@close_double_square_brackets_pattern = /[\]\\]\]/
+  @@open_double_square_invisible = '(un78iJKlikely('
+  @@close_double_square_invisible = ')un78iJKlikely)'
+
+  @@open_double_square_invisible_pattern  = /\(un78iJKlikely\(/
+  @@close_double_square_invisible_pattern = /\)un78iJKlikely\)/
+  @@open_double_square_visible  = '['
+  @@close_double_square_visible = ']'
+  
+  
+
   def self.generate_full(page_or_collection_item)
 
-    new_markdown = ContentHtmlGenerator.chomp_this(page_or_collection_item).gsub(/\[([^\]]*)\]/) { LinkInterpreter.new($1).process }
+    new_markdown = ContentHtmlGenerator.chomp_this(page_or_collection_item)
+    new_markdown.gsub!(@@open_double_square_brackets_pattern) {@@open_double_square_invisible}
+    new_markdown.gsub!(@@close_double_square_brackets_pattern){@@close_double_square_invisible}
 
-    markdown_renderer = Redcarpet::Markdown.new(Redcarpet::Render::HTML.new(),
-                                                    extensions = {})
-    markdown_renderer.render(new_markdown).html_safe
+    new_markdown.gsub!(@@link){LinkInterpreter.new($1).process}
 
+    markdown_renderer = Redcarpet::Markdown.new(Redcarpet::Render::HTML.new(), extensions = {})
+    rendered = markdown_renderer.render(new_markdown)
+
+    rendered.gsub!(@@open_double_square_invisible_pattern) {@@open_double_square_visible}
+    rendered.gsub!(@@close_double_square_invisible_pattern){@@close_double_square_visible}
+    rendered.html_safe
   end
 
   def self.generate_with_small_images(page_or_collection_item)
@@ -24,7 +45,6 @@ class ContentHtmlGenerator
                                         end
 
     markdown_renderer.render(new_markdown).html_safe
-
   end
 
   def self.page_image(page_or_collection_item)
