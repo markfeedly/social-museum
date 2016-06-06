@@ -10,6 +10,7 @@ class SubscriptionsController < ApplicationController
   expose (:collection_item_subscriptions) do
     CollectionItem.select { |ci| ci.subscribers.include?(user) }.sort { |a, b| a.name <=> b.name }
   end
+  expose(:resource_subscriptions){Resource.where(id: '_extremely **89; unlikely')}
 
   def index
   end

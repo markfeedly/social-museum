@@ -4,7 +4,16 @@
 
     - path_helper_name = "delete_all_#{descr}_subscriptions_subscriptions_path"
     - path_helper_name.gsub!(/ /,'_')
-    = link_to("Delete all #{descr} subscriptions", @_controller.send(path_helper_name.to_sym), class: 'btn btn-disabled button-spacing')
+    - cl = 'btn btn-disabled button-spacing'
+    - case descr
+      - when 'page'
+        - cl = 'btn btn-primary button-spacing' if page_subscriptions.any?
+      - when 'collection item'
+        - cl = 'btn btn-primary button-spacing' if collection_item_subscriptions.any?
+      - when 'collection item'
+        - cl = 'btn btn-primary button-spacing' if collection_item_subscriptions.any?
+
+    = link_to("Delete all #{descr} subscriptions", @_controller.send(path_helper_name.to_sym), class: cl)
 
   .recent-entries-col.no-bullets-in-list.subscription-column-above-list-spacing
     - if subscriptions.any?

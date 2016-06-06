@@ -1,15 +1,10 @@
-Before do
-  @pages = Hash.new{|h,k| h[k] = []}
-end
-
 def page_count
-  @pages.length
+  Page.count
 end
 
-def create_page(title: "Test me #{page_count}", content: "test content",
+def create_page(title: "Test me #{page_count+1}", content: "test content",
                                                     tags: "", categories: "")
   visit new_page_path
-
   within_role 'page-form' do
     fill_in('page_title',      :with => title)
     fill_in('page_description',    :with => content)
@@ -17,7 +12,7 @@ def create_page(title: "Test me #{page_count}", content: "test content",
     fill_in('page_categories_as_str', :with => categories)
     click_role('page-item-button')
   end
-  @pages[title] = []
+  Page.last
 end
 
 When(/^I (?:have )?created? (a|\d+) pages?$/) do |pages|
@@ -26,7 +21,7 @@ When(/^I (?:have )?created? (a|\d+) pages?$/) do |pages|
 end
 
 When(/^I (?:have )?created? a page entitled "([^"]*)"$/) do |title|
-  create_page(title: title)
+  expect(create_page(title: title).subscriptions.count).to eq 1
 end
 
 When(/^I create a page with content "([^"]*)"$/) do |content|

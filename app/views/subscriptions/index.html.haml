@@ -1,6 +1,9 @@
 %h1 Subscriptions
 
-= link_to('Delete all subscriptions', delete_all_page_subscriptions_subscriptions_path, class: 'btn btn-disabled button-spacing')
+- cl = 'btn btn-disabled button-spacing'
+- cl = 'btn btn-primary button-spacing' if collection_item_subscriptions.any? || page_subscriptions.any?
+
+= link_to('Delete all subscriptions', delete_all_page_subscriptions_subscriptions_path, class: cl)
 
 .recent-page-font
 
@@ -8,5 +11,5 @@
 
   = render 'subscriptions/index/column', title: 'Subscribed pages', subscriptions: page_subscriptions, descr: 'page'
 
-
+  = render 'subscriptions/index/column', title: 'Subscribed resources', subscriptions: resource_subscriptions, descr: 'resource'
 

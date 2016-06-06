@@ -54,6 +54,7 @@ class Page < ActiveRecord::Base
 
   def auto_subscribe_user
     subscribe(User.find(user_id))
+    true
   end
 
   def check_for_spam
