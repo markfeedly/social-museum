@@ -1,4 +1,5 @@
 class HelpController < ApplicationController
-  def index
-  end
+
+  expose(:page){ Page.find_by_title('SPECIAL: Help') }
+
 end

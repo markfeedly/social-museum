@@ -1,16 +1,4 @@
 %h1#top.page-title Help
 
-- p = Page.find_by_title('SPECIAL: help')
-
-- if !p
-  - p = Page.new
-  - p.description = File.read(Rails.root.join('config/initial_wiki_pages/help.md'))
-  - p.title = Title.create(title: 'SPECIAL: help')
-  - p.set_tags_from_string( 'help' )
-  - p.set_categories_from_string( '')
-  - p.logged_user_id = User.select{|u| u.admin? }.first.id
-  - p.user_id = p.logged_user_id
-  - p.save
-
-= ContentHtmlGenerator.generate_full( p )
+= ContentHtmlGenerator.generate_full( page || get_initalised_page('help') )
 
