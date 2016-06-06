@@ -1,12 +1,10 @@
 class SubscriptionsController < ApplicationController
 
+  before_action :authenticate_user!
+
   expose(:user){ current_user }
-
   expose(:page){ Page.find(params[:id]) }
-  expose (:page_subscriptions) do
-    Page.select { |p| p.subscribers.include?(user) }.sort { |a, b| a.name <=> b.name }
-  end
-
+  expose((:page_subscriptions)) { Page.select { |p| p.subscribers.include?(user) }.sort { |a, b| a.name <=> b.name } }
   expose(:collection_item){ CollectionItem.find(params[:id]) }
   expose (:collection_item_subscriptions) do
     CollectionItem.select { |ci| ci.subscribers.include?(user) }.sort { |a, b| a.name <=> b.name }

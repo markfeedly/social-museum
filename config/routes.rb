@@ -62,11 +62,10 @@ VirtualMuseum::Application.routes.draw do
 
   resources :tags, only: [:show]
 
-
-  resources :users
-
   devise_for :users, :controllers => {:registrations => "registrations",
                                       :omniauth_callbacks => "omniauth_callbacks" }
+
+  resources :users
 
 
 

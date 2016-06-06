@@ -7,7 +7,7 @@
           %ul.nav
 
             - if current_user.can_read?(CollectionItem)
-              %li= link_to 'Contents', table_of_contents_path
+              %li= #link_to 'Contents', table_of_contents_path - not needed for now
               %li.menu-highlight= link_to 'Collection', collection_items_path
               %li.menu-highlight= link_to 'More', pages_path
               %li.menu-highlight= link_to 'Resources', resources_path
@@ -26,9 +26,6 @@
                   %li= link_to 'Login to create (or edit) content', new_user_session_path
 
 
-            - if current_user.can_read?(Page)
-              %li= #link_to 'Recent', recent_index_path
-
             %li.dropdown
               = link_to pages_path, class: "dropdown-toggle", data: {toggle: 'dropdown'} do
                 Recent
@@ -39,8 +36,8 @@
                   %li= link_to 'Pages', pages_recent_index_path, :id => 'recent_page_link'
                 - if current_user.can_read?(Resource)
                   %li= link_to 'Resources', resources_recent_index_path, :id => 'add_resource_link'
-
-
+                - if current_user.can_read?(Subscription)
+                  %li= link_to 'Subscriptions', subscriptions_path
 
             - if current_user.can_read?(User)
               %li= link_to 'Users', users_path, :id => 'users_link'
@@ -59,5 +56,4 @@
                     = fa_icon 'caret-down'
                   %ul.dropdown-menu
                     %li= link_to 'Profile', user_path(current_user)
-                    %li= link_to 'Subscriptions', subscriptions_path
                     %li= link_to 'Sign out', destroy_user_session_path,  :method => :delete, :data => {:role => 'sign-out'}

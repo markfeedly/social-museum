@@ -10,6 +10,16 @@ class UsersController < ApplicationController
   def show
   end
 
+  def destroy
+    flash[:notice] = ['Signed out successfully']
+    sign_out @user
+    redirect_to root_path
+  end
+
+  def sign_in
+
+  end
+
 
 
 
