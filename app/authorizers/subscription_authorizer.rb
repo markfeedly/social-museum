@@ -5,7 +5,11 @@ class SubscriptionAuthorizer < Authority::Authorizer
   end
 
   def self.creatable_by?(user, opts = {})
-      !user.guest?
+    !user.guest?
+  end
+
+  def self.readable_by?(user, opts={})
+    !user.guest?
   end
 
   def deletable_by?(user, opts={})
