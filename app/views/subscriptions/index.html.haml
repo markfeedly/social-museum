@@ -5,6 +5,8 @@
 
 = link_to('Delete all subscriptions', delete_all_page_subscriptions_subscriptions_path, class: cl)
 
+%hr
+
 .recent-page-font
 
   = render 'subscriptions/index/column', title: 'Subscribed collection items', subscriptions: collection_item_subscriptions, descr: 'collection item'

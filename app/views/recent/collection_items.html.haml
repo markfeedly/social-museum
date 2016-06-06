@@ -1,7 +1,7 @@
 .recent-page-font
 
-  = render 'recent/column', title: 'New collection items', recent: recently_created_collection_items, time_method: :created_at, path_method: :collection_item_path
+  = render 'recent/columns/column', title: 'Recently created collection items', recent: recently_created_collection_items, time_method: :created_at, path_method: :collection_item_path
 
-  = render 'recent/column', title: 'Recent collection item edits', recent: recently_edited_collection_items, time_method: :updated_at, path_method: :collection_item_path
+  = render 'recent/columns/column', title: 'Recent collection item edits', recent: recently_edited_collection_items, time_method: :updated_at, path_method: :collection_item_path
 
-  = render 'recent/column', title: 'Constrain comments', recent: recently_created_comments, time_method: :collection_item_path
+  = render 'recent/columns/comment_column', title: 'Collection items with recent comments', recent: recently_created_resource_comments, time_method: :collection_item_path, time_method: :created_at, path_method: :page_path
