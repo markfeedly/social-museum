@@ -53,10 +53,11 @@ class CollectionItemsController < ApplicationController
         collection_item.reload
         render 'collection_items/edit_with_conflicts'
       else
-        raise "unknown error during collection_item#update: #{error.inspect}"
+        raise "Error during collection_item#update: #{error.inspect}"
       end
     end
   end
+
   def index
     respond_with(collection_items)
   end

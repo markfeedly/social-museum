@@ -66,22 +66,20 @@ class ResourcesController < ApplicationController
   end
 
   def update
-    if !stale? resource
-      resource.set_tags_from_string( params[:resource][:tags_as_str] )
-      resource.set_categories_from_string( params[:resource][:categories_as_str] )
-    end
     resource.logged_user_id = current_user.id
-    resource.logged_user_id = current_user.id
+    resource.user_id = current_user.id
     begin
       resource.update_attributes(resource_params)
+      resource.set_tags_from_string( params[:resource][:tags_as_str] )
+      resource.set_categories_from_string( params[:resource][:categories_as_str] )
       respond_with(resource)
     rescue => error
       if error.instance_of?(ActiveRecord::StaleObjectError)
-        flash[:warning] = 'Another user has made a conflicting edit, you can use this form to resolve the differences and save the resource'
+        #flash[:warning] = 'Another user has made a conflicting edit, you can use this form to resolve the differences and save the resource'
         resource.reload
         render 'resources/edit_with_conflicts'
       else
-        raise "unknown error during resource#update: #{error.inspect}"
+        raise "Error during resource#update: #{error.inspect}"
       end
     end
   end
