@@ -66,7 +66,6 @@ class ResourcesController < ApplicationController
   end
 
   def update
-    response = false
     resource.set_tags_from_string(       params[:resource][:tags_as_str] )
     resource.set_categories_from_string( params[:resource][:categories_as_str] )
     resource.logged_user_id = current_user.id
@@ -75,24 +74,12 @@ class ResourcesController < ApplicationController
       resource.update_attributes(resource_params)
       render 'resources/show'
     rescue
-      flash.now[:warning] = 'Another user has made a conflicting change, you can resolve the differences and save the resource again'
+      flash[:warning] = 'Another user has made a conflicting edit, you can use this form to resolve the differences and save the resource'
       resource.reload
       render 'resources/edit_with_conflicts'
     end
-
   end
 
-
-    #todo sort out conflicting edits
-=begin
-    resource.update_attributes(resource_params)
-    respond_with(resource)
-  rescue ActiveRecord::StaleObjectError
-    flash.now[:warning] = 'Another user has made a conflicting change, you can resolve the differences and save the resource again'
-    resource.reload
-    @conflict = 'set me appropriately'
-    render :edit_with_conflicts
-=end
 
   def destroy
     resource.destroy
