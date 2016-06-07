@@ -74,7 +74,7 @@ class ResourcesController < ApplicationController
     resource.logged_user_id = current_user.id
     begin
       resource.update_attributes(resource_params)
-      render 'resources/show'
+      respond_with(resource)
     rescue => error
       if error.instance_of?(ActiveRecord::StaleObjectError)
         flash[:warning] = 'Another user has made a conflicting edit, you can use this form to resolve the differences and save the resource'
