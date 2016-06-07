@@ -1,12 +1,11 @@
 class PagesController < ApplicationController
   respond_to :html
 
-  expose_wants_key = :page
-  expose(:want_title) { params[expose_wants_key][:title_attributes][:title] || '' }
-  expose(:want_str_categories) { params[expose_wants_key][:categories_as_str] || '' }
-  expose(:want_str_tags) { params[expose_wants_key][:tags_as_str] || '' }
-  expose(:want_description) { params[expose_wants_key][:description] || '' }
-  expose(:want_url) { params[expose_wants_key][:url] || '' }
+  expose(:want_title) { params[:page][:title_attributes][:title] || '' }
+  expose(:want_str_categories) { params[:page][:categories_as_str] || '' }
+  expose(:want_str_tags) { params[:page][:tags_as_str] || '' }
+  expose(:want_description) { params[:page][:description] || '' }
+  expose(:want_url) { params[:page][:url] || '' }
 
   expose(:page, attributes: :page_params, finder: :find_by_slug)
   expose(:pages)
@@ -42,8 +41,10 @@ class PagesController < ApplicationController
   end
 
   def update
-    page.set_tags_from_string(       params[:page][:tags_as_str] )
-    page.set_categories_from_string( params[:page][:categories_as_str] )
+    if !stale? page
+      page.set_tags_from_string(       params[:page][:tags_as_str] )
+      page.set_categories_from_string( params[:page][:categories_as_str] )
+    end
     page.logged_user_id = current_user.id
     begin
       page.update_attributes(page_params)

@@ -66,8 +66,10 @@ class ResourcesController < ApplicationController
   end
 
   def update
-    resource.set_tags_from_string( params[:resource][:tags_as_str] )
-    resource.set_categories_from_string( params[:resource][:categories_as_str] )
+    if !stale? resource
+      resource.set_tags_from_string( params[:resource][:tags_as_str] )
+      resource.set_categories_from_string( params[:resource][:categories_as_str] )
+    end
     resource.logged_user_id = current_user.id
     resource.logged_user_id = current_user.id
     begin

@@ -4,6 +4,10 @@ class CollectionItemAuthorizer < ApplicationAuthorizer
   end
 
   def self.creatable_by?(user, opts={})
+    user.admin?
+  end
+
+  def self.updatable_by?(user, opts={})
     !user.guest?
   end
 
