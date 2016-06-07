@@ -17,4 +17,8 @@ module ApplicationHelper
       Category.category_trail(cat, :isa).map{|c| link_to c, category_path(c)}.join(' > ')
     end.join(', ').html_safe
   end
+
+  def compare_versions(previous, current)
+    Diffy::Diff.new(previous, current).to_s(:html)
+  end
 end

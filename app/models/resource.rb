@@ -70,12 +70,35 @@ class Resource < ActiveRecord::Base
     end
   end
 
+  def valid_filename?
+    url[0] == '/'
+  end
+
+  def has_image_extension?
+    url.match(/\.(jpe?g|gif|png)\z/) != nil
+  end
+
+  def valid_image_filename?
+    valid_filename? && has_image_extension?
+  end
+
+  def valid_other_filename?
+    valid_filename? && ! has_image_extension?
+  end
+
+
+  def file_type_id_and__name
+    value_hash = {}
+    value_hash[:type], value_hash[:id], value_hash[:name] = url.split('/')[1..3]
+    value_hash
+  end
+
   def valid_url?
-    url =~ URI::regexp(['http','https']) || upload_exists?(url)
+    (url =~ URI::regexp(['http','https'])) == 0 #mvh commented || upload_exists?(url)
   end
 
   def valid_image_url?
-    valid_url? && url =~ /\.(jpe?g|gif|png)\z/
+    valid_url? && url.match(/\.(jpe?g|gif|png)\z/) != nil
   end
 
   def self.valid_image_url?(url)
@@ -86,12 +109,7 @@ class Resource < ActiveRecord::Base
     Upload.image_url_for(url)
   end
 
-  # misc -----------------------------------------------------------------------------------------
 
-# TO BE used in conflicting edits (maybe)
-  def compare_versions(previous, current)
-    Diffy::Diff.new(previous, current).to_s(:html)
-  end
 
   # finding ----------------------------------------------------------------------------------------
 
