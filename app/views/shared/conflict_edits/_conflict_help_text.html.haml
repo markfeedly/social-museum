@@ -1,0 +1,17 @@
+- page_type.gsub(/_/, ' ')
+%p
+  While you were editing this #{page_type}, another user edited it.
+
+  You can merge your changes with the other user's edit:
+
+  %ul
+    %li
+      For each item that is different
+      %ul
+        %li.del The changes you wanted are displayed in a dull red
+        %li.ins The changes the other user made displayed in green
+        %li Anything that neither user wanted to change is displayed normally, like this line
+        %li Finally, the box-like edit field displays what the item is currently set to, as a result of the other user's edit.
+
+  %li Change the contents of the edit fields, merging into them your desired changes
+  %li Then save.

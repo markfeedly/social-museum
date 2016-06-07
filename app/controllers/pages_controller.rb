@@ -42,17 +42,20 @@ class PagesController < ApplicationController
 
   def update
     if !stale? page
+      puts "stale ========================================"
+      puts "stale ========================================"
+      puts "stale ========================================"
       page.set_tags_from_string(       params[:page][:tags_as_str] )
       page.set_categories_from_string( params[:page][:categories_as_str] )
     end
     page.logged_user_id = current_user.id
     begin
       page.update_attributes(page_params)
-      render 'page/show'
+      respond_with(page)
     rescue => error
       if error.instance_of?(ActiveRecord::StaleObjectError)
         flash[:warning] = 'Another user has made a conflicting edit, you can use this form to resolve the differences and save the resource'
-        resource.reload
+        page.reload
         render 'page/edit_with_conflicts'
       else
         raise "unknown error during resource#update: #{error.inspect}"

@@ -28,7 +28,7 @@ class CollectionItemsController < ApplicationController
   end
 
   def create
-    collection_item.set_tags_from_string(       params[:collection_item][:tags_as_str] )
+    collection_item.set_tags_from_string( params[:collection_item][:tags_as_str] )
     collection_item.set_categories_from_string( params[:collection_item][:categories_as_str] )
     collection_item.logged_user_id = current_user.id
     collection_item.save
@@ -40,19 +40,16 @@ class CollectionItemsController < ApplicationController
   end
 
   def update
-    if !stale? collection_item
-      collection_item.set_tags_from_string( params[:collection_item][:tags_as_str] )
-      collection_item.set_categories_from_string( params[:collection_item][:categories_as_str] )
-      stale
-    end
     collection_item.logged_user_id = current_user.id
-    collection_item.logged_user_id = current_user.id
+    collection_item.user_id = current_user.id
     begin
       collection_item.update_attributes(collection_item_params)
-      render 'collection_items/show'
+      collection_item.set_tags_from_string( params[:collection_item][:tags_as_str] )
+      collection_item.set_categories_from_string( params[:collection_item][:categories_as_str] )
+      respond_with(collection_item)
     rescue => error
       if error.instance_of?(ActiveRecord::StaleObjectError)
-        flash[:warning] = 'Another user has made a conflicting edit, you can use this form to resolve the differences and save the collection_item'
+        #flash[:warning] = 'Another user has made a conflicting edit, you can use this form to resolve the differences and save the collection_item'
         collection_item.reload
         render 'collection_items/edit_with_conflicts'
       else
