@@ -1,8 +1,8 @@
 %div{data: {role: "page-versions"}}
-  = paginate page_history, param_name: :page_ci, params: {anchor: :"history-tab"}
+  = paginate page_history, param_name: :history, params: {anchor: :"history-tab"}
   .page-summary-width-plus
     %hr
 
   = render partial: 'pages/page_state', collection: page_history
 
-  = paginate page_history, param_name: :page_ci, params: {anchor: :"history-tab"}
+  = paginate page_history, param_name: :history, params: {anchor: :"history-tab"}

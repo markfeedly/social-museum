@@ -5,9 +5,9 @@
     %br/
     You can add them via the new collection item menu item in the menu at the top of the page
 - else
-  = paginate paginated_collection_items, param_name: "collection_item_summaries"
+  = paginate paginated_collection_items
   .page-summary-width-plus
     %hr
   - paginated_collection_items.each do |ci|
     = render 'collection_items/collection_item_summary', collection_item: ci
-  = paginate paginated_collection_items, param_name: "collection_item_summaries"
+  = paginate paginated_collection_items
