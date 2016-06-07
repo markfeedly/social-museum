@@ -1,7 +1,14 @@
 %h1.resource-title Resolve editing conflicts
 
 %p
-  While you were editing this resource another user saved an edit while you were editing.
+  While you were editing this resource, another user saved an edit of the same resource.
+
+  You can merge the other user's saved edit with your desired changes using this page.
+
+  You can see where you and the other user wanted different things. What you wanted are in green,
+  what was saved by the other user is in red.
+
+  Change the contents of the boxes to a merge of yours and the other user's text, then save.
 
 = simple_nested_form_for(resource, :html => {:data => {:role => 'resource-form'}, :multipart => true}) do |f|
   = f.hidden_field :lock_version
