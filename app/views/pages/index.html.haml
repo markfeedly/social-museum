@@ -5,9 +5,9 @@
     %br/
     You can add new pages via the new page menu item in the menu at the top of the page
 - else
-  = paginate paginated_pages, param_name: 'page_summaries'
+  = paginate paginated_pages
   .page-summary-width-plus
     %hr
   - paginated_pages.each do |pg|
     = render 'pages/page_summary', page: pg
-  = paginate paginated_pages, param_name: 'page_summaries'
+  = paginate paginated_pages

@@ -5,9 +5,9 @@
     %br/
     You can add new pages via the new resourecs menu item in the menu at the top of the page
 - else
-  = paginate paginated_resources, param_name: "resource_summaries"
+  = paginate paginated_resources
   .page-summary-width-plus
     %hr
   - paginated_resources.each do |res|
     = render 'resources/resource_summary', resource: res
-  = paginate paginated_resources, param_name: "resource_summaries"
+  = paginate paginated_resources

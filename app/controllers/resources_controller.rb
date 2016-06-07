@@ -66,17 +66,21 @@ class ResourcesController < ApplicationController
   end
 
   def update
-    resource.set_tags_from_string(       params[:resource][:tags_as_str] )
+    resource.set_tags_from_string( params[:resource][:tags_as_str] )
     resource.set_categories_from_string( params[:resource][:categories_as_str] )
     resource.logged_user_id = current_user.id
     resource.logged_user_id = current_user.id
     begin
       resource.update_attributes(resource_params)
       render 'resources/show'
-    rescue
-      flash[:warning] = 'Another user has made a conflicting edit, you can use this form to resolve the differences and save the resource'
-      resource.reload
-      render 'resources/edit_with_conflicts'
+    rescue => error
+      if error.instance_of?(ActiveRecord::StaleObjectError)
+        flash[:warning] = 'Another user has made a conflicting edit, you can use this form to resolve the differences and save the resource'
+        resource.reload
+        render 'resources/edit_with_conflicts'
+      else
+        raise "unknown error during resource#update: #{error.inspect}"
+      end
     end
   end
 
@@ -98,30 +102,13 @@ class ResourcesController < ApplicationController
 
   def resource_params
     params.require(:resource).permit(:categories,
-                                 :description,
-                                 :lock_version,
-                                 :url,
-                                 :file,
-                                 :tags,
-                                 title_attributes: [:title, :id],
-                                 resource_usages_attributes: [:id, :page_title, :_destroy])
-
-=begin
-    if current_user.can_change_link?(resource)
-      params.require(:resource).permit( :lock_version,
-                                        :url,
-                                        :file,
-                                        :description,
-                                        :title,
-                                        resource_usages_attributes: [:id, :page_title, :_destroy])
-    else
-      params.require(:resource).permit( :lock_version,
-                                        :description,
-                                        :title,
-                                        resource_usages_attributes: [:id, :page_title, :_destroy])
-    end
-=end
-
+                                     :description,
+                                     :lock_version,
+                                     :url,
+                                     :file,
+                                     :tags,
+                                     title_attributes: [:title, :id],
+                                     resource_usages_attributes: [:id, :page_title, :_destroy])
   end
 
   def resource_pages_params

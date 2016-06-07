@@ -30,7 +30,7 @@ class Page < ActiveRecord::Base
   has_many :category_items,  as: :categorisable, dependent: :delete_all
   has_many :categories,      through: :category_items
 
-  scope    :ordered_by_title, ->{joins(:page_title).order("titles.title")}
+  #scope    :ordered_by_title, ->{joins(:title).order("titles.title")}
 
   #todo validates  :check_for_spam
   validates_associated :title
