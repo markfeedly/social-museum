@@ -1,0 +1,41 @@
+%h1.resource-title Resolve editing conflicts
+
+%p
+  While you were editing this resource another user saved an edit while you were editing.
+
+= simple_nested_form_for(resource, :html => {:data => {:role => 'resource-form'}, :multipart => true}) do |f|
+  = f.hidden_field :lock_version
+
+  %ul.red
+    - resource.errors.full_messages.each do |msg|
+      %li= msg
+
+  Please edit to resolve the differences shown below.
+  %br/
+  %br/
+  What you wanted to save appears in red. If you didn't want to save anything then you will see nothing in red.
+  %br/
+  %br/
+  What is currently saved is shown in green and in the edit boxes,
+  ready for your further changes.
+
+  = compare_versions(want_title, resource.name).html_safe
+  = f.fields_for :title do |title_form|
+    = title_form.input :title, input_html: {id: 'page_title'}, wrapper_html: {data: {role: 'title'}}, error_html: {data: {role: 'error'}}
+
+  = render 'resources/conflict',  f: f, field: :categories_as_str, current: want_str_categories, desired: resource.categories_as_str
+
+  - if want_description != resource.description
+    %h3  Description differs
+    %br/
+    .width-500px
+      = compare_versions(want_description, resource.description).html_safe
+      %br/
+      = f.text_area :description
+  - else
+    = f.hidden_field :description
+
+  = render 'resources/conflict', f: f, field: :tags_as_str, current: want_str_tags, desired: resource.tags_as_str
+
+  %br
+  = f.submit class: 'btn btn-primary'

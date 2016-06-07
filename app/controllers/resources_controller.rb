@@ -9,6 +9,12 @@ class ResourcesController < ApplicationController
     Kaminari.paginate_array(resource.load_versions).page(params[:resource_ci]).per(10)
   end
 
+  expose(:want_title) { params[:resource][:title_attributes][:title] || '' }
+  expose(:want_str_categories) { params[:resource][:categories_as_str] || '' }
+  expose(:want_str_tags) { params[:resource][:tags_as_str] || '' }
+  expose(:want_description) { params[:resource][:description] || '' }
+  expose(:want_url) { params[:resource][:url] || '' }
+
   autocomplete :page, :title
 
   #todo use: authorize_actions_for Resource
@@ -60,11 +66,23 @@ class ResourcesController < ApplicationController
   end
 
   def update
+    response = false
     resource.set_tags_from_string(       params[:resource][:tags_as_str] )
     resource.set_categories_from_string( params[:resource][:categories_as_str] )
     resource.logged_user_id = current_user.id
-    resource.update_attributes(resource_params)
-    respond_with(resource)
+    resource.logged_user_id = current_user.id
+    begin
+      resource.update_attributes(resource_params)
+      render 'resources/show'
+    rescue
+      flash.now[:warning] = 'Another user has made a conflicting change, you can resolve the differences and save the resource again'
+      resource.reload
+      render 'resources/edit_with_conflicts'
+    end
+
+  end
+
+
     #todo sort out conflicting edits
 =begin
     resource.update_attributes(resource_params)
@@ -75,7 +93,6 @@ class ResourcesController < ApplicationController
     @conflict = 'set me appropriately'
     render :edit_with_conflicts
 =end
-  end
 
   def destroy
     resource.destroy
