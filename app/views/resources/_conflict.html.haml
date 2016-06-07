@@ -1,10 +1,8 @@
 -# locals f,field, current, desired
 - if current != desired
-  %h3  #{field.capitalize} differ
-  %br/
+  %h2  #{field.to_s.split('_')[0].capitalize} differ
   .width-500px
     = compare_versions(current, desired).html_safe
-    %br
     = f.text_field field
 - else
   = f.hidden_field field

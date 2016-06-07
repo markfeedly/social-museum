@@ -10,6 +10,12 @@ class CollectionItemsController < ApplicationController
     Kaminari.paginate_array(all_ci).page(params[:page_ci]).per(10)
   end
 
+  expose(:want_title) { params[:collection_item][:title_attributes][:title] || '' }
+  expose(:want_str_categories) { params[:collection_item][:categories_as_str] || '' }
+  expose(:want_str_tags) { params[:collection_item][:tags_as_str] || '' }
+  expose(:want_description) { params[:collection_item][:description] || '' }
+  expose(:want_url) { params[:collection_item][:url] || '' }
+
   authorize_actions_for CollectionItem
 
   def show
@@ -34,13 +40,26 @@ class CollectionItemsController < ApplicationController
   end
 
   def update
-    collection_item.set_tags_from_string(       params[:collection_item][:tags_as_str] )
-    collection_item.set_categories_from_string( params[:collection_item][:categories_as_str] )
+    if !stale? collection_item
+      collection_item.set_tags_from_string( params[:collection_item][:tags_as_str] )
+      collection_item.set_categories_from_string( params[:collection_item][:categories_as_str] )
+      stale
+    end
     collection_item.logged_user_id = current_user.id
-    collection_item.update_attributes(collection_item_params)
-    respond_with(collection_item)
+    collection_item.logged_user_id = current_user.id
+    begin
+      collection_item.update_attributes(collection_item_params)
+      render 'collection_items/show'
+    rescue => error
+      if error.instance_of?(ActiveRecord::StaleObjectError)
+        flash[:warning] = 'Another user has made a conflicting edit, you can use this form to resolve the differences and save the collection_item'
+        collection_item.reload
+        render 'collection_items/edit_with_conflicts'
+      else
+        raise "unknown error during collection_item#update: #{error.inspect}"
+      end
+    end
   end
-
   def index
     respond_with(collection_items)
   end
@@ -69,7 +88,6 @@ class CollectionItemsController < ApplicationController
                                             :location,
                                             :lock_version,
                                             :tags,
-                                            :categories,
                                             title_attributes: [:title, :id])
   end
 end
