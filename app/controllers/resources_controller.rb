@@ -6,7 +6,7 @@ class ResourcesController < ApplicationController
   expose(:resources)
   expose(:paginated_resources) { resources.page(params[:resource]).per(10)}
   expose(:resource_history) do
-    Kaminari.paginate_array(resource.load_versions).page(params[:resource_ci]).per(10)
+    Kaminari.paginate_array(resource.load_versions).resource(params[:resource_ci]).per(10)
   end
 
   expose(:want_title) { params[:resource][:title_attributes][:title] || '' }
@@ -15,7 +15,7 @@ class ResourcesController < ApplicationController
   expose(:want_description) { params[:resource][:description] || '' }
   expose(:want_url) { params[:resource][:url] || '' }
 
-  autocomplete :page, :title
+  autocomplete :resource, :title
 
   #todo use: authorize_actions_for Resource
   before_action :authenticate_user!, :except => [:index, :show]
@@ -33,13 +33,13 @@ class ResourcesController < ApplicationController
   end
 
   def create
-    resource.set_tags_from_string(       params[:resource][:tags_as_str] )
-    resource.set_categories_from_string( params[:resource][:categories_as_str] )
+    resource.name = params[:resource][:title_attributes][:title]
     resource.logged_user_id = current_user.id
-
-    #resource.attributes = resource_params
-    #resource.user = current_user
-    resource.save
+    resource.user_id = current_user.id
+    if resource.save
+      resource.set_tags_from_string( params[:resource][:tags_as_str] )
+      resource.set_categories_from_string( params[:resource][:categories_as_str] )
+    end
     respond_with(resource)
   end
 
@@ -66,6 +66,7 @@ class ResourcesController < ApplicationController
   end
 
   def update
+    resource.name = params[:resource][:title_attributes][:title]
     resource.logged_user_id = current_user.id
     resource.user_id = current_user.id
     begin
@@ -90,7 +91,7 @@ class ResourcesController < ApplicationController
     respond_with(resource)
   end
 
-  def autocomplete_page_title
+  def autocomplete_resource_title
     render json: Title.where(Title.arel_table[:title].matches("%#{params[:term]}%")).pluck(:title)
   end
 
@@ -108,10 +109,10 @@ class ResourcesController < ApplicationController
                                      :file,
                                      :tags,
                                      title_attributes: [:title, :id],
-                                     resource_usages_attributes: [:id, :page_title, :_destroy])
+                                     resource_usages_attributes: [:id, :resource_title, :_destroy])
   end
 
-  def resource_pages_params
-    params['resource_pages'] || []
+  def resource_resources_params
+    params['resource_resources'] || []
   end
 end

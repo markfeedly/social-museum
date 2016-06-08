@@ -30,7 +30,7 @@ class Page < ActiveRecord::Base
   has_many :category_items,  as: :categorisable, dependent: :delete_all
   has_many :categories,      through: :category_items
 
-  default_scope {order('name ASC')}
+  default_scope {order('LOWER(name)')}
 
   scope    :ordered_by_title, ->{joins(:title).order("titles.title")}
 

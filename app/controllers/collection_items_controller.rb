@@ -28,10 +28,13 @@ class CollectionItemsController < ApplicationController
   end
 
   def create
-    collection_item.set_tags_from_string( params[:collection_item][:tags_as_str] )
-    collection_item.set_categories_from_string( params[:collection_item][:categories_as_str] )
+    collection_item.name = params[:collection_item][:title_attributes][:title]
     collection_item.logged_user_id = current_user.id
-    collection_item.save
+    collection_item.user_id = current_user.id
+    if collection_item.save
+      collection_item.set_tags_from_string( params[:collection_item][:tags_as_str] )
+      collection_item.set_categories_from_string( params[:collection_item][:categories_as_str] )
+    end
     respond_with(collection_item)
   end
 
@@ -40,8 +43,8 @@ class CollectionItemsController < ApplicationController
   end
 
   def update
+    collection_item.name = params[:collection_item][:title_attributes][:title]
     collection_item.logged_user_id = current_user.id
-    collection_item.user_id = current_user.id
     begin
       collection_item.update_attributes(collection_item_params)
       collection_item.set_tags_from_string( params[:collection_item][:tags_as_str] )
@@ -85,6 +88,7 @@ class CollectionItemsController < ApplicationController
                                             :item_number,
                                             :location,
                                             :lock_version,
+                                            :name,
                                             :tags,
                                             title_attributes: [:title, :id])
   end

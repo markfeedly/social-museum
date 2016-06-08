@@ -26,7 +26,7 @@ class CollectionItem < ActiveRecord::Base
   has_many :category_items,  as: :categorisable, dependent: :delete_all
   has_many :categories,      through: :category_items
 
-  default_scope {order('name ASC')}
+  default_scope {order('LOWER(name)')}
 
   #todo rakismet validate
   validates :item_number, presence: true, uniqueness: true

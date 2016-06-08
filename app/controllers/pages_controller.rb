@@ -7,7 +7,7 @@ class PagesController < ApplicationController
   expose(:want_description) { params[:page][:description] || '' }
   expose(:want_url) { params[:page][:url] || '' }
 
-  expose(:page, attributes: :page_params, finder: :find_by_slug)
+  expose(:page)
   expose(:pages)
   expose(:paginated_pages) { pages.page(params[:page]).per(10)}
   expose(:page_history) do
@@ -26,11 +26,13 @@ class PagesController < ApplicationController
   end
 
   def create
-    page.set_tags_from_string( params[:page][:tags_as_str] )
-    page.set_categories_from_string( params[:page][:categories_as_str] )
+    page.name = params[:page][:title_attributes][:title]
     page.logged_user_id = current_user.id
     page.user_id = current_user.id
-    page.save
+    if page.save
+      page.set_tags_from_string( params[:page][:tags_as_str] )
+      page.set_categories_from_string( params[:page][:categories_as_str] )
+    end
     respond_with(page)
   end
 
@@ -39,6 +41,7 @@ class PagesController < ApplicationController
   end
 
   def update
+    page.name = params[:page][:title_attributes][:title]
     page.logged_user_id = current_user.id
     begin
       page.update_attributes(page_params)

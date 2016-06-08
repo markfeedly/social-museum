@@ -30,7 +30,7 @@ class Resource < ActiveRecord::Base
 
   belongs_to :user
 
-  default_scope {order('name ASC')}
+  default_scope {order('LOWER(name)')}
 
   accepts_nested_attributes_for :title
   accepts_nested_attributes_for :resource_usages, allow_destroy: true
