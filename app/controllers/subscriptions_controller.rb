@@ -50,5 +50,6 @@ class SubscriptionsController < ApplicationController
     Page.select{|p| p.subscribers.include?(user)}.each{|p|p.unsubscribe(user)}
     CollectionItem.select{|ci| ci.subscribers.include?(user)}.each{|ci|ci.unsubscribe(user)}
     Resource.select{|ci| ci.subscribers.include?(user)}.each{|r|r.unsubscribe(user)}
+    redirect_to subscriptions_path
   end
 end
