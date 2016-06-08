@@ -15,8 +15,6 @@ class PagesController < ApplicationController
   end
 
   authorize_actions_for Page
-  before_filter :authenticate_user!, except: [:index]
-
 
   def show
     respond_with(page)
@@ -42,7 +40,6 @@ class PagesController < ApplicationController
 
   def update
     page.logged_user_id = current_user.id
-    page.user_id = current_user.id
     begin
       page.update_attributes(page_params)
       page.set_tags_from_string( params[:page][:tags_as_str] )

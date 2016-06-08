@@ -1,7 +1,4 @@
 module Titles
-  def name
-    title.title
-  end
 
   def hacky_title
     title.title

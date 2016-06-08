@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160606094817) do
+ActiveRecord::Schema.define(version: 20160608071026) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,7 +42,10 @@ ActiveRecord::Schema.define(version: 20160606094817) do
     t.datetime "updated_at"
     t.integer  "lock_version"
     t.integer  "user_id"
+    t.string   "name"
   end
+
+  add_index "collection_items", ["name"], name: "index_collection_items_on_name", unique: true, using: :btree
 
   create_table "comments", force: true do |t|
     t.text     "content"
@@ -68,7 +71,10 @@ ActiveRecord::Schema.define(version: 20160606094817) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "name"
   end
+
+  add_index "pages", ["name"], name: "index_pages_on_name", unique: true, using: :btree
 
   create_table "related_collection_items", force: true do |t|
     t.integer  "source_collection_item_id"
@@ -97,7 +103,10 @@ ActiveRecord::Schema.define(version: 20160606094817) do
     t.string   "url"
     t.integer  "user_id"
     t.integer  "lock_version"
+    t.string   "name"
   end
+
+  add_index "resources", ["name"], name: "index_resources_on_name", unique: true, using: :btree
 
   create_table "subscriptions", force: true do |t|
     t.integer "user_id"

@@ -7,12 +7,16 @@ class CollectionItemAuthorizer < ApplicationAuthorizer
     user.admin?
   end
 
+  def self.readable_by?(user, opts = {})
+    true
+  end
+
   def self.updatable_by?(user, opts={})
     !user.guest?
   end
 
-  def self.readable_by?(user, opts = {})
-    true
+  def deleteable_by(user, opts={})
+    false
   end
 
   def subscribable_by?(user, opts={})

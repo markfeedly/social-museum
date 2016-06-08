@@ -30,7 +30,7 @@ class Resource < ActiveRecord::Base
 
   belongs_to :user
 
-  #scope    :ordered_by_title, ->{joins(:page_title).order("titles.title")}
+  default_scope {order('name ASC')}
 
   accepts_nested_attributes_for :title
   accepts_nested_attributes_for :resource_usages, allow_destroy: true
