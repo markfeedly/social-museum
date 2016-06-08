@@ -7,7 +7,7 @@ VirtualMuseum::Application.routes.draw do
   end
 
   resources :collection_items do
-    resources :comments, only: :create, controller: 'collection_comments'
+    resources :comments, only: [:create, :destroy, :approve, :disapprove]
     member do
       get :subscribe
       get :unsubscribe
@@ -22,7 +22,7 @@ VirtualMuseum::Application.routes.draw do
   resources :help, only: [:index]
 
   resources :pages do
-    resources :comments, only: :create, controller: 'collection_comments'
+    resources :comments, only: [:create, :destroy, :approve, :disapprove]
     member do
       get :subscribe
       get :unsubscribe
@@ -38,7 +38,7 @@ VirtualMuseum::Application.routes.draw do
   end
 
   resources :resources do
-    resources :comments, only: :create, controller: 'collection_comments'
+    resources :comments, only: [:create, :destroy, :approve, :disapprove]
     member do
       get :subscribe
       get :unsubscribe
