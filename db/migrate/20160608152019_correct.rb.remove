@@ -1,0 +1,5 @@
+class Correct < ActiveRecord::Migration
+  def change
+    remove_reference :collection_items, :user
+  end
+end

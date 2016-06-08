@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160608152812) do
+ActiveRecord::Schema.define(version: 20160608183346) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,6 +43,8 @@ ActiveRecord::Schema.define(version: 20160608152812) do
     t.integer  "lock_version"
     t.string   "name"
     t.integer  "user_id"
+    t.integer  "creator_id"
+    t.integer  "last_editor_id"
   end
 
   add_index "collection_items", ["name"], name: "index_collection_items_on_name", unique: true, using: :btree
@@ -61,6 +63,8 @@ ActiveRecord::Schema.define(version: 20160608152812) do
     t.boolean  "notified",         default: false
     t.integer  "commentable_id"
     t.string   "commentable_type"
+    t.integer  "creator_id"
+    t.integer  "last_editor_id"
   end
 
   add_index "comments", ["page_id"], name: "index_comments_on_page_id", using: :btree
@@ -73,6 +77,8 @@ ActiveRecord::Schema.define(version: 20160608152812) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name"
+    t.integer  "creator_id"
+    t.integer  "last_editor_id"
   end
 
   add_index "pages", ["name"], name: "index_pages_on_name", unique: true, using: :btree
@@ -105,6 +111,8 @@ ActiveRecord::Schema.define(version: 20160608152812) do
     t.integer  "user_id"
     t.integer  "lock_version"
     t.string   "name"
+    t.integer  "creator_id"
+    t.integer  "last_editor_id"
   end
 
   add_index "resources", ["name"], name: "index_resources_on_name", unique: true, using: :btree

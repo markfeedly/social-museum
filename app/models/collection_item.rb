@@ -12,6 +12,8 @@ class CollectionItem < ActiveRecord::Base
   include CategoryExtensions
 
   belongs_to :user
+  belongs_to :creator
+  belongs_to :last_editor
 
   has_one  :title,           as: :titleable,    dependent: :destroy, autosave: true
   has_many :comments,        as: :commentable,  dependent: :delete_all
