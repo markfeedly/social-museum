@@ -1,6 +1,6 @@
 .width-800px
 
-  - if User.any? && current_user.id != nil
+  - if User.any? && (current_user.id != nil || Page.find_by_title('SPECIAL: Help'))
     = ContentHtmlGenerator.generate_full( page )
   - else
     .page-title Welcome
