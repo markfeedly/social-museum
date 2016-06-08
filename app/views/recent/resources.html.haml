@@ -4,4 +4,4 @@
 
   = render 'recent/columns/column', title: 'Recent resource edits', recent: recently_edited_resources, time_method: :updated_at, path_method: :resource_path
 
-  = render 'recent/columns/column', title: 'Resources with recent comments', recent: recently_created_resource_comments, time_method: :created_at, path_method: :page_path
+  = render 'recent/columns/comment_column', title: 'Resources with recent comments', recent: recently_created_resource_comments, time_method: :created_at, path_method: :resource_path
