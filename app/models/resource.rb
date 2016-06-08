@@ -6,7 +6,7 @@ class Resource < ActiveRecord::Base
   self.authorizer_name = 'ResourceAuthorizer'
   #todo include Rakismet::Model
   include SecVersioning
-  #todo include Subscriptions
+  include Subscriptions
   include Titles
   include Tags
   include Categories

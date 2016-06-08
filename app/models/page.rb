@@ -12,6 +12,7 @@ class Page < ActiveRecord::Base
   include Tags
   include Categories
   include CategoryExtensions
+  include Diff
 
   #todo belongs_to :user doesnt work
 

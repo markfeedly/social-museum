@@ -1,18 +1,18 @@
 class PagesController < ApplicationController
   respond_to :html
 
-  expose(:want_title) { params[:page][:title_attributes][:title] || '' }
-  expose(:want_str_categories) { params[:page][:categories_as_str] || '' }
-  expose(:want_str_tags) { params[:page][:tags_as_str] || '' }
-  expose(:want_description) { params[:page][:description] || '' }
-  expose(:want_url) { params[:page][:url] || '' }
-
-  expose(:page)
+  expose(:page, attributes: :page_params, finder: :find_by_slug) {|default| default.decorate }
   expose(:pages)
   expose(:paginated_pages) { pages.page(params[:page]).per(10)}
   expose(:page_history) do
     Kaminari.paginate_array(page.load_versions).page(params[:history]).per(10)
   end
+
+  expose(:want_title) { params[:page][:title_attributes][:title] || '' }
+  expose(:want_str_categories) { params[:page][:categories_as_str] || '' }
+  expose(:want_str_tags) { params[:page][:tags_as_str] || '' }
+  expose(:want_description) { params[:page][:description] || '' }
+  expose(:want_url) { params[:page][:url] || '' }
 
   authorize_actions_for Page
 

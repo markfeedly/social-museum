@@ -1,4 +1,4 @@
-module FindBy
+module Diff
 
   def compare_versions(previous, current)
     Diffy::Diff.new(previous, current).to_s(:html)
