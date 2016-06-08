@@ -6,14 +6,14 @@ class Comment < ActiveRecord::Base
   belongs_to :commentable, polymorphic: true
   belongs_to :user
 
-  after_create :subscribe_creator
+  after_update :subscribe_creator
   #todo after_create :notify_subscribers
 
   rakismet_attrs :author       => proc { user.try(:name) || 'guest'  },
                  :author_email => proc { user.try(:email) || 'guest' },
                  :user_role    => proc { user.try(:admin?) ? 'administrator' : 'user' }
 
-  #before_create :check_for_spam
+  #todo before_create :check_for_spam
   after_create  :subscribe_creator,
                 :notify_subscribers
 
@@ -25,6 +25,8 @@ class Comment < ActiveRecord::Base
   end
   
   def ham!
+    commentable.subscribe(user) #todo needs auth check, needs creator_id
+
     self.approved = true
     notify_subscribers unless self.notified
     super
@@ -48,8 +50,7 @@ class Comment < ActiveRecord::Base
       ( commentable.subscribers - [user] ).each do |usr|
         Notifier.comment_updated(self, usr).deliver if usr.can_read?(self)
       end
-      # ( commentable.subscribers - [user] ).select {|u| u.can_read?(self) }.map {|u| Notifier.comment_updated(self, u).deliver }
-        self.notified = true
+      self.notified = true
     elsif
       self.notified = false
     end
