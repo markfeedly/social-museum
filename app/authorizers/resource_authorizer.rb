@@ -16,6 +16,14 @@ class ResourceAuthorizer < Authority::Authorizer
     !user.guest?
   end
 
+  def subscribable_by?(user, opts={})
+    !user.guest? && !resource.subscribed?(user)
+  end
+
+  def unsubscribable_by?(user, opts={})
+    !user.guest? && resource.subscribed?(user)
+  end
+
   def link_changeable_by?(user, opts={})
     !user.guest? && (user == resource.user || resource.new_record? || super)
   end

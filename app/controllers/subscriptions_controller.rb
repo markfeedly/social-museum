@@ -4,13 +4,19 @@ class SubscriptionsController < ApplicationController
   before_action :authenticate_user!
 
   expose(:user){ current_user }
-  expose(:page){ Page.find(params[:id]) }
-  expose((:page_subscriptions)) { Page.select { |p| p.subscribers.include?(user) }.sort { |a, b| a.name <=> b.name } }
   expose(:collection_item){ CollectionItem.find(params[:id]) }
+  expose(:page){ Page.find(params[:id]) }
+  expose(:resource){ Page.find(params[:id]) }
+
+  #todo optimise using .order ?
+
   expose (:collection_item_subscriptions) do
     CollectionItem.select { |ci| ci.subscribers.include?(user) }.sort { |a, b| a.name <=> b.name }
   end
-  expose(:resource_subscriptions){Resource.where(id: '_extremely **89; unlikely')}
+
+  expose((:page_subscriptions)) { Page.select { |p| p.subscribers.include?(user) }.sort { |a, b| a.name <=> b.name } }
+
+  expose(:resource_subscriptions) { Resource.select { |r| r.subscribers.include?(user) }.sort { |a, b| a.name <=> b.name } }
 
   def index
   end
@@ -35,7 +41,14 @@ class SubscriptionsController < ApplicationController
     redirect_to subscriptions_path
   end
 
+  def delete_all_resource_subscriptions
+    Resource.select{|ci| ci.subscribers.include?(user)}.each{|r|r.unsubscribe(user)}
+    redirect_to subscriptions_path
+  end
+
   def delete_all_subscriptions
-    delete_all_page_subscriptions && delete_all_collection_item_subscriptions
+    Page.select{|p| p.subscribers.include?(user)}.each{|p|p.unsubscribe(user)}
+    CollectionItem.select{|ci| ci.subscribers.include?(user)}.each{|ci|ci.unsubscribe(user)}
+    Resource.select{|ci| ci.subscribers.include?(user)}.each{|r|r.unsubscribe(user)}
   end
 end
