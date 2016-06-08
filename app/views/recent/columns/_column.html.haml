@@ -3,15 +3,18 @@
     %h4= title
   %hr
   .recent-entries-col.recent-underlining-spacing
-    - recent.each do |p|
-      .float-left.recent-name-col
-        - if p.try(:name)
-          = link_to p.name, send(path_method, p.slug)
-        -else
-          implement to permalink
-      .float-right.recent-date-col.recent-date-color
-        = p.send(time_method).strftime('%e %B %Y')
-      .clear
-      %hr
+    - if recent.any?
+      - recent.each do |p|
+        .float-left.recent-name-col
+          - if p.try(:name)
+            = link_to p.name, send(path_method, p.slug)
+          -else
+            Error in _column.html.haml
+        .float-right.recent-date-col.recent-date-color
+          = p.send(time_method).strftime('%e %B %Y')
+        .clear
+        %hr
+    - else
+      #{none_msg}
 .float-left.recent-entries-col-spacer
   &nbsp; &nbsp; &nbsp; &nbsp;

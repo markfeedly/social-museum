@@ -1,7 +1,9 @@
+.lesser-page-title Recent activity for resources
+
 .recent-page-font
 
-  = render 'recent/columns/column', title: 'Recently created resources', recent: recently_created_resources, time_method: :created_at, path_method: :resource_path
+  = render 'recent/columns/column', title: 'Recently created resources', none_msg: 'No recent resources', recent: recently_created_resources, time_method: :created_at, path_method: :resource_path
 
-  = render 'recent/columns/column', title: 'Recent resource edits', recent: recently_edited_resources, time_method: :updated_at, path_method: :resource_path
+  = render 'recent/columns/column', title: 'Recent resource edits', none_msg: 'No recently edited resources', recent: recently_edited_resources, time_method: :updated_at, path_method: :resource_path
 
-  = render 'recent/columns/comment_column', title: 'Resources with recent comments', recent: recently_created_resource_comments, time_method: :created_at, path_method: :resource_path
+  = render 'recent/columns/comment_column', title: 'Resources with recent comments', none_msg: 'No recent comments on resources', recent: recently_created_resource_comments, time_method: :created_at, path_method: :resource_path
