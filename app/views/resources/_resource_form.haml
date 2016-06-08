@@ -12,7 +12,7 @@
 
 
   - if current_user.can_change_link?(resource)
-    = f.input :url, label: 'Resource on the web to link to (this must be a URL beginning with http)', wrapper_html: {data: {role: "link-field"}}, error_html: {data: {role: "error"}}
+    = f.input :url, label: 'Resource on the web to link to (this must be a URL beginning with http). This will be automatically filed in with a file path if you choose to upload a file.', wrapper_html: {data: {role: "link-field"}}, error_html: {data: {role: "error"}}
     %div.hide{data: {role: 'upload-field'}}
       %p
         Uploading a file will set the URL link to the uploaded file, replacing the current link.

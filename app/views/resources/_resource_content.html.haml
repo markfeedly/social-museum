@@ -3,18 +3,19 @@
   = render 'resources/resource_used_by'
   %br/
 
-  %a{href: root_path+'get_uploaded_file'+resource.url, class: "content-content"}
+  %a{href: resourcez_url_path(resource), class: "content-content"}
 
     - case true
 
       - when resource.valid_image_filename?
         - split_path = resource.file_type_id_and__name
         - img_src = uploaded_path(split_path[:type], split_path[:id], split_path[:name])
-        %img.width-600px{src: img_src}
+        %img.width-600px{src: resourcez_url_path(resource)}
 
       -when resource.valid_image_url?
-        %img.width-600px{src: resource.url}
+        %img.width-600px{src: resourcez_url_path(resource)}
 
+      - #todo tidy below w resourcez_url_path(resource) ? or refactor to better
       - when resource.valid_url?
         - resource.url.split('/')[-1]
 
