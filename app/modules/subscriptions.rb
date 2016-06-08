@@ -17,4 +17,9 @@ module Subscriptions
   def auto_subscribe_user
     subscribe(User.find(user_id))
   end
+
+  def auto_subscribe_for_page_creation
+    User.where(admin: true).each { | u | subscribe(u) } if name =~ /^SPECIAL: /
+    subscribe(User.find(user_id))
+  end
 end
