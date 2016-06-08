@@ -1,7 +1,10 @@
 module ResourceHelper
-  def make_upload_url(resource)
-    res_url = String.new(resource.url)
-    res_url.gsub( /^\/.*uploads/, "/get_uploaded_file" )
+  def resourcez_url_path(resource)
+    if resource.url[0] == '/'
+      resource.url.gsub( /^/, "/get_uploaded_file" )
+    else
+      resource.url
+    end
   end
 
   def get_mime(key)
@@ -21,5 +24,4 @@ module ResourceHelper
       add_file(upload_type, mime_hash)
     end
   end
-
 end

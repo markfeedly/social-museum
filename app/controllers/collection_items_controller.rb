@@ -88,7 +88,7 @@ class CollectionItemsController < ApplicationController
                                             :item_number,
                                             :location,
                                             :lock_version,
-                                            :name,
+                                            :name, #todo dont think this is needed
                                             :tags,
                                             title_attributes: [:title, :id])
   end

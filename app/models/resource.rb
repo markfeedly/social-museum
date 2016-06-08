@@ -35,6 +35,7 @@ class Resource < ActiveRecord::Base
   accepts_nested_attributes_for :title
   accepts_nested_attributes_for :resource_usages, allow_destroy: true
 
+  after_validation  :clean_file_path
   after_create  :auto_subscribe_user
   after_update  :auto_subscribe_user
 
@@ -53,6 +54,8 @@ class Resource < ActiveRecord::Base
   #validates :url, presence: true, uniqueness: true
   #validate  :validate_url
   #validate  :validate_file
+
+  after_create :clean_file_path
 
   alias_attribute :source, :url
 
@@ -127,6 +130,10 @@ class Resource < ActiveRecord::Base
   # validations ----------------------------------------------------------------------------------------
 
   private
+
+  def clean_file_path
+    url.gsub!(ENV['PUBLIC_UPLOAD_DIR'], '') if url[0] == '/'
+  end
 
   def validate_url
     if !valid_url? && !@upload_error
