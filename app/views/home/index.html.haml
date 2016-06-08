@@ -1,3 +1,13 @@
 .width-800px
 
-= ContentHtmlGenerator.generate_full( page )
+- if User.any? && !guest?
+  = ContentHtmlGenerator.generate_full( page )
+- else
+  .page-title Welcome
+  %h2
+    This is the home page
+  %h2
+    On the first sign in by a user, this sytem will automatically create editable content for this page
+  %h2
+    After that first sign in, any signed in user may edit the content of this page
+

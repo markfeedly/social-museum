@@ -41,14 +41,13 @@ ActiveRecord::Schema.define(version: 20160608183346) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "lock_version"
-    t.string   "name"
     t.integer  "user_id"
+    t.string   "name"
     t.integer  "creator_id"
     t.integer  "last_editor_id"
   end
 
   add_index "collection_items", ["name"], name: "index_collection_items_on_name", unique: true, using: :btree
-  add_index "collection_items", ["user_id"], name: "index_collection_items_on_user_id", using: :btree
 
   create_table "comments", force: true do |t|
     t.text     "content"
