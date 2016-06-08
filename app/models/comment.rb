@@ -3,8 +3,10 @@ class Comment < ActiveRecord::Base
   include Authority::Abilities
   self.authorizer_name = 'CommentAuthorizer'
 
-  belongs_to :commentable, polymorphic: true
   belongs_to :user
+  belongs_to :creator, class_name:  User
+  belongs_to :last_editor, class_name:  User
+  belongs_to :commentable, polymorphic: true
 
   after_update :subscribe_creator
   #todo after_create :notify_subscribers
@@ -13,11 +15,12 @@ class Comment < ActiveRecord::Base
                  :author_email => proc { user.try(:email) || 'guest' },
                  :user_role    => proc { user.try(:admin?) ? 'administrator' : 'user' }
 
-  #todo before_create :check_for_spam
-  after_create  :subscribe_creator,
-                :notify_subscribers
+  #todo before_create or validate :check_for_spam
 
   validates_presence_of :content
+
+  after_create  :notify_subscribers
+
 
   def spam!
     self.approved = false
@@ -42,7 +45,7 @@ class Comment < ActiveRecord::Base
   end
 
   def subscribe_creator
-    commentable.subscribe(user)
+    #todo dont know why this is being called on comment creation but make it do nothing for now
   end
 
   def notify_subscribers

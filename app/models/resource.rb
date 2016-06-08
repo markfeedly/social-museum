@@ -14,8 +14,8 @@ class Resource < ActiveRecord::Base
   include UploadHelper
 
   belongs_to :user
-  belongs_to :creator
-  belongs_to :last_editor
+  belongs_to :creator, class_name: User
+  belongs_to :last_editor, class_name: User
 
   has_one  :title,           as: :titleable,    dependent: :destroy, autosave: true
   has_many :comments,        as: :commentable,  dependent: :delete_all
