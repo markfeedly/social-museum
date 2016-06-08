@@ -1,9 +1,9 @@
 %h1 Subscriptions
 
 - cl = 'btn btn-disabled button-spacing'
-- cl = 'btn btn-primary button-spacing' if collection_item_subscriptions.any? || page_subscriptions.any?
+- cl = 'btn btn-primary button-spacing' if collection_item_subscriptions.any? || page_subscriptions.any? || resource_subscriptions.any?
 
-= link_to('Delete all subscriptions', delete_all_page_subscriptions_subscriptions_path, class: cl)
+= link_to('Delete all subscriptions', delete_all_subscriptions_subscriptions_path, class: cl)
 
 %hr
 
