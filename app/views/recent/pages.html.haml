@@ -1,7 +1,9 @@
+.lesser-page-title Recent activity for more information pages
+
 .recent-page-font
 
-  = render 'recent/columns/column', title: 'Recently created pages', recent: recently_created_pages, time_method: :created_at, path_method: :collection_item_path
+  = render 'recent/columns/column', title: 'Recently created pages', none_msg: 'No recent pages', recent: recently_created_pages, time_method: :created_at, path_method: :collection_item_path
 
-  = render 'recent/columns/column', title: 'Recent page edits', recent: recently_edited_pages, time_method: :updated_at, path_method: :page_path
+  = render 'recent/columns/column', title: 'Recent page edits', none_msg: 'No recent page edits', recent: recently_edited_pages, time_method: :updated_at, path_method: :page_path
 
-  = render 'recent/columns/comment_column', title: 'Pages with recent comments', recent: recently_created_page_comments, time_method: :created_at, path_method: :page_path
+  = render 'recent/columns/comment_column', title: 'Pages with recent comments', none_msg: 'No recent comments on pages', recent: recently_created_page_comments, time_method: :created_at, path_method: :page_path

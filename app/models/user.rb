@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   include Authority::UserAbilities
   include Authority::Abilities
 
-  # :lockable, :timeoutable
+  #todo check devise parameterisation :lockable, :timeoutable
   devise :database_authenticatable, :registerable, :confirmable,
          :recoverable, :rememberable, :trackable, :validatable,
          :omniauthable, :omniauth_providers => [:twitter]
@@ -18,6 +18,8 @@ class User < ActiveRecord::Base
   has_many :subscribed_collection_items, through: :subscriptions, source: :subscribable, source_type: 'CollectionItem'
   has_many :subscribed_pages,            through: :subscriptions, source: :subscribable, source_type: 'Page'
   #todo has_many :subscribed_resources,        through: :subscribable, source: :categorisable, source_type: 'Resource'
+
+  before_create :make_first_user_admin
 
   # -----------------------------------------------------------
 
@@ -43,6 +45,16 @@ class User < ActiveRecord::Base
 
   def guest?
     !persisted?
+  end
+
+  private
+
+  def make_first_user_admin
+    if User.count == 1
+      u = User.find(1)
+      u.admin == true
+      u.save
+    end
   end
 
 end
