@@ -14,6 +14,19 @@ class ApplicationController < ActionController::Base
     super || User.new
   end
 
+  def commentable
+    case params['comment']['commentable_type']
+      when 'CollectionItem'
+        collection_item
+      when 'Page'
+        page
+      when 'Resource'
+        resource
+      else
+        raise
+    end
+  end
+
   def store_location
     # store last url - this is needed for post-login redirect to whatever the user last visited.
     if request.get? && !request.xhr?

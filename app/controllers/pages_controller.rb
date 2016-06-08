@@ -1,7 +1,7 @@
 class PagesController < ApplicationController
   respond_to :html
 
-  expose(:page, attributes: :page_params, finder: :find_by_slug) {|default| default.decorate }
+  expose(:page, attributes: :page_params, finder: :find_by_slug)
   expose(:pages)
   expose(:paginated_pages) { pages.page(params[:page]).per(10)}
   expose(:page_history) do

@@ -3,10 +3,10 @@ class CommentsController < ApplicationController
   expose(:comment)
   expose(:page){Page.find(params[:comment][:commentable_id].to_i)}
   expose(:collection_item){CollectionItem.find(params[:comment][:commentable_id].to_i)}
+  expose(:resource){Resource.find(params[:comment][:commentable_id].to_i)}
 
   def create
-    ci = params['comment']['commentable_type'] == 'CollectionItem'
-
+    path_method = (params['comment']['commentable_type'].underscore+'_path').to_sym
     c = Comment.create( user:   current_user,
                     content:    params[:comment][:content],
                     user_ip:    request.remote_ip,
@@ -14,8 +14,8 @@ class CommentsController < ApplicationController
                     commentable_id: params[:comment][:commentable_id].to_i,
                     user_agent: request.env["HTTP_USER_AGENT"],
                     referrer:   request.env["HTTP_REFERRER"] )
-    ci ? collection_item.comments << c : page.comments << c
-    redirect_to ci ? collection_item_path(collection_item) : page_path(page)
+    commentable.comments << c
+    redirect_to send(path_method, commentable)
   end
 
   def destroy
