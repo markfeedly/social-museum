@@ -40,7 +40,7 @@ class Page < ActiveRecord::Base
 
   #todo validates  :check_for_spam
   validates_associated :title
-  after_create  :auto_subscribe_user
+  after_create  :auto_subscribe_for_page_creation
   after_update  :auto_subscribe_user
 
   accepts_nested_attributes_for :title
