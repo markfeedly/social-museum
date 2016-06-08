@@ -20,14 +20,6 @@ class PageAuthorizer < Authority::Authorizer
     user.admin?
   end
 
-  def subscribable_by?(user, opts={})
-    !user.guest? && !resource.subscribed?(user)
-  end
-
-  def unsubscribable_by?(user, opts={})
-    !user.guest? && resource.subscribed?(user)
-  end
-
   def collection_item_creatable_by?(user, opts = {})
     user.admin?
   end

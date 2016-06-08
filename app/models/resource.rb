@@ -35,6 +35,9 @@ class Resource < ActiveRecord::Base
   accepts_nested_attributes_for :title
   accepts_nested_attributes_for :resource_usages, allow_destroy: true
 
+  after_create  :auto_subscribe_user
+  after_update  :auto_subscribe_user
+
 
   #tracks_association :resource_usages
   #tracks_association :user

@@ -6,6 +6,9 @@ class Comment < ActiveRecord::Base
   belongs_to :commentable, polymorphic: true
   belongs_to :user
 
+  after_create :subscribe_creator
+  #todo after_create :notify_subscribers
+
   rakismet_attrs :author       => proc { user.try(:name) || 'guest'  },
                  :author_email => proc { user.try(:email) || 'guest' },
                  :user_role    => proc { user.try(:admin?) ? 'administrator' : 'user' }
