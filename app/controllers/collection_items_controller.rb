@@ -28,6 +28,7 @@ class CollectionItemsController < ApplicationController
   end
 
   def create
+    collection_item.creator = current_user
     collection_item.name = params[:collection_item][:title_attributes][:title]
     collection_item.logged_user_id = current_user.id
     collection_item.user_id = current_user.id
@@ -43,6 +44,7 @@ class CollectionItemsController < ApplicationController
   end
 
   def update
+    collection_item.last_editor = current_user
     collection_item.name = params[:collection_item][:title_attributes][:title]
     collection_item.logged_user_id = current_user.id
     begin

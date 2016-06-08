@@ -8,12 +8,13 @@ class CommentsController < ApplicationController
   def create
     path_method = (params['comment']['commentable_type'].underscore+'_path').to_sym
     c = Comment.create( user:   current_user,
-                    content:    params[:comment][:content],
-                    user_ip:    request.remote_ip,
-                    commentable_type: params[:comment][:commentable_type],
-                    commentable_id: params[:comment][:commentable_id].to_i,
-                    user_agent: request.env["HTTP_USER_AGENT"],
-                    referrer:   request.env["HTTP_REFERRER"] )
+                        creator: current_user,
+                        content:    params[:comment][:content],
+                        user_ip:    request.remote_ip,
+                        commentable_type: params[:comment][:commentable_type],
+                        commentable_id: params[:comment][:commentable_id].to_i,
+                        user_agent: request.env["HTTP_USER_AGENT"],
+                        referrer:   request.env["HTTP_REFERRER"] )
     commentable.comments << c
     redirect_to send(path_method, commentable)
   end
@@ -36,7 +37,9 @@ class CommentsController < ApplicationController
     authorize_action_for comment
     comment.spam!
     comment.save
-    comment.commentable.unsubscribe(comment.user)
+    # todo need to think about this in the light of rakismet and about if manually unsubscribing then is the user good, or not
+    # todo and are they doing it themselves? comment.commentable.unsubscribe(comment.user)
+
     redirect_to :back
   end
 

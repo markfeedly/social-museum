@@ -26,6 +26,7 @@ class PagesController < ApplicationController
   end
 
   def create
+    page.creator = current_user
     page.name = params[:page][:title_attributes][:title]
     page.logged_user_id = current_user.id
     page.user_id = current_user.id
@@ -41,6 +42,7 @@ class PagesController < ApplicationController
   end
 
   def update
+    page.last_editor = current_user
     page.name = params[:page][:title_attributes][:title]
     page.logged_user_id = current_user.id
     begin

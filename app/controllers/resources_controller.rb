@@ -33,6 +33,7 @@ class ResourcesController < ApplicationController
   end
 
   def create
+    resource.creator = current_user
     resource.name = params[:resource][:title_attributes][:title]
     resource.logged_user_id = current_user.id
     resource.user_id = current_user.id
@@ -66,6 +67,7 @@ class ResourcesController < ApplicationController
   end
 
   def update
+    resource.last_editor = current_user
     resource.name = params[:resource][:title_attributes][:title]
     resource.logged_user_id = current_user.id
     resource.user_id = current_user.id
@@ -89,6 +91,16 @@ class ResourcesController < ApplicationController
   def destroy
     resource.destroy
     respond_with(resource)
+  end
+
+  def subscribe
+    resource.subscribe(current_user)
+    redirect_to resource_path(resource)
+  end
+
+  def unsubscribe
+    resource.unsubscribe(current_user)
+    redirect_to resource_path(resource)
   end
 
   def autocomplete_resource_title
