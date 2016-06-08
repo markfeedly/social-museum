@@ -13,6 +13,10 @@ class Resource < ActiveRecord::Base
   include CategoryExtensions
   include UploadHelper
 
+  belongs_to :user
+  belongs_to :creator
+  belongs_to :last_editor
+
   has_one  :title,           as: :titleable,    dependent: :destroy, autosave: true
   has_many :comments,        as: :commentable,  dependent: :delete_all
 

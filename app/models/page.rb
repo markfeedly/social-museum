@@ -15,6 +15,9 @@ class Page < ActiveRecord::Base
   include Diff
 
   #todo belongs_to :user doesnt work
+  belongs_to :user
+  belongs_to :creator
+  belongs_to :last_editor
 
   has_one  :title,           as: :titleable,    dependent: :destroy, autosave: true
   has_many :comments,        as: :commentable,  dependent: :delete_all
