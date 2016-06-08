@@ -12,12 +12,12 @@ class PageAuthorizer < Authority::Authorizer
     true
   end
 
-  def deletable_by?(user, opts={})
-    user.admin?
-  end
-
   def updatable_by?(user, opts={})
     !user.guest?
+  end
+
+  def deletable_by?(user, opts={})
+    user.admin?
   end
 
   def subscribable_by?(user, opts={})
