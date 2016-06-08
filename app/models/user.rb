@@ -19,7 +19,7 @@ class User < ActiveRecord::Base
   has_many :subscribed_pages,            through: :subscriptions, source: :subscribable, source_type: 'Page'
   #todo has_many :subscribed_resources,        through: :subscribable, source: :categorisable, source_type: 'Resource'
 
-  before_create :make_first_user_admin
+  after_create :make_first_user_admin
 
   # -----------------------------------------------------------
 
@@ -52,7 +52,7 @@ class User < ActiveRecord::Base
   def make_first_user_admin
     if User.count == 1
       u = User.find(1)
-      u.admin == true
+      u.admin = true
       u.save
     end
   end
