@@ -15,9 +15,13 @@
 
         = render 'layouts/header_and_footers/in_list_header', ci: collection_item
 
-        %div
+        %a{href: page_url(collection_item)}
+
           .float-left.width-150px.page-summary-image-align
-            = link_to image_tag(ContentHtmlGenerator.page_image(collection_item) || no_image ), collection_item_url(collection_item)
+            - if found_image = ContentHtmlGenerator.page_image(collection_item)
+              = image_tag(found_image)
+            - else
+              = render 'shared/no_image/no_image'
             %br
           .content-preview
             = ContentHtmlGenerator.generate_with_small_images(collection_item)

@@ -14,7 +14,10 @@
       .summary-indent
 
         .float-left.width-150px.page-summary-image-align
-          = link_to image_tag(ContentHtmlGenerator.page_image(page) || no_image), page_url(page)
+          - if found_image = ContentHtmlGenerator.page_image(page)
+            = link_to image_tag(found_image), page_url(page)
+          - else
+            = render 'shared/no_image/no_image'
           %br
         .content-preview
           = ContentHtmlGenerator.generate_with_small_images(page)

@@ -45,7 +45,7 @@
 .width-550px     { width: 550px; }
 .width-600px     { width: 600px; }
 .width-800px     { width: 800px; }
-.content-preview { width: 400px; max-height: 250px; overflow: hidden; float: right; margin-bottom: 5px; }
+.content-preview { width: 400px; min-height: 100px; max-height: 250px; overflow: hidden; float: right; margin-bottom: 5px; }
 .content-preview p { font-size: 1.1em; line-height: 1.4em}
 
 // main tab
@@ -194,4 +194,14 @@ li.del{background:#fee; color:#b00}
 .content-preview a:hover:after {
   //content: url(image/circle.PNG); /* no need for qoutes */
   //display: block;
+}
+
+.no-image {
+  border: 1px solid #aaa;
+  font-size: 1.5em;
+  color: #bbb;
+  text-align: center;
+  padding-left: .17em;
+  width: '150px';
+  height: '100px';
 }
