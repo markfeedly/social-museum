@@ -1,4 +1,4 @@
-class PagesController < ApplicationController
+tclass PagesController < ApplicationController
   respond_to :html
 
   expose(:page, attributes: :page_params, finder: :find_by_slug)
