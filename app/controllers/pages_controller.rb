@@ -90,4 +90,4 @@ tclass PagesController < ApplicationController
                                   :categories,
                                   title_attributes: [:title, :id])
   end
-end
+eend
