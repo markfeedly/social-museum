@@ -1,4 +1,4 @@
-tclass PagesController < ApplicationController
+class PagesController < ApplicationController
   respond_to :html
 
   expose(:page, attributes: :page_params, finder: :find_by_slug)
@@ -90,4 +90,4 @@ tclass PagesController < ApplicationController
                                   :categories,
                                   title_attributes: [:title, :id])
   end
-eend
+end
