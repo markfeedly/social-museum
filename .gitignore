@@ -17,7 +17,6 @@
 /uploads
 
 # minimal Rails specific artifacts
-db/*.sqlite3
 /log/*
 /tmp/*
 
