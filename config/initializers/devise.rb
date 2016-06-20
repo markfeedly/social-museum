@@ -1,7 +1,7 @@
 # Use this hook to configure devise mailer, warden hooks and so forth.
 # Many of these configuration options can be set straight in your model.
 Devise.setup do |config|
-  # mvh for testing -- --
+  # mvh for testing -- -- --
   #TODO remove
   if Rails.env.test?
     config.allow_unconfirmed_access_for = 365.days
