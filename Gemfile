@@ -34,7 +34,7 @@ gem 'secretary-rails'
 gem 'carrierwave'
 gem 'rails4-autocomplete'
 
-gem 'puma'
+gem 'passenger'
 gem 'newrelic_rpm'
 gem 'lograge_params', github: "hedtek/lograge-params"
 gem 'jquery-ui-rails'

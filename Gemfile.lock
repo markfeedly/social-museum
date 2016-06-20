@@ -221,6 +221,9 @@ GEM
     orm_adapter (0.5.0)
     parslet (1.6.1)
       blankslate (~> 2.0)
+    passenger (5.0.28)
+      rack
+      rake (>= 0.8.1)
     pg (0.17.1)
     polyglot (0.3.5)
     pry (0.10.0)
@@ -391,10 +394,10 @@ DEPENDENCIES
   newrelic_rpm
   omniauth-twitter
   parslet
+  passenger
   pg
   pry-byebug
   pry-rails
-  puma
   quiet_assets
   rails (= 4.1.4)
   rails4-autocomplete
