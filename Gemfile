@@ -34,7 +34,7 @@ gem 'secretary-rails'
 gem 'carrierwave'
 gem 'rails4-autocomplete'
 
-gem 'passenger'
+gem 'passenger' #todo should only be in production I think, pma is missing but piced up by puma-guard below
 gem 'newrelic_rpm'
 gem 'lograge_params', github: "hedtek/lograge-params"
 gem 'jquery-ui-rails'
