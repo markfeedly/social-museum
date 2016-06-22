@@ -8,7 +8,7 @@ class CategoriesController < ApplicationController
   expose(:all_ci_count) { all_category_is ? all_categorised_collection_items.count : 0 }
 
   expose(:categorised_collection_items) { category_is ? category_is.collection_items.select { |ci| ci.has_category?(params[:id]) ? ci : nil } : [] }
-  expose(:paginated_caegorised_collection_items) { Kaminari.paginate_array(categorised_collection_items).page(params[:page]).per(10) }
+  expose(:paginated_categorised_collection_items) { Kaminari.paginate_array(categorised_collection_items).page(params[:page]).per(10) }
   expose(:ci_count) { category_is ? categorised_collection_items.count : 0 }
 
 
