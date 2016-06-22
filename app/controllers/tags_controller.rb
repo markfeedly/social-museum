@@ -43,4 +43,7 @@ class TagsController < ApplicationController
   expose(:all_p_class)  { all_ci_count == 0 && all_p_count > 0 ? 'active' : '' }
   expose(:all_r_class)  { all_ci_count == 0 && all_p_count == 0 && all_r_count > 0 ? 'active' : '' }
 
+  def show
+  end
+
 end

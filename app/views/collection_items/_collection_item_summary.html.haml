@@ -16,8 +16,6 @@
         = render 'layouts/header_and_footers/in_list_header', ci: collection_item
 
         %div
-          - #
-
           .float-left.width-150px.page-summary-image-align
             - if found_image = ContentHtmlGenerator.page_image(collection_item)
               %a{href: collection_item_path(collection_item)}
