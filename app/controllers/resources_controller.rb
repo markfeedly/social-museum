@@ -22,7 +22,7 @@ class ResourcesController < ApplicationController
 
 
   def get_uploaded_file
-    upload_dir = ENV['PUBLIC_UPLOAD_DIR']
+    upload_dir = ENV['PUBLIC_UPLOAD_DIR']+'/'
     file_name = upload_dir + "#{params[:type]}/#{params[:id]}/#{params[:name]}.#{params[:format]}"
     send_file file_name, type: get_mime(params[:format].downcase), disposition: 'inline'
   end
