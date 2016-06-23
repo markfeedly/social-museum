@@ -39,11 +39,6 @@ class Resource < ActiveRecord::Base
   accepts_nested_attributes_for :title
   accepts_nested_attributes_for :resource_usages, allow_destroy: true
 
-  after_validation  :clean_file_path
-  after_create  :auto_subscribe_user
-  after_update  :auto_subscribe_user
-
-
   #tracks_association :resource_usages
   #tracks_association :user
   tracks_association :title
@@ -51,19 +46,18 @@ class Resource < ActiveRecord::Base
   tracks_association :category_items
   #todo ? tracks_association :resources
 
-  #todo ? validates_associated :title
-  #--
   validates :title, presence: true
+  #todo ? validates_associated :title
   #validates :source, presence: true
   #validates :url, presence: true, uniqueness: true
   #validate  :validate_url
   #validate  :validate_file
 
-  after_create :clean_file_path
+  after_create :sanetise_filenames
+  #todo after_create :auto_subscribe_user
+  #todo after_update :auto_subscribe_user
 
   alias_attribute :source, :url
-
-  #todo after_create  :subscribe_creator
 
   def file
     @upload
@@ -133,10 +127,26 @@ class Resource < ActiveRecord::Base
 
   # validations ----------------------------------------------------------------------------------------
 
+  def sanetise_filename(name)
+    raise 'bad (empty) filename for upload' if name.empty?
+    arr = name.split('.')
+    raise "bad (no extension) in filename '#{name}' to upload" if arr.length == 1
+    return name if arr.length == 2
+    extension = arr.delete_at(-1)
+    sanetised_base = arr.join('_')
+    sanetised_base + '.' + extension
+  end
+
   private
 
-  def clean_file_path
-    url.gsub!(ENV['PUBLIC_UPLOAD_DIR'], '') if url[0] == '/'
+  def sanetise_filenames
+    if url[0] == '/'
+      sanetised_fn = sanetise_filename(url)
+      File.rename(url, sanetised_fn)
+      self.url = sanetised_fn
+      url.gsub!(ENV['PUBLIC_UPLOAD_DIR'], '') if url[0] == '/'
+      self.save
+    end
   end
 
   def validate_url
