@@ -2,9 +2,6 @@
   - if page.resources == []
     There are no resources associated with this page.
   - else
-    - page.resources.each do |r|
+    - page.resources.each do |res|
       %li
-        %p.bold
-          =link_to r.name, resource_path(r)
-        =link_to image_tag(r.source, title: r.description, class: 'resource-image'), resource_path(r)
-        %hr
+        = render 'resources/resource_summary', resource: res

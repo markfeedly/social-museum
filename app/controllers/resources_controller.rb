@@ -15,7 +15,7 @@ class ResourcesController < ApplicationController
   expose(:want_description) { params[:resource][:description] || '' }
   expose(:want_url) { params[:resource][:url] || '' }
 
-  expose(:slug) { params[:slug] || params[:resource][:slug] }
+  expose(:slug) { (params[:slug] if params.key?(:slug)) || (params[:resource][:slug] if params.key?(:resource)) }
   expose(:for_resourceable)  { CollectionItem.find_by_slug(slug) || Page.find_by_slug(slug) }
 
   autocomplete :resource, :title
