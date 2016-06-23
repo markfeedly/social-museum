@@ -51,7 +51,7 @@ class User < ActiveRecord::Base
 
   def make_first_user_admin
     if User.count == 1
-      u = User.find(1)
+      u = User.first
       u.admin = true
       u.save
     end
