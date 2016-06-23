@@ -71,6 +71,7 @@ class ResourcesController < ApplicationController
   end
 
   def update
+    xxx
     resource.last_editor = current_user
     resource.name = params[:resource][:title_attributes][:title]
     resource.logged_user_id = current_user.id
@@ -79,6 +80,14 @@ class ResourcesController < ApplicationController
       resource.update_attributes(resource_params)
       resource.set_tags_from_string( params[:resource][:tags_as_str] )
       resource.set_categories_from_string( params[:resource][:categories_as_str] )
+      params[:resource][:resource_usages_attributes].each do |selection|
+        case selection[:_destroy]
+          when "1"
+          when "false"
+        end
+      end
+
+
       respond_with(resource)
     rescue => error
       if error.instance_of?(ActiveRecord::StaleObjectError)
@@ -107,7 +116,8 @@ class ResourcesController < ApplicationController
     redirect_to resource_path(resource)
   end
 
-  def autocomplete_resource_title
+  def autocomplete_resourceable_title
+    puts "============ #{Title.where(Title.arel_table[:title].matches("%#{params[:term]}%")).pluck(:title)} ====="
     render json: Title.where(Title.arel_table[:title].matches("%#{params[:term]}%")).pluck(:title)
   end
 

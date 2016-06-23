@@ -10,7 +10,7 @@
         %clear
       -# TODO Phrase button more appropriately, or create a means to select existing resource.
       .float-right
-        = link_to("Add new resource", new_resource_path+"?slug=#{content_source.slug}", class: 'btn btn-primary button-width button-spacing')
+        = link_to("New resource", new_resource_path+"?slug=#{content_source.slug}", class: 'btn btn-primary button-width button-spacing')
       .float-right
         = render 'subscriptions/shared/subscription_buttons', subscribable: content_source
 .clear
