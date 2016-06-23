@@ -45,7 +45,7 @@ VirtualMuseum::Application.routes.draw do
       get :edit_with_conflicts
     end
     get 'P:resources', :action => :index, :on => :collection
-    get :autocomplete_page_title, :on => :collection
+    get :autocomplete_resourceable_title, :on => :collection
   end
 
   resources :subscriptions, only: :index do

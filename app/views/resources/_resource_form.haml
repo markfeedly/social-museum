@@ -36,7 +36,7 @@
   = f.fields_for :resource_usages do |title_form|
     .parent-div.width-400px
       .float-left
-        = title_form.input :page_title, as: :autocomplete, url: autocomplete_page_title_resources_path, label: false
+        = title_form.input :page_title, as: :autocomplete, url: autocomplete_resourceable_title_resources_path, label: false
       .float-right
         = title_form.link_to_remove fa_icon('times'), class: 'btn btn-mini btn-error red'
   = f.link_to_add "Add a page", :resource_usages, class: 'btn'
