@@ -7,9 +7,9 @@
         = ', ' if started
         - started = true
         - if r.is_a?(Page)
-          = link_to r.title, page_path(r)
+          = link_to r.name, page_path(r)
         - else
-          = link_to r.title.title, collection_item_path(r)
+          = link_to r.name, collection_item_path(r)
   - else
     This is not a resource for any collection items or information pages yet, edit to associate with these
 .color-bbb

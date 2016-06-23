@@ -1,14 +1,17 @@
-.page-title-main= collection_item.title.title
+.std-width
+  .page-title-main= collection_item.title.title
 
-= render 'layouts/tab_headers/collection_item_tabs'
+  = # render 'collection_items/collection_item_info'
 
-#my-tab-content.tab-content
+  = render 'layouts/tab_headers/collection_item_tabs'
 
-  #content-tab.tab-pane.active
-    = render 'collection_items/collection_item_content'
+  #my-tab-content.tab-content
 
-  #resource-tab.tab-pane
-    = render  'resources/page_resources', page: collection_item
+    #content-tab.tab-pane.active
+      = render 'collection_items/collection_item_content'
 
-  #history-tab.tab-pane
-    = render 'collection_items/content_page_history'
+    #resource-tab.tab-pane
+      = render  'resources/page_resources', page: collection_item
+
+    #history-tab.tab-pane
+      = render 'collection_items/content_page_history'

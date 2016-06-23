@@ -69,6 +69,7 @@ end
 
 group :development do
   gem 'meta_request'
+  gem 'xray-rails'
 end
 
 group :test do
