@@ -15,6 +15,9 @@ class ResourcesController < ApplicationController
   expose(:want_description) { params[:resource][:description] || '' }
   expose(:want_url) { params[:resource][:url] || '' }
 
+  expose(:slug) { params[:slug] || params[:resource][:slug] }
+  expose(:for_resourceable)  { CollectionItem.find_by_slug(slug) || Page.find_by_slug(slug) }
+
   autocomplete :resource, :title
 
   #todo use: authorize_actions_for Resource
@@ -40,6 +43,7 @@ class ResourcesController < ApplicationController
     if resource.save
       resource.set_tags_from_string( params[:resource][:tags_as_str] )
       resource.set_categories_from_string( params[:resource][:categories_as_str] )
+      for_resourceable.resources << resource if for_resourceable
     end
     respond_with(resource)
   end
@@ -119,6 +123,7 @@ class ResourcesController < ApplicationController
                                      :lock_version,
                                      :url,
                                      :file,
+                                     :slug,
                                      :tags,
                                      title_attributes: [:title, :id],
                                      resource_usages_attributes: [:id, :resource_title, :_destroy])

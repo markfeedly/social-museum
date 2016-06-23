@@ -1,3 +1,7 @@
+- str = ''
+- str = " for #{for_resourceable.name}" if for_resourceable
+
+
 .page-title
-  Create a resource
+  Create a resource #{str}
 = render :partial => 'resources/resource_form', locals: {act: :create}

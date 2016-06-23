@@ -1,5 +1,6 @@
 = simple_nested_form_for(resource, :html => {:data => {:role => 'resource-form'}, :multipart => true}) do |f|
-  = f.input :lock_version, as: :hidden
+  = f.input :lock_version, as: :fake
+  = f.input :slug, input_html: { value: slug }
 
   = f.fields_for :title do |title_form|
     = title_form.input :title, input_html: {id: 'page_title'}, wrapper_html: {data: {role: 'title'}}, error_html: {data: {role: 'error'}}
