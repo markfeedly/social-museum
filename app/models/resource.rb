@@ -58,6 +58,7 @@ class Resource < ActiveRecord::Base
   #todo after_update :auto_subscribe_user
 
   alias_attribute :source, :url
+  attr_accessor :slug
 
   def file
     @upload
