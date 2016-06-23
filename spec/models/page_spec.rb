@@ -29,7 +29,7 @@ describe 'Page' do
   describe "Assignment" do
     it "of page title" do
       title.update(title: 'new title')
-      expect(page.title).to eq('new title')
+      expect(page.name).to eq 'new title'
     end
 
     it "of page content without recorded history" do
@@ -81,7 +81,7 @@ describe 'Page' do
 
     specify "title" do
       page.update(title: 'new title')
-      expect(page.title).to eq('new title')
+      expect(page.name).to eq('new title')
     end
 
     specify "user" do
@@ -114,7 +114,7 @@ describe 'Page' do
     end
 
     it "page should reflect successive changes" do
-      expect{page.update(user: user, title: 'changed title')}.to change{page.title}.to('changed title')
+      expect{page.update(user: user, title: 'changed title')}.to change{page.name}.to('changed title')
       expect{page.update(user: user, title: 'another title')}.to change{page.lock_version}
       expect{page.update(user: user, description: 'changed content')}.to change{page.description}.to('changed content')
     end

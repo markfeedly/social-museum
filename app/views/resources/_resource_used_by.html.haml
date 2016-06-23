@@ -3,7 +3,7 @@
     Resource belongs to
     %div
       - started = false
-      - resource.resourceables.sort{ |a,b| a.hacky_title <=> b.hacky_title }.each do |r|
+      - resource.resourceables.sort{ |a,b| a.name <=> b.name }.each do |r|
         = ', ' if started
         - started = true
         - if r.is_a?(Page)
