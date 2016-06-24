@@ -4,7 +4,7 @@
     %div
       - started = false
       - res_list = resource.resourceables.select!{ |r| r} || []
-      - res_list.sort{ |a,b| a.name <=> b.name }.each do |r|
+      - resource.resourceables.sort{ |a,b| a.name <=> b.name }.each do |r|
         = ', ' if started
         - started = true
         - if r.is_a?(Page)
