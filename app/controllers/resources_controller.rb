@@ -101,14 +101,17 @@ class ResourcesController < ApplicationController
             puts "*** in [destroy, add] === do nothing"
           when ['no destroy', 'add']
             puts "*** in [no destroy, add]"
-            typ = selection['page_title'] =~ / .c\d+.$/ ? 'CollectionItem' : 'Page'
-            r_id = selection['page_title'].match(/ {[pc](\d+)}$/)[1].to_i
-            puts "== typ #{typ}"
-            puts "== rid #{r_id}"
-            resourceable = (typ == 'CollectionItem' ? CollectionItem.find(r_id) : Page.find(r_id))
-            puts "== rid #{resourceable}"
+            if selection['page_title'] != ''
+              typ = selection['page_title'] =~ / .c\d+.$/ ? 'CollectionItem' : 'Page'
+              r_id = selection['page_title'].match(/ {[pc](\d+)}$/)[1].to_i
+              puts "== typ #{typ}"
+              puts "== rid #{r_id}"
+              resourceable = (typ == 'CollectionItem' ? CollectionItem.find(r_id) : Page.find(r_id))
+              puts "== rid #{resourceable}"
 
-            ResourceUsage.create(resource_id: resource.id, resourceable_id: r_id, resourceable_type: typ)
+              ResourceUsage.create(resource_id: resource.id, resourceable_id: r_id, resourceable_type: typ)
+            end
+
             ResourceUsage.where(resource_id: nil).each { |ru| ru.destroy } unless ResourceUsage.where(resource_id: nil).blank?
             ResourceUsage.where(resourceable_id: nil).each { |ru| ru.destroy } unless ResourceUsage.where(resourceable_id: nil).blank?
             ResourceUsage.where(resourceable_type: nil).each { |ru| ru.destroy } unless ResourceUsage.where(resourceable_type: nil).blank?
@@ -147,7 +150,7 @@ class ResourcesController < ApplicationController
   end
 
   def autocomplete_resourceable_title
-    list = Title.where(Title.arel_table[:title].matches("%#{params[:term]}%")).pluck(:title, :id)
+    list = Title.where(Title.arel_table[:title].matches("%#{params[:term]}%")).pluck(:title, :id, :titleable_type)
     render json: make_menu_items(list)
   end
 
@@ -155,6 +158,16 @@ class ResourcesController < ApplicationController
 
   def make_menu_items(list)
     list.reject! { |i| Title.find(i[1]).titleable_type == 'Resource'  }
+    reject_list = resource.resourceables
+    list.reject! do |i|
+      reject_list.each do |j|
+        reject_type = j.resourceable_type
+        reject_id   = j.resourceable_id
+        candidate_type = i[2]
+        candidate_id   = i[1]
+        reject_type != candidate_type || reject_id != candidate_id
+      end
+    end
     list.collect do |i|
       title = i[0]
       ttl = Title.find(i[1].to_i)
