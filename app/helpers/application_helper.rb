@@ -1,14 +1,5 @@
 module ApplicationHelper
 
-  def no_image
-    full_dir_path = ENV['PUBLIC_UPLOAD_DIR']+'/images/0/'
-    full_file_path = full_dir_path+'no_image.png'
-    if ! File.file?(full_file_path)
-      FileUtils::makedirs(full_dir_path)
-      FileUtils::copy(Rails.root+'app/assets/images/no_image.png', full_file_path)
-    end
-    '/get_uploaded_file/images/0/no_image.png'.html_safe
-  end
 
   def category_list(categories)
     categories.map do |cat|

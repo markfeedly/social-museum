@@ -1,6 +1,7 @@
 (function (jQuery) {
     var self = null;
     var options = {};
+
     jQuery.fn.railsAutocomplete = function () {
         var handler = function () {
             if (!this.railsAutoCompleter) {
@@ -14,12 +15,16 @@
             return this.live("focus", handler)
         }
     };
+
     jQuery.railsAutocomplete = function (e) {
         _e = e;
         this.init(_e)
     };
+
     jQuery.railsAutocomplete.fn = jQuery.railsAutocomplete.prototype = {railsAutocomplete: "0.0.1"};
+
     jQuery.railsAutocomplete.fn.extend = jQuery.railsAutocomplete.extend = jQuery.extend;
+
     jQuery.railsAutocomplete.fn.extend({
         init: function (e) {
             e.delimiter = jQuery(e).attr("data-delimiter") || null;
@@ -32,6 +37,7 @@
             }
 
             jQuery(e).autocomplete($.extend({
+
                 source: function (request, response) {
                     jQuery.getJSON(jQuery(e).attr("data-autocomplete"), {term: extractLast(request.term)}, function () {
                         if (arguments[0].length == 0) {
@@ -45,7 +51,9 @@
                         });
                         response.apply(null, arguments)
                     })
-                }, change: function (event, ui) {
+                },
+
+                change: function (event, ui) {
                     if (jQuery(jQuery(this).attr("data-id-element")).val() == "") {
                         return
                     }
@@ -58,14 +66,20 @@
                     for (var key in update_elements) {
                         jQuery(update_elements[key]).val(ui.item ? data[key] : "")
                     }
-                }, search: function () {
+                },
+
+                search: function () {
                     var term = extractLast(this.value);
                     if (term.length < 2) {
                         return false
                     }
-                }, focus: function () {
+                },
+
+                focus: function () {
                     return false
-                }, select: function (event, ui) {
+                },
+
+                select: function (event, ui) {
                     var terms = split(this.value);
                     terms.pop();
                     terms.push(ui.item.value);
@@ -98,7 +112,9 @@
             }, options[e.id]))
         }
     });
+
     jQuery(document).ready(function () {
         jQuery("input[data-autocomplete]").railsAutocomplete()
     })
+
 })(jQuery);
