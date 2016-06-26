@@ -1,6 +1,19 @@
 module UpdateResourceUse
   extend ActiveSupport::Concern
 
+  def make_menu_items
+    list = Title.where(Title.arel_table[:title].matches("%#{params[:term]}%")).pluck(:title, :id)
+    list.reject!{ |title_str, id| t = Title.find_by_id(id); t.title == title_str && t.titleable_type == 'Resource' if t }
+    list.collect do |i|
+      title = i[0]
+      ttl = Title.find(i[1].to_i)
+      res_class_abbr =  ttl.titleable_type == 'Page' ? 'p' : 'c'
+      res_id = ttl.titleable_id.to_s
+      puts '=== ' + title + '( ' + res_class_abbr + res_id + ')'
+      title + ' {' + res_class_abbr + res_id + '}'
+    end
+  end
+
   def update_resource_use
     begin
       res_use_attrs = params[:resource][:resource_usages_attributes]
@@ -29,8 +42,9 @@ module UpdateResourceUse
               puts "== rid #{r_id}"
               resourceable = (typ == 'CollectionItem' ? CollectionItem.find(r_id) : Page.find(r_id))
               puts "== rid #{resourceable}"
-
-              ResourceUsage.create(resource_id: resource.id, resourceable_id: r_id, resourceable_type: typ)
+              unless ResourceUsage.where(resource_id: resource.id, resourceable_id: r_id, resourceable_type: typ)
+                ResourceUsage.create(resource_id: resource.id, resourceable_id: r_id, resourceable_type: typ)
+              end
             end
 
             ResourceUsage.where(resource_id: nil).each { |ru| ru.destroy } unless ResourceUsage.where(resource_id: nil).blank?
