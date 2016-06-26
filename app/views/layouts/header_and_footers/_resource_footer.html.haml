@@ -1,0 +1,13 @@
+.content-footer.parent-div
+  .content-t-and-c.float-left
+    = render 'categories/categories', categories: content_source.categories.collect{|c| c.name }
+    = render  'tags/tags', tags: content_source.tags.collect{|t| t.name }
+
+  .content-edit-button.float-right.button-width
+    - if current_user.can_update?(content_source)
+      .float-right
+        = link_to("Edit", edit_content_source_path, class: 'btn btn-primary button-width button-spacing')
+        %clear
+      .float-right
+        = render 'subscriptions/shared/subscription_buttons', subscribable: content_source
+.clear
