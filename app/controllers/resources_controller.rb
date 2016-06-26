@@ -113,45 +113,11 @@ class ResourcesController < ApplicationController
   end
 
   def autocomplete_resourceable_title
-    list = Title.where(Title.arel_table[:title].matches("%#{params[:term]}%")).pluck(:title, :id) #, :titleable_type)
-    puts ">>>>>>>>>>>> #{list}"
-    list.collect do |i|
-      title = i[0]
-      ttl = Title.find(i[1].to_i)
-      res_class_abbr =  ttl.titleable_type == 'Page' ? 'p' : 'c'
-      res_id = ttl.titleable_id.to_s
-      puts '=== ' + title + '( ' + res_class_abbr + res_id + ')'
-      title + ' {' + res_class_abbr + res_id + '}'
-    end
-    puts ">>>>>>>>>>>> #{list}"
-    render json: make_menu_items(list)
+    render json: make_menu_items
   end
 
   private
 
-  def make_menu_items(list)
-=begin
-    list.reject! { |i| Title.find(i[1]).titleable_type == 'Resource'  }
-    reject_list = resource.resourceables
-    list.reject! do |i|
-      reject_list.each do |j|
-        reject_type = j.resourceable_type
-        reject_id   = j.resourceable_id
-        candidate_type = i[2]
-        candidate_id   = i[1]
-        reject_type != candidate_type || reject_id != candidate_id
-      end
-    end
-=end
-    list.collect do |i|
-      title = i[0]
-      ttl = Title.find(i[1].to_i)
-      res_class_abbr =  ttl.titleable_type == 'Page' ? 'p' : 'c'
-      res_id = ttl.titleable_id.to_s
-      puts '=== ' + title + '( ' + res_class_abbr + res_id + ')'
-      title + ' {' + res_class_abbr + res_id + '}'
-    end
-  end
 
   def empty_params
     params.require(:resource).permit()
