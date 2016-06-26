@@ -2,7 +2,9 @@
   = f.input :lock_version, as: :hidden
 
   = f.fields_for :title do |title_form|
-    = title_form.input :title, input_html: {id: 'collection_item_title'}, wrapper_html: {data: {role: 'title'}}, error_html: {data: {role: 'error'}}
+    - titl = collection_item.name
+    - (titl = params[:page_title] || '') if (titl == nil || titl == '')
+    = title_form.input :title, input_html: {value: titl, id: 'collection_item_title'}, wrapper_html: {data: {role: 'title'}}, error_html: {data: {role: 'error'}}
 
   .parent-div.width-500px
     .float-left
