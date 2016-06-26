@@ -7,11 +7,6 @@
 
     - case true
 
-      - when resource.valid_image_filename?
-        - split_path = resource.file_type_id_and__name
-        - img_src = uploaded_path(split_path[:type], split_path[:id], split_path[:name])
-        %img.width-600px{src: resourcez_url_path(resource)}
-
       -when resource.valid_image_url?
         %img.width-600px{src: resourcez_url_path(resource)}
 
@@ -24,14 +19,13 @@
         - src = uploaded_path(split_path[:type], split_path[:id], split_path[:name])
         %href{src: src} #{split_path[:name]}
 
-
       - else
         %span.red
           Internal error: The resource could not be previewed because the stored link was not valid
 
   = ContentHtmlGenerator.generate_full(resource)
 
-  = render 'layouts/header_and_footers/content_footer', content_source: resource, edit_content_source_path: edit_resource_path(resource)
+  = render 'layouts/header_and_footers/resource_footer', content_source: resource, edit_content_source_path: edit_resource_path(resource)
 
   #comments.comments-spacer
     = render 'comments/comments', commentable: resource

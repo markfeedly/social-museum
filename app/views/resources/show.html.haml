@@ -1,11 +1,12 @@
-.page-title-main= "#{resource.name} #{resource.id}"
+.std-width
+  .page-title-main= "#{resource.name} #{resource.id}"
 
-= render 'layouts/tab_headers/resources_tabs'
+  = render 'layouts/tab_headers/resources_tabs'
 
-#my-tab-content.tab-content
+  #my-tab-content.tab-content
 
-  #content-tab.tab-pane.active
-    = render 'resources/resource_content'
+    #content-tab.tab-pane.active
+      = render 'resources/resource_content'
 
-  #history-tab.tab-pane
-    = render 'resources/content_page_history'
+    #history-tab.tab-pane
+      = render 'resources/content_page_history'
