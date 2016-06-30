@@ -36,8 +36,6 @@ class Page < ActiveRecord::Base
 
   default_scope {order('LOWER(name)')}
 
-  scope    :ordered_by_title, ->{joins(:title).order("titles.title")}
-
   #todo validates  :check_for_spam
   validates_associated :title
   after_create  :auto_subscribe_for_page_creation
