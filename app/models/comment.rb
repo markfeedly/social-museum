@@ -8,28 +8,23 @@ class Comment < ActiveRecord::Base
   belongs_to :last_editor, class_name:  User
   belongs_to :commentable, polymorphic: true
 
+  validates_presence_of :content
+  validate :check_for_spam
+  after_create  :notify_subscribers
   after_update :subscribe_creator
-  #todo after_create :notify_subscribers
 
   rakismet_attrs :author       => proc { user.try(:name) || 'guest'  },
                  :author_email => proc { user.try(:email) || 'guest' },
                  :user_role    => proc { user.try(:admin?) ? 'administrator' : 'user' }
 
-  #todo before_create or validate :check_for_spam
-
-  validates_presence_of :content
-
-  after_create  :notify_subscribers
-
-
   def spam!
     self.approved = false
     super
   end
-  
-  def ham!
-    commentable.subscribe(user) #todo needs auth check, needs creator_id
 
+  #todo needs auth check, needs creator_id
+  def ham!
+    commentable.subscribe(user)
     self.approved = true
     notify_subscribers unless self.notified
     super
@@ -38,9 +33,9 @@ class Comment < ActiveRecord::Base
   private
 
   def check_for_spam
-    puts 'cfs========='
-    self.approved = false #!self.spam?
-    puts "#{self.approved} -------------"
+    puts '==== In Comment#check_for _spam ========='
+    self.approved = !self.spam?
+    puts "====   approved is #{self.approved} -------------"
     false
   end
 

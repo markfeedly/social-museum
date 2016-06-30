@@ -42,5 +42,8 @@ module VirtualMuseum
 
     config.rakismet.key  = ENV['WORDPRESS_KEY']
     config.rakismet.url  = ENV['SITE']
+    # Rakismet default is test is false
+    config.rakismet.test = true if ENV['RAKISMET_TEST'] == 'true'
+
   end
 end
