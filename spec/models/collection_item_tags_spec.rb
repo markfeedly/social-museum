@@ -2,10 +2,15 @@ require 'spec_helper'
 
 describe 'CollectionItem Tags' do
 
+  def new_collection_item
+    FactoryGirl.create(:collection_item, user_id: user.id)
+  end
+
+  let(:user){ FactoryGirl.create(:user) }
+
   let(:collection_item){
     CollectionItem.delete_all
-    FactoryGirl.create(:collection_item)
-    CollectionItem.first
+    new_collection_item
   }
 
   it 'basic' do
