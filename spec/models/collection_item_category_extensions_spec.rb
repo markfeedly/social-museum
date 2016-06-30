@@ -2,8 +2,12 @@ require 'spec_helper'
 
 describe 'Category Extensions' do
 
-  let(:collection_item){ FactoryGirl.create(:collection_item) }
+  def new_collection_item
+    FactoryGirl.create(:collection_item, user_id: user.id)
+  end
 
+  let(:user){ FactoryGirl.create(:user) }
+  let(:collection_item){ new_collection_item }
   it 'should get the right trail' do
     expect(Category.category_trail('VUM Atlas', :isa)).to eq ['VUM Atlas', 'Atlas', 'Computer']
   end
