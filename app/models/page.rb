@@ -14,7 +14,7 @@ class Page < ActiveRecord::Base
   include CategoryExtensions
   include Diff
 
-  #todo belongs_to sometimes doesnt work
+  #todo belongs_to sometimes doesnt work - really, still?
   belongs_to :user
   belongs_to :creator, class_name: User
   belongs_to :last_editor, class_name: User
