@@ -9,7 +9,7 @@
             - if current_user.can_read?(CollectionItem)
               %li= #link_to 'Contents', table_of_contents_path - not needed for now
               %li.menu-highlight= link_to 'Collection', collection_items_path
-              %li.menu-highlight= link_to 'More Information', pages_path
+              %li.menu-highlight= link_to 'Additional information', pages_path
               %li.menu-highlight= link_to 'Resources', resources_path
 
             %li.dropdown
@@ -19,7 +19,7 @@
                 - if current_user.can_create?(CollectionItem)
                   %li= link_to "New Collection Item", new_collection_item_path, id: 'add_collection_item'
                 - if current_user.can_create?(Page)
-                  %li= link_to "New More Information Page", new_page_path, :id => 'add_page_link'
+                  %li= link_to "New additional information Page", new_page_path, :id => 'add_page_link'
                 - if current_user.can_create?(Resource)
                   %li= link_to 'New Resource', new_resource_path, :id => 'add_resource_link'
                 - if ! (current_user.can_create?(CollectionItem) || current_user.can_create?(Page) || current_user.can_create?(Resource))
