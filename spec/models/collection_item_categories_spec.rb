@@ -2,7 +2,11 @@ require 'spec_helper'
 
 describe 'CollectionItem Categories' do
 
-  let(:collection_item){ FactoryGirl.create(:collection_item) }
+  let(:user){ FactoryGirl.create(:user) }
+  def new_collection_item
+    FactoryGirl.create(:collection_item, user_id: user.id)
+  end
+  let(:collection_item){ new_collection_item }
 
   it 'basic creation of collection item' do
     expect(collection_item.name).to eq 'Some title 1'
@@ -52,7 +56,7 @@ describe 'CollectionItem Categories' do
   it 'should deal with the repeated use of the same category' do
     collection_item
     expect(Category.where(name: 'cat1').length).to eq 1
-    FactoryGirl.create(:collection_item)
+    new_collection_item
     expect(Category.where(name: 'cat1').length).to eq 1
     cat_id = Category.where(name: 'cat1').first.id
     expect(CategoryItem.where(category_id: cat_id).length).to eq 2
@@ -60,7 +64,7 @@ describe 'CollectionItem Categories' do
 
   it 'should destroy a CollectionItem and its CategoryItems ' do
     collection_item
-    FactoryGirl.create(:collection_item)
+    new_collection_item
     expect(CategoryItem.count).to eq 4
     CollectionItem.first.destroy
     expect(Category.where(name: 'cat1').length).to eq 1
@@ -69,7 +73,7 @@ describe 'CollectionItem Categories' do
 
   it 'should destroy a Category and its CategoryItems ' do
     collection_item
-    FactoryGirl.create(:collection_item)
+    new_collection_item
     expect(CollectionItem.count).to eq 2
     expect(CategoryItem.count).to eq 4
     expect(Category.count).to eq 2
