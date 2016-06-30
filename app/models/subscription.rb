@@ -6,7 +6,7 @@ class Subscription < ActiveRecord::Base
   belongs_to :subscribable, polymorphic: true
 
   def self.subscribe_user_to(user:, subscribable:)
-    create(user: user, subscribable: subscribable)
+    create(user: user, subscribable: subscribable) unless Subscription.find_by(user: user, subscribable: subscribable)
   end
 
   def self.unsubscribe_user_from(user:, subscribable:)

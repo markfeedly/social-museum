@@ -52,19 +52,18 @@ describe 'Subscription' do
 
   it "should allow a user to subscribe to multiple pages" do
     page1 = FactoryGirl.create(:page,
-                                title:   FactoryGirl.create(:title),
-                               user_id:     user.id,
+                                title:       FactoryGirl.create(:title),
+                                user_id:     user.id,
                                 description: 'anyway' )
     page1.subscribe(user)
     expect(user.subscribed_pages).to include(page, page1)
 
     page2 = FactoryGirl.create(:page,
                                 title:   FactoryGirl.create(:title),
-                               user_id:     user.id,
+                                user_id:     user.id,
                                 description: 'racy' )
     page2.subscribe(user)
     user.reload
-
     expect(user.subscribed_pages.count).to eq 3
     expect(user.subscribed_pages).to include(page, page1, page2)
   end
@@ -86,6 +85,7 @@ describe 'Subscription' do
   it "should not re-subcribe comment creators if already subscribed" do
     page.comments.create(user:       user,
                          content:   'meh'  )
+
     expect(page.subscribers.count).to eq 1
     expect(page.subscribers).to include(user)
 

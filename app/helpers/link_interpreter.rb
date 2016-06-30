@@ -109,6 +109,14 @@ class LinkInterpreter
     "<img src='#{@first}' style='width: #{@rest}px;'/>"
   end
 
+  def process_resource_image
+    "<ing src=#{@rest.split(' ')[0]}' style='width: #{rest.split(' ')[1]}px;'/>"
+  end
+
+  def process_reosurce_image_with_width
+    "<ing src=#{rest.split(' ')[0]}' />"
+  end
+
   def process_image_url
     @rest ? process_image_url_with_width : process_image_url_without_width
   end
