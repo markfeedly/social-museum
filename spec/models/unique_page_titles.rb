@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Pages with unique titles' do
+describe "Pages with unique titles" do
 
   let(:user) {FactoryGirl.create(:user) }
   let(:page){ FactoryGirl.create(:page,
@@ -8,7 +8,7 @@ describe 'Pages with unique titles' do
                                  user: user,
                                  content: 'any' ) }
 
-  it 'should not save a page with the same title' do
+  it "should not save a page with the same title" do
     expect{Page.create!(title: page.title,
                         user: user,
                         content: 'any' )}.
