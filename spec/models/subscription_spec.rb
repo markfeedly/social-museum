@@ -2,52 +2,56 @@ require 'spec_helper'
 
 describe 'Subscription' do
 
-  let(:user)  { FactoryGirl.create(:user) }
-  let(:user1) { FactoryGirl.create(:user) }
-  let(:title) { FactoryGirl.create(:title) }
-  let(:page)  { FactoryGirl.create(:page,
-                                    title:   title,
-                                    user_id:     user.id,
-                                    description: 'any' ) }
-
-  before {page}
-
-  it "should subscribe page creator" do
-    expect(Page.count).to eq 1
-    expect(page.subscribers.count).to eq 1
-    expect(page.subscribers.last).to eq user
+  def new_user
+    FactoryGirl.create(:user)
   end
 
-  it "should add a subscriber" do
-    page.subscribe(user1)
+
+  def new_page(user = FactoryGirl.create(:user))
+    title = FactoryGirl.create(:title)
+    FactoryGirl.create(:page,
+                       title:   title,
+                       user_id: user.id,
+                       description: 'any')
+  end
+
+  it "should subscribe page creator" do
+    page = new_page
+    expect(page.subscribers.count).to eq 1
+    expect(page.subscribers.last.id).to eq page.user_id
+  end
+
+  it "should add another subscriber" do
+    page = new_page
+    another_user = new_user
+    page.subscribe(another_user)
     expect(page.subscribers.count).to eq 2
-    expect(page.subscribers.first).to eq user
-    expect(page.subscribers.last).to eq user1
+    expect(page.subscribers.last).to eq another_user
   end
 
   it "should add a subscriber once only" do
-    page.subscribe(user1)
-    page.subscribe(user1)
+    page = new_page
+    another_user = new_user
+    page.subscribe(another_user)
+    page.subscribe(another_user)
     expect(page.subscribers.count).to eq 2
-    expect(page.subscribers).to include(user)
-    expect(page.subscribers).to include(user1)
-    expect(user.subscribed_pages).to eq [page]
+    expect(page.subscribers).to include(another_user)
+    expect(another_user.subscribed_pages).to eq [page]
   end
 
   it "should keep track of subscribed pages for several users" do
+    user = new_user
+    page = new_page(user)
     expect(user.subscribed_pages).to eq [page]
-    expect(user1.subscribed_pages).to eq []
-    page.subscribe(user1)
-    expect(page.subscribers).to include(user, user1)
+    another_user = new_user
+    expect(another_user.subscribed_pages).to eq []
+    page.subscribe(another_user)
+    another_user.reload
+    expect(another_user.subscribed_pages).to eq [page]
+    another_page = new_page(another_user)
+    another_user.reload
+    expect(another_user.subscribed_pages).to eq [another_page, page]
     expect(user.subscribed_pages).to eq [page]
-    user1.reload
-    expect(user1.subscribed_pages).to eq [page]
-    page1 = FactoryGirl.create(:page,
-                               title:   FactoryGirl.create(:title),
-                               user_id:     user.id,
-                               description: 'anyway' )
-    user.reload
-    expect(user.subscribed_pages).to eq [page1, page]
   end
 
   it "should allow a user to subscribe to multiple pages" do
