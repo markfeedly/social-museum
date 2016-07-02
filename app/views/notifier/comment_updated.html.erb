@@ -1,8 +1,8 @@
 Hello!
 <%= @comment.user.try(:name)|| 'A guest' %> has just commented on page
-<%= @comment.page.title %>
+<%= @page.name %>
 
 <%= @comment.content %>
 You can view this page by going to:
-<%= link_to @page.title, page_url(@page) %>
+<%= link_to @page.name, page_url(@page) %>
 <%= link_to "Unsubscribe", unsubscribe_page_url(@page) %>

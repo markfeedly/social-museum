@@ -6,8 +6,17 @@ describe 'Subscription' do
     FactoryGirl.create(:user)
   end
 
+  def new_user_and_page
+    user = FactoryGirl.create(:user)
+    title = FactoryGirl.create(:title)
+    page = FactoryGirl.create(:page,
+                       title:   title,
+                       user_id: user.id,
+                       description: 'any')
+    [ user, page ]
+  end
 
-  def new_page(user = FactoryGirl.create(:user))
+  def new_page_for_user(user = FactoryGirl.create(:user))
     title = FactoryGirl.create(:title)
     FactoryGirl.create(:page,
                        title:   title,
@@ -16,13 +25,14 @@ describe 'Subscription' do
   end
 
   it "should subscribe page creator" do
-    page = new_page
+    user, page = new_user_and_page
     expect(page.subscribers.count).to eq 1
+    expect(page.subscribers.last.id).to eq page.user_id
     expect(page.subscribers.last.id).to eq page.user_id
   end
 
   it "should add another subscriber" do
-    page = new_page
+    user, page = new_user_and_page
     another_user = new_user
     page.subscribe(another_user)
     expect(page.subscribers.count).to eq 2
@@ -30,7 +40,7 @@ describe 'Subscription' do
   end
 
   it "should add a subscriber once only" do
-    page = new_page
+    user, page = new_user_and_page
     another_user = new_user
     page.subscribe(another_user)
     page.subscribe(another_user)
@@ -40,48 +50,36 @@ describe 'Subscription' do
   end
 
   it "should keep track of subscribed pages for several users" do
-    user = new_user
-    page = new_page(user)
-    expect(user.subscribed_pages).to eq [page]
-    another_user = new_user
-    expect(another_user.subscribed_pages).to eq []
-    page.subscribe(another_user)
-    another_user.reload
-    expect(another_user.subscribed_pages).to eq [page]
-    another_page = new_page(another_user)
-    another_user.reload
-    expect(another_user.subscribed_pages).to eq [another_page, page]
-    expect(user.subscribed_pages).to eq [page]
-  end
+    first_user, first_page = new_user_and_page
+    expect(first_user.subscribed_pages).to eq [first_page]
+    second_page = new_page_for_user(first_user)
+    first_user.reload
+    expect(first_user.subscribed_pages).to eq [second_page, first_page]
 
-  it "should allow a user to subscribe to multiple pages" do
-    page1 = FactoryGirl.create(:page,
-                                title:       FactoryGirl.create(:title),
-                                user_id:     user.id,
-                                description: 'anyway' )
-    page1.subscribe(user)
-    expect(user.subscribed_pages).to include(page, page1)
+    second_user = new_user
+    expect(second_user.subscribed_pages).to eq []
 
-    page2 = FactoryGirl.create(:page,
-                                title:   FactoryGirl.create(:title),
-                                user_id:     user.id,
-                                description: 'racy' )
-    page2.subscribe(user)
-    user.reload
-    expect(user.subscribed_pages.count).to eq 3
-    expect(user.subscribed_pages).to include(page, page1, page2)
+    first_page.subscribe(second_user)
+    second_user.reload
+    expect(second_user.subscribed_pages).to eq [first_page]
+
+    second_page.subscribe(second_user)
+    second_user.reload
+    expect(second_user.subscribed_pages).to eq [second_page, first_page]
+    expect(first_user.subscribed_pages).to eq [second_page, first_page]
   end
 
   it "should subscribe a comment creator" do
-    page.comments.create(user:       user1,
-                         content:   'meh'  )
+    user, page = new_user_and_page
+    second_user = new_user
+    page.comments.create(user: second_user, content: 'meh', page_id: page.id)
     expect(page.subscribers.count).to eq 2
-    expect(page.subscribers).to include(user1)
+    expect(page.subscribers).to include(second_user)
   end
 
   it "should not re-subcribe a comment creator if already subscribed" do
-    page.comments.create(user:       user,
-                         content:   'meh'  )
+    user, page = new_user_and_page
+    page.comments.create(user: user, content:   'meh', page_id: page.id)
     expect(page.subscribers.count).to eq 1
     expect(page.subscribers).to include(user)
   end

@@ -7,6 +7,6 @@ class Notifier < ActionMailer::Base
     @user    = user
 
     mail(:to      => user.email,
-         :subject => "[#{ENV['MUSEUM_NAME']}] New comment on page #{comment.page.name} at #{comment.created_at}")
+         :subject => "[#{ENV['MUSEUM_NAME']}] New comment on page #{@page.name} at #{comment.created_at}")
   end
 end
