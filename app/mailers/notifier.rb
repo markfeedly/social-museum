@@ -3,7 +3,7 @@ class Notifier < ActionMailer::Base
 
   def comment_updated(comment, user)
     @comment = comment
-    @page    = comment.page
+    @page    = Page.find(comment.page_id)
     @user    = user
 
     mail(:to      => user.email,

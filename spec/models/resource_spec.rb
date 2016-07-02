@@ -1,7 +1,8 @@
 require 'spec_helper'
 
 describe Resource do
-  let(:resource){ FactoryGirl.create(:resource) }
+  let(:title){ FactoryGirl.create(:title) }
+  let(:resource){ FactoryGirl.create(:resource, title: title )}
 
   # ----------------------------------------------------
 
@@ -12,7 +13,7 @@ describe Resource do
       resource.update(url: 'http://hedtek.com')
       expect(resource).to be_valid
 
-      resource.update(url: 'htstp://hedtek.com')
+      resource.update(url: 'htttttp://hedtek.com')
       expect(resource).to_not be_valid
     end
 
