@@ -22,7 +22,7 @@ class Comment < ActiveRecord::Base
     super
   end
 
-  #todo needs auth check, needs creator_id
+  #todo needs auth check, needs creator_id, why unless for notification
   def ham!
     commentable.subscribe(user)
     self.approved = true
