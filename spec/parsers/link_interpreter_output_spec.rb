@@ -13,13 +13,9 @@ describe LinkInterpreter, "output" do
 
   def new_page(name)
     user = FactoryGirl.create(:user)
-    title = FactoryGirl.create(:title, title: name)
-    page = FactoryGirl.create(:page,
-                              title:   title,
-                              user_id: user.id,
-                              description: 'any')
+    title = FactoryGirl.create(:title, title: name, titleable_type: 'Page')
+    page = FactoryGirl.create(:page, title:   title, user_id: user.id, description: 'any')
     title.titleable_id = page.id
-    title.titleable_type = 'Page'
     page
   end
 
@@ -27,25 +23,19 @@ describe LinkInterpreter, "output" do
 
     it "should output a hyperlink to an existing page" do
       page = new_page('An unusual  Name')
-      check_li_outputs(page.name, :process_title,
-          "<a href='/pages/an-unusual-name' data-page>An unusual  Name</a>" )
+      check_li_outputs(page.name, :process_title, "<a href='/pages/an-unusual-name' data-page>An unusual  Name</a>" )
     end
 
     it "should output a hyperlink to create a missing page" do
-      new_page_title = "This is not the title of existing page; rather for a page to be created by a user"
-      li=LinkInterpreter.new(new_page_title)
-
-      check_outputs(li, :process_title,
-          "<a href='/pages/new?page_title=#{new_page_title.to_param}' data-new-page>#{new_page_title}</a>" )
+      check_li_outputs('Not a page yet', :process_title,
+                       "<a href='/pages/new?page_title=not-a-page-yet' data-new-page>Not a page yet</a>" )
     end
   end
 
   context "Hyperlinks" do
     it "should output a hyperlink to a URL with no link text" do
-      li = LinkInterpreter.new('http://hedtek.com')
-
-      check_outputs(li, :process_url_without_text,
-          "<a href='http://hedtek.com' external-link>http://hedtek.com</a>"  )
+      check_li_outputs('http://hedtek.com', :process_url_without_text,
+                       "<a href='http://hedtek.com' external-link>http://hedtek.com</a>"  )
     end
 
     it "should output a hyperlink showing link text" do
