@@ -9,8 +9,7 @@ class LinkInterpreter
 
   def initialize text
     @text = text.strip
-    @first, @rest = @text.split(/ /, 2)
-    @rest.strip! if @rest
+    @first, @rest = @text.split(/ +/, 2)
   end
 
   def url?
@@ -73,9 +72,15 @@ class LinkInterpreter
         "<a href='/pages/#{title.slug}' data-page>#{@text}</a>"
       when CollectionItem
         "<a href='/collection_items/#{title.slug}' data-collection-item>#{@text}</a>"
+        when Resource
+          "<a href='/resources/#{title.slug}' data-resource>#{@text}</a>"
       end
     else
-      "<a href='/pages/new?page_title=#{@text}' data-new-page>#{@text}</a>"
+      if /^_/ =~ @text
+        "<a href='/resources/new?resource_title=#{@text}' data-new-resource>#{@text}</a>"
+      else
+        "<a href='/pages/new?page_title=#{@text}' data-new-page>#{@text}</a>"
+      end
     end
   end
 

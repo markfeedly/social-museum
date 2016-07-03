@@ -19,6 +19,37 @@ describe LinkInterpreter, "output" do
     page
   end
 
+  def new_resource(name)
+    user = FactoryGirl.create(:user)
+    title = FactoryGirl.create(:title, title: name, titleable_type: 'Resource')
+    page = FactoryGirl.create(:resource, title:   title, user_id: user.id, description: 'any', url: 'http://hedtek.com/image.png')
+    title.titleable_id = page.id
+    page
+  end
+
+  context "Trial for resources" do
+
+    it "should output a hyperlink to an existing 'new name format' resource" do
+      resource = new_resource('_A resource with an image')
+      check_li_outputs(resource.name, :process_title, "<a href='/resources/_a-resource-with-an-image' data-resource>_A resource with an image</a>")
+    end
+
+    it "should output a hyperlink to create a missing 'new name format' resource" do
+      check_li_outputs('_Not a resource yet', :process_title, "<a href='/resources/new?resource_title=_Not a resource yet' data-new-resource>_Not a resource yet</a>" )
+    end
+
+    it "should output a hyperlink to create a page if not a 'new name format' uncreated resource" do
+      check_li_outputs('A resource with a bad title', :process_title, "<a href='/pages/new?page_title=A resource with a bad title' data-new-page>A resource with a bad title</a>")
+    end
+
+    it "should include url images" do
+      check_li_outputs('@_A resource with an image', :process_title, "<a href='/pages/new?page_title=A resource with a bad title' data-new-page>A resource with a bad title</a>")
+    end
+
+
+
+  end
+
   context "Pages" do
 
     it "should output a hyperlink to an existing page" do
@@ -30,6 +61,7 @@ describe LinkInterpreter, "output" do
       check_li_outputs('Not a page yet', :process_title,
                        "<a href='/pages/new?page_title=not-a-page-yet' data-new-page>Not a page yet</a>" )
     end
+
   end
 
   context "Hyperlinks" do
