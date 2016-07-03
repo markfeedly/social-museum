@@ -34,6 +34,7 @@ describe 'Subscription' do
   it "should add another subscriber" do
     user, page = new_user_and_page
     another_user = new_user
+
     page.subscribe(another_user)
     expect(page.subscribers.count).to eq 2
     expect(page.subscribers.last).to eq another_user
@@ -42,6 +43,7 @@ describe 'Subscription' do
   it "should add a subscriber once only" do
     user, page = new_user_and_page
     another_user = new_user
+
     page.subscribe(another_user)
     page.subscribe(another_user)
     expect(page.subscribers.count).to eq 2
@@ -51,12 +53,14 @@ describe 'Subscription' do
 
   it "should keep track of subscribed pages for several users" do
     first_user, first_page = new_user_and_page
+
     expect(first_user.subscribed_pages).to eq [first_page]
     second_page = new_page_for_user(first_user)
     first_user.reload
     expect(first_user.subscribed_pages).to eq [second_page, first_page]
 
     second_user = new_user
+
     expect(second_user.subscribed_pages).to eq []
 
     first_page.subscribe(second_user)
