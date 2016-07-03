@@ -6,18 +6,33 @@ describe LinkInterpreter, "output" do
     expect(link_interpreter.send(li_method)).to eq html_output
   end
 
-  context "Pages" do
-    it "should output a hyperlink to an existing page" do
-      @page = FactoryGirl.create(:page)
-      li=LinkInterpreter.new(@page.title)
+  def check_li_outputs(str, li_method, html_output)
+    link_interpreter=LinkInterpreter.new(str)
+    expect(link_interpreter.send(li_method)).to eq html_output
+  end
 
-      check_outputs(li, :process_title,
-          "<a href='/pages/#{@page.title.downcase.gsub(/ /, '-')}' data-page>#{@page.title}</a>" )
+  def new_page(name)
+    user = FactoryGirl.create(:user)
+    title = FactoryGirl.create(:title, title: name)
+    page = FactoryGirl.create(:page,
+                              title:   title,
+                              user_id: user.id,
+                              description: 'any')
+    title.titleable_id = page.id
+    title.titleable_type = 'Page'
+    page
+  end
+
+  context "Pages" do
+
+    it "should output a hyperlink to an existing page" do
+      page = new_page('An unusual  Name')
+      check_li_outputs(page.name, :process_title,
+          "<a href='/pages/an-unusual-name' data-page>An unusual  Name</a>" )
     end
 
     it "should output a hyperlink to create a missing page" do
-      @page = FactoryGirl.create(:page)
-      new_page_title = "This is not the title of existing page #{@page.title}; rather for a page to be created by a user"
+      new_page_title = "This is not the title of existing page; rather for a page to be created by a user"
       li=LinkInterpreter.new(new_page_title)
 
       check_outputs(li, :process_title,
