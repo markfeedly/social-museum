@@ -46,8 +46,16 @@ class LinkInterpreter
   def process_title
     title = Title.where(title: @text).first
     if title
-      str = ActiveSupport::Inflector::underscore(title.titleable_type)
-      "<a href='/#{str}s/#{title.slug}' data-page>#{@text}</a>"
+      s = title.slug
+      puts s
+      case title.titleable
+        when Page
+          "<a href='/pages/#{title.slug}' data-page>#{@text}</a>"
+        when CollectionItem
+          "<a href='/collection_items/#{title.slug}' data-collection-item>#{@text}</a>"
+        when Resource
+          "<a href='/resources/#{title.slug}' data-resource>#{@text}</a>"
+      end
     else
       if /^_/ =~ @text
         "<a href='/resources/new?resource_title=#{@text}' data-new-resource>#{@text}</a>"
