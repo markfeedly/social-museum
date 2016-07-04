@@ -17,7 +17,6 @@ describe "Title" do
   end
 
   it "should have the correct slug" do
-    expect(page.title).to eq 1
     expect(page.slug).to eq 'a-title'
   end
 
