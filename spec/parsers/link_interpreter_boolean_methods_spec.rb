@@ -47,7 +47,7 @@ describe LinkInterpreter, "boolean methods" do
       expect(li.page_title?).to be true
     end
 
-    it "should recognise a bad protocol" do
+    it "should not recognise a bad protocol" do
       li = LinkInterpreter.new('ftp://hedtek.com')
       expect(li.url?).to be false
       expect(li.page_title?).to be true

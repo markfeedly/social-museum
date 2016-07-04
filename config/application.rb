@@ -14,6 +14,10 @@ Bundler.require(:default, Rails.env)
 module VirtualMuseum
   class Application < Rails::Application
 
+    #autoload subdirectories of app/models
+    # http://stackoverflow.com/questions/18934115/rails-4-organize-rails-models-in-sub-path-without-namespacing-models
+    # config.autoload_paths += Dir[Rails.root.join('app', 'models', '{*/}')]
+
     # don't generate RSpec tests for views and helpers
     config.generators do |g|
 
