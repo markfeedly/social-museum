@@ -85,7 +85,7 @@ describe LinkInterpreter, "output" do
         image_url = 'http://hedtek.com/some/page.png'
         li = LinkInterpreter.new(image_url)
 
-        check_outputs(li, :process_image_url_without_width,
+        check_outputs(li, :process_image_url,
             "<img src='#{image_url}'/>" )
       end
 
@@ -93,7 +93,7 @@ describe LinkInterpreter, "output" do
         image_url_and_width = 'http://hedtek.com/some/page.png 300'
         li = LinkInterpreter.new(image_url_and_width)
 
-        check_outputs(li, :process_image_url_with_width,
+        check_outputs(li, :process_image_url,
             "<img src='http://hedtek.com/some/page.png' style='width: 300px;'/>" )
       end
     end
