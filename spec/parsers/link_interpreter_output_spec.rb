@@ -22,9 +22,9 @@ describe LinkInterpreter, "output" do
   def new_resource(name)
     user = FactoryGirl.create(:user)
     title = FactoryGirl.create(:title, title: name, titleable_type: 'Resource')
-    page = FactoryGirl.create(:resource, title:   title, user_id: user.id, description: 'any', url: 'http://hedtek.com/image.png')
-    title.titleable_id = page.id
-    page
+    resource = FactoryGirl.create(:resource, title:   title, user_id: user.id, description: 'any', url: 'http://hedtek.com/image.png')
+    title.titleable_id = resource.id
+    resource
   end
 
   context "Trial for resources" do
@@ -53,21 +53,17 @@ describe LinkInterpreter, "output" do
   context "Pages" do
 
     it "should output a hyperlink to an existing page" do
-      page = new_page('An unusual  Name')
       check_li_outputs(page.name, :process_title, "<a href='/pages/an-unusual-name' data-page>An unusual  Name</a>" )
     end
 
     it "should output a hyperlink to create a missing page" do
-      check_li_outputs('Not a page yet', :process_title,
-                       "<a href='/pages/new?page_title=not-a-page-yet' data-new-page>Not a page yet</a>" )
+      check_li_outputs('Not a page yet', :process_title, "<a href='/pages/new?page_title=Not a page yet' data-new-page>Not a page yet</a>" )
     end
-
   end
 
   context "Hyperlinks" do
     it "should output a hyperlink to a URL with no link text" do
-      check_li_outputs('http://hedtek.com', :process_url_without_text,
-                       "<a href='http://hedtek.com' external-link>http://hedtek.com</a>"  )
+      check_li_outputs('http://hedtek.com', :process_url_without_text, "<a href='http://hedtek.com' external-link>http://hedtek.com</a>"  )
     end
 
     it "should output a hyperlink showing link text" do
