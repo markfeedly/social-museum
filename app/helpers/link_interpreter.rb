@@ -9,21 +9,16 @@ class LinkInterpreter
   def initialize text
     @text = text.strip
     @first, @rest = @text.split(/ +/, 2)
-    @width = @rest.split(/ +/).to_i
-    @width = false if @width <= 0
+    @width = @rest.split(/ +/)[0].to_i if @rest
+    @width = nil if @width && @width <= 0
   end
 
   def process
-    if is_rel_url?
-      process_rel_url
-    elsif page_title?
-      process_title
-    elsif image_url?
-      process_image_url
-    elsif is_youtube_url?
-      process_youtube_url
-    elsif is_vimeo_url?
-      process_vimeo_url
+    if    is_rel_url? ;     process_rel_url
+    elsif page_title? ;     process_title
+    elsif image_url? ;      process_image_url
+    elsif is_youtube_url? ; process_youtube_url
+    elsif is_vimeo_url? ;   process_vimeo_url
     else
       process_url
     end
@@ -50,14 +45,8 @@ class LinkInterpreter
   def process_title
     title = Title.where(title: @text).first
     if title
-      case title.titleable
-        when Page
-          "<a href='/pages/#{title.slug}' data-page>#{@text}</a>"
-        when CollectionItem
-          "<a href='/collection_items/#{title.slug}' data-collection-item>#{@text}</a>"
-        when Resource
-          "<a href='/resources/#{title.slug}' data-resource>#{@text}</a>"
-      end
+      str = ActiveSupport::Inflector::underscore(title)
+      "<a href='/#{str}s/#{title.slug}' data-page>#{@text}</a>"
     else
       if /^_/ =~ @text
         "<a href='/resources/new?resource_title=#{@text}' data-new-resource>#{@text}</a>"
@@ -151,9 +140,6 @@ class LinkInterpreter
     !(@uri.host.nil? || @uri.host.include?(".."))
   end
 
-
-
-
   def domain
     return nil unless url?
     d = @first.gsub(/https?:\/\//, '')
@@ -166,10 +152,6 @@ class LinkInterpreter
     (@first =~ /https?\:\/\//) == 0 &&
     !!(domain.match(domain_to_match))
   end
-
-
-
-
 
   def process_url_without_text
     "<a href='#{@text}' external-link>#{@text}</a>"
