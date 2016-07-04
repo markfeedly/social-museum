@@ -14,7 +14,8 @@ class LinkInterpreter
   end
 
   def process
-    if    is_rel_url? ;     process_rel_url
+    if    empty? ; '<span class="red">[empty brackets]</span>'
+    elsif is_rel_url? ;     process_rel_url
     elsif page_title? ;     process_title
     elsif image_url? ;      process_image_url
     elsif is_youtube_url? ; process_youtube_url
@@ -45,7 +46,7 @@ class LinkInterpreter
   def process_title
     title = Title.where(title: @text).first
     if title
-      str = ActiveSupport::Inflector::underscore(title)
+      str = ActiveSupport::Inflector::underscore(title.titleable_type)
       "<a href='/#{str}s/#{title.slug}' data-page>#{@text}</a>"
     else
       if /^_/ =~ @text
