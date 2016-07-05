@@ -30,4 +30,7 @@ describe "link text" do
     expect(LinkText.new('_foo bar3 300').title).to eq '_foo bar3'
     expect(LinkText.new('__foo bar3 300').title).to eq '_foo bar3'
   end
+  it "shuld yeild a correct asset url for a given resoource" do
+    skip 'need to create a resource for this test'
+  end
 end
