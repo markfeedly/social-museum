@@ -37,7 +37,16 @@ class LinkInterpreter
   end
 
   def resource_asset?
-    !! (@first =~ /^__/)
+    !! (@text =~ /^__/)
+  end
+
+  def asset_url
+    LinkText.new(@text).asset_url
+  end
+
+  def process_summary_resource_asset
+    lt = LinkText.new(@text)
+    "<img src=#{lt.asset_url} style='height:50px;'/>"
   end
 
   #-----

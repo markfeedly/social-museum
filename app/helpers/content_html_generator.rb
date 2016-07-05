@@ -26,6 +26,8 @@ class ContentHtmlGenerator
           li.process_summary_image
         elsif li.is_youtube_url? || li.is_vimeo_url?
           li.process_summary_video
+        elsif li.resource_asset?
+          li.process_summary_resource_asset
         else
           li.process
         end
@@ -35,10 +37,15 @@ class ContentHtmlGenerator
 
   def self.page_image(page_or_collection_item)
     image = nil
-    (page_or_collection_item.description).gsub(/\[([^\]]*)\]/) do
-      li = LinkInterpreter.new($1)
-      image = li.url if ! image && li.image_url?
-      image = li.asset_url if ! image && li.resource_asset?
+    page_or_collection_item.description.gsub(/\[([^\]]*)\]/) do
+      unless image
+        li = LinkInterpreter.new($1)
+        if li.image_url?
+          image = li.url
+        elsif li.resource_asset?
+          image = li.asset_url
+        end
+      end
     end
     image = page_or_collection_item.resources.first.source if !image && page_or_collection_item.resources.first
     image
