@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe LinkInterpreter, "output" do
+describe "LinkInterpreter output" do
 
   def check_outputs(link_interpreter, li_method, html_output)
     expect(link_interpreter.send(li_method)).to eq html_output
@@ -40,11 +40,6 @@ describe LinkInterpreter, "output" do
 
     it "should correctly output a hyperlink to create a * page * if not a 'new name format' uncreated resource" do
       check_li_outputs('A resource with a bad title', :process_title, "<a href='/pages/new?page_title=A resource with a bad title' data-new-page>A resource with a bad title</a>")
-    end
-
-    it "should include url images" do
-      skip
-      check_li_outputs('__A resource with an image', :process_title, "<a href='/pages/new?page_title=A resource with a bad title' data-new-page>A resource with a bad title</a>")
     end
 
   end
@@ -185,13 +180,10 @@ describe LinkInterpreter, "output" do
     end
 
     it "should process a url (with width spec) resource asset" do
-
-      skip "'Doesn't work at moment'"
-
       resource = new_resource('_My resource')
       resource.update(url: 'http:/hedtek.com/image.png')
       li = LinkInterpreter.new('_' + resource.name + ' 300')
-      check_outputs(li, :process_resource_asset, "zz")
+      check_outputs(li, :process_resource_asset, "<img src='http:/hedtek.com/image.png' style='width: 300px;'/>")
     end
 
     it "should process a file resource asset" do
@@ -202,14 +194,11 @@ describe LinkInterpreter, "output" do
     end
 
     it "should process a file (with width) resource asset" do
-
-      skip "'Doesn't work at moment'"
-
       resource = new_resource('_My resource')
       resource.update(url: '/images/1/image.png')
       resource.update(url: 'http:/hedtek.com/image.png')
       li = LinkInterpreter.new('_' + resource.name+ ' 300')
-       check_outputs(li, :process_resource_asset, "bb")
+       check_outputs(li, :process_resource_asset, "<img src='http:/hedtek.com/image.png' style='width: 300px;'/>")
     end
 
   end
