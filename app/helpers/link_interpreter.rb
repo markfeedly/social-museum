@@ -14,8 +14,8 @@ class LinkInterpreter
   end
 
   def process
-    if    empty? ; '<span class="red">[empty brackets]</span>'
-    elsif is_rel_url? ;     process_rel_url
+    if    empty? ;          '<span class="red">[empty brackets]</span>'
+    elsif resource_asset? ; process_resource_asset
     elsif page_title? ;     process_title
     elsif image_url? ;      process_image_url
     elsif is_youtube_url? ; process_youtube_url
@@ -27,14 +27,26 @@ class LinkInterpreter
 
   #-----
 
-  #TODO refactor
-  def process_rel_url
-    @first.gsub!(/rel:\/\//, ENV['SITE']+'/')
-    process_url
+  def process_resource_asset
+    resource = Resource.find_by_title(@text)
+    if resource.url =~ /\//
+      dir, id, name = resource.url.split('/')
+      if @width then
+        "<img src='#{uploaded_path(dir, id, name)}' style='width: #{@width}px;'/>"
+      else
+        "<img src='#{uploaded_path(dir, id, name)}'/>"
+      end
+    else
+      if @width then
+        "<img src='#{resource.url}' style='width: #{@width}px;'/>"
+      else
+        "<img src='#{resource.url}'/>"
+      end
+    end
   end
 
-  def is_rel_url?
-    !! (@first =~ /^rel:\/\//)
+  def resource_asset?
+    !! (@first =~ /^__/)
   end
 
   #-----
@@ -48,7 +60,6 @@ class LinkInterpreter
     if title
       titleable_type = ActiveSupport::Inflector.underscore(title.titleable_type)
        "<a href='/#{titleable_type}s/#{title.slug}' data-#{titleable_type}>#{@text}</a>"
-
     else
       if /^_/ =~ @text
         "<a href='/resources/new?resource_title=#{@text}' data-new-resource>#{@text}</a>"
@@ -129,7 +140,6 @@ class LinkInterpreter
     false
   end
 
-
   def empty?
     @text.blank?
   end
@@ -155,13 +165,7 @@ class LinkInterpreter
     !!(domain.match(domain_to_match))
   end
 
-  def process_url_without_text
-    "<a href='#{@text}' external-link>#{@text}</a>"
-  end
 
-  def process_url_with_text
-    "<a href='#{@first}' external-link>#{@rest}</a>"
-  end
 
 
 

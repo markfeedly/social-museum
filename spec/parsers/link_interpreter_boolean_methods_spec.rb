@@ -53,6 +53,13 @@ describe LinkInterpreter, "boolean methods" do
       expect(li.page_title?).to be true
     end
 
+    it "should recognise a resource asset and ignore a 'new style resource title' as an asset " do
+      li = LinkInterpreter.new('__A resource title')
+      expect(li.resource_asset?).to be true
+      li = LinkInterpreter.new('_A resource title')
+      expect(li.resource_asset?).to be false
+    end
+
     it "should recognise url suffix" do
       li = LinkInterpreter.new('http://hedtek.com/x')
       expect(li.url?).to be true

@@ -47,8 +47,6 @@ describe LinkInterpreter, "output" do
       check_li_outputs('__A resource with an image', :process_title, "<a href='/pages/new?page_title=A resource with a bad title' data-new-page>A resource with a bad title</a>")
     end
 
-
-
   end
 
   context "Pages" do
@@ -60,20 +58,6 @@ describe LinkInterpreter, "output" do
 
     it "should output a hyperlink to create a missing page" do
       check_li_outputs('Not a page yet', :process_title, "<a href='/pages/new?page_title=Not a page yet' data-new-page>Not a page yet</a>" )
-    end
-  end
-
-  context "Hyperlinks" do
-    it "should output a hyperlink to a URL with no link text" do
-      check_li_outputs('http://hedtek.com', :process_url_without_text, "<a href='http://hedtek.com' external-link>http://hedtek.com</a>"  )
-    end
-
-    it "should output a hyperlink showing link text" do
-      url_and_hyperlink_with_text = 'http://hedtek.com/some/page funny money'
-      li = LinkInterpreter.new(url_and_hyperlink_with_text)
-
-      check_outputs(li, :process_url_with_text,
-          "<a href='http://hedtek.com/some/page' external-link>funny money</a>" )
     end
   end
 
@@ -179,5 +163,24 @@ describe LinkInterpreter, "output" do
                       "<a href='#{non_video_link}' external-link>#{non_video_link}</a>")
       end
     end
+  end
+
+  context "resources" do
+    it "should process an existing resource title" do
+      resource = new_resource('_My resource')
+      li = LinkInterpreter.new(resource.name)
+      check_outputs(li, :process_title, "<a href='/resources/_my-resource' data-new-resource>_A resource title</a>")
+    end
+
+    it "should process a non-existing resource title" do
+      li = LinkInterpreter.new('_A resource title')
+      check_outputs(li, :process_title, "<a href='/resources/new?resource_title=_A resource title' data-new-resource>_A resource title</a>")
+    end
+
+    it "should process a resource asset" do
+      li = LinkInterpreter.new('__A resource asset')
+      check_outputs(li, :process_resource_asset, "yy")
+    end
+
   end
 end

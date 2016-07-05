@@ -3,8 +3,10 @@ require 'spec_helper'
 describe ContentHtmlGenerator do
 
   let(:user) { FactoryGirl.create(:user) }
-  let(:title) { FactoryGirl.create(:title, title: 'Some page') }
+  let(:title) { FactoryGirl.create(:title, title: 'Some title') }
   let(:page) { FactoryGirl.create(:page, title: title, user_id: user.id, description: 'This is text') }
+  let(:resource_title) { FactoryGirl.create(:title, title: '_My resource') }
+  let(:resource) { FactoryGirl.create(:resource, title: resource_title, description: 'URL to web image', url: 'http://hedtek.com/image.png')}
 
   it "should process plain text correctly" do
     expect(ContentHtmlGenerator.generate_full(page)).to include "<p>#{page.description}</p>"
@@ -56,6 +58,13 @@ describe ContentHtmlGenerator do
 
       expect(ContentHtmlGenerator.generate_full(page)).to include
           "<img src='http://a.b/img.png' style='width: 100px;'/>"
+    end
+  end
+
+  context "Resources" do
+    it "should process a resource title" do
+      page.update(user: user, description: 'pre-amble [_My resource] post-amble')
+      expect(ContentHtmlGenerator.generate_full(page)).to include "<img src='http://a.b/img.png' style='width: 100px;'/>"
     end
   end
 
