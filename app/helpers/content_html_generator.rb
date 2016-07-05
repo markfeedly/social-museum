@@ -38,6 +38,7 @@ class ContentHtmlGenerator
     (page_or_collection_item.description).gsub(/\[([^\]]*)\]/) do
       li = LinkInterpreter.new($1)
       image = li.url if ! image && li.image_url?
+      image = li.asset_url if ! image && li.resource_asset?
     end
     image = page_or_collection_item.resources.first.source if !image && page_or_collection_item.resources.first
     image

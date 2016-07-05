@@ -29,21 +29,10 @@ class LinkInterpreter
 
   def process_resource_asset
     lt = LinkText.new(@text)
-    resource = Resource.find_by_title(lt.title)
-    if resource.url =~ /^\//
-      blank, type, id, name = resource.url.split('/')
-      path = Rails.application.routes.url_helpers.uploaded_path(type, id, name)
-      if lt.width then
-        "<img src='#{path}' style='width: #{lt.width}px;'/>"
-      else
-        "<img src='#{path}'/>"
-      end
+    if lt.width
+      "<img src='#{lt.asset_url}' style='width: #{lt.width}px;'/>"
     else
-      if lt.width then
-        "<img src='#{resource.url}' style='width: #{lt.width}px;'/>"
-      else
-        "<img src='#{resource.url}'/>"
-      end
+      "<img src='#{lt.asset_url}'/>"
     end
   end
 
