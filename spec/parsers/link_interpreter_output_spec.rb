@@ -169,7 +169,7 @@ describe LinkInterpreter, "output" do
     it "should process an existing resource title" do
       resource = new_resource('_My resource')
       li = LinkInterpreter.new(resource.name)
-      check_outputs(li, :process_title, "<a href='/resources/_my-resource' data-new-resource>_A resource title</a>")
+      check_outputs(li, :process_title, "<a href='/resources/_my-resource' data-resource>_My resource</a>")
     end
 
     it "should process a non-existing resource title" do
@@ -177,9 +177,39 @@ describe LinkInterpreter, "output" do
       check_outputs(li, :process_title, "<a href='/resources/new?resource_title=_A resource title' data-new-resource>_A resource title</a>")
     end
 
-    it "should process a resource asset" do
-      li = LinkInterpreter.new('__A resource asset')
-      check_outputs(li, :process_resource_asset, "yy")
+    it "should process a url resource asset" do
+      resource = new_resource('_My resource')
+      resource.update(url: 'http:/hedtek.com/image.png')
+      li = LinkInterpreter.new('_' + resource.name)
+      check_outputs(li, :process_resource_asset, "<img src='http:/hedtek.com/image.png'/>")
+    end
+
+    it "should process a url (with width spec) resource asset" do
+
+      skip "'Doesn't work at moment'"
+
+      resource = new_resource('_My resource')
+      resource.update(url: 'http:/hedtek.com/image.png')
+      li = LinkInterpreter.new('_' + resource.name + ' 300')
+      check_outputs(li, :process_resource_asset, "zz")
+    end
+
+    it "should process a file resource asset" do
+      resource = new_resource('_My resource')
+      resource.update(url: '/images/1/image.png')
+      li = LinkInterpreter.new('_' + resource.name)
+      check_outputs(li, :process_resource_asset, "<img src='/get_uploaded_file/images/1/image.png'/>")
+    end
+
+    it "should process a file (with width) resource asset" do
+
+      skip "'Doesn't work at moment'"
+
+      resource = new_resource('_My resource')
+      resource.update(url: '/images/1/image.png')
+      resource.update(url: 'http:/hedtek.com/image.png')
+      li = LinkInterpreter.new('_' + resource.name+ ' 300')
+       check_outputs(li, :process_resource_asset, "bb")
     end
 
   end

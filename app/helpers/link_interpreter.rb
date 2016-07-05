@@ -28,13 +28,15 @@ class LinkInterpreter
   #-----
 
   def process_resource_asset
+    @text[0] = ''
     resource = Resource.find_by_title(@text)
-    if resource.url =~ /\//
-      dir, id, name = resource.url.split('/')
+    if resource.url =~ /^\//
+      blank, type, id, name = resource.url.split('/')
+      path = Rails.application.routes.url_helpers.uploaded_path(type, id, name)
       if @width then
-        "<img src='#{uploaded_path(dir, id, name)}' style='width: #{@width}px;'/>"
+        "<img src='#{path}' style='width: #{@width}px;'/>"
       else
-        "<img src='#{uploaded_path(dir, id, name)}'/>"
+        "<img src='#{path}'/>"
       end
     else
       if @width then
@@ -98,6 +100,14 @@ class LinkInterpreter
     else
       process_url
     end
+  end
+
+  def process_video_url(video_url)
+    @rest &&= @rest.split(' ', 2)[0]
+    @rest ||= '400'
+    @rest = 640 if @rest.to_i > 640
+    aspect_ratio = 0.5625
+    "<iframe src='//#{video_url}' width='#{@rest}' height='#{(@rest.to_i * aspect_ratio).ceil}' frameborder='0' allowfullscreen sandbox='allow-scripts allow-same-origin'></iframe>"
   end
 
 #-----
@@ -165,15 +175,6 @@ class LinkInterpreter
     !!(domain.match(domain_to_match))
   end
 
-
-
-
-
-
-
-
-
-
   def process_resource_image
     "<ing src=#{@rest.split(/ +/)[0]}' style='width: #{rest.split(/ +/)[1]}px;'/>"
   end
@@ -184,13 +185,7 @@ class LinkInterpreter
 
 
 
-  def process_video_url(video_url)
-    @rest &&= @rest.split(' ', 2)[0]
-    @rest ||= '400'
-    @rest = 640 if @rest.to_i > 640
-    aspect_ratio = 0.5625
-    "<iframe src='//#{video_url}' width='#{@rest}' height='#{(@rest.to_i * aspect_ratio).ceil}' frameborder='0' allowfullscreen sandbox='allow-scripts allow-same-origin'></iframe>"
-  end
+
 
   def output_type
     if image_url? || is_youtube_url? || is_vimeo_url?
