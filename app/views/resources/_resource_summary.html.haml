@@ -21,6 +21,7 @@
           - else
             = ContentHtmlGenerator.generate_with_small_images(resource)
 
+        Implement tag and category history
         = render 'layouts/header_and_footers/in_list_footer', categories: resource.categories_as_arr, tags: resource.tags_as_arr
 
 .page-summary-width-plus
