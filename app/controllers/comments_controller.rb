@@ -6,7 +6,7 @@ class CommentsController < ApplicationController
   expose(:resource){Resource.find(params[:comment][:commentable_id].to_i)}
 
   def create
-    path_method = (params['comment']['commentable_type'].underscore+'_path').to_sym
+    authorize_action_for comment
     c = Comment.create( user:   current_user,
                         creator: current_user,
                         content:    params[:comment][:content],
@@ -16,6 +16,7 @@ class CommentsController < ApplicationController
                         user_agent: request.env["HTTP_USER_AGENT"],
                         referrer:   request.env["HTTP_REFERRER"] )
     commentable.comments << c
+    path_method = (params['comment']['commentable_type'].underscore+'_path').to_sym
     redirect_to send(path_method, commentable)
   end
 
