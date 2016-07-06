@@ -19,7 +19,7 @@
         .content-preview
           = ContentHtmlGenerator.generate_with_small_images(page)
 
-          = render 'layouts/header_and_footers/in_list_footer', categories: page.categories_as_arr, tags: page.tags_as_arr
+        = render 'layouts/header_and_footers/in_list_footer', categories: page.categories_as_arr, tags: page.tags_as_arr
 
 .page-summary-width-plus
   %hr
