@@ -5,12 +5,11 @@ class CommentAuthorizer < Authority::Authorizer
   end
 
   def self.creatable_by?(user, opts = {})
-    #todo check comments can't be made by url haking
-    # if ENV['ALLOW_GUEST_COMMENTS']
-    #  true
-    #else
+    if ENV['ALLOW_GUEST_COMMENTS']
+      true
+    else
       !user.guest?
-    #end
+    end
   end
 
   def deletable_by?(user, opts={})
