@@ -24,7 +24,7 @@ class LinkText
   def asset_url
     resource = Resource.find_by_title(title)
     if resource.url =~ /^\//
-      blank, type, id, name = resource.url.split('/')
+      _blank, type, id, name = resource.url.split('/')
       Rails.application.routes.url_helpers.uploaded_path(type, id, name)
     else
       resource.url
