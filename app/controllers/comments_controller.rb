@@ -16,8 +16,7 @@ class CommentsController < ApplicationController
                         user_agent: request.env["HTTP_USER_AGENT"],
                         referrer:   request.env["HTTP_REFERRER"] )
     commentable.comments << c
-    path_method = (params['comment']['commentable_type'].underscore+'_path').to_sym
-    redirect_to send(path_method, commentable)
+    redirect_to :back
   end
 
   def destroy
