@@ -42,9 +42,9 @@ class Resource < ActiveRecord::Base
   #tracks_association :resource_usages
   #tracks_association :user
   tracks_association :title
-  tracks_association :tag_items
-  tracks_association :category_items
-  #todo ? tracks_association :resources
+  tracks_association :tags
+  tracks_association :categories
+  #todo ? tracks_association :resourceables
 
   validates :title, presence: true
   #todo ? validates_associated :title
