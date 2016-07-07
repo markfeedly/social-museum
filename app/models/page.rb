@@ -44,8 +44,8 @@ class Page < ActiveRecord::Base
   accepts_nested_attributes_for :title
 
   tracks_association :title
-  tracks_association :tag_items
-  tracks_association :category_items
+  tracks_association :tags
+  tracks_association :categories
   #todo tracks_association :resources
 
 

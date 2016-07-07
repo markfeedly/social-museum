@@ -49,5 +49,8 @@ module VirtualMuseum
     # Rakismet default is test is false
     config.rakismet.test = true if ENV['RAKISMET_TEST'] == 'true'
 
+    config.autoload_paths << Rails.root.join('lib') if Rails.env.development?
+
+
   end
 end

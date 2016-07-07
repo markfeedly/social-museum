@@ -3,7 +3,7 @@
   %li.no-bullets{data: {role: "collection-item-version", "history-idx" => page_state_counter }}
 
     .time-and-user
-      = render 'users/user_and_time', user: page_state.user.name, thing: page_state
+      = render 'users/user_and_time', user: User.find(page_state.user_id).name, thing: page_state
 
     .history-indent
 
