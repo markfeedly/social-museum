@@ -29,13 +29,20 @@ module Categories
   private
 
   def set_categories(desired_categories)
-    categories.destroy_all
-    desired_categories.each do |name|
-      cat = Category.find_by(name: name)
+    categories.each do |exist_cat|
+      name = exist_cat.name
+      if desired_categories.include?(name)
+        desired_categories.delete(name)
+      else
+        categories.delete(exist_cat)
+      end
+    end
+    desired_categories.each  do |desired_name|
+      cat = Category.find_by(name: desired_name)
       if cat
         self.categories << cat
       else
-        self.categories << Category.new(name: name)
+        self.categories << Category.new(name: desired_name)
       end
     end
   end

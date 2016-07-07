@@ -5,9 +5,8 @@ class CollectionItemsController < ApplicationController
   expose(:collection_items)
   expose(:paginated_collection_items) { collection_items.page(params[:page]).per(10)}
   #todo following does not have correct times
-  expose(:all_ci) { collection_item.load_versions }
   expose(:collection_item_history) do
-    Kaminari.paginate_array(all_ci).page(params[:page_ci]).per(10)
+    Kaminari.paginate_array(collection_item.load_versions).page(params[:page_ci]).per(10)
   end
 
   expose(:want_title) { params[:collection_item][:title_attributes][:title] || '' }
