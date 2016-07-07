@@ -3,7 +3,7 @@ module SecVersioning
     base.send(:has_secretary)
     base.send(:attr_accessor, :version_object_changes)
     base.send(:attr_reader, :user)
-    # base.send(:prepend, PrependMethods)
+    base.send(:prepend, PrependMethods)
   end
 
   def load_versions
@@ -14,6 +14,8 @@ module SecVersioning
   end
 
   def version(version_number, versions: nil)
+    puts "=============== Start processing version: version_number #{version_number} ========================"
+
     puts "version: version_number #{version_number}, versions #{versions}"
     reversion = self.class.new
     @tags_changed = false
@@ -33,9 +35,15 @@ module SecVersioning
     versions ||= self.versions.where("version_number <= ?", version_number).order("version_number DESC")
     versions.each do |v|
       next if v.version_number > version_number
+      puts "-------------- considering update #{v.version_number} ========================"
+
       merge_version(v, reversion)
-      break if reversion_complete?(reversion)
+      if reversion_complete?(reversion)
+        break
+      end
     end
+    puts "=============== Finished processing version: version_number #{version_number} ========================"
+
     reversion
   end
 
@@ -51,19 +59,18 @@ module SecVersioning
       end
 
       if change.is_a?(Hash) || change.is_a?(Array) # mvh added or Array
-        puts "====================== potentially change #{key}"
+        puts "====================== potentially change #{key}, tags_changed is #{@tags_changed}, categories_changed is #{@categories_changed}"
         if key == 'title'
-          puts "====================== call merg_association for #{key}"
           merge_association(reversion, key, change)
         end
 
         if key == 'tags'&& ! @tags_changed
-          puts "====================== call merg_association for #{key}"
+          puts "====================== TAGS TAGS TAGS call merg_association for #{key}"
           merge_association(reversion, key, change)
           @tags_changed = true
         end
         if key == 'categories' && ! @categories_changed
-          puts "====================== call merg_association for #{key}"
+          puts "====================== CATEGORIES ATEGORIES ATEGORIES call merg_association for #{key}"
           merge_association(reversion, key, change)
           @categories_changed = true
         end
@@ -101,15 +108,14 @@ module SecVersioning
     puts "merge_attribute: reversion #{reversion}, name #{name}, change #{change}"
     reversion[name] ||= change
   end
-end
 
 
-=begin
   # This fixes the vanishing act of tags in history
   module PrependMethods
     def user=(user_id)
       @user = User.find(user_id)
     end
+=begin
 
     def tags
       if version_object_changes.present?
@@ -126,5 +132,8 @@ end
         super
       end
     end
-  end
 =end
+  end
+
+end
+

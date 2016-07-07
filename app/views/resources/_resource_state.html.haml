@@ -7,8 +7,7 @@
 
     .history-indent
 
-      .history-title
-        = resource_state.title.title
+      .history-title = resource_state.title.title
 
       = ContentHtmlGenerator.generate_with_small_images(resource_state)
 
