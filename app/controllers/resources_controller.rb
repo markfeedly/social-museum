@@ -41,9 +41,10 @@ class ResourcesController < ApplicationController
     resource.name = params[:resource][:title_attributes][:title]
     resource.logged_user_id = current_user.id
     resource.user_id = current_user.id
-    if resource.save
+    if resource.valid?
       resource.set_tags_from_string( params[:resource][:tags_as_str] )
       resource.set_categories_from_string( params[:resource][:categories_as_str] )
+      resource.save
       for_resourceable.resources << resource if for_resourceable
     end
     respond_with(resource)
@@ -77,17 +78,19 @@ class ResourcesController < ApplicationController
     resource.logged_user_id = current_user.id
     resource.user_id = current_user.id
     begin
-      puts "====**============ update params #{resource_params}"
-      resource_params.keep_if { |k, v| k != 'resource_usages_attributes' }
-      puts "====**============ update params #{resource_params}"
-
+      saved_tags = resource.tags_as_str
+      saved_categories = resource.categories_as_str
       resource.update_attributes(resource_params)
       resource.set_tags_from_string(params[:resource][:tags_as_str])
       resource.set_categories_from_string(params[:resource][:categories_as_str])
       update_resource_use
+      resource.update_attributes(resource_params)
       respond_with(resource)
     rescue => error
       if error.instance_of?(ActiveRecord::StaleObjectError)
+        #todo - this wont work if a new tag or category was created above
+        resource.set_tags_from_string( saved_tags )
+        resource.set_categories_from_string( saved_categories )
         resource.reload
         render 'resources/edit_with_conflicts'
       else

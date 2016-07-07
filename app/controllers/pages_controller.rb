@@ -56,6 +56,7 @@ class PagesController < ApplicationController
     rescue => error
       if error.instance_of?(ActiveRecord::StaleObjectError)
         #flash[:warning] = 'Another user has made a conflicting edit, you can use this form to resolve the differences and save the page'
+        #todo - this wont work if a new tag or category was created above
         page.set_tags_from_string( saved_tags )
         page.set_categories_from_string( saved_categories )
         page.reload

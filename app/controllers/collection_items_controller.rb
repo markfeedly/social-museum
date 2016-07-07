@@ -57,12 +57,13 @@ class CollectionItemsController < ApplicationController
     rescue => error
       if error.instance_of?(ActiveRecord::StaleObjectError)
         #flash[:warning] = 'Another user has made a conflicting edit, you can use this form to resolve the differences and save the collection_item'
+        #todo - this wont work if a new tag or category was created above
         collection_item.set_tags_from_string( saved_tags )
         collection_item.set_categories_from_string( saved_categories )
         collection_item.reload
         render 'collection_items/edit_with_conflicts'
       else
-        raise "Error during collection_item#update: #{error.inspect}"
+        raise "Error during collection_item#update: #{error}"
       end
     end
   end
