@@ -15,8 +15,6 @@ module SecVersioning
 
   def version(version_number, versions: nil)
     puts "=============== Start processing version: version_number #{version_number} ========================"
-
-    puts "version: version_number #{version_number}, versions #{versions}"
     reversion = self.class.new
     @tags_changed = false
     @categories_changed = false
@@ -33,6 +31,11 @@ module SecVersioning
     reversion.version_object_changes = {}
 
     versions ||= self.versions.where("version_number <= ?", version_number).order("version_number DESC")
+    ordering = versions.collect{ |v| v.version_number }
+    if ordering.length >= 2 && ordering[0] < ordering[1]
+      versions = versions.reverse
+    end
+    puts ">>>>>>>>>>> #{versions.collect { |v| v.version_number }}"
     versions.each do |v|
       next if v.version_number > version_number
       puts "-------------- considering update #{v.version_number} ========================"
@@ -48,7 +51,7 @@ module SecVersioning
   end
 
   def merge_version(v, reversion)
-    puts "merge_version: v #{v}, reversion #{reversion}"
+    puts "merge_version: v #{v}, v.object_changes #{v.object_changes}"
     reversion.updated_at ||= v.created_at
     reversion.user ||= User.find_by_id(v.user_id)
     v.object_changes.each do |key, (from, change)|

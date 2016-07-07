@@ -80,7 +80,6 @@ class ResourcesController < ApplicationController
     begin
       saved_tags = resource.tags_as_str
       saved_categories = resource.categories_as_str
-      resource.update_attributes(resource_params)
       resource.set_tags_from_string(params[:resource][:tags_as_str])
       resource.set_categories_from_string(params[:resource][:categories_as_str])
       update_resource_use
