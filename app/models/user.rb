@@ -4,9 +4,15 @@ class User < ActiveRecord::Base
   include Authority::Abilities
 
   #todo check devise parameterisation :lockable, :timeoutable
-  devise :database_authenticatable, :registerable, :confirmable,
-         :recoverable, :rememberable, :trackable, :validatable,
-         :omniauthable, :omniauth_providers => [:twitter]
+  if Rails.env.test?
+    devise :database_authenticatable, :registerable,
+           :recoverable, :rememberable, :trackable, :validatable,
+           :omniauthable, :omniauth_providers => [:twitter]
+  else
+    devise :database_authenticatable, :registerable, :confirmable,
+           :recoverable, :rememberable, :trackable, :validatable,
+           :omniauthable, :omniauth_providers => [:twitter]
+  end
 
   has_many :comments
   has_many :pages

@@ -47,5 +47,4 @@ class CollectionItem < ActiveRecord::Base
   tracks_association :categories
   #todo tracks_association :resources - any more?
 
-
 end

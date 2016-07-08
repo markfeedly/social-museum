@@ -1,0 +1,8 @@
+- isa:
+  -  Ferranti_Mark_I: 'Computer'
+  -  MU5: 'Computer'
+  -  MU6G: 'Computer'
+  -  SSEM: 'Computer'
+  -  Atlas: :Computer
+  -  VUM_Atlas: 'Atlas'
+

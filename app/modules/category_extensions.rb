@@ -4,17 +4,8 @@ module CategoryExtensions
   end
 
   def get_categories
-    [ ['Ferranti Mark I', :isa, 'Computer'],
-      ['MU5', :isa, 'Computer'],
-      ['SSEM', :isa, 'Computer'],
-      ['Atlas', :isa, 'Computer'],
-      ['VUM Atlas', :isa, 'Atlas'],
-      ['Hardware', :is_part_of, 'Computer'],
-      ['Software', :is_part_of, 'Computer'],
-      ['Memory', :is_part_of, 'Hardware'],
-      ['Disc Drive', :is_part_of, 'Hardware'],
-      ['CPU', :is_part_of, 'Hardware']
-    ]
+    cats = YAML.load_file(Rails.root.join(ENV['CATEGORIES_FILE_RELATIVE_PATH']))
+    cats[0].to_a[0][1].map{|c| c.to_a[0]}.map{|c| [c[0], :isa, c[1]]}
   end
 
   def category_trail(subject, predicate)

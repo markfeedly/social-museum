@@ -83,7 +83,6 @@ custom_plan.rb
 zeus.json
 
 try*
-public/assets
 
 # Ignore content uploads folder
 /public/uploads

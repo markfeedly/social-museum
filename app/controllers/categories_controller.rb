@@ -30,6 +30,8 @@ class CategoriesController < ApplicationController
 
   expose(:none)     { category_is ? false : true }
   expose(:all_none) { all_category_is ? false : true }
+  expose(:all_inc_children_none) { all_category_is ? false : true }
+
 
   expose(:all_ci_class) { all_ci_count > 0 ? 'active' : '' }
   expose(:all_p_class)  { all_ci_count == 0 && all_p_count > 0 ? 'active' : '' }
