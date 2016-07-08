@@ -3,8 +3,15 @@ module CategoryExtensions
     base.extend(self)
   end
 
+  def self.get_categories
+    f = Rails.root.join(ENV['CATEGORIES_FILE_RELATIVE_PATH'])
+    cats = YAML.load( File.open(f) )
+    cats[0].to_a[0][1].map{|c| c.to_a[0]}.map{|c| [c[0], :isa, c[1]]}
+  end
+
   def get_categories
-    cats = YAML.load_file(Rails.root.join(ENV['CATEGORIES_FILE_RELATIVE_PATH']))
+    f = Rails.root.join(ENV['CATEGORIES_FILE_RELATIVE_PATH'])
+    cats = YAML.load( File.open(f) )
     cats[0].to_a[0][1].map{|c| c.to_a[0]}.map{|c| [c[0], :isa, c[1]]}
   end
 

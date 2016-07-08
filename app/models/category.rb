@@ -1,5 +1,7 @@
 class Category < ActiveRecord::Base
+  #todo is include CategoryExtensions needed?
   include CategoryExtensions
+  extend CategoryClassExtensions
 
   has_many :category_items
 

@@ -1,0 +1,11 @@
+- isa:
+  -  'Manchester computer': 'Computer'
+  -  'Ferranti Mark I':     'Manchester computer'
+  -  MU5:   'Manchester computer'
+  -  MU6G:  'Manchester computer'
+  -  SSEM:  'Manchester computer'
+  -  Atlas: 'Manchester computer'
+  -  'VUM Atlas': 'Atlas'
+  -  'Other computer': 'Computer'
+  -  'PDP-11': 'Other computer'
+
