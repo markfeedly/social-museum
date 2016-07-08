@@ -1,5 +1,13 @@
 module CategoryClassExtensions
 
+  def find_categorized(cat)
+    CollectionItem.select{ |ci| ci.has_category?(cat) }
+  end
+
+  def find_categorized_including_child_categories(cat)
+    CollectionItem.select{ |ci| Category.get_children(:isa, cat).find{|c| ci.has_category?(c)} }
+  end
+
   def get_children(predicate, root)
     matched_triples = Category.get_matches(nil, predicate, root)
     return [root] unless matched_triples
