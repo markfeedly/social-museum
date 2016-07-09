@@ -7,7 +7,6 @@ class PagesController < ApplicationController
   expose(:page_history) do
     Kaminari.paginate_array(page.load_versions).page(params[:history]).per(10)
   end
-
   expose(:want_title) { params[:page][:title_attributes][:title] || '' }
   expose(:want_str_categories) { params[:page][:categories_as_str] || '' }
   expose(:want_str_tags) { params[:page][:tags_as_str] || '' }

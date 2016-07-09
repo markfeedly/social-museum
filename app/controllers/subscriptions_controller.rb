@@ -7,8 +7,6 @@ class SubscriptionsController < ApplicationController
   expose(:page){ Page.find(params[:id]) }
   expose(:resource){ Page.find(params[:id]) }
 
-
-
   expose (:collection_item_subscriptions) { get_subscriptions_for(CollectionItem)}
   expose((:page_subscriptions)) { get_subscriptions_for(Page)}
   expose(:resource_subscriptions){ get_subscriptions_for(Resource)}
@@ -23,16 +21,15 @@ class SubscriptionsController < ApplicationController
     redirect_to subscriptions_path
   end
 
-
   def delete_all_resource_subscriptions
     unsubscribe_from(Resource)
     redirect_to subscriptions_path
   end
 
   def delete_all_subscriptions
-    delete_all_collection_item_subscriptions
-    delete_all_page_subscriptions
-    delete_all_resource_subscriptions
+    unsubscribe_from(CollectionItem)
+    unsubscribe_from(Page)
+    unsubscribe_from(Resource)
     redirect_to subscriptions_path
   end
 
