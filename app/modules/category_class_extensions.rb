@@ -10,18 +10,6 @@ module CategoryClassExtensions
     type.select{ |ci| Category.get_children(:isa, cat_as_str).find{|c| ci.has_category?(c)} }
   end
 
-  def find_categorized_c_i_including_child_categories(cat)
-    find_categorized_including_child_categories(cat, CollectionItem)
-  end
-
-  def find_categorized_p_including_child_categories(cat)
-    find_categorized_including_child_categories(cat, Page)
-  end
-
-  def find_categorized_r_including_child_categories(cat)
-    find_categorized_including_child_categories(cat, Resource)
-  end
-
   def get_children(predicate, root)
     matched_triples = Category.get_matches(nil, predicate, root)
     return [root] unless matched_triples
