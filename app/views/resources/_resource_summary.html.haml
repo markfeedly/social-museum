@@ -4,6 +4,9 @@
       .summary-header.page-summary-width-plus
         = link_to resource.name, resource_path(resource), class: 'summary-title'
         .float-right
+          - if current_user && current_user.can_update?(resource)
+            = link_to 'edit', edit_resource_path(resource)
+            &nbsp; &nbsp; &nbsp;
           - if current_user && current_user.can_delete?(resource)
             = link_to fa_icon('trash-o'), resource,
                       :data =>  {:confirm => 'Are you sure you want to remove this resource? This cannot be undone.',
@@ -21,7 +24,7 @@
           - else
             = ContentHtmlGenerator.generate_with_small_images(resource)
 
-        = render 'layouts/header_and_footers/in_list_footer', categories: resource.categories_as_arr, tags: resource.tags_as_arr
+        = render 'layouts/header_and_footers/in_list_resource_footer', categories: resource.categories_as_arr, tags: resource.tags_as_arr
 
 .page-summary-width-plus
   %hr

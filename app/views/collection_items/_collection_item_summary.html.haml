@@ -5,6 +5,9 @@
       .summary-header.page-summary-width-plus
         = link_to collection_item.title.title, collection_item_path(collection_item), class: 'summary-title'
         .float-right
+          - if current_user && current_user.can_update?(collection_item)
+            = link_to 'edit', edit_collection_item_path(collection_item)
+            &nbsp; &nbsp; &nbsp;
           - if current_user && current_user.can_delete?(collection_item)
             = link_to fa_icon('trash-o'), collection_item,
                       :data =>  {:confirm => 'Are you sure you want to remove this collection_item? This cannot be undone.',
