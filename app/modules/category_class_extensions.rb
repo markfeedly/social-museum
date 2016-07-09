@@ -5,19 +5,21 @@ module CategoryClassExtensions
     CollectionItem.select{ |ci| ci.has_category?(cat_as_str) }
   end
 
-  def find_categorized_c_i_including_child_categories(cat)
+  def find_categorized_including_child_categories(cat, type)
     cat_as_str = cat.class == String ? cat : cat.name
-    CollectionItem.select{ |ci| Category.get_children(:isa, cat_as_str).find{|c| ci.has_category?(c)} }
+    type.select{ |ci| Category.get_children(:isa, cat_as_str).find{|c| ci.has_category?(c)} }
+  end
+
+  def find_categorized_c_i_including_child_categories(cat)
+    find_categorized_including_child_categories(cat, CollectionItem)
   end
 
   def find_categorized_p_including_child_categories(cat)
-    cat_as_str = cat.class == String ? cat : cat.name
-    Page.select{ |ci| Category.get_children(:isa, cat_as_str).find{|c| ci.has_category?(c)} }
+    find_categorized_including_child_categories(cat, Page)
   end
 
   def find_categorized_r_including_child_categories(cat)
-    cat_as_str = cat.class == String ? cat : cat.name
-    Resource.select{ |ci| Category.get_children(:isa, cat_as_str).find{|c| ci.has_category?(c)} }
+    find_categorized_including_child_categories(cat, Resource)
   end
 
   def get_children(predicate, root)
