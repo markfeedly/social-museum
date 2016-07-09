@@ -12,7 +12,7 @@ class CategoriesController < ApplicationController
   expose(:ci_count) { category_is ? categorised_collection_items.count : 0 }
 
 
-  expose(:all_categorised_pages) { all_category_is ? Category.find_categorized_p_including_child_categories(params[:category_id], Page) : [] }
+  expose(:all_categorised_pages) { all_category_is ? Category.find_categorized_including_child_categories(params[:category_id], Page) : [] }
   expose(:paginated_all_categorised_pages) { Kaminari.paginate_array(all_categorised_pages).page(params[:page]).per(10) }
   expose(:all_p_count) { all_category_is ? all_categorised_pages.count : 0 }
 
@@ -20,7 +20,7 @@ class CategoriesController < ApplicationController
   expose(:paginated_categorised_pages) { Kaminari.paginate_array(categorised_pages).page(params[:page]).per(10) }
   expose(:p_count) { category_is ? categorised_pages.count : 0 }
 
-  expose(:all_categorised_resources) { all_category_is ? Category.find_categorized_r_including_child_categories(params[:category_id], Resource) : [] }
+  expose(:all_categorised_resources) { all_category_is ? Category.find_categorized_including_child_categories(params[:category_id], Resource) : [] }
   expose(:paginated_all_resources) { Kaminari.paginate_array(all_categorised_resources).page(params[:page]).per(10) }
   expose(:all_r_count) { all_category_is ? all_categorised_resources.count : 0 }
 
@@ -28,14 +28,10 @@ class CategoriesController < ApplicationController
   expose(:paginated_categorised_resources) { Kaminari.paginate_array(categorised_resources).page(params[:page]).per(10) }
   expose(:r_count) { category_is ? categorised_resources.count : 0 }
 
-  expose(:none)     { category_is ? false : true }
-  expose(:all_none) { all_category_is ? false : true }
-  expose(:all_inc_children_none) { all_category_is ? false : true }
+  expose(:none)     { ci_count + p_count + r_count == 0 }
+  expose(:all_inc_children_none) { all_ci_count + all_p_count + all_r_count == 0  }
 
-
-  expose(:all_ci_class) { all_ci_count > 0 ? 'active' : '' }
-  expose(:all_p_class)  { all_ci_count == 0 && all_p_count > 0 ? 'active' : '' }
-  expose(:all_r_class)  { all_ci_count == 0 && all_p_count == 0 && all_r_count > 0 ? 'active' : '' }
+  # calculate which tab should be shown aka active
 
   expose(:ci_class) { ci_count > 0 ? 'active' : '' }
   expose(:p_class)  { ci_count == 0 && p_count > 0 ? 'active' : '' }

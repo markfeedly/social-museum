@@ -21,6 +21,9 @@ class ResourcesController < ApplicationController
 
   autocomplete :resource, :title
 
+  authorize_actions_for Resource
+
+
   #todo use: authorize_actions_for Resource
   before_action :authenticate_user!, :except => [:index, :show]
 

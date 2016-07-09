@@ -2,6 +2,7 @@ require 'uri'
 require 'sec-versioning'
 
 class Resource < ActiveRecord::Base
+  extend FindBy
   include Authority::Abilities
   self.authorizer_name = 'ResourceAuthorizer'
   #todo include Rakismet::Model
@@ -112,18 +113,6 @@ class Resource < ActiveRecord::Base
 
   def image_url
     Upload.image_url_for(url)
-  end
-
-
-
-  # finding ----------------------------------------------------------------------------------------
-
-  def self.find_by_slug(slug)
-    joins(:title).where(titles: {slug: slug}).first
-  end
-
-  def self.find_by_title(title)
-    joins(:title).where(titles: {title: title}).first
   end
 
   # validations ----------------------------------------------------------------------------------------

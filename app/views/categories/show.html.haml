@@ -1,5 +1,5 @@
 - if none
-  %h2'Nothing is catgorised as #{params[:id]}'
+  %h2 Nothing is categorised with '#{params[:id]}'
   = link_to "Show subcategories of '#{params[:id]}' as well", category_show_full_path(params[:id]),class: 'btn btn-primary'
 - else
   %h1#top Categorised '#{params[:id]}'

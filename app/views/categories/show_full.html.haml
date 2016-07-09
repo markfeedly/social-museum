@@ -1,5 +1,7 @@
-- if false
-  %h2 Nothing is catgorised as #{params[:category_id]} or its children
+- if all_inc_children_none
+  %h2 Nothing is catgorised with '#{params[:category_id]}' or its subcategories
+  = link_to 'Don\'t show subcategories', category_path(params[:category_id]), class: 'btn btn-primary'
+
 - else
   %h1#top Categorised with '#{params[:category_id]}' and its subcategories
   = link_to 'Don\'t show subcategories', category_path(params[:category_id]), class: 'btn btn-primary'

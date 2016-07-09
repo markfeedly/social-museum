@@ -6,10 +6,7 @@
     - if recent.any?
       - recent.each do |p|
         .float-left.recent-name-col
-          - if p.try(:name)
-            = link_to p.name, send(path_method, p.slug)
-          -else
-            Error in _column.html.haml
+          = link_to p.name, send(path_method, p.name)
         .float-right.recent-date-col.recent-date-color
           = p.send(time_method).strftime('%e %B %Y')
         .clear
