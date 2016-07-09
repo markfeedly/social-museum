@@ -13,8 +13,8 @@ module Categories
     categories.collect{ |tag|tag.name.strip.squeeze(' ')}.sort.join(', ')
   end
 
-  def has_category?(tag)
-    categories.include?(Category.find_by(name: tag))
+  def has_category?(cat)
+    categories.include?(Category.find_by(name: cat))
   end
 
   def in_categories_and_children?(target_category)

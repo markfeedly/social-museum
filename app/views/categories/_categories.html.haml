@@ -6,4 +6,5 @@
   - else
     .bold
       Categories
-    = category_list(categories)
+    - category_list(categories).each do |cc|
+      = "#{cc}</br>".html_safe

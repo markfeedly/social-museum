@@ -1,18 +1,18 @@
 class CategoriesController < ApplicationController
 
   expose(:category_is) { Category.where(name: params[:id]).first }
-  expose(:all_category_is) { Category.where(name: params[:category_id]).first }
+  expose(:all_category_is) { Category.where(name: params[:category_id]).first || Category.new(name: params[:category_id]) }
 
-  expose(:all_categorised_collection_items) { all_category_is ? CollectionItem.all.select { |ci| ci.in_category_and_its_children?(params[:category_id]) ? ci : nil } : [] }
+  expose(:all_categorised_collection_items) { all_category_is ? Category.find_categorized_c_i_including_child_categories(params[:category_id]) : [] }
   expose(:paginated_all_collection_items) { Kaminari.paginate_array(all_categorised_collection_items).page(params[:page]).per(10) }
   expose(:all_ci_count) { all_category_is ? all_categorised_collection_items.count : 0 }
 
-  expose(:categorised_collection_items) { category_is ? category_is.collection_items.select { |ci| ci.has_category?(params[:id]) ? ci : nil } : [] }
+  expose(:categorised_collection_items) { category_is ? Category.find_categorized(category_is) : [] }
   expose(:paginated_categorised_collection_items) { Kaminari.paginate_array(categorised_collection_items).page(params[:page]).per(10) }
   expose(:ci_count) { category_is ? categorised_collection_items.count : 0 }
 
 
-  expose(:all_categorised_pages) { all_category_is ? Page.all.select { |ci| ci.in_category_and_its_children?(params[:category_id]) ? ci : nil } : [] }
+  expose(:all_categorised_pages) { all_category_is ? Category.find_categorized_p_including_child_categories(params[:category_id]) : [] }
   expose(:paginated_all_categorised_pages) { Kaminari.paginate_array(all_categorised_pages).page(params[:page]).per(10) }
   expose(:all_p_count) { all_category_is ? all_categorised_pages.count : 0 }
 
@@ -20,7 +20,7 @@ class CategoriesController < ApplicationController
   expose(:paginated_categorised_pages) { Kaminari.paginate_array(categorised_pages).page(params[:page]).per(10) }
   expose(:p_count) { category_is ? categorised_pages.count : 0 }
 
-  expose(:all_categorised_resources) { all_category_is ? Resource.all.select { |ci| ci.in_category_and_its_children?(params[:category_id]) ? ci : nil } : [] }
+  expose(:all_categorised_resources) { all_category_is ? Category.find_categorized_r_including_child_categories(params[:category_id]) : [] }
   expose(:paginated_all_resources) { Kaminari.paginate_array(all_categorised_resources).page(params[:page]).per(10) }
   expose(:all_r_count) { all_category_is ? all_categorised_resources.count : 0 }
 

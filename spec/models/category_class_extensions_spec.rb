@@ -58,17 +58,17 @@ describe 'CollectionItem Categories' do
 
   it "should find child collection items" do
     new_collection_item('VUM Atlas')
-    collection_items = Category.find_categorized_including_child_categories('Atlas')
+    collection_items = Category.find_categorized_c_i_including_child_categories('Atlas')
     expect(collection_items.count).to eq 1
     expect(collection_items.first.has_category?('Atlas')).to eq false
     expect(collection_items.first.has_category?('VUM Atlas')).to eq true
     new_collection_item('Atlas')
     new_collection_item('a second spurious')
-    collection_items = Category.find_categorized_including_child_categories('Atlas')
+    collection_items = Category.find_categorized_c_i_including_child_categories('Atlas')
     expect(collection_items.count).to eq 2
     expect(collection_items.first.has_category?('Atlas') && collection_items.last.has_category?('VUM Atlas')).to eq false
     expect(collection_items.first.has_category?('VUM Atlas') && collection_items.last.has_category?('Atlas')).to eq true
-    collection_items = Category.find_categorized_including_child_categories('Manchester computer')
+    collection_items = Category.find_categorized_c_i_including_child_categories('Manchester computer')
     expect(collection_items.count).to eq 2
     expect(collection_items.first.has_category?('VUM Atlas') && collection_items.last.has_category?('Atlas')).to eq true
   end
