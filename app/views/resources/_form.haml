@@ -1,34 +1,20 @@
 = simple_nested_form_for(resource, :html => {:data => {:role => 'resource-form'}, :multipart => true}) do |f|
-  = f.input :lock_version, as: :fake
-  = f.input :slug, input_html: { value: slug }
+  = f.input :lock_version, as: :fake, as: :hidden
+  = f.input :slug, input_html: { value: slug }, as: :hidden
 
   = f.fields_for :title do |title_form|
     = title_form.input :title, input_html: {id: 'page_title'}, wrapper_html: {data: {role: 'title'}}, error_html: {data: {role: 'error'}}
 
-    = f.input :categories_as_str, label: 'Categories', wrapper_html: {data: {role: 'categories'}}, error_html: {data: {role: 'error'}}
-
     = f.input :description
+
+    = render 'resources/url_or_file', f: f
+
+    = f.input :categories_as_str, label: 'Categories', wrapper_html: {data: {role: 'categories'}}, error_html: {data: {role: 'error'}}
 
     = f.input :tags_as_str, label: 'Tags', wrapper_html: {data: {role: 'tags'}}, error_html: {data: {role: 'error'}}
 
 
-  - if current_user.can_change_link?(resource)
-    = f.input :url, label: 'Resource on the web to link to (this must be a URL beginning with http). This will be automatically filed in with a file path if you choose to upload a file.', wrapper_html: {data: {role: "link-field"}}, error_html: {data: {role: "error"}}
-    %div.hide{data: {role: 'upload-field'}}
-      %p
-        Uploading a file will set the URL link to the uploaded file, replacing the current link.
-      = f.input :file, as: :file, label: 'Upload a file (image, document or archive)'
-      %button{data: {role: "clear-file"}, class: 'btn'} Clear file
-    %button.btn.btn-info{data: {role: "toggle-field"}} Upload a file instead
 
-  - else
-    .control-group
-      = f.label :url, class: 'control-label string'
-      .controls
-        %input.string#resource_url{type: 'text', value: resource.url, disabled: true}
-        %br
-        .instruction.change-note
-          = "This resource asset may only be changed by this resource's creator or by an administrator."
   %br
   %br
   %br

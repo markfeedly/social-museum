@@ -1,0 +1,19 @@
+- if current_user.can_change_link?(resource)
+  = f.input :url, label: 'Resource on the web to link to (this must be a URL beginning with http or https)', wrapper_html: {data: {role: "link-field"}}, error_html: {data: {role: "error"}}
+  %div.hide{data: {role: 'upload-field'}}
+    %p
+      = f.input :file, as: :file, label: 'Upload a file (image, document or zip format archive)<br/>Only upload files which you legally own, or which have a non-restrictive copyright'.html_safe
+      %button{data: {role: "clear-file"}, class: 'btn'} Clear file
+  .resource_url
+    .float-right
+      %button.btn.btn-info{data: {role: "toggle-field"}} Upload a file instead
+  .clear
+
+- else
+  .control-group
+    = f.label :url, class: 'control-label string'
+    .controls
+      %input.string#resource_url{type: 'text', value: resource.url, disabled: true}
+      %br
+      .instruction.change-note
+        = "This resource asset may only be changed by this resource's creator or by an administrator."

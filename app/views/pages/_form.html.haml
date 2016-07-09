@@ -6,9 +6,9 @@
     - (titl = params[:page_title] || '') if (titl == nil || titl == '')
     = title_form.input :title, input_html: {value: titl, id: 'page_title'}, wrapper_html: {data: {role: 'title'}}, error_html: {data: {role: 'error'}}
 
-  = f.input :categories_as_str, label: 'Categories', wrapper_html: {data: {role: 'categories'}}, error_html: {data: {role: 'error'}}
-
   = f.input :description, as: :text, wrapper_html: {data: {role: 'description'}}, error_html: {data: {role: 'error'}}
+
+  = f.input :categories_as_str, label: 'Categories', wrapper_html: {data: {role: 'categories'}}, error_html: {data: {role: 'error'}}
 
   = f.input :tags_as_str, label: 'Tags', wrapper_html: {data: {role: 'tags'}}, error_html: {data: {role: 'error'}}
 
