@@ -3,7 +3,6 @@
     .title-color.bold Resource for
     %div
       - started = false
-      - res_list = resource.resourceables.select!{ |r| r} || []
       - resource.resourceables.sort{ |a,b| a.name <=> b.name }.each do |r|
         = ', ' if started
         - started = true
