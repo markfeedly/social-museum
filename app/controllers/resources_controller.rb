@@ -21,7 +21,7 @@ class ResourcesController < ApplicationController
 
   autocomplete :resource, :title
 
-  authorize_actions_for Resource
+  authorize_actions_for Resource, :except => :autocomplete_resourceable_title
 
 
   #todo use: authorize_actions_for Resource
