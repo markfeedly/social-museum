@@ -3,53 +3,49 @@ class SubscriptionsController < ApplicationController
   #todo more method calls like this in controllers before_action :authenticate_user!
   before_action :authenticate_user!
 
-  expose(:user){ current_user }
   expose(:collection_item){ CollectionItem.find(params[:id]) }
   expose(:page){ Page.find(params[:id]) }
   expose(:resource){ Page.find(params[:id]) }
 
-  #todo optimise using .order ?
 
-  expose (:collection_item_subscriptions) do
-    CollectionItem.select { |ci| ci.subscribers.include?(user) }.sort { |a, b| a.name <=> b.name }
-  end
 
-  expose((:page_subscriptions)) { Page.select { |p| p.subscribers.include?(user) }.sort { |a, b| a.name <=> b.name } }
+  expose (:collection_item_subscriptions) { get_subscriptions_for(CollectionItem)}
+  expose((:page_subscriptions)) { get_subscriptions_for(Page)}
+  expose(:resource_subscriptions){ get_subscriptions_for(Resource)}
 
-  expose(:resource_subscriptions) { Resource.select { |r| r.subscribers.include?(user) }.sort { |a, b| a.name <=> b.name } }
-
-  def index
-  end
-
-  def delete_subscription_on_page
-    page.unsubscribe(user)
-    redirect_to subscriptions_path
-  end
-
-  def delete_subscription_on_collection_item
-    collection_item.unsubscribe(user)
+  def delete_all_collection_item_subscriptions
+    unsubscribe_from(CollectionItem)
     redirect_to subscriptions_path
   end
 
   def delete_all_page_subscriptions
-    Page.select{|p| p.subscribers.include?(user)}.each{|p|p.unsubscribe(user)}
+    unsubscribe_from(Page)
     redirect_to subscriptions_path
   end
 
-  def delete_all_collection_item_subscriptions
-    CollectionItem.select{|ci| ci.subscribers.include?(user)}.each{|ci|ci.unsubscribe(user)}
-    redirect_to subscriptions_path
-  end
 
   def delete_all_resource_subscriptions
-    Resource.select{|ci| ci.subscribers.include?(user)}.each{|r|r.unsubscribe(user)}
+    unsubscribe_from(Resource)
     redirect_to subscriptions_path
   end
 
   def delete_all_subscriptions
-    Page.select{|p| p.subscribers.include?(user)}.each{|p|p.unsubscribe(user)}
-    CollectionItem.select{|ci| ci.subscribers.include?(user)}.each{|ci|ci.unsubscribe(user)}
-    Resource.select{|ci| ci.subscribers.include?(user)}.each{|r|r.unsubscribe(user)}
+    delete_all_collection_item_subscriptions
+    delete_all_page_subscriptions
+    delete_all_resource_subscriptions
     redirect_to subscriptions_path
   end
+
+  private
+
+  #todo optimise
+  def get_subscriptions_for(claz)
+    claz.select{ |obj| obj.subscribers.include?(current_user) }.sort { |a, b| a.name <=> b.name }
+  end
+
+  def unsubscribe_from(claz)
+    claz.select{|p| p.subscribers.include?(current_user)}.each{|p|p.unsubscribe(current_user)}
+  end
+
+
 end
