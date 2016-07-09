@@ -6,7 +6,7 @@
     - if recent.any?
       - recent.each do |p|
         .float-left.recent-name-col
-          = link_to p.name, send(path_method, p.name)
+          = link_to p.name, send(path_method, p)
         .float-right.recent-date-col.recent-date-color
           = p.send(time_method).strftime('%e %B %Y')
         .clear
