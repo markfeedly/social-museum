@@ -1,10 +1,10 @@
 %span.categories
 
   - if categories == []
-    .bold
+    .title-color.bold
       No categories
   - else
-    .bold
+    .title-color.bold
       Categories
     - category_list(categories).each do |cc|
       = "#{cc}</br>".html_safe

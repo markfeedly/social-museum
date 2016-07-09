@@ -1,6 +1,6 @@
 .content-t-and-c
   - if resource.resourceables != nil && resource.resourceables != []
-    Resource belongs to
+    .title-color.bold Resource for
     %div
       - started = false
       - res_list = resource.resourceables.select!{ |r| r} || []
@@ -12,7 +12,7 @@
         - else
           = link_to r.name, collection_item_path(r)
   - else
-    This is not a resource for any collection items or information pages yet, edit to associate with these
+    .title-color.bold This is not a resource for any collection items or other pages yet
 .color-bbb
   - #todo do we want an identification here?
   = #"Resource created by #{resource.user.name}"

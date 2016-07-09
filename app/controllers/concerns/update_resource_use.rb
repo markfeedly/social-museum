@@ -40,15 +40,15 @@ module UpdateResourceUse
                 ResourceUsage.create(resource_id: resource.id, resourceable_id: r_id, resourceable_type: typ)
               end
             end
-            ResourceUsage.where(resource_id: nil).each { |ru| ru.destroy } unless ResourceUsage.where(resource_id: nil).blank?
-            ResourceUsage.where(resourceable_id: nil).each { |ru| ru.destroy } unless ResourceUsage.where(resourceable_id: nil).blank?
-            ResourceUsage.where(resourceable_type: nil).each { |ru| ru.destroy } unless ResourceUsage.where(resourceable_type: nil).blank?
 
           when ['no destroy', 'allow destroy']
 
         end
       end
     end
+    ResourceUsage.where(resource_id: nil).each { |ru| ru.destroy }
+    ResourceUsage.where(resourceable_id: nil).each { |ru| ru.destroy }
+    ResourceUsage.where(resourceable_type: nil).each { |ru| ru.destroy }
   end
 
   private

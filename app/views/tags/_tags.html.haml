@@ -1,6 +1,6 @@
 %span.tags
   - if tags == []
-    .bold No tags
+    .title-color.bold No tags
   - else
-    .bold Tags
+    .title-color.bold Tags
     = render partial: 'tags/tag', collection: tags, spacer_template: 'tags/tag_spacer'

@@ -1,6 +1,9 @@
 .content-footer.parent-div
   .content-t-and-c.float-left
+    = render 'resources/resource_used_by'
+    <br/>
     = render 'categories/categories', categories: content_source.categories.collect{|c| c.name }
+    <br/>
     = render  'tags/tags', tags: content_source.tags.collect{|t| t.name }
 
   .content-edit-button.float-right.button-width
