@@ -1,9 +1,9 @@
-.lesser-page-title Recent activity for collection items
+.lesser-page-title Recent activity - collection items
 
 .recent-page-font
 
   = render 'recent/columns/column', title: 'Recently created collection items', none_msg: 'No recent collection items',     recent: recently_created_collection_items, path_method: :collection_item_path, time_method: :created_at
 
-  = render 'recent/columns/column', title: 'Recent collection item edits', none_msg: 'No recently edited collection items', recent: recently_edited_collection_items,  path_method: :collection_item_path, time_method: :updateded_at
+  = render 'recent/columns/column', title: 'Recent collection item edits', none_msg: 'No recently edited collection items', recent: recently_edited_collection_items,  path_method: :collection_item_path, time_method: :updated_at
 
   = render 'recent/columns/comment_column', title: 'Collection items with recent comments', none_msg: 'No recent comments on collection items', recent: recently_created_collection_item_comments, path_method: :collection_item_path, time_method: :created_at
