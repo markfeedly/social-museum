@@ -1,0 +1,6 @@
+.clear
+.history-tags-and-categories
+  .tags-and-categories
+    = render 'resources/resource_used_by', resource: resource
+    = render 'categories/categories', categories: resource.categories_as_arr
+    = render 'tags/tags', tags: resource.tags_as_arr
