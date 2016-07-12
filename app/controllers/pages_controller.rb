@@ -13,7 +13,7 @@ class PagesController < ApplicationController
   expose(:want_description) { params[:page][:description] || '' }
   expose(:want_url) { params[:page][:url] || '' }
 
-  authorize_actions_for Page
+  authorize_actions_for Page, :except => :install
 
   def show
     respond_with(page)
@@ -85,6 +85,12 @@ class PagesController < ApplicationController
     redirect_to page_path(page)
   end
 
+  def install
+    make_initalised_page('home') unless Page.find_by_name('Home')
+    make_initalised_page('help') unless Page.find_by_name('Help')
+    redirect_to root_path
+  end
+
   private
 
   def page_params
@@ -94,5 +100,19 @@ class PagesController < ApplicationController
                                   :tags,
                                   :categories,
                                   title_attributes: [:title, :id])
+  end
+
+  def make_initalised_page(pg_str)
+    pg = Page.new
+    pg.description = File.read(Rails.root.join("config/initial_pages/#{pg_str}.md"))
+    pg.title = Title.create(title: "#{pg_str.capitalize}")
+    pg.name = pg_str.capitalize
+    pg.set_tags_from_string( "#{pg_str}" )
+    pg.set_categories_from_string( '')
+    pg.logged_user_id = current_user.id
+    pg.user_id = current_user.id
+    pg.creator = current_user
+    pg.save
+    pg
   end
 end

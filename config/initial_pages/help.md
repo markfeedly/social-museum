@@ -108,11 +108,9 @@ For images, YouTube videos, or Vimeo videos the following should be on lines by 
 
 Still somewhat experimental, resource names should start with a single underscore. If a resource title appears in square brackets, a link to the resource will be displayed. Thus
 
-- \[_Picture of Turing\]
 
 If the name is preceded by a further underscore (using two underscores in total), then the resource content will be embedded. Thus to show a picture
 
-- \[__Picture of Turing\]
 
 ##New paragraphs
 

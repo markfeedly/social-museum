@@ -10,6 +10,7 @@ module PagesHelper
     pg.logged_user_id = current_user.id
     pg.user_id = current_user.id
     pg.creator = current_user
+    xxx
     pg.save
     pg
   end

@@ -27,6 +27,7 @@ VirtualMuseum::Application.routes.draw do
       get :subscribe
       get :unsubscribe
     end
+    collection{ get :install }
   end
 
   resources :recent, only: [:collection_items, :pages, :resources] do

@@ -28,7 +28,14 @@ class PageAuthorizer < Authority::Authorizer
     !user.guest? && resource.subscribed?(user)
   end
 
+  #todo huh?
   def collection_item_creatable_by?(user, opts = {})
     user.admin?
   end
+
+  def self.installable_by(user, opts = {})
+    !user.guest?
+  end
+
+
 end
