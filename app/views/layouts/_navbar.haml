@@ -10,6 +10,7 @@
               %li= #link_to 'Contents', table_of_contents_path - not needed for now
               %li.menu-highlight= link_to 'Collection', collection_items_path
               %li.menu-highlight= link_to 'Innovations', category_path('Innovation')
+              %li.menu-highlight= link_to 'Computers', category_path('Manchester computer')
               %li.menu-highlight= link_to 'People', category_path('Person')
 
 
@@ -21,23 +22,23 @@
                 New
               %ul.dropdown-menu
                 - if current_user.can_create?(CollectionItem)
-                  %li= link_to "New Collection Item", new_collection_item_path, id: 'add_collection_item'
+                  %li= link_to "Collection Item", new_collection_item_path, id: 'add_collection_item'
                 - if current_user.can_create?(Page)
-                  %li= link_to "New additional information Page", new_page_path, :id => 'add_page_link'
+                  %li= link_to "Page", new_page_path, :id => 'add_page_link'
                 - if current_user.can_create?(Resource)
-                  %li= link_to 'New Resource', new_resource_path, :id => 'add_resource_link'
+                  %li= link_to 'Resource', new_resource_path, :id => 'add_resource_link'
                 - if ! (current_user.can_create?(CollectionItem) || current_user.can_create?(Page) || current_user.can_create?(Resource))
                   %li= link_to 'Login to create (or edit) content', new_user_session_path
 
 
             %li.dropdown
               = link_to pages_path, class: "dropdown-toggle", data: {toggle: 'dropdown'} do
-                Recent Activity
+                Recent
               %ul.dropdown-menu
                 - if current_user.can_read?(CollectionItem)
                   %li= link_to 'Collection Items', collection_items_recent_index_path, id: 'recent_collection_item'
                 - if current_user.can_read?(Page)
-                  %li= link_to "More Information Pages", pages_recent_index_path, :id => 'recent_page_link'
+                  %li= link_to 'Other Pages', pages_recent_index_path, :id => 'recent_page_link'
                 - if current_user.can_read?(Resource)
                   %li= link_to 'Resources', resources_recent_index_path, :id => 'add_resource_link'
 
@@ -47,7 +48,7 @@
             - if current_user.can_read?(User)
               %li= link_to 'Users', users_path, :id => 'users_link'
 
-            %li= link_to 'Help', help_index_path
+            %li.menu-highlight= link_to 'Help', help_index_path
 
           .pull-right
             %ul.nav
@@ -57,7 +58,7 @@
               -else
                 %li.dropdown
                   = link_to '#', class: "dropdown-toggle #{current_user.admin? ? 'red' : ''}", data: {toggle: 'dropdown'} do
-                    = current_user.email
+                    = current_user.name
                     = fa_icon 'caret-down'
                   %ul.dropdown-menu
                     %li= link_to 'Profile', user_path(current_user)
