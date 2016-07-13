@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'Pages Helper' do
-  include PagesHelper
+  include PageHelper
 
   before{ FactoryGirl.create(:user) }
 

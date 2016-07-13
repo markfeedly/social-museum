@@ -1,6 +1,8 @@
 class PagesController < ApplicationController
   respond_to :html
 
+  include PageHelper
+
   expose(:page, attributes: :page_params, finder: :find_by_slug)
   expose(:pages)
   expose(:paginated_pages) { pages.page(params[:page]).per(10)}
@@ -102,6 +104,7 @@ class PagesController < ApplicationController
                                   title_attributes: [:title, :id])
   end
 
+=begin
   def make_initalised_page(pg_str)
     pg = Page.new
     pg.description = File.read(Rails.root.join("config/initial_pages/#{pg_str}.md"))
@@ -115,4 +118,5 @@ class PagesController < ApplicationController
     pg.save
     pg
   end
+=end
 end

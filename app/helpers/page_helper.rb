@@ -1,4 +1,4 @@
-module PagesHelper
+module PageHelper
   
   def make_initalised_page(pg_str)
     pg = Page.new
@@ -10,7 +10,6 @@ module PagesHelper
     pg.logged_user_id = current_user.id
     pg.user_id = current_user.id
     pg.creator = current_user
-    xxx
     pg.save
     pg
   end

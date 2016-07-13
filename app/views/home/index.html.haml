@@ -1,6 +1,6 @@
 .width-800px
 
-  - if Page.find_by_title('Home')
+  - if page
     = ContentHtmlGenerator.generate_full( page )
   - else
     .page-title Welcome
