@@ -11,10 +11,10 @@
 // about supported directives.
 //
 //= require jquery
+//= require bootstrap-sprockets
 //= require jquery_ujs
 //= require jquery-ui
 //= require autocomplete-rails
 //= require turbolinks
-//= require bootstrap
 //= require jquery_nested_form
 //= require_tree .

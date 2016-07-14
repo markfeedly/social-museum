@@ -6,6 +6,7 @@ gem 'rake'
 gem 'pg'
 
 gem 'sass-rails', '~> 4.0.3'
+gem 'sprockets-rails', '~> 2.1.4'
 gem 'sprockets-image_compressor'
 gem 'sprockets-webp'
 gem 'uglifier'
