@@ -13,7 +13,7 @@ gem 'coffee-rails'
 gem 'jquery-rails'
 gem 'turbolinks'
 gem 'font-awesome-rails'
-gem 'bootstrap-sass', '2.3.2.2'
+gem 'bootstrap-sass'
 gem 'responders'
 gem 'nested_form'
 

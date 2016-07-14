@@ -47,6 +47,8 @@ GEM
     authority (3.0.0)
       activesupport (>= 3.0.0)
       rake (>= 0.8.7)
+    autoprefixer-rails (6.3.7)
+      execjs
     bcrypt (3.1.7)
     better_errors (1.1.0)
       coderay (>= 1.0.0)
@@ -54,8 +56,9 @@ GEM
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
     blankslate (2.1.2.4)
-    bootstrap-sass (2.3.2.2)
-      sass (~> 3.2)
+    bootstrap-sass (3.3.5)
+      autoprefixer-rails (>= 5.0.0.1)
+      sass (>= 3.2.19)
     builder (3.2.2)
     byebug (2.7.0)
       columnize (~> 0.3)
@@ -364,7 +367,7 @@ DEPENDENCIES
   authority
   better_errors
   binding_of_caller
-  bootstrap-sass (= 2.3.2.2)
+  bootstrap-sass
   capybara
   capybara-screenshot
   carrierwave
@@ -428,4 +431,4 @@ RUBY VERSION
    ruby 2.1.5p273
 
 BUNDLED WITH
-   1.12.0.pre.1
+   1.12.4
