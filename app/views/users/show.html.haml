@@ -3,4 +3,4 @@
 %p Email: #{user.email if user.email}
 %p Type: #{user.admin? ? 'Administrator' : 'Normal user'}
 
-= link_to("Edit and/or change password", edit_user_registration_path, class: 'btn btn-primary button-spacing')
+= link_to("Change password", edit_user_registration_path, class: 'btn btn-primary button-spacing')

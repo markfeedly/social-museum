@@ -1,0 +1,69 @@
+%nav.navbar.navbar-default.navbar-fixed-top
+  .container
+    .navbar-header
+      %button.navbar-toggle.collapsed{"aria-controls" => "navbar", "aria-expanded" => "true", "data-target" => "#navbar", "data-toggle" => "collapse", :type => "button"}
+        %span.sr-only Toggle navigation
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
+      %a.navbar-brand{:href => "#{root_path}"} Project name
+    #navbar.navbar-collapse
+      %ul.nav.navbar-nav
+        - if current_user.can_read?(CollectionItem)
+          %li.menu-highlight= link_to 'Collection', collection_items_path
+          %li.menu-highlight= link_to 'Innovations', category_path('Innovation')
+          %li.menu-highlight= link_to 'Computers', category_path('Manchester computer')
+          %li.menu-highlight= link_to 'People', category_path('Person')
+
+
+          %li.menu-highlight= link_to 'Other', pages_path
+          %li.menu-highlight= link_to 'Resources', resources_path
+
+        %li.dropdown
+          %a.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "#", :role => "button"}
+            New
+            %span.caret
+          %ul.dropdown-menu
+            - if current_user.can_create?(CollectionItem)
+              %li= link_to "Collection Item", new_collection_item_path, id: 'add_collection_item'
+            - if current_user.can_create?(Page)
+              %li= link_to "Page", new_page_path, :id => 'add_page_link'
+            - if current_user.can_create?(Resource)
+              %li= link_to 'Resource', new_resource_path, :id => 'add_resource_link'
+            - if ! (current_user.can_create?(CollectionItem) || current_user.can_create?(Page) || current_user.can_create?(Resource))
+              %li= link_to 'Login to create (or edit) content', new_user_session_path
+
+
+
+        %li.dropdown
+          %a.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "#", :role => "button"}
+            Recent
+            %span.caret
+          %ul.dropdown-menu
+            - if current_user.can_read?(CollectionItem)
+              %li= link_to 'Collection Items', collection_items_recent_index_path, id: 'recent_collection_item'
+            - if current_user.can_read?(Page)
+              %li= link_to 'Other Pages', pages_recent_index_path, :id => 'recent_page_link'
+            - if current_user.can_read?(Resource)
+              %li= link_to 'Resources', resources_recent_index_path, :id => 'add_resource_link'
+
+
+        - if current_user.can_read?(Subscription)
+          %li= link_to 'Subscriptions', subscriptions_path
+
+        - if current_user.can_read?(User)
+          %li= link_to 'Users', users_path, :id => 'users_link'
+
+        %li.menu-highlight= link_to 'Help', help_index_path
+
+      %ul.nav.navbar-nav.navbar-right
+        %li
+          %a{:href => "../navbar/"} Default
+        %li
+          %a{:href => "../navbar-static-top/"} Static top
+        %li.active
+          %a{:href => "./"}
+            Fixed top
+            %span.sr-only
+              (current)
+              / /.nav-collapse
