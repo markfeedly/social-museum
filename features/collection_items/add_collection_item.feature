@@ -15,9 +15,7 @@ Feature: Adding items to the collection
       |0     |
       |1     |
       |2     |
-      |9     |
-      |10    |
-      |11    |
+
 
   Scenario: Add a collection item with a name
     When I create a collection item called "Test"

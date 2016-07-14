@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
 
   #todo check devise parameterisation :lockable, :timeoutable
   if Rails.env.test?
-    devise :database_authenticatable, :registerable,
+    devise :database_authenticatable, :registerable, :confirmable,
            :recoverable, :rememberable, :trackable, :validatable,
            :omniauthable, :omniauth_providers => [:twitter]
   else
