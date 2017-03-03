@@ -3,13 +3,13 @@ class User < ActiveRecord::Base
   include Authority::UserAbilities
   include Authority::Abilities
 
-  #todo check devise parameterisation :lockable, :timeoutable
+  #todo check devise parameterisation :lockable, :timeoutable, :confirmable,
   if Rails.env.test?
-    devise :database_authenticatable, :registerable, :confirmable,
+    devise :database_authenticatable, :registerable,
            :recoverable, :rememberable, :trackable, :validatable,
            :omniauthable, :omniauth_providers => [:twitter]
   else
-    devise :database_authenticatable, :registerable, :confirmable,
+    devise :database_authenticatable, :registerable,
            :recoverable, :rememberable, :trackable, :validatable,
            :omniauthable, :omniauth_providers => [:twitter]
   end

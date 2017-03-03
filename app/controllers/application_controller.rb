@@ -38,9 +38,11 @@ class ApplicationController < ActionController::Base
     session[:previous_url] || root_path
   end
 
+=begin
   decent_configuration do
     strategy DecentExposure::StrongParametersStrategy
   end
+=end
 
   def authority_forbidden(error)
     Authority.logger.warn(error.message)

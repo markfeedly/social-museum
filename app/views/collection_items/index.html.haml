@@ -1,9 +1,11 @@
 .page-title Collection
-- if collection_items.empty?
-  No collection items yet
+- if CollectionItem.count <= ENV['NUM_PAGES_TO_START'].to_i
+
+  %h2 No collection items yet
   - if current_user.admin?
     %br/
-    You can add them via the new collection item menu item in the menu at the top of the page
+    You can add them via the navbar's 'New > Collection Item'
+
 - else
   = paginate paginated_collection_items
   .page-summary-width-plus

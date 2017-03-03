@@ -11,30 +11,19 @@
   <%= favicon_link_tag  %>
 </head>
 <body>
-    <%# application layout styled for Twitter Bootstrap 2.3 %>
-    <div>
-        <%= render 'layouts/responsive_navbar' %>
-    </div>
-    <clear>
-      &nbsp;
-      <br/>
-      &nbsp;
-      <br/>
-      &nbsp;
-      <br/>
-      &nbsp;
-      <br/>
+   <container class="span8">
+      <%= render 'layouts/responsive_navbar' %>
 
-    </clear>
-    <div class="container">
-      <div class="row">
-        <div class="span12">
-          <%= render 'layouts/messages' %>
-          <%= yield %>
+      <div class="jumbotron" style="margin-left: 100px;">
+        <div class="row">
+          <div class="span8">
+            <%= render 'layouts/messages' %>
+            <%= yield %>
+          </div>
         </div>
       </div>
-    </div>
-    <footer>
-    </footer>
+      <footer>
+      </footer>
+  </container>
 </body>
 </html>

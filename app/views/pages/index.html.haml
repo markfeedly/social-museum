@@ -1,9 +1,9 @@
 .page-title Other information
-- if pages.empty?
+- if Page.count <= ENV['NUM_PAGES_TO_START'].to_i
   No additional information  yet
   - if current_user.admin?
     %br/
-    You can add new additional informaton pages via the new page menu item in the menu at the top of the page
+    You can add new information pages via the new page menu item in the menu at the top of the page
 - else
   = paginate paginated_pages
   .page-summary-width-plus

@@ -1,5 +1,5 @@
 .page-title Resources
-- if resources.empty?
+- if Resource.count <= ENV['NUM_RESOURCES_TO_START'].to_i
   No resources yet
   - if current_user.admin?
     %br/

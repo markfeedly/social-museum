@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 ruby IO.read(File.dirname(__FILE__) + "/.ruby-version").strip
 
-gem 'rails', '4.1.4'
+gem 'rails', '4.2.8'
 gem 'rake'
 gem 'pg'
 
