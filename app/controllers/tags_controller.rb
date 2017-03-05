@@ -1,7 +1,6 @@
 class TagsController < ApplicationController
 
   expose(:tag_from_param) { Tag.where(name: params[:id]).first }
-  expose(:none)    { tag_from_param ? false : true  }
 
   expose(:tagged_collection_items) { none ? [] : tag_from_param.collection_items }
   expose(:tagged_pages)            { none ? [] : tag_from_param.pages }
@@ -14,6 +13,8 @@ class TagsController < ApplicationController
   expose(:ci_count) { none ? 0 : tagged_collection_items.count }
   expose(:p_count)  { none ? 0 : tagged_pages.count }
   expose(:r_count)  { none ? 0 : tagged_resources.count }
+
+  expose(:none)     { ci_count + p_count + r_count == 0 }
 
   expose(:ci_tab_active) { ci_count > 0 ? 'active' : '' }
   expose(:p_tab_active)  { ci_count == 0 && p_count > 0 ? 'active' : '' }
