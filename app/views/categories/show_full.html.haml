@@ -7,8 +7,8 @@
   = link_to 'Don\'t show subcategories', category_path(params[:category_id]), class: 'btn btn-primary'
   %br
   &nbsp;
-  = render 'layouts/categorised_or_tagged/tab_header', ci_tab_actv: all_ci_class, p_tab_actv: all_p_class, r_tab_actv: all_r_class, ci_cnt: all_ci_count, p_cnt: all_p_count, r_cnt: all_r_count
-  = render 'layouts/categorised_or_tagged/tab_contents', collection_items: paginated_all_collection_items, pages: paginated_all_categorised_pages, resources: paginated_all_resources, ci_tab_actv: all_ci_class, p_tab_actv: all_p_class, r_tab_actv: all_r_class
+  = render 'layouts/categorised_or_tagged/tab_header', ci_tab_actv: all_ci_tab_active, p_tab_actv: all_p_tab_active, r_tab_actv: all_r_tab_active, ci_cnt: all_ci_count, p_cnt: all_p_count, r_cnt: all_r_count
+  = render 'layouts/categorised_or_tagged/tab_contents', collection_items: paginated_all_collection_items, pages: paginated_all_categorised_pages, resources: paginated_all_resources, ci_tab_actv: all_ci_tab_active, p_tab_actv: all_p_tab_active, r_tab_actv: all_r_tab_active
 
 
 

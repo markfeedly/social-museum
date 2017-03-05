@@ -15,8 +15,8 @@ class TagsController < ApplicationController
   expose(:p_count)  { none ? 0 : tagged_pages.count }
   expose(:r_count)  { none ? 0 : tagged_resources.count }
 
-  expose(:ci_class) { ci_count > 0 ? 'active' : '' }
-  expose(:p_class)  { ci_count == 0 && p_count > 0 ? 'active' : '' }
-  expose(:r_class)  { ci_count == 0 && p_count == 0 && r_count > 0 ? 'active' : '' }
+  expose(:ci_tab_active) { ci_count > 0 ? 'active' : '' }
+  expose(:p_tab_active)  { ci_count == 0 && p_count > 0 ? 'active' : '' }
+  expose(:r_tab_active)  { ci_count == 0 && p_count == 0 && r_count > 0 ? 'active' : '' }
 
 end
