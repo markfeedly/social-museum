@@ -422,6 +422,7 @@ DEPENDENCIES
   sprockets-webp
   turbolinks
   uglifier
+  webp-ffi
   xray-rails
 
 RUBY VERSION
