@@ -1,34 +1,33 @@
 class CategoriesController < ApplicationController
 
-  expose(:category_is) { Category.where(name: params[:id]).first }
-
-  def get_categorized(cat, cat_for_childs)
-    cat ? Category.find_categorized(cat) : Category.find_categorized_including_child_categories(cat_for_childs, CollectionItem)
+  def get_categorized(cat, cat_for_childs, clazz)
+    cat ? Category.find_categorized(cat) : Category.find_categorized_including_child_categories(cat_for_childs, clazz)
   end
 
-  expose(:categorised_collection_items) { get_categorized(category_is, all_category_is) }
-  expose(:all_categorised_collection_items) { get_categorized(category_is, all_category_is) }
-
-  expose(:paginated_categorised_collection_items) { Kaminari.paginate_array(categorised_collection_items).page(params[:page]).per(10) }
-  expose(:paginated_all_collection_items) { Kaminari.paginate_array(categorised_collection_items).page(params[:page]).per(10) }
-
-
-
-
-
+  expose(:category_is) { Category.where(name: params[:id]).first }
   expose(:all_category_is) { Category.where(name: params[:category_id]).first || Category.new(name: params[:category_id]) }
 
-  expose(:all_ci_count) { all_category_is ? all_categorised_collection_items.count : 0 }
+
+
+  expose(:categorised_collection_items) { get_categorized(category_is, all_category_is, CollectionItem) }
+
+  expose(:paginated_collection_items) { Kaminari.paginate_array(categorised_collection_items).page(params[:page]).per(10) }
+
+  expose(:categorised_pages) { category_is ? category_is.pages.select { |ci| ci.has_category?(params[:id]) ? ci : nil } : [] }
+  expose(:all_categorised_pages) { all_category_is ? Category.find_categorized_including_child_categories(params[:category_id], Page) : [] }
+
+  expose(:paginated_categorised_pages) { Kaminari.paginate_array(categorised_pages).page(params[:page]).per(10) }
+  expose(:paginated_all_categorised_pages) { Kaminari.paginate_array(all_categorised_pages).page(params[:page]).per(10) }
+
+
+
+  expose(:all_ci_count) { all_category_is ? paginated_collection_items.count : 0 }
 
   expose(:ci_count) { category_is ? categorised_collection_items.count : 0 }
 
 
-  expose(:all_categorised_pages) { all_category_is ? Category.find_categorized_including_child_categories(params[:category_id], Page) : [] }
-  expose(:paginated_all_categorised_pages) { Kaminari.paginate_array(all_categorised_pages).page(params[:page]).per(10) }
   expose(:all_p_count) { all_category_is ? all_categorised_pages.count : 0 }
 
-  expose(:categorised_pages) { category_is ? category_is.pages.select { |ci| ci.has_category?(params[:id]) ? ci : nil } : [] }
-  expose(:paginated_categorised_pages) { Kaminari.paginate_array(categorised_pages).page(params[:page]).per(10) }
   expose(:p_count) { category_is ? categorised_pages.count : 0 }
 
   expose(:all_categorised_resources) { all_category_is ? Category.find_categorized_including_child_categories(params[:category_id], Resource) : [] }

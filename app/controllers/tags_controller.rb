@@ -7,7 +7,7 @@ class TagsController < ApplicationController
   expose(:tagged_pages)            { none ? [] : tag_from_param.pages }
   expose(:tagged_resources)        { none ? [] : tag_from_param.resources }
 
-  expose(:paginated_tagged_collection_items) { Kaminari.paginate_array(tagged_collection_items).page(params[:page]).per(10) }
+  expose(:paginated_collection_items) { Kaminari.paginate_array(tagged_collection_items).page(params[:page]).per(10) }
   expose(:paginated_tagged_pages) { Kaminari.paginate_array(tagged_pages).page(params[:page]).per(10) }
   expose(:paginated_tagged_resources) { Kaminari.paginate_array(tagged_resources).page(params[:page]).per(10) }
 
