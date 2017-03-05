@@ -1,8 +1,8 @@
 module CategoryClassExtensions
 
-  def find_categorized(cat)
+  def find_categorized(cat, type)
     cat_as_str = cat.class == String ? cat : cat.name
-    CollectionItem.select{ |ci| ci.has_category?(cat_as_str) }
+    type.select{ |ci| ci.has_category?(cat_as_str) }
   end
 
   def find_categorized_including_child_categories(cat, type)
