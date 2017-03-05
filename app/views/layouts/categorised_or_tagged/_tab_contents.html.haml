@@ -1,25 +1,25 @@
 #my-tab-content.tab-content
 
-  #collection-item-tab.tab-pane{class: "#{ci_tab_actv}"}
+  #collection-item-tab.tab-pane{class: "#{ci_tab_active}"}
 
-    = paginate collection_items, param_name: :ci_page, params: {anchor: :"collection-item-tab"}
-    - collection_items.each do |cont_obj|
+    = paginate paginated_collection_items, param_name: :ci_page, params: {anchor: :"collection-item-tab"}
+    - paginated_collection_items.each do |cont_obj|
       = render 'collection_items/collection_item_summary', collection_item: cont_obj
-    = paginate collection_items, param_name: :ci_page, params: {anchor: :"collection-item-tab"}
+    = paginate paginated_collection_items, param_name: :ci_page, params: {anchor: :"collection-item-tab"}
 
-  #page-tab.tab-pane{class: "#{p_tab_actv}"}
+  #page-tab.tab-pane{class: "#{p_tab_active}"}
 
-    = paginate pages, param_name: :p_page, params: {anchor: :"page-tab"}
-    - pages.each do |cont_obj|
+    = paginate paginated_pages, param_name: :p_page, params: {anchor: :"page-tab"}
+    - paginated_pages.each do |cont_obj|
       = render 'pages/page_summary', page: cont_obj
-    = paginate pages, param_name: :p_page, params: {anchor: :"page-tab"}
+    = paginate paginated_pages, param_name: :p_page, params: {anchor: :"page-tab"}
 
-  #resource-tab.tab-pane{class: "#{r_tab_actv}"}
+  #resource-tab.tab-pane{class: "#{r_tab_active}"}
 
-    = paginate resources, param_name: :r_page, params: {anchor: :"resource-tab"}
-    - resources.each do |cont_obj|
+    = paginate paginated_resources, param_name: :r_page, params: {anchor: :"resource-tab"}
+    - paginated_resources.each do |cont_obj|
       = render 'resources/resource_summary', resource: cont_obj
-    = paginate resources, param_name: :r_page, params: {anchor: :"resource-tab"}
+    = paginate paginated_resources, param_name: :r_page, params: {anchor: :"resource-tab"}
 
 
 
