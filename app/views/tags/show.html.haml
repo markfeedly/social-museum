@@ -2,8 +2,8 @@
   %h2 Nothing is tagged with '#{params[:id]}'
 - else
   %h1#top Tagged '#{params[:id]}'
-  = render 'layouts/categorised_or_tagged/tab_header', ci_claz: ci_class, p_claz: p_class, r_claz: r_class, ci_cnt: ci_count, p_cnt: p_count, r_cnt: r_count
-  = render 'layouts/categorised_or_tagged/tab_contents', collection_items: paginated_tagged_collection_items, pages: paginated_tagged_pages, resources: paginated_tagged_resources, ci_claz: ci_class, p_claz: p_class, r_claz: r_class
+  = render 'layouts/categorised_or_tagged/tab_header', ci_tab_actv: ci_class, p_tab_actv: p_class, r_tab_actv: r_class, ci_cnt: ci_count, p_cnt: p_count, r_cnt: r_count
+  = render 'layouts/categorised_or_tagged/tab_contents', collection_items: paginated_tagged_collection_items, pages: paginated_tagged_pages, resources: paginated_tagged_resources, ci_tab_actv: ci_class, p_tab_actv: p_class, r_tab_actv: r_class
 
 
 
