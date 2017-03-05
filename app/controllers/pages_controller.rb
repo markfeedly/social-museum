@@ -4,7 +4,7 @@ class PagesController < ApplicationController
   include PageHelper
 
   expose(:page, attributes: :page_params, finder: :find_by_slug)
-  expose(:pages)
+  expose(:pages) { Page.all }
   expose(:paginated_pages) { pages.page(params[:page]).per(10)}
   expose(:page_history) do
     Kaminari.paginate_array(page.load_versions).page(params[:history]).per(10)

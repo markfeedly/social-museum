@@ -5,7 +5,6 @@ class CategoriesController < ApplicationController
 
   expose(:all_categorised_collection_items) { all_category_is ? Category.find_categorized_including_child_categories(params[:category_id], CollectionItem) : [] }
   expose(:paginated_all_collection_items) { Kaminari.paginate_array(all_categorised_collection_items).page(params[:page]).per(10) }
-  expose(:all_ci_count) { all_category_is ? all_categorised_collection_items.count : 0 }
 
   expose(:categorised_collection_items) { category_is ? Category.find_categorized(category_is) : [] }
   expose(:paginated_categorised_collection_items) { Kaminari.paginate_array(categorised_collection_items).page(params[:page]).per(10) }
@@ -14,7 +13,6 @@ class CategoriesController < ApplicationController
 
   expose(:all_categorised_pages) { all_category_is ? Category.find_categorized_including_child_categories(params[:category_id], Page) : [] }
   expose(:paginated_all_categorised_pages) { Kaminari.paginate_array(all_categorised_pages).page(params[:page]).per(10) }
-  expose(:all_p_count) { all_category_is ? all_categorised_pages.count : 0 }
 
   expose(:categorised_pages) { category_is ? category_is.pages.select { |ci| ci.has_category?(params[:id]) ? ci : nil } : [] }
   expose(:paginated_categorised_pages) { Kaminari.paginate_array(categorised_pages).page(params[:page]).per(10) }
@@ -22,7 +20,6 @@ class CategoriesController < ApplicationController
 
   expose(:all_categorised_resources) { all_category_is ? Category.find_categorized_including_child_categories(params[:category_id], Resource) : [] }
   expose(:paginated_all_resources) { Kaminari.paginate_array(all_categorised_resources).page(params[:page]).per(10) }
-  expose(:all_r_count) { all_category_is ? all_categorised_resources.count : 0 }
 
   expose(:categorised_resources) { category_is ? category_is.resources.select { |ci| ci.has_category?(params[:id]) ? ci : nil } : [] }
   expose(:paginated_categorised_resources) { Kaminari.paginate_array(categorised_resources).page(params[:page]).per(10) }
@@ -36,6 +33,12 @@ class CategoriesController < ApplicationController
   expose(:ci_class) { ci_count > 0 ? 'active' : '' }
   expose(:p_class)  { ci_count == 0 && p_count > 0 ? 'active' : '' }
   expose(:r_class)  { ci_count == 0 && p_count == 0 && r_count > 0 ? 'active' : '' }
+
+
+  expose(:all_ci_count) { all_category_is ? all_categorised_collection_items.count : 0 }
+  expose(:all_p_count) { all_category_is ? all_categorised_pages.count : 0 }
+  expose(:all_r_count) { all_category_is ? all_categorised_resources.count : 0 }
+
 
   expose(:all_ci_class) { all_ci_count > 0 ? 'active' : '' }
   expose(:all_p_class)  { all_ci_count == 0 && all_p_count > 0 ? 'active' : '' }
