@@ -3,20 +3,20 @@
 
   = render 'edit_conflicts/user_guide_text'
 
-  = simple_nested_form_for(collection_item, :html => {:data => {:role => 'collection-item-form'}, :multipart => true}) do |f|
+  = simple_nested_form_for(collection_item, :html => {:data => {:role => 'collection-item-form'}, :id => 'edit-with-conflicts', :multipart => true}) do |f|
     = f.hidden_field :lock_version
 
     = render 'edit_conflicts/title_conflict',  f: f
 
-    = render 'edit_conflicts/text_conflict',  f: f, field: :item_number, current: want_item_number, desired: collection_item.item_number
+    = render 'edit_conflicts/text_conflict',  f: f, field: :item_number, desired: want_item_number, current: collection_item.item_number
 
-    = render 'edit_conflicts/text_conflict',  f: f, field: :location, current: want_location, desired: collection_item.location
+    = render 'edit_conflicts/text_conflict',  f: f, field: :location, desired: want_location, current: collection_item.location
 
     = render 'edit_conflicts/description_conflict',  f: f
 
-    = render 'edit_conflicts/text_conflict',  f: f, field: :categories_as_str, current: want_str_categories, desired: collection_item.categories_as_str
+    = render 'edit_conflicts/text_conflict',  f: f, field: :categories_as_str, desired: want_str_categories, current: collection_item.categories_as_str
 
-    = render 'edit_conflicts/text_conflict', f: f, field: :tags_as_str, current: want_str_tags, desired: collection_item.tags_as_str
+    = render 'edit_conflicts/text_conflict', f: f, field: :tags_as_str, desired: want_str_tags, current: collection_item.tags_as_str
 
     %br
     = f.submit class: 'btn btn-primary'

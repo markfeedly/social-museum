@@ -8,7 +8,7 @@ module ApplicationHelper
   end
 
   def compare_versions(previous, current)
-    Diffy::Diff.new(current, previous).to_s(:html)
+    Diffy::Diff.new(previous, current).to_s(:html)
   end
 
 
