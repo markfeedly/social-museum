@@ -1,0 +1,7 @@
+- if want_description != collection_item.description
+  %h2  Description differs
+  = compare_versions(want_description, collection_item.description).html_safe
+  %br/
+  = f.text_area :description
+- else
+  = f.hidden_field :description

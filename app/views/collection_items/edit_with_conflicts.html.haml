@@ -1,46 +1,22 @@
 .width-500px
   %h1.page-title Resolve editing conflicts
 
-  %p
-    While you were editing this collection item, another user edited it.
-
-    You can merge your changes with the other user's edit:
-
-    %ul
-      %li
-        For each item that is different
-        %ul
-          %li.del The changes you wanted are displayed in a dull red
-          %li.ins The changes the other user made displayed in green
-          %li Anything that neither user wanted to change is displayed normally, like this line
-          %li Finally, the box-like edit field displays what the item is currently set to, as a result of the other user's edit.
-
-    %li Change the contents of the edit fields, merging into them your desired changes
-    %li Then save.
+  = render 'edit_conflicts/user_guide_text'
 
   = simple_nested_form_for(collection_item, :html => {:data => {:role => 'collection-item-form'}, :multipart => true}) do |f|
     = f.hidden_field :lock_version
 
-    - if want_title != collection_item.name
-      %h2  Title differs
-      = compare_versions(want_title, collection_item.name).html_safe
-      = f.fields_for :title do |title_form|
-        = title_form.input :title, label: false, input_html: {id: '_title'}, wrapper_html: {data: {role: 'title'}}, error_html: {data: {role: 'error'}}
-    -else
-      = f.fields_for :title do |title_form|
-        = title_form.input :title, as: :hidden, input_html: {id: '_title'}, wrapper_html: {data: {role: 'title'}}, error_html: {data: {role: 'error'}}
+    = render 'edit_conflicts/title_conflict',  f: f
 
-    = render 'resources/conflict',  f: f, field: :categories_as_str, current: want_str_categories, desired: collection_item.categories_as_str
+    = render 'edit_conflicts/text_conflict',  f: f, field: :item_number, current: want_item_number, desired: collection_item.item_number
 
-    - if want_description != collection_item.description
-      %h2  Description differs
-      = compare_versions(want_description, collection_item.description).html_safe
-      %br/
-      = f.text_area :description
-    - else
-      = f.hidden_field :description
+    = render 'edit_conflicts/text_conflict',  f: f, field: :location, current: want_location, desired: collection_item.location
 
-    = render 'resources/conflict', f: f, field: :tags_as_str, current: want_str_tags, desired: collection_item.tags_as_str
+    = render 'edit_conflicts/description_conflict',  f: f
+
+    = render 'edit_conflicts/text_conflict',  f: f, field: :categories_as_str, current: want_str_categories, desired: collection_item.categories_as_str
+
+    = render 'edit_conflicts/text_conflict', f: f, field: :tags_as_str, current: want_str_tags, desired: collection_item.tags_as_str
 
     %br
     = f.submit class: 'btn btn-primary'

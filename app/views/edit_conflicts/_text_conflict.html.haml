@@ -1,0 +1,11 @@
+-# locals f,field, current, desired
+- if current != desired
+  - if field == :item_number || field == :location
+    %h2 #{field.to_s.gsub(/_/,' ').capitalize}s differ
+  - else
+    %h2  #{field.to_s.split('_')[0].capitalize} differ
+  .width-500px
+    = compare_versions(current, desired).html_safe
+    = f.text_field field
+- else
+  = f.hidden_field field

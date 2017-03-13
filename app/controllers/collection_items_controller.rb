@@ -1,5 +1,7 @@
-class CollectionItemsController < ApplicationController
+ class CollectionItemsController < ApplicationController
   respond_to :html
+
+  include CheckConflictingChanges
 
   expose(:collection_item, attributes: :collection_item_params, finder: :find_by_slug)
   expose(:collection_items)
@@ -10,10 +12,11 @@ class CollectionItemsController < ApplicationController
   end
 
   expose(:want_title) { params[:collection_item][:title_attributes][:title] || '' }
+  expose(:want_item_number) { params[:collection_item][:item_number] || '' }
+  expose(:want_location) { params[:collection_item][:location] || '' }
+  expose(:want_description) { params[:collection_item][:description] || '' }
   expose(:want_str_categories) { params[:collection_item][:categories_as_str] || '' }
   expose(:want_str_tags) { params[:collection_item][:tags_as_str] || '' }
-  expose(:want_description) { params[:collection_item][:description] || '' }
-  expose(:want_url) { params[:collection_item][:url] || '' }
 
   authorize_actions_for CollectionItem
 
@@ -48,20 +51,24 @@ class CollectionItemsController < ApplicationController
     collection_item.name = params[:collection_item][:title_attributes][:title]
     collection_item.logged_user_id = current_user.id
     begin
-      saved_tags = collection_item.tags_as_str
-      saved_categories = collection_item.categories_as_str
+      last_saved_tags       = collection_item.tags_as_str
+      last_saved_categories = collection_item.categories_as_str
       collection_item.set_tags_from_string( params[:collection_item][:tags_as_str] )
       collection_item.set_categories_from_string( params[:collection_item][:categories_as_str] )
       collection_item.update_attributes(collection_item_params)
+
       respond_with(collection_item)
     rescue => error
       if error.instance_of?(ActiveRecord::StaleObjectError)
-        #flash[:warning] = 'Another user has made a conflicting edit, you can use this form to resolve the differences and save the collection_item'
-        #todo - this wont work if a new tag or category was created above
-        collection_item.set_tags_from_string( saved_tags )
-        collection_item.set_categories_from_string( saved_categories )
-        collection_item.reload
-        render 'collection_items/edit_with_conflicts'
+        if changed_collection_item( collection_item )
+          flash[:warning] = 'Another user has made a conflicting edit, you can use this form to resolve the differences and save the collection_item'
+          collection_item.set_tags_from_string( last_saved_tags )
+          collection_item.set_categories_from_string( last_saved_categories )
+          collection_item.reload
+          render 'collection_items/edit_with_conflicts'
+        else
+          render 'collection_items/show'
+        end
       else
         raise "Error during collection_item#update: #{error}"
       end
@@ -95,7 +102,7 @@ class CollectionItemsController < ApplicationController
                                             :item_number,
                                             :location,
                                             :lock_version,
-                                            :name, #todo dont think this is needed
+                                            # :name, #todo dont think this is needed
                                             :tags,
                                             title_attributes: [:title, :id])
   end
