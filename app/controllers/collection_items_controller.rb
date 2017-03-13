@@ -63,7 +63,7 @@
         collection_item.set_tags_from_string( last_saved_tags )
         collection_item.set_categories_from_string( last_saved_categories )
         collection_item.reload
-        if changed_collection_item?( collection_item )
+        if changed_object?( collection_item, :collection_item )
           flash[:warning] = 'Another user has made a conflicting edit, you can use this form to resolve the differences and save the collection_item'
           render 'collection_items/edit_with_conflicts'
         else

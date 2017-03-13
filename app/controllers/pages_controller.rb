@@ -2,6 +2,7 @@ class PagesController < ApplicationController
   respond_to :html
 
   include PageHelper
+  include CheckConflictingChanges
 
   expose(:page, attributes: :page_params, finder: :find_by_slug)
   expose(:pages)
