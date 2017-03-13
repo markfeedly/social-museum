@@ -60,14 +60,14 @@
       respond_with(collection_item)
     rescue => error
       if error.instance_of?(ActiveRecord::StaleObjectError)
-        if changed_collection_item( collection_item )
+        if changed_collection_item?( collection_item )
           flash[:warning] = 'Another user has made a conflicting edit, you can use this form to resolve the differences and save the collection_item'
           collection_item.set_tags_from_string( last_saved_tags )
           collection_item.set_categories_from_string( last_saved_categories )
           collection_item.reload
           render 'collection_items/edit_with_conflicts'
         else
-          render 'collection_items/show'
+          respond_with(collection_item)
         end
       else
         raise "Error during collection_item#update: #{error}"
@@ -102,7 +102,6 @@
                                             :item_number,
                                             :location,
                                             :lock_version,
-                                            # :name, #todo dont think this is needed
                                             :tags,
                                             title_attributes: [:title, :id])
   end
