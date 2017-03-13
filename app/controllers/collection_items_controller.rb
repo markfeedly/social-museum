@@ -67,6 +67,7 @@
           collection_item.reload
           render 'collection_items/edit_with_conflicts'
         else
+          #todo gives success status even though a change was not recorded for this user
           respond_with(collection_item)
         end
       else
