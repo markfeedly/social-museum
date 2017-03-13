@@ -60,11 +60,11 @@
       respond_with(collection_item)
     rescue => error
       if error.instance_of?(ActiveRecord::StaleObjectError)
+        collection_item.set_tags_from_string( last_saved_tags )
+        collection_item.set_categories_from_string( last_saved_categories )
+        collection_item.reload
         if changed_collection_item?( collection_item )
           flash[:warning] = 'Another user has made a conflicting edit, you can use this form to resolve the differences and save the collection_item'
-          collection_item.set_tags_from_string( last_saved_tags )
-          collection_item.set_categories_from_string( last_saved_categories )
-          collection_item.reload
           render 'collection_items/edit_with_conflicts'
         else
           #todo gives success status even though a change was not recorded for this user
