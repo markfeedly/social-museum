@@ -1,48 +1,23 @@
-%h1.resource-title Resolve editing conflicts
+.width-500px
+  - #todo pages for this resource
+  %h1.resource-title Resolve editing conflicts
 
-%p
-  While you were editing this resource, another user saved an edit of the same resource.
+  = render 'shared/conflict_edits/conflict_help_text', page_type: 'page'
 
-  You can merge the other user's saved edit with your desired changes using this page.
+  = simple_nested_form_for(resource, :html => {:data => {:role => 'resource-form'}, :multipart => true}) do |f|
+    = f.hidden_field :lock_version
 
-  You can see where you and the other user wanted different things. What you wanted are in green,
-  what was saved by the other user is in red.
+      = render 'edit_conflicts/title_conflict',  f: f
 
-  Change the contents of the boxes to a merge of yours and the other user's text, then save.
+      = render 'edit_conflicts/text_conflict',  f: f, field: :item_number, desired: want_item_number, current: collection_item.item_number
 
-= simple_nested_form_for(resource, :html => {:data => {:role => 'resource-form'}, :multipart => true}) do |f|
-  = f.hidden_field :lock_version
+      = render 'edit_conflicts/text_conflict',  f: f, field: :location, desired: want_location, current: collection_item.location
 
-  %ul.red
-    - resource.errors.full_messages.each do |msg|
-      %li= msg
+      = render 'edit_conflicts/description_conflict',  f: f
 
-  Please edit to resolve the differences shown below.
-  %br/
-  %br/
-  What you wanted to save appears in red. If you didn't want to save anything then you will see nothing in red.
-  %br/
-  %br/
-  What is currently saved is shown in green and in the edit boxes,
-  ready for your further changes.
+      = render 'edit_conflicts/text_conflict',  f: f, field: :categories_as_str, desired: want_str_categories, current: collection_item.categories_as_str
 
-  = compare_versions(want_title, resource.name).html_safe
-  = f.fields_for :title do |title_form|
-    = title_form.input :title, input_html: {id: 'page_title'}, wrapper_html: {data: {role: 'title'}}, error_html: {data: {role: 'error'}}
+      = render 'edit_conflicts/text_conflict', f: f, field: :tags_as_str, desired: want_str_tags, current: collection_item.tags_as_str
 
-  = render 'resources/conflict',  f: f, field: :categories_as_str, current: want_str_categories, desired: resource.categories_as_str
-
-  - if want_description != resource.description
-    %h3  Description differs
-    %br/
-    .width-500px
-      = compare_versions(want_description, resource.description).html_safe
-      %br/
-      = f.text_area :description
-  - else
-    = f.hidden_field :description
-
-  = render 'resources/conflict', f: f, field: :tags_as_str, current: want_str_tags, desired: resource.tags_as_str
-
-  %br
-  = f.submit class: 'btn btn-primary'
+      %br
+      = f.submit class: 'btn btn-primary'
