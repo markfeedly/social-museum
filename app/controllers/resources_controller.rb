@@ -81,8 +81,9 @@ class ResourcesController < ApplicationController
     resource.logged_user_id = current_user.id
     resource.user_id = current_user.id
     begin
-      saved_tags = resource.tags_as_str
-      saved_categories = resource.categories_as_str
+      last_saved_tags = resource.tags_as_str
+      last_saved_categories = resource.categories_as_str
+      last_saved_resource_uses = change_me #todo
       resource.set_tags_from_string(params[:resource][:tags_as_str])
       resource.set_categories_from_string(params[:resource][:categories_as_str])
       update_resource_use
@@ -90,17 +91,22 @@ class ResourcesController < ApplicationController
       respond_with(resource)
     rescue => error
       if error.instance_of?(ActiveRecord::StaleObjectError)
-        #todo - this wont work if a new tag or category was created above
-        resource.set_tags_from_string( saved_tags )
-        resource.set_categories_from_string( saved_categories )
+        resource.set_tags_from_string( last_saved_tags )
+        resource.set_categories_from_string( last_saved_categories )
+        restore_resource_uses ( last_saved_resource_uses )  #todo
         resource.reload
-        render 'resources/edit_with_conflicts'
+        if changed_object?( resource, :resource )
+          flash[:warning] = 'Another user has made a conflicting edit, you can use this form to resolve the differences and save the collection_item'
+          render 'resources/edit_with_conflicts'
+        else
+          #todo gives success status even though a change was not recorded for this user
+          respond_with(resource)
+        end
       else
-        raise "Error during resource update: #{error}"
+        raise "Error during collection_item#update: #{error}"
       end
     end
   end
-
 
   def destroy
     resource.destroy

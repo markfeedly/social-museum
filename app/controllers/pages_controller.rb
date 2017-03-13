@@ -49,23 +49,26 @@ class PagesController < ApplicationController
     page.name = params[:page][:title_attributes][:title]
     page.logged_user_id = current_user.id
     begin
-      saved_tags = page.tags_as_str
-      saved_categories = page.categories_as_str
+      last_saved_tags = page.tags_as_str
+      last_saved_categories = page.categories_as_str
       page.set_tags_from_string( params[:page][:tags_as_str] )
       page.set_categories_from_string( params[:page][:categories_as_str] )
       page.update_attributes(page_params)
       respond_with(page)
     rescue => error
-      page.set_tags_from_string( saved_tags )
-      page.set_categories_from_string( saved_categories )
-      page.reload
       if error.instance_of?(ActiveRecord::StaleObjectError)
-        #flash[:warning] = 'Another user has made a conflicting edit, you can use this form to resolve the differences and save the page'
-        #todo - this wont work if a new tag or category was created above
-
-        render 'pages/edit_with_conflicts'
+        page.set_tags_from_string( last_saved_tags )
+        page.set_categories_from_string( last_saved_categories )
+        page.reload
+        if changed_object?( page, :page )
+          flash[:warning] = 'Another user has made a conflicting edit, you can use this form to resolve the differences and save the collection_item'
+          render 'pages/edit_with_conflicts'
+        else
+          #todo gives success status even though a change was not recorded for this user
+          respond_with(page)
+        end
       else
-        raise "Error during page#update: #{error.inspect}"
+        raise "Error during collection_item#update: #{error}"
       end
     end
   end
