@@ -6,26 +6,13 @@
   = simple_nested_form_for(page, :html => {:data => {:role => 'collection-item-form'}, :multipart => true}) do |f|
     = f.hidden_field :lock_version
 
-    - if want_title != page.name
-      %h2  Title differs
-      = compare_versions(want_title, page.name).html_safe
-      = f.fields_for :title do |title_form|
-        = title_form.input :title, label: false, input_html: {id: '_title'}, wrapper_html: {data: {role: 'title'}}, error_html: {data: {role: 'error'}}
-    -else
-      = f.fields_for :title do |title_form|
-        = title_form.input :title, as: :hidden, input_html: {id: '_title'}, wrapper_html: {data: {role: 'title'}}, error_html: {data: {role: 'error'}}
+    = render 'edit_conflicts/title_conflict',  f: f
 
-    - if want_description != page.description
-      %h2  Description differs
-      = compare_versions(want_description, page.description).html_safe
-      %br/
-      = f.text_area :description
-    - else
-      = f.hidden_field :description
+    = render 'edit_conflicts/description_conflict',  f: f
 
-    = render 'shared/conflict_edits/conflict',  f: f, field: :categories_as_str, current: want_str_categories, desired: page.categories_as_str
+    = render 'edit_conflicts/text_conflict',  f: f, field: :categories_as_str, desired: want_str_categories, current: collection_item.categories_as_str
 
-    = render 'resources/conflict', f: f, field: :tags_as_str, current: want_str_tags, desired: page.tags_as_str
+    = render 'edit_conflicts/text_conflict', f: f, field: :tags_as_str, desired: want_str_tags, current: collection_item.tags_as_str
 
     %br
     = f.submit class: 'btn btn-primary'
