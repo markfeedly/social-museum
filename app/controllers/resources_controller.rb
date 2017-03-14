@@ -83,11 +83,12 @@ class ResourcesController < ApplicationController
     begin
       last_saved_tags = resource.tags_as_str
       last_saved_categories = resource.categories_as_str
-      last_saved_resource_uses = change_me #todo
+      #last_saved_resource_uses = change_me #todo
       resource.set_tags_from_string(params[:resource][:tags_as_str])
       resource.set_categories_from_string(params[:resource][:categories_as_str])
       update_resource_use
       resource.update_attributes(resource_params)
+      clean_resource_usage_table # deals with pesky user leaving blank resource use on save
       respond_with(resource)
     rescue => error
       if error.instance_of?(ActiveRecord::StaleObjectError)
@@ -149,4 +150,6 @@ class ResourcesController < ApplicationController
   def resource_resources_params
     params['resource_resources'] || []
   end
+
+
 end

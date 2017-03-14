@@ -46,9 +46,6 @@ module UpdateResourceUse
         end
       end
     end
-    ResourceUsage.where(resource_id: nil).each { |ru| ru.destroy }
-    ResourceUsage.where(resourceable_id: nil).each { |ru| ru.destroy }
-    ResourceUsage.where(resourceable_type: nil).each { |ru| ru.destroy }
   end
 
   private
@@ -57,6 +54,12 @@ module UpdateResourceUse
     typ = selection['page_title'] =~ / .c\d+.$/ ? 'CollectionItem' : 'Page'
     r_id = selection['page_title'].match(/ {[pc](\d+)}$/)[1].to_i
     [typ, r_id]
+  end
+
+  def clean_resource_usage_table
+    ResourceUsage.where(resource_id: nil).each { |ru| ru.destroy }
+    ResourceUsage.where(resourceable_id: nil).each { |ru| ru.destroy }
+    ResourceUsage.where(resourceable_type: nil).each { |ru| ru.destroy }
   end
 
 end
