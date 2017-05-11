@@ -1,5 +1,4 @@
 See http://markfeedly.github.io/virtual-museum/
-for some documentation.
 
 The MIT License (MIT)
 
