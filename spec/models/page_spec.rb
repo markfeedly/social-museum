@@ -21,8 +21,6 @@ describe 'Page' do
       expect(page.subscribers.count).to eq 1
       expect(page.subscribers.last).to eq user
     end
-
-
   end
 
 
